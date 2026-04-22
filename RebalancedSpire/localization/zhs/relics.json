@@ -1,0 +1,15 @@
+﻿{
+  "REBALANCEDSPIRE-BOOMING_CONCH.description": "在与[gold]精英[/gold]敌人战斗时，前[blue]{Cards}[/blue]张牌可以被免费打出。",
+  "REBALANCEDSPIRE-FIDDLE.description": "在每个回合开始时，额外抽[blue]{Cards}[/blue]张牌。你的手牌上限减少[red]{Cards}[/red]张。",
+  "REBALANCEDSPIRE-LAVA_ROCK.description": "每击败[blue]4[/blue]次敌人时，额外掉落一组[gold]罕见[/gold]卡牌奖励。",
+  "REBALANCEDSPIRE-LORDS_PARASOL.description": "在每回合开始时获得{Energy:energyIcons()}。当你遇见[gold]商人[/gold]时，立刻获得他所出售的[red]所有[/red]物品。[gold]?[/gold]房间中出现商店的概率翻倍。",
+  "REBALANCEDSPIRE-NEOWS_LAMENT.description": "接下来[blue]{Rooms}[/blue]场战斗中的敌人将只有[blue]1[/blue]点生命。",
+  "REBALANCEDSPIRE-NEOWS_LAMENT.eventDescription": "接下来[blue]{Rooms}[/blue]场战斗中的敌人将只有[blue]1[/blue]点生命。",
+  "REBALANCEDSPIRE-NEOWS_LAMENT.flavor": "[red]这个遗物的细节将在未来揭晓……[/red]",
+  "REBALANCEDSPIRE-NEOWS_LAMENT.title": "涅奥的悲恸",
+  "REBALANCEDSPIRE-NUTRITIOUS_OYSTER.description": "拾起时，将你的最大生命值提升[blue]{MaxHp}[/blue]。在战斗结束时，回复[green]{Heal}[/green]点生命。",
+  "REBALANCEDSPIRE-NUTRITIOUS_OYSTER.eventDescription": "将你的最大生命值提升[blue]{MaxHp}[/blue]。在战斗结束时，回复[green]{Heal}[/green]点生命。",
+  "REBALANCEDSPIRE-SERE_TALON.description": "拾起时，将[blue]{CurseCards}[/blue]张[red]{Writhe}[/red]和[blue]{WishCards}[/blue]张[purple]{Wish}[/purple]加入你的[gold]牌组[/gold]。",
+  "REBALANCEDSPIRE-SERE_TALON.eventDescription": "将[blue]{CurseCards}[/blue]张[red]{Writhe}[/red]和[blue]{WishCards}[/blue]张[purple]{Wish}[/purple]加入你的[gold]牌组[/gold]。",
+  "REBALANCEDSPIRE-TOASTY_MITTENS.description": "在你的回合开始时，选择[blue]{Cards}[/blue]张你[gold]抽牌堆[/gold]中能被打出的牌[gold]消耗[/gold]，并获得[blue]{StrengthPower}[/blue]点[gold]力量[/gold]。"
+}

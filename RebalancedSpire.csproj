@@ -1,0 +1,313 @@
+﻿<Project Sdk="Godot.NET.Sdk/4.5.1" InitialTargets="CheckDependencyPaths">
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>true</ImplicitUsings>
+        <Nullable>enable</Nullable> <!--Makes code analysis regarding null values stricter.-->
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <DefaultItemExcludes>packages/**</DefaultItemExcludes>
+        <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
+        <PathMap>$(AppOutputBase)=.\</PathMap>
+    </PropertyGroup>
+
+    <!-- OS Detection -->
+    <PropertyGroup>
+        <IsWindows>false</IsWindows>
+        <IsLinux>false</IsLinux>
+        <IsOSX>false</IsOSX>
+        <IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</IsWindows>
+        <IsLinux Condition="$([MSBuild]::IsOSPlatform('Linux'))">true</IsLinux>
+        <IsOSX Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</IsOSX>
+    </PropertyGroup>
+
+    <!-- // NOTE: Megadot is version 4.5.1, and the game won't load your .pck if the Godot version used is newer. -->
+
+    <!-- Windows -->
+    <PropertyGroup Condition="'$(IsWindows)' == 'true'">
+        <AutoSteamPath>$(registry:HKEY_CURRENT_USER\Software\Valve\Steam@SteamPath)\steamapps</AutoSteamPath>
+        <SteamLibraryPath Condition="Exists('$(AutoSteamPath)/common/Slay the Spire 2')">$(AutoSteamPath)</SteamLibraryPath>
+
+        <GodotPath>D:/sls2/megadot-4.5.1-m.8-windows-x86_64-llvm-editor-csharp/MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
+        <!-- If on Windows and Slay the Spire 2 is not installed in your default steam library, adjust the following.-->
+        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">D:/SteamLibrary/steamapps</SteamLibraryPath>
+
+        <!-- The below should not need to be changed. -->
+        <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+        <ModsPath>$(Sts2Path)/mods/</ModsPath>
+        <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+    </PropertyGroup>
+
+    <!-- Linux -->
+    <PropertyGroup Condition="'$(IsLinux)' == 'true'">
+        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(HOME)/.local/share/Steam/steamapps</SteamLibraryPath>
+        <GodotPath Condition="'$(GodotPath)' == ''">$(SteamLibraryPath)/common/Godot Engine/godot.x11.opt.tools.64</GodotPath>
+
+        <!-- The below should not need to be changed. -->
+        <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+        <ModsPath>$(Sts2Path)/mods/</ModsPath>
+        <Sts2DataDir>$(Sts2Path)/data_sts2_linuxbsd_x86_64</Sts2DataDir>
+    </PropertyGroup>
+
+    <!-- macOS -->
+    <PropertyGroup Condition="'$(IsOSX)' == 'true'">
+        <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(HOME)/Library/Application Support/Steam/steamapps</SteamLibraryPath>
+        <GodotPath Condition="'$(GodotPath)' == ''">$(HOME)/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath>
+
+        <!-- The below should not need to be changed. -->
+        <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+        <ModsPath>$(Sts2Path)/SlayTheSpire2.app/Contents/MacOS/mods/</ModsPath>
+        <Sts2DataDir>$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_x86_64</Sts2DataDir>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <!-- Diasble architecture mismatch warning; mods are ideally built for all platforms (MSIL)
+             while your local StS2 version will be for your specific platform. -->
+        <NoWarn>$(NoWarn);MSB3270</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup Condition="Exists('$(Sts2DataDir)')">
+        <Reference Include="0Harmony">
+            <HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="sts2">
+            <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
+            <Private>false</Private>
+            <Publicize>True</Publicize> <!--Allows private/protected field references but may cause errors.-->
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.0.6" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
+        <AdditionalFiles Include="RebalancedSpire/localization/**/*.json"/>
+        <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="materials/**"/>
+        <Compile Remove="shaders/**"/>
+        <EmbeddedResource Remove="materials/**"/>
+        <EmbeddedResource Remove="shaders/**"/>
+        <Compile Remove="animations\**" />
+        <EmbeddedResource Remove="animations\**" />
+        <Compile Remove="images\packed\card_portraits\token\**" />
+        <EmbeddedResource Remove="images\packed\card_portraits\token\**" />
+        <Compile Remove="images\packed\intents\**" />
+        <EmbeddedResource Remove="images\packed\intents\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include=".gitignore" />
+        <None Include="RebalancedSpire.json" />
+        <None Include="project.godot" />
+        <None Include="RebalancedSpire/**" />
+        <None Include="scr\Core\Harmony\Monsters\Overgrowth\EyeWithTeethPatch.cs.uid" />
+        <None Include="scr\Core\Harmony\Monsters\Overgrowth\FlyconidPatch.cs.uid" />
+        <None Include="scr\Core\Harmony\Monsters\Overgrowth\FogmogPatch.cs.uid" />
+        <None Include="scr\Core\Harmony\Monsters\Overgrowth\FuzzyWurmCrawlerPatch.cs.uid" />
+        <None Include="scr\Core\Harmony\Monsters\Overgrowth\ShrinkerBeetlePatch.cs.uid" />
+        <None Include="scr\Core\Harmony\Monsters\Overgrowth\TwigSlimeMPatch.cs.uid" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="images\packed\card_portraits\event\rebalancedspire_luminesce.png" />
+      <Content Include="images\packed\card_portraits\event\rebalancedspire_luminesce.png.import" />
+      <Content Include="images\powers\rebalancedspire-disillusion_power.png" />
+      <Content Include="images\powers\rebalancedspire-disillusion_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-fabricator_power.png" />
+      <Content Include="images\powers\rebalancedspire-fabricator_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-guard_power.png" />
+      <Content Include="images\powers\rebalancedspire-guard_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-infested_plus_power.png" />
+      <Content Include="images\powers\rebalancedspire-infested_plus_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-leeching_hug_power.png" />
+      <Content Include="images\powers\rebalancedspire-leeching_hug_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-long_distance_power.png" />
+      <Content Include="images\powers\rebalancedspire-long_distance_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-minion_fake_power.png" />
+      <Content Include="images\powers\rebalancedspire-minion_fake_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-omnidynamics_power.png" />
+      <Content Include="images\powers\rebalancedspire-omnidynamics_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-ping_pong_power.png" />
+      <Content Include="images\powers\rebalancedspire-ping_pong_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-plowed_power.png" />
+      <Content Include="images\powers\rebalancedspire-plowed_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-plow_plus_power.png" />
+      <Content Include="images\powers\rebalancedspire-plow_plus_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png" />
+      <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-shifting_power.png" />
+      <Content Include="images\powers\rebalancedspire-shifting_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-soul_wither_power.png" />
+      <Content Include="images\powers\rebalancedspire-soul_wither_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-to_its_origin_owner_power.png" />
+      <Content Include="images\powers\rebalancedspire-to_its_origin_owner_power.png.import" />
+      <Content Include="images\relics\rebalancedspire-neows_lament.png" />
+      <Content Include="images\relics\rebalancedspire-neows_lament.png.import" />
+      <Content Include="RebalancedSpireMain.cs.uid" />
+      <Content Include="scenes\cards\overlays\afflictions\twist.tscn" />
+      <Content Include="scenes\creature_visuals\rebalancedspire-doormaker_left.tscn" />
+      <Content Include="scenes\creature_visuals\rebalancedspire-doormaker_right.tscn" />
+      <Content Include="scenes\encounters\doormaker_boss.tscn" />
+      <Content Include="scenes\vfx\ui\card\afflictions\twist\vfx_ui_card_affliction_twist.tscn" />
+      <Content Include="scr\Core\Afflictions\ToItsOriginOwner.cs.uid" />
+      <Content Include="scr\Core\Afflictions\Twist.cs.uid" />
+      <Content Include="scr\Core\Harmony\Ancients\NeowPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Ancients\OrobasPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Ancients\VakuuPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\AttackCommandPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\AcrobaticsPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\EnthralledPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\FollyPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\LuminescePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\NeowsFuryPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\RelaxPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\WishPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Merchant\MerchantCardRemovalEntryPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\AxebotPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\DevotedSculptorPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\DoormakerBossPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\FabricatorPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\FrogKnightPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\GlobeHeadPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\GuardbotPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\LivingShieldPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\MagiKnightPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\MechaKnightPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\NoisebotPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\OwlMagistratePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\QueenPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\ScrollOfBitingPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\SlimedBerserkerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\SoulNexusPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\SpectralKnightPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\StabbotPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\TestSubjectPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\TheForgottenPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\TheLostPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\TorchHeadAmalgamPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\TurretOperatorPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Glory\ZapbotPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\BowlbugRockPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\BowlbugSilkPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\ChomperPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\CrusherPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\DecimillipedeSegmentPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\EntomancerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\ExoskeletonPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\HunterKillerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\InfestedPrismPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\KnowledgeDemonPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\LouseProgenitorPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\MytePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\OvicopterPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\ParafrightPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\RocketPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\SlumberingBeetlePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\SpinyToadPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\TheInsatiablePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\ThievingHopperPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\ToughEggPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Hive\TunnelerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\BygoneEffigyPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\ByrdonisPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\CeremonialBeastPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\CubexConstructPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\InkletPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\KinFollowerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\KinPriestPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\LeafSlimeSPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\NibbitPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\PhrogParasitePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\SlitheringStranglerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\SnappingJaxfruitPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\TheKinBossPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\VantomPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Overgrowth\VineShamblerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\CalcifiedCultistPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\DampCultistPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\FossilStalkerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\GasBombPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\GremlinMercPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\HauntedShipPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\LivingFogPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\SeapunkPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\SewerClamPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\SkulkingColonyPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\SludgeSpinnerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\SoulFyshPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\TerrorEelPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\ToadpolePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\TwoTailedRatPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Monsters\Underdocks\WaterfallGiantPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\FiddlePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\LavaRockPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\LordsParasolPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\NutritiousOysterPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\ToastyMittensPatch.cs.uid" />
+      <Content Include="scr\Core\Monsters\DoormakerBase.cs.uid" />
+      <Content Include="scr\Core\Monsters\DoormakerLeft.cs.uid" />
+      <Content Include="scr\Core\Monsters\DoormakerRight.cs.uid" />
+      <Content Include="scr\Core\Powers\DisillusionPower.cs.uid" />
+      <Content Include="scr\Core\Powers\OmnidynamicsPower.cs.uid" />
+      <Content Include="scr\Core\Powers\ScrutinyPlusPower.cs.uid" />
+      <Content Include="scr\Core\RebalancedSpireConfig.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\ByrdonisEggPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Powers\SkittishPowerPatch.cs.uid" />
+      <Content Include="scr\Core\Helpers.cs.uid" />
+      <Content Include="scr\Core\Powers\FabricatorPower.cs.uid" />
+      <Content Include="scr\Core\Powers\InfestedPlusPower.cs.uid" />
+      <Content Include="scr\Core\Powers\GuardPower.cs.uid" />
+      <Content Include="scr\Core\Powers\LeechingHugPower.cs.uid" />
+      <Content Include="scr\Core\Powers\LongDistancePower.cs.uid" />
+      <Content Include="scr\Core\Powers\MinionFakePower.cs.uid" />
+      <Content Include="scr\Core\Powers\PingPongPower.cs.uid" />
+      <Content Include="scr\Core\Powers\PlowedPower.cs.uid" />
+      <Content Include="scr\Core\Powers\PlowPlusPower.cs.uid" />
+      <Content Include="scr\Core\Powers\ShiftingPower.cs.uid" />
+      <Content Include="scr\Core\Powers\SoulWitherPower.cs.uid" />
+      <Content Include="scr\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
+      <Content Include="scr\Core\Relics\NeowsLament.cs.uid" />
+    </ItemGroup>
+
+    <Target Name="CheckDependencyPaths">
+        <Error
+                Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"
+                Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')"/>
+        <Error
+                Text=" Godot not found at path '$(GodotPath)'"
+                Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')"/>
+    </Target>
+
+    <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
+        <Message Text="Copying .dll and manifest to mods folder." Importance="high"/>
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
+        <Copy SourceFiles="RebalancedSpire.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
+        <Message Text="Copying BaseLib to mods folder." Importance="high"/>
+        <ItemGroup>
+            <BaseLibFiles Include="$(NuGetPackageRoot)/alchyr.sts2.baselib/**/lib/**/BaseLib.dll;$(NuGetPackageRoot)/alchyr.sts2.baselib/**/Content/BaseLib.pck;$(NuGetPackageRoot)/alchyr.sts2.baselib/**/Content/BaseLib.json;"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(BaseLibFiles)" DestinationFolder="$(ModsPath)BaseLib/"/>
+    </Target>
+
+    <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
+        <Message Text="Exporting Godot .pck to mods folder" Importance="high"/>
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
+              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
+              ContinueOnError="WarnAndContinue"/>
+    </Target>
+
+    <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
+        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high"/>
+    </Target>
+</Project>

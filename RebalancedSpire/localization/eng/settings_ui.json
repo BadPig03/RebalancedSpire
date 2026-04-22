@@ -1,0 +1,19 @@
+﻿{
+  "REBALANCEDSPIRE.mod_title": "Rebalanced Spire",
+  "REBALANCEDSPIRE-ANCIENTS.title": "Ancients",
+  "REBALANCEDSPIRE-NEOW_CONFIG.title": "Neow",
+  "REBALANCEDSPIRE-NEOW_CONFIG.hover.title": "Enable balance changes related to Neow.",
+  "REBALANCEDSPIRE-NEOW_CONFIG.hover.desc": "Affects Ancient Relics and options provided by Neow.",
+  "REBALANCEDSPIRE-OROBAS_CONFIG.title": "Orobas",
+  "REBALANCEDSPIRE-OROBAS_CONFIG.hover.title": "Enable balance changes related to Orobas.",
+  "REBALANCEDSPIRE-OROBAS_CONFIG.hover.desc": "Affects Ancient Relics and options provided by Orobas.",
+  "REBALANCEDSPIRE-TEZCATARA_CONFIG.title": "Tezcatara",
+  "REBALANCEDSPIRE-TEZCATARA_CONFIG.hover.title": "Enable balance changes related to Tezcatara.",
+  "REBALANCEDSPIRE-TEZCATARA_CONFIG.hover.desc": "Affects Ancient Relics provided by Tezcatara.",
+  "REBALANCEDSPIRE-PAEL_CONFIG.title": "Pael",
+  "REBALANCEDSPIRE-PAEL_CONFIG.hover.title": "Enable balance changes related to Pael.",
+  "REBALANCEDSPIRE-PAEL_CONFIG.hover.desc": "Affects Ancient Relics provided by Pael.",
+  "REBALANCEDSPIRE-VAKUU_CONFIG.title": "Vakuu",
+  "REBALANCEDSPIRE-VAKUU_CONFIG.hover.title": "Enable balance changes related to Vakuu.",
+  "REBALANCEDSPIRE-VAKUU_CONFIG.hover.desc": "Affects Ancient Relics and options provided by Vakuu."
+}
