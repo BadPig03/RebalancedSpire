@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace RebalancedSpire.scr.Core.Powers;
 
 using Harmony.Monsters.Glory;
+using Harmony.Monsters.Glory.Normal;
 
 public sealed class FabricatorPower : CustomPowerModel
 {

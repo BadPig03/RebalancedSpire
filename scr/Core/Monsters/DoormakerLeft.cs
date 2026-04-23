@@ -18,11 +18,12 @@ public sealed class DoormakerLeft : DoormakerBase
 {
     private static int ScrutinyDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
     private static int ScrutinyCount => 4;
-    private static int VulnerablePowerAmount => 4;
-    private static int WeakPowerAmount => 4;
-    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
+    private static int BeamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 16);
+    private static int VulnerablePowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
+    private static int WeakPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
+    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 32, 30);
 
-    private async Task OpenMove(IReadOnlyList<Creature> targets)
+    private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
     {
         await Open();
         UpdateVisual(EyeState);
@@ -36,8 +37,9 @@ public sealed class DoormakerLeft : DoormakerBase
         await PowerCmd.Apply<ScrutinyPlusPower>(Creature, 1, Creature, null);
     }
 
-    private async Task DebuffMove(IReadOnlyList<Creature> targets)
+    private async Task BeamMove(IReadOnlyList<Creature> targets)
     {
+        await DamageCmd.Attack(BeamDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, Creature, null);
         await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, Creature, null);
     }
@@ -101,30 +103,30 @@ public sealed class DoormakerLeft : DoormakerBase
     {
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("SLEEP_MOVE", _ => Task.CompletedTask, new SleepIntent());
-        MoveState moveState2 = new MoveState("OPEN_MOVE", OpenMove, new SummonIntent());
+        DramaticOpenState = new MoveState("DRAMATIC_OPEN_MOVE", DramaticOpenMove, new SummonIntent());
         MoveState moveState3 = new MoveState("SCRUTINY_MOVE", ScrutinyMove, new MultiAttackIntent(ScrutinyDamage, ScrutinyCount), new CardDebuffIntent());
-        MoveState moveState4 = new MoveState("DEBUFF_MOVE", DebuffMove, new DebuffIntent());
+        MoveState moveState4 = new MoveState("BEAM_MOVE", BeamMove, new SingleAttackIntent(BeamDamage), new DebuffIntent());
         MoveState moveState5 = new MoveState("FULL_ATTACK_MOVE", FullAttackMove, new SingleAttackIntent(FullAttackDamage));
         MoveState moveState6 = new MoveState("CLOSE_MOVE", CloseMove, new EscapeIntent());
         MoveState moveState7 = new MoveState("CLOSED_MOVE", _ => Task.CompletedTask, new SleepIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("DOORMAKER_LEFT");
         branchState.AddState(moveState, () => !ShouldWakeUp());
-        branchState.AddState(moveState2, ShouldWakeUp);
+        branchState.AddState(DramaticOpenState, ShouldWakeUp);
         ConditionalBranchState branchState2 = new ConditionalBranchState("DOORMAKER_LEFT_2");
         branchState2.AddState(moveState7, () => !ShouldWakeUp());
-        branchState2.AddState(moveState2, ShouldWakeUp);
+        branchState2.AddState(DramaticOpenState, ShouldWakeUp);
         ConditionalBranchState branchState3 = new ConditionalBranchState("DOORMAKER_LEFT_3");
         branchState3.AddState(moveState3, () => !ShouldClose());
         branchState3.AddState(moveState6, ShouldClose);
         moveState.FollowUpState = branchState;
-        moveState2.FollowUpState = moveState3;
+        DramaticOpenState.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;
         moveState4.FollowUpState = moveState5;
         moveState5.FollowUpState = branchState3;
         moveState6.FollowUpState = moveState7;
         moveState7.FollowUpState = branchState2;
         list.Add(moveState);
-        list.Add(moveState2);
+        list.Add(DramaticOpenState);
         list.Add(moveState3);
         list.Add(moveState4);
         list.Add(moveState5);

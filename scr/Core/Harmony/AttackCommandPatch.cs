@@ -7,15 +7,22 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands.Builders;
 
-[HarmonyPatch, HarmonyPatchCategory(RebalancedSpireMain.CategoryGlory)]
+[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class AttackCommandPatch
 {
+    private static readonly bool Disabled = !RebalancedSpireConfig.DoormakerConfig;
+
     [HarmonyPatch(typeof(AttackCommand), nameof(AttackCommand.TargetingRandomOpponents))]
     [HarmonyPrefix]
     [UsedImplicitly]
     private static bool PreFix_TargetingRandomOpponents(AttackCommand __instance, CombatState combatState, bool allowDuplicates, ref AttackCommand __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (!combatState.ContainsMonster<DoormakerBase>())
         {
             return true;

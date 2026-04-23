@@ -13,10 +13,12 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Rooms;
 
-[HarmonyPatch, HarmonyPatchCategory(RebalancedSpireMain.CategoryNeow)]
+[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class BoomingConchPatch
 {
+    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+
     private static int MaxCards => 2;
     private static readonly SpireField<RelicModel, int> CardsPlayed = new(() => 0);
 
@@ -25,6 +27,11 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not BoomingConch)
         {
             return true;
@@ -39,6 +46,11 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_ShowCounter(RelicModel __instance, ref bool __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not BoomingConch boomingConch)
         {
             return true;
@@ -53,6 +65,11 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_DisplayAmount(RelicModel __instance, ref int __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not BoomingConch boomingConch)
         {
             return true;
@@ -67,6 +84,11 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_AfterCardPlayed(AbstractModel __instance, PlayerChoiceContext context, CardPlay cardPlay, ref Task __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || !CombatManager.Instance.IsInProgress || cardPlay.Card.Owner != boomingConch.Owner)
         {
             return true;
@@ -85,7 +107,7 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_TryModifyEnergyCostInCombat(AbstractModel __instance, CardModel card, decimal originalCost, out decimal modifiedCost, ref bool __result)
     {
-        if (__instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
+        if (Disabled || __instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
         {
             modifiedCost = originalCost;
             return true;
@@ -101,7 +123,7 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_TryModifyStarCost(AbstractModel __instance, CardModel card, decimal originalCost, out decimal modifiedCost, ref bool __result)
     {
-        if (__instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
+        if (Disabled || __instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
         {
             modifiedCost = originalCost;
             return true;
@@ -117,6 +139,11 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_BeforeCombatStart(AbstractModel __instance, ref Task __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not BoomingConch boomingConch)
         {
             return true;
@@ -140,6 +167,11 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_AfterCombatEnd(AbstractModel __instance, CombatRoom room, ref Task __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not BoomingConch boomingConch)
         {
             return true;
@@ -158,6 +190,11 @@ public static class BoomingConchPatch
     // ReSharper disable BuiltInTypeReferenceStyle
     private static bool PreFix_ModifyHandDraw(BoomingConch __instance, Player player, Decimal count, ref Decimal __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance.Owner != player)
         {
             return true;

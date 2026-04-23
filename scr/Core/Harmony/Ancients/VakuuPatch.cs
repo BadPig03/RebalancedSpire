@@ -6,15 +6,22 @@ using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
 
-[HarmonyPatch, HarmonyPatchCategory(RebalancedSpireMain.CategoryVakuu)]
+[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class VakuuPatch
 {
+    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+
     [HarmonyPatch(typeof(Vakuu), nameof(Vakuu.Pool1), MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
     private static bool PreFix_Pool1(Vakuu __instance, ref IEnumerable<EventOption> __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         __result = new List<EventOption>
         {
             Helpers.RelicOption<BloodSoakedRose>(__instance),
@@ -29,6 +36,11 @@ public static class VakuuPatch
     [UsedImplicitly]
     private static bool PreFix_Pool2(Vakuu __instance, ref IEnumerable<EventOption> __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         __result = new List<EventOption>
         {
             Helpers.RelicOption<Fiddle>(__instance),
@@ -44,6 +56,11 @@ public static class VakuuPatch
     [UsedImplicitly]
     private static bool PreFix_Pool3(Vakuu __instance, ref IEnumerable<EventOption> __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         __result = new List<EventOption>
         {
             Helpers.RelicOption<ChoicesParadox>(__instance),

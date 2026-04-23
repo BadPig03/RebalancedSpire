@@ -13,11 +13,13 @@ using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 
-[HarmonyPatch, HarmonyPatchCategory(RebalancedSpireMain.CategoryNeow)]
+[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class LavaRockPatch
 {
-    private static int EnemiesDefeatedRequired => 4;
+    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+
+    private static int EnemiesDefeatedRequired => 6;
     private static readonly SavedSpireField<LavaRock, int> EnemiesDefeated = new(() => 0, "REBALANCEDSPIRE-LAVA_ROCK");
 
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
@@ -25,6 +27,11 @@ public static class LavaRockPatch
     [UsedImplicitly]
     private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not LavaRock)
         {
             return true;
@@ -39,6 +46,11 @@ public static class LavaRockPatch
     [UsedImplicitly]
     private static bool PreFix_ShowCounter(LavaRock __instance, ref bool __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         __result = true;
         return false;
     }
@@ -48,6 +60,11 @@ public static class LavaRockPatch
     [UsedImplicitly]
     private static bool PreFix_DisplayAmount(RelicModel __instance, ref int __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not LavaRock lavaRock)
         {
             return true;
@@ -62,6 +79,11 @@ public static class LavaRockPatch
     [UsedImplicitly]
     private static bool PreFix_AfterObtained(RelicModel __instance, ref Task __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not LavaRock lavaRock)
         {
             return true;
@@ -77,6 +99,11 @@ public static class LavaRockPatch
     [UsedImplicitly]
     private static bool PreFix_AfterCombatEnd(AbstractModel __instance, CombatRoom room, ref Task __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not LavaRock lavaRock)
         {
             return true;
@@ -94,6 +121,11 @@ public static class LavaRockPatch
     [UsedImplicitly]
     private static bool PreFix_TryModifyRewards(LavaRock __instance, Player player, List<Reward> rewards, AbstractRoom? room, ref bool __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (player != __instance.Owner || room is not CombatRoom || EnemiesDefeated.Get(__instance) < EnemiesDefeatedRequired)
         {
             return true;

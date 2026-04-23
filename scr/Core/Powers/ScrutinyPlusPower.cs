@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Afflictions;
 
 public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
 {
@@ -63,7 +64,7 @@ public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
 
         foreach (Player player in oldOwner.CombatState.Players)
         {
-            var list = player.PlayerCombatState?.AllCards.Where(c => c.Affliction is Twist).ToList();
+            var list = player.PlayerCombatState?.AllCards.Where(c => c.Affliction is Weighted).ToList();
             if (list == null)
             {
                 continue;
@@ -89,6 +90,7 @@ public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
             return;
         }
 
-        await CardCmd.Afflict<Twist>(card, Amount);
+
+        await CardCmd.Afflict<Weighted>(card, Amount);
     }
 }

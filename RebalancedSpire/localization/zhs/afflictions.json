@@ -2,6 +2,5 @@
   "TO_ITS_ORIGIN_OWNER.description": "归还[gold]多尼斯异鸟蛋[/gold]，与[gold]多尼斯异鸟[/gold]交好。",
   "TO_ITS_ORIGIN_OWNER.extraCardText": "获得胜利。",
   "TO_ITS_ORIGIN_OWNER.title": "物归原主",
-  "TWIST.description": "你的[gold]手牌上限[/gold]减少。",
-  "TWIST.title": "扭曲"
+  "REBALANCEDSPIRE-WEIGHTED.description": "你的[gold]手牌上限[/gold]减少。"
 }

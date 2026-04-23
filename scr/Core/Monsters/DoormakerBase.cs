@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
@@ -19,7 +20,6 @@ public abstract class DoormakerBase : CustomMonsterModel
     private const string ClosedState = "monsters/beta/door_maker_placeholder_1.png";
     protected const string EyeState = "monsters/beta/door_maker_placeholder_2.png";
     protected const string MouthState = "monsters/beta/door_maker_placeholder_3.png";
-    protected const string HandState = "monsters/beta/door_maker_placeholder_4.png";
 
     public override int MinInitialHp => 400;
 
@@ -33,6 +33,8 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     private int _originalHp;
 
+    private MoveState? _dramaticOpenState;
+
     private readonly List<PowerModel> _powerModels = [];
 
     public bool IsPortalOpen
@@ -42,6 +44,16 @@ public abstract class DoormakerBase : CustomMonsterModel
         {
             AssertMutable();
             _isPortalOpen = value;
+        }
+    }
+
+    protected MoveState DramaticOpenState
+    {
+        get => _dramaticOpenState ?? throw new InvalidOperationException();
+        set
+        {
+            AssertMutable();
+            _dramaticOpenState = value;
         }
     }
 
@@ -98,12 +110,18 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (wasRemovalPrevented || creature != Creature || CombatState.Enemies.CountBy(c => c.IsAlive).Any())
+        if (wasRemovalPrevented)
         {
             return Task.CompletedTask;
         }
 
-        NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 5f);
+        if (!CombatState.Enemies.Any(enemy => enemy.IsAlive)) {
+            NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 5f);
+        }
+        else if (creature != Creature)
+        {
+            SetMoveImmediate(DramaticOpenState);
+        }
         return Task.CompletedTask;
     }
 

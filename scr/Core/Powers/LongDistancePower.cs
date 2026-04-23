@@ -22,11 +22,11 @@ namespace RebalancedSpire.scr.Core.Powers;
 
 public sealed class LongDistancePower : CustomPowerModel
 {
-    private static int MaxSandpitAmount => 9;
+    private static int MaxSandpitAmount => 11;
 
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
     public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
     [
@@ -37,15 +37,12 @@ public sealed class LongDistancePower : CustomPowerModel
     {
         if (target == Owner && props.IsPoweredAttack())
         {
-            return (decimal) Math.Max(0.2, 1.3 - 0.1 * Amount - 0.1 * Math.Max(0, Amount - 5) + 0.2 * Math.Max(0, Amount - 8));
+            return CalculatePlayerMultiplier(Amount);
         }
-
-        /*
         if ((dealer == Owner || dealer?.PetOwner == Owner.Player) && target?.Monster is TheInsatiable && props.IsPoweredAttack())
         {
-            return (decimal) Math.Max(0.2, 1.4 - 0.1 * Amount - 0.1 * Math.Max(0, Amount - 6) + 0.2 * Math.Max(0, Amount - 9));
-        }*/
-
+            return CalculateEnemyMultiplier(Amount);
+        }
         return 1;
     }
 
@@ -100,5 +97,15 @@ public sealed class LongDistancePower : CustomPowerModel
             CombatManager.Instance.RemoveCreature(enemy);
             enemy.CombatState?.RemoveCreature(enemy);
         }
+    }
+
+    private static decimal CalculatePlayerMultiplier(int amount)
+    {
+        return (decimal) Math.Max(0.2, 1.3 - 0.1 * amount - 0.1 * Math.Max(0, amount - 5) + 0.2 * Math.Max(0, amount - 8));
+    }
+
+    private static decimal CalculateEnemyMultiplier(int amount)
+    {
+        return (decimal) Math.Max(0.2, 1.4 - 0.1 * amount - 0.1 * Math.Max(0, amount - 6) + 0.2 * Math.Max(0, amount - 9));
     }
 }

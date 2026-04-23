@@ -1,4 +1,7 @@
 ﻿{
+  "HARD_TO_KILL_POWER.description": "Reduce all damage taken and HP lost by [gold]Exoskeleton[/gold] to [blue]{Amount}[/blue].",
+  "HARD_TO_KILL_POWER.smartDescription": "Reduce all damage taken and HP lost by [gold]{OwnerName}[/gold] to [blue]{Amount}[/blue].",
+
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.description": "",
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.smartDescription": "",
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.title": "Leeching Hug",
@@ -39,6 +42,9 @@
   "REBALANCEDSPIRE-DISILLUSION_POWER.description": "",
   "REBALANCEDSPIRE-DISILLUSION_POWER.smartDescription": "",
   "REBALANCEDSPIRE-DISILLUSION_POWER.title": "Disillusion",
+  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.description": "",
+  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.smartDescription": "",
+  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.title": "Scrutiny+",
   "REBALANCEDSPIRE-OMNIDYNAMICS_POWER.description": "",
   "REBALANCEDSPIRE-OMNIDYNAMICS_POWER.smartDescription": "",
   "REBALANCEDSPIRE-OMNIDYNAMICS_POWER.title": "Omnidynamics"

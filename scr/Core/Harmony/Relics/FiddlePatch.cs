@@ -8,15 +8,22 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 
-[HarmonyPatch, HarmonyPatchCategory(RebalancedSpireMain.CategoryVakuu)]
+[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class FiddlePatch
 {
+    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
     private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not Fiddle)
         {
             return true;
@@ -31,6 +38,11 @@ public static class FiddlePatch
     [UsedImplicitly]
     private static bool PreFix_ShouldDraw(Fiddle __instance, Player player, bool fromHandDraw, ref bool __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (player != __instance.Owner)
         {
             return true;
@@ -45,6 +57,11 @@ public static class FiddlePatch
     [UsedImplicitly]
     private static bool PreFix_AfterPreventingDraw(ref Task __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         __result = Task.CompletedTask;
         return false;
     }
@@ -54,6 +71,11 @@ public static class FiddlePatch
     [UsedImplicitly]
     public static void PostFix_ModifyMaxHandSize(Player player, ref int __result)
     {
+        if (Disabled)
+        {
+            return;
+        }
+
         var value = 0;
         foreach (var relic in player.Relics)
         {

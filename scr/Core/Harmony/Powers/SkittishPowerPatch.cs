@@ -13,13 +13,27 @@ namespace RebalancedSpire.scr.Core.Harmony.Powers;
 // ReSharper disable InconsistentNaming
 public static class SkittishPowerPatch
 {
-    private static int ReducedAmount => -1;
+    private static readonly bool Disabled = !RebalancedSpireConfig.PhantasmalGardenerConfig;
+
+    private static async Task AfterAttack(SkittishPower instance)
+    {
+        instance.HasGainedBlockThisTurn = true;
+        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/phantasmal_gardeners/phantasmal_gardeners_retract");
+        await CreatureCmd.TriggerAnim(instance.Owner, "BlockStart", 0.3f);
+        await CreatureCmd.GainBlock(instance.Owner, instance.Amount, ValueProp.Unpowered, null);
+        await PowerCmd.Apply<StrengthPower>(instance.Owner, -1, instance.Owner, null);
+    }
 
     [HarmonyPatch(typeof(SkittishPower), nameof(SkittishPower.AfterAttack))]
     [HarmonyPrefix]
     [UsedImplicitly]
     private static bool Prefix(SkittishPower __instance, AttackCommand command, ref Task __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance.HasGainedBlockThisTurn || !command.DamageProps.HasFlag(ValueProp.Move) || command.ModelSource is not CardModel)
         {
             return true;
@@ -33,14 +47,5 @@ public static class SkittishPowerPatch
 
         __result = AfterAttack(__instance);
         return false;
-    }
-
-    private static async Task AfterAttack(SkittishPower instance)
-    {
-        instance.HasGainedBlockThisTurn = true;
-        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/phantasmal_gardeners/phantasmal_gardeners_retract");
-        await CreatureCmd.TriggerAnim(instance.Owner, "BlockStart", 0.3f);
-        await CreatureCmd.GainBlock(instance.Owner, instance.Amount, ValueProp.Unpowered, null);
-        await PowerCmd.Apply<StrengthPower>(instance.Owner, ReducedAmount, instance.Owner, null);
     }
 }

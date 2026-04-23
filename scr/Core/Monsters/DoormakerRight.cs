@@ -9,22 +9,23 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
-using Powers;
 
 public sealed class DoormakerRight : DoormakerBase
 {
-    private static int HungerDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 14);
+    private static int HungerDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 24, 22);
+    private static int ChargeUpDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 9);
+    private static int ChargeUpCount => 2;
+
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackCount => 4;
 
-    private async Task OpenMove(IReadOnlyList<Creature> targets)
+    private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
     {
         await Open();
         UpdateVisual(MouthState);
         await Cmd.CustomScaledWait(0.2f, 0.6f);
         NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
-        await PowerCmd.Apply<ScrutinyPlusPower>(Creature, 1, Creature, null);
     }
 
     private async Task HungerMove(IReadOnlyList<Creature> targets)
@@ -33,8 +34,9 @@ public sealed class DoormakerRight : DoormakerBase
         await PowerCmd.Apply<HungerPower>(Creature, 1, Creature, null);
     }
 
-    private async Task PowerUpMove(IReadOnlyList<Creature> targets)
+    private async Task ChargeUpMove(IReadOnlyList<Creature> targets)
     {
+        await DamageCmd.Attack(ChargeUpDamage).WithHitCount(ChargeUpCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Remove<HungerPower>(Creature);
         await PowerCmd.Apply<StrengthPower>(Creature, StrengthPowerAmount, Creature, null);
     }
@@ -81,25 +83,25 @@ public sealed class DoormakerRight : DoormakerBase
     public override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("OPEN_MOVE", OpenMove, new SummonIntent());
+        DramaticOpenState = new MoveState("DRAMATIC_OPEN_MOVE", DramaticOpenMove, new SummonIntent());
         MoveState moveState2 = new MoveState("HUNGER_MOVE", HungerMove, new SingleAttackIntent(HungerDamage), new CardDebuffIntent());
-        MoveState moveState3 = new MoveState("POWER_UP_MOVE", PowerUpMove, new BuffIntent());
+        MoveState moveState3 = new MoveState("CHARGE_UP_MOVE", ChargeUpMove, new MultiAttackIntent(ChargeUpDamage, ChargeUpCount), new BuffIntent());
         MoveState moveState4 = new MoveState("FULL_ATTACK_MOVE", FullAttackMove, new MultiAttackIntent(FullAttackDamage, FullAttackCount));
         MoveState moveState5 = new MoveState("CLOSE_MOVE", CloseMove, new EscapeIntent());
         MoveState moveState6 = new MoveState("CLOSED_MOVE", _ => Task.CompletedTask, new SleepIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("DOORMAKER_RIGHT");
         branchState.AddState(moveState6, () => !ShouldWakeUp());
-        branchState.AddState(moveState, ShouldWakeUp);
+        branchState.AddState(DramaticOpenState, ShouldWakeUp);
         ConditionalBranchState branchState2 = new ConditionalBranchState("DOORMAKER_RIGHT_2");
         branchState2.AddState(moveState2, () => !ShouldClose());
         branchState2.AddState(moveState5, ShouldClose);
-        moveState.FollowUpState = moveState2;
+        DramaticOpenState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;
         moveState4.FollowUpState = branchState2;
         moveState5.FollowUpState = moveState6;
         moveState6.FollowUpState = branchState;
-        list.Add(moveState);
+        list.Add(DramaticOpenState);
         list.Add(moveState2);
         list.Add(moveState3);
         list.Add(moveState4);
@@ -107,6 +109,6 @@ public sealed class DoormakerRight : DoormakerBase
         list.Add(moveState6);
         list.Add(branchState);
         list.Add(branchState2);
-        return new MonsterMoveStateMachine(list, moveState);
+        return new MonsterMoveStateMachine(list, DramaticOpenState);
     }
 }

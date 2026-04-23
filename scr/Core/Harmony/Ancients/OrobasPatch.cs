@@ -9,10 +9,12 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
 
-[HarmonyPatch, HarmonyPatchCategory(RebalancedSpireMain.CategoryOrobas)]
+[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class OrobasPatch
 {
+    private static readonly bool Disabled = !RebalancedSpireConfig.OrobasConfig;
+
     private static List<EventOption> OptionPool1(Orobas instance) =>
     [
         Helpers.RelicOption<Driftwood>(instance),
@@ -67,6 +69,11 @@ public static class OrobasPatch
     [UsedImplicitly]
     private static bool PreFix_AllPossibleOptions(Orobas __instance, ref IEnumerable<EventOption> __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         List<EventOption> options = [];
         options.AddRange(OptionPool1(__instance));
         options.AddRange(OptionPool2(__instance));
@@ -82,6 +89,11 @@ public static class OrobasPatch
     [UsedImplicitly]
     private static bool PreFix_GenerateInitialOptions(Orobas __instance, ref IReadOnlyList<EventOption> __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         Player? player = __instance.Owner;
         if (player == null)
         {

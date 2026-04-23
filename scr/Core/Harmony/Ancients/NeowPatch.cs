@@ -9,10 +9,12 @@ using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
 
-[HarmonyPatch, HarmonyPatchCategory(RebalancedSpireMain.CategoryNeow)]
+[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class NeowPatch
 {
+    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+
     private static List<EventOption> CurseOptions(Neow instance) =>
     [
         Helpers.RelicOption<CursedPearl>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
@@ -52,6 +54,11 @@ public static class NeowPatch
     [UsedImplicitly]
     private static bool PreFix_AllPossibleOptions(Neow __instance, ref IEnumerable<EventOption> __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         List<EventOption> options = [];
         options.AddRange(CurseOptions(__instance));
         options.AddRange(PositiveOptions(__instance));
@@ -64,6 +71,11 @@ public static class NeowPatch
     [UsedImplicitly]
     private static bool PreFix_GenerateInitialOptions(Neow __instance, ref IReadOnlyList<EventOption> __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         Player? player = __instance.Owner;
         if (player == null || player.RunState.Modifiers.Count > 0)
         {
