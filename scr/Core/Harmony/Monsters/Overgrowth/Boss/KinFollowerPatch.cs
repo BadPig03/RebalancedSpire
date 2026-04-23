@@ -44,15 +44,15 @@ public static class KinFollowerPatch
 
     private static async Task AfterAddedToRoom(KinFollower instance)
     {
-        var scaledMaxHp = Creature.ScaleHpForMultiplayer(instance.Creature.MaxHp, instance.CombatState.Encounter, instance.CombatState.Players.Count, instance.CombatState.RunState.CurrentActIndex);
+        var currentMaxHp = instance.Creature.MaxHp;
         if (instance.StartsWithDance)
         {
             await PowerCmd.Apply<MinionFakePower>(instance.Creature, MinionPowerAmount, instance.Creature, null);
-            await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, scaledMaxHp * 0.5m);
+            await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, currentMaxHp * 0.5m);
         }
         else
         {
-            await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, scaledMaxHp * 1.5m);
+            await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, currentMaxHp * 1.5m);
         }
         NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 0f);
     }

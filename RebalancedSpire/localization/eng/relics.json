@@ -1,7 +1,7 @@
 ﻿{
   "REBALANCEDSPIRE-BOOMING_CONCH.description": "The first [blue]{Cards}[/blue] cards you play are free to play in [gold]Elite[/gold] combats.",
   "REBALANCEDSPIRE-FIDDLE.description": "At the start of each turn, draw [blue]{Cards}[/blue] additional {Cards:plural:card|cards}. Decrease your max hand size by [red]{Cards}[/red].",
-  "REBALANCEDSPIRE-LAVA_ROCK.description": "Every [blue]4[/blue] combats, enemies drop an additional [gold]Uncommon[/gold] card reward.",
+  "REBALANCEDSPIRE-LAVA_ROCK.description": "Every [blue]6[/blue] combats, enemies drop an additional [gold]Uncommon[/gold] card reward.",
   "REBALANCEDSPIRE-LORDS_PARASOL.description": "Gain {Energy:energyIcons()} at the start of each turn. When you encounter the [gold]Merchant[/gold], immediately obtain EVERYTHING he sells. The chance for a Shop to appear in [gold]?[/gold] rooms is doubled.",
   "REBALANCEDSPIRE-NEOWS_LAMENT.description": "Enemies in your first [blue]{Rooms}[/blue] combats will have [blue]1[/blue] HP.",
   "REBALANCEDSPIRE-NEOWS_LAMENT.eventDescription": "Enemies in your first [blue]{Rooms}[/blue] combats will have [blue]1[/blue] HP.",
