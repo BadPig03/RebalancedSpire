@@ -26,7 +26,7 @@ public static class ToastyMittensPatch
         {
             instance.Flash();
             await CardCmd.Exhaust(choiceContext, card);
-            await PowerCmd.Apply<StrengthPower>(player.Creature, instance.DynamicVars.Strength.BaseValue, player.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, player.Creature, instance.DynamicVars.Strength.BaseValue, player.Creature, null);
         }
     }
 

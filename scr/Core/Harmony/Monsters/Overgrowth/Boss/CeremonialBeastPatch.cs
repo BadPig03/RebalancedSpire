@@ -5,6 +5,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
@@ -29,7 +30,7 @@ public static class CeremonialBeastPatch
         SfxCmd.Play(instance.AttackSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Attack", 0.6f);
         await Cmd.CustomScaledWait(0f, 0.4f);
-        await PowerCmd.Apply<PlowPlusPower>(instance.Creature, (int) (instance.MaxInitialHp * FirstPlowAmount), instance.Creature, null);
+        await PowerCmd.Apply<PlowPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, (int) (instance.MaxInitialHp * FirstPlowAmount), instance.Creature, null);
     }
 
     private static async Task PlowMove(CeremonialBeast instance, IReadOnlyList<Creature> targets)
@@ -47,7 +48,7 @@ public static class CeremonialBeastPatch
         SfxCmd.Play(instance.AttackSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Attack", 0.6f);
         await Cmd.CustomScaledWait(0f, 0.4f);
-        await PowerCmd.Apply<PlowPlusPower>(instance.Creature, (int) (instance.MaxInitialHp * SecondPlowAmount), instance.Creature, null);
+        await PowerCmd.Apply<PlowPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, (int) (instance.MaxInitialHp * SecondPlowAmount), instance.Creature, null);
     }
 
     private static async Task StunnedMove(CeremonialBeast instance, IReadOnlyList<Creature> targets)

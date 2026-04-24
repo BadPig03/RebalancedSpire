@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -36,7 +37,7 @@ public static class WaterfallGiantPatch
     private static async Task StompMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(instance.StompDamage).FromMonster(instance).WithAttackerAnim("AttackDebuff", 0.3f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/waterfall_giant/waterfall_giant_attack_stomp").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<WeakPower>(targets, 1, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 1, instance.Creature, null);
     }
 
     private static async Task RamMove(WaterfallGiant instance)
@@ -52,7 +53,7 @@ public static class WaterfallGiantPatch
         }
 
         await _siphonMoveDelegate(instance, targets);
-        await PowerCmd.Apply<SteamEruptionPower>(instance.Creature, SteamEruptionPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<SteamEruptionPower>(new ThrowingPlayerChoiceContext(), instance.Creature, SteamEruptionPowerAmount, instance.Creature, null);
     }
 
     private static async Task PressureGunMove(WaterfallGiant instance)

@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -19,7 +20,7 @@ public static class SlitheringStranglerPatch
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/slithering_strangler/slithering_strangler_cast");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.6f);
-        await PowerCmd.Apply<ConstrictPower>(targets, ConstrictPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<ConstrictPower>(new ThrowingPlayerChoiceContext(), targets, ConstrictPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(SlitheringStrangler), nameof(SlitheringStrangler.ConstrictMove))]

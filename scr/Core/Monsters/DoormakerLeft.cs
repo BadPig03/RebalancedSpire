@@ -34,14 +34,14 @@ public sealed class DoormakerLeft : DoormakerBase
     private async Task ScrutinyMove(IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(ScrutinyDamage).WithHitCount(ScrutinyCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<ScrutinyPlusPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<ScrutinyPlusPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
 
     private async Task BeamMove(IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(BeamDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, Creature, null);
-        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, Creature, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), targets, VulnerablePowerAmount, Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, Creature, null);
     }
 
     private async Task FullAttackMove(IReadOnlyList<Creature> targets)
@@ -67,7 +67,7 @@ public sealed class DoormakerLeft : DoormakerBase
         await base.AfterAddedToRoom();
         foreach (Player player in CombatState.Players)
         {
-            await PowerCmd.Apply<OmnidynamicsPower>(player.Creature, 1, Creature, null);
+            await PowerCmd.Apply<OmnidynamicsPower>(new ThrowingPlayerChoiceContext(), player.Creature, 1, Creature, null);
         }
     }
 

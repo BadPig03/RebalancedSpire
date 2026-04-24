@@ -244,6 +244,7 @@
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\SludgeSpinnerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\ToadpolePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\TwoTailedRatPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\NCompendiumSubmenuPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\HardToKillPowerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\FiddlePatch.cs.uid" />

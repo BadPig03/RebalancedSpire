@@ -4,11 +4,12 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Models.Monsters;
 
-[HarmonyPatch]
+//[HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class AxebotPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.AxebotConfig;
+    //private static readonly bool Disabled = !RebalancedSpireConfig.AxebotConfig;
+    private static readonly bool Disabled = true;
 
     [HarmonyPatch(typeof(Axebot), nameof(Axebot.MinInitialHp), MethodType.Getter)]
     [HarmonyPostfix]

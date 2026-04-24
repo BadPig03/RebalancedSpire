@@ -5,6 +5,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -33,8 +34,8 @@ public static class ParafrightPatch
 
     private static async Task AfterAddedToRoom(Parafright instance)
     {
-        await PowerCmd.Apply<IllusionPower>(instance.Creature, IllusionPowerAmount, instance.Creature, null);
-        await PowerCmd.Apply<DisillusionPower>(instance.Creature, DisillusionPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<IllusionPower>(new ThrowingPlayerChoiceContext(), instance.Creature, IllusionPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<DisillusionPower>(new ThrowingPlayerChoiceContext(), instance.Creature, DisillusionPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(Parafright), nameof(Parafright.MinInitialHp), MethodType.Getter)]

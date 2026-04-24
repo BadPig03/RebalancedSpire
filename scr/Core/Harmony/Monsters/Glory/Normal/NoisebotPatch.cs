@@ -35,7 +35,7 @@ public static class NoisebotPatch
             }
 
             CardModel card = instance.CombatState.CreateCard<Dazed>(player);
-            statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, addedByPlayer: false));
+            statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, null));
             if (!LocalContext.IsMe(player))
             {
                 continue;

@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -22,7 +23,7 @@ public static class GremlinMercPatch
         {
             await powerInstance.Steal();
         }
-        await PowerCmd.Apply<WeakPower>(targets, 1, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 1, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(GremlinMerc), nameof(GremlinMerc.DoubleSmashDamage), MethodType.Getter)]

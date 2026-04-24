@@ -67,7 +67,7 @@ public static class KnowledgeDemonPatch
         }
 
         await CreatureCmd.Heal(instance.Creature, HealAmount * instance.Creature.CombatState.Players.Count);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, instance.PonderStrength, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.PonderStrength, instance.Creature, null);
     }
 
     private static async Task ChooseCurse(KnowledgeDemon instance, Creature target)

@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -16,7 +17,7 @@ public static class SewerClamPatch
 
     private static async Task AfterAddedToRoom(SewerClam instance)
     {
-        await PowerCmd.Apply<PlatingPower>(instance.Creature, AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 6, 5), instance.Creature, null);
+        await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), instance.Creature, AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 6, 5), instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(SewerClam), nameof(SewerClam.AfterAddedToRoom))]

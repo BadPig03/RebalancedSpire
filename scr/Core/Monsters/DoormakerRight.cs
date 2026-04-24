@@ -31,14 +31,14 @@ public sealed class DoormakerRight : DoormakerBase
     private async Task HungerMove(IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(HungerDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<HungerPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<HungerPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
     }
 
     private async Task ChargeUpMove(IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(ChargeUpDamage).WithHitCount(ChargeUpCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Remove<HungerPower>(Creature);
-        await PowerCmd.Apply<StrengthPower>(Creature, StrengthPowerAmount, Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, StrengthPowerAmount, Creature, null);
     }
 
     private async Task FullAttackMove(IReadOnlyList<Creature> targets)

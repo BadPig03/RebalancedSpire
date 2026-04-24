@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves;
@@ -35,7 +36,7 @@ public static class DecimillipedeSegmentPatch
 
     private static async Task BulkMove(DecimillipedeSegment instance)
     {
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, BulkStrength, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, BulkStrength, instance.Creature, null);
     }
 
     private static async Task ConstrictMove(DecimillipedeSegment instance, IReadOnlyList<Creature> targets)
@@ -78,7 +79,7 @@ public static class DecimillipedeSegmentPatch
             }
         }
         await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, maxHp);
-        await PowerCmd.Apply<ReattachPower>(instance.Creature, ReattachPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<ReattachPower>(new ThrowingPlayerChoiceContext(), instance.Creature, ReattachPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(DecimillipedeSegment), nameof(DecimillipedeSegment.AfterAddedToRoom))]

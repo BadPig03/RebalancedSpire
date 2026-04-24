@@ -59,7 +59,7 @@ public static class KinPriestPatch
                 continue;
             }
 
-            await PowerCmd.Apply<StrengthPower>(enemy, StrengthPowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), enemy, StrengthPowerAmount, instance.Creature, null);
         }
     }
 
@@ -89,8 +89,8 @@ public static class KinPriestPatch
             .WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3").OnlyPlayAnimOnce().Execute(null);
         foreach (Creature player in instance.CombatState.PlayerCreatures)
         {
-            await PowerCmd.Apply<FrailPower>(player, FrailPowerAmount, instance.Creature, null);
-            await PowerCmd.Apply<WeakPower>(player, WeakPowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), player, FrailPowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), player, WeakPowerAmount, instance.Creature, null);
         }
     }
 
@@ -135,7 +135,7 @@ public static class KinPriestPatch
         await _ritualMoveDelegate(instance, targets);
     }
 
-    private static Task AfterDeath(KinPriest instance, Creature creature)
+    private static async Task AfterDeath(KinPriest instance, Creature creature)
     {
         if (creature == instance.Creature)
         {
@@ -151,7 +151,7 @@ public static class KinPriestPatch
                 var state = (MoveState?) follower.MoveStateMachine?.States["REVENGE_DANCE_MOVE"];
                 if (state == null)
                 {
-                    return Task.CompletedTask;
+                    return;
                 }
 
                 follower.SetMoveImmediate(state);
@@ -168,13 +168,13 @@ public static class KinPriestPatch
 
                 NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 1f);
                 priest.AllFollowerDeathResponse();
-                PowerCmd.Apply<StrengthPower>(enemy, StrengthPowerAmount, enemy, null);
+                await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), enemy, StrengthPowerAmount, enemy, null);
                 if (priest.SpeechUsed)
                 {
                     var state = (MoveState?) priest.MoveStateMachine?.States["RITUAL_MOVE"];
                     if (state == null)
                     {
-                        return Task.CompletedTask;
+                        return;
                     }
 
                     priest.SetMoveImmediate(state);
@@ -182,7 +182,6 @@ public static class KinPriestPatch
                 priest.SpeechUsed = true;
             }
         }
-        return Task.CompletedTask;
     }
 
     [HarmonyPatch(typeof(KinPriest), nameof(KinPriest.AfterDeath))]

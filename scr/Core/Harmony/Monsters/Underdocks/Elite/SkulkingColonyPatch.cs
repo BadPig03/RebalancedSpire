@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -36,7 +37,7 @@ public static class SkulkingColonyPatch
 
     private static async Task InertiaMove(SkulkingColony instance)
     {
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, instance.InertiaStrengthGain, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.InertiaStrengthGain, instance.Creature, null);
     }
 
     private static async Task PiercingStabsMove(SkulkingColony instance)
@@ -46,7 +47,7 @@ public static class SkulkingColonyPatch
 
     private static async Task AfterAddedToRoom(SkulkingColony instance)
     {
-        await PowerCmd.Apply<HardenedShellPower>(instance.Creature, 20, instance.Creature, null);
+        await PowerCmd.Apply<HardenedShellPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 20, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(SkulkingColony), nameof(SkulkingColony.AfterAddedToRoom))]

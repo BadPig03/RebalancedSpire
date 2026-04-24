@@ -43,7 +43,7 @@ public sealed class LeechingHugPower : CustomPowerModel
         var enumerable = CombatState.Enemies.Where(c => c.Monster is SlimedBerserker);
         foreach (Creature creature in enumerable)
         {
-            await PowerCmd.Apply<StrengthPower>(creature, DynamicVars.Strength.IntValue, creature, null);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Strength.IntValue, creature, null);
             await CreatureCmd.Heal(creature, DynamicVars.Heal.IntValue);
         }
     }

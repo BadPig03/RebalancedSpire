@@ -4,6 +4,7 @@ using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -29,6 +30,6 @@ public sealed class DisillusionPower : CustomPowerModel
             return;
         }
 
-        await PowerCmd.Apply<StrengthPower>(Owner, -DynamicVars.Strength.IntValue, creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, -DynamicVars.Strength.IntValue, creature, null);
     }
 }

@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -36,8 +37,8 @@ public static class TheInsatiablePatch
         {
             SandpitPower sandpitPower = (SandpitPower) ModelDb.Power<SandpitPower>().ToMutable();
             sandpitPower.Target = target;
-            await PowerCmd.Apply(sandpitPower, instance.Creature, SandpitPowerAmount, instance.Creature, null);
-            await PowerCmd.Apply<LongDistancePower>(target, LongDistancePowerAmount, instance.Creature, null);
+            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), sandpitPower, instance.Creature, SandpitPowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<LongDistancePower>(new ThrowingPlayerChoiceContext(), target, LongDistancePowerAmount, instance.Creature, null);
         }
 
         var statusCards = new List<CardPileAddResult>();
@@ -53,7 +54,7 @@ public static class TheInsatiablePatch
             {
                 CardModel card = instance.CombatState.CreateCard<FranticEscape>(player);
                 PileType newPileType = i < FranticEscapeAmount / 2 ? PileType.Draw : PileType.Discard;
-                statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, newPileType, addedByPlayer: false, CardPilePosition.Random));
+                statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, newPileType, null, CardPilePosition.Random));
             }
 
             if (!LocalContext.IsMe(player))

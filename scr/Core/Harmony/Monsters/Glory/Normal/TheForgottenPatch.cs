@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -22,9 +23,9 @@ public static class TheForgottenPatch
     {
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.5f);
-        await PowerCmd.Apply<DexterityPower>(targets, -instance.DebilitatingSmogDexStealAmount, instance.Creature, null);
+        await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), targets, -instance.DebilitatingSmogDexStealAmount, instance.Creature, null);
         await CreatureCmd.GainBlock(instance.Creature, MiasmaBlockAmount + instance.Creature.GetPowerAmount<DexterityPower>(), BlockProps.monsterMove, null);
-        await PowerCmd.Apply<DexterityPower>(instance.Creature, instance.DebilitatingSmogDexStealAmount, instance.Creature, null);
+        await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.DebilitatingSmogDexStealAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(TheForgotten), nameof(TheForgotten.DreadDamage), MethodType.Getter)]

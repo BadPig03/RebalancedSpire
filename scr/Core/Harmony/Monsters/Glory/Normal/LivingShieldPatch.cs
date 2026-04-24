@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -31,12 +32,12 @@ public static class LivingShieldPatch
     private static async Task SmashMove(LivingShield instance)
     {
         await DamageCmd.Attack(SmashDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.3f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 
     private static async Task AfterAddedToRoom(LivingShield instance)
     {
-        await PowerCmd.Apply<RampartPower>(instance.Creature, RampartPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<RampartPower>(new ThrowingPlayerChoiceContext(), instance.Creature, RampartPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(LivingShield), nameof(LivingShield.AfterAddedToRoom))]

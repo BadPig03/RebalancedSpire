@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -55,7 +56,7 @@ public static class ToughEggPatch
         if (!instance.IsHatched)
         {
             var num = instance.CombatState.CurrentSide != CombatSide.Enemy ? 2 : 3;
-            await PowerCmd.Apply<HatchPower>(instance.Creature, num, instance.Creature, null);
+            await PowerCmd.Apply<HatchPower>(new ThrowingPlayerChoiceContext(), instance.Creature, num, instance.Creature, null);
             return;
         }
 

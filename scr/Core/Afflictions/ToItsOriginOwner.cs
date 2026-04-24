@@ -64,7 +64,7 @@ public sealed class ToItsOriginOwner : AfflictionModel
 
         foreach (Player player in players)
         {
-            await PowerCmd.Apply<ToItsOriginOwnerPower>(player.Creature, 1, player.Creature, null);
+            await PowerCmd.Apply<ToItsOriginOwnerPower>(new ThrowingPlayerChoiceContext(), player.Creature, 1, player.Creature, null);
         }
         await Cmd.Wait(0.5f);
         foreach (Creature enemy in byrdonis)

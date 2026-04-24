@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -31,15 +32,15 @@ public static class SlimedBerserkerPatch
     {
         SfxCmd.Play(instance.SlimeSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Vomit", 0.7f);
-        await CardPileCmd.AddToCombatAndPreview<Slimed>(targets, PileType.Discard, SlimedAmount, addedByPlayer: false);
-        await PowerCmd.Apply<LeechingHugPower>(instance.Creature, LeechingHugPowerAmount, instance.Creature, null);
+        await CardPileCmd.AddToCombatAndPreview<Slimed>(targets, PileType.Discard, SlimedAmount, null);
+        await PowerCmd.Apply<LeechingHugPower>(new ThrowingPlayerChoiceContext(), instance.Creature, LeechingHugPowerAmount, instance.Creature, null);
     }
 
     private static async Task LeechingHugMove(SlimedBerserker instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Hug", 0.65f);
-        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, null, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task SmotherMove(SlimedBerserker instance)

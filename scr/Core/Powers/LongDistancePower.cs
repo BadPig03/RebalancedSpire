@@ -63,7 +63,7 @@ public sealed class LongDistancePower : CustomPowerModel
             return;
         }
 
-        await PowerCmd.ModifyAmount(this, 1, Applier, null);
+        await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), this, 1, Applier, null);
         if (Amount < MaxSandpitAmount)
         {
             return;

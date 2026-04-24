@@ -81,7 +81,7 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool TheInsatiableConfig { get; set; } = true;
 
     [ConfigSection("Glory")]
-    public static bool AxebotConfig { get; set; } = true;
+    //public static bool AxebotConfig { get; set; } = true;
     public static bool DevotedSculptorConfig { get; set; } = true;
     public static bool FabricatorConfig { get; set; } = true;
     public static bool FrogKnightConfig { get; set; } = true;

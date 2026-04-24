@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -32,7 +33,7 @@ public static class ByrdonisPatch
     private static async Task AngryMove(Byrdonis instance, IReadOnlyList<Creature> targets)
     {
         await CreatureCmd.TriggerAnim(instance.Creature, "AngryPermanently", 0.8f);
-        await PowerCmd.Apply<TerritorialPower>(instance.Creature, TerritorialPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<TerritorialPower>(new ThrowingPlayerChoiceContext(), instance.Creature, TerritorialPowerAmount, instance.Creature, null);
         foreach (Player player in instance.CombatState.Players)
         {
             var allCards = player.PlayerCombatState?.AllCards;
@@ -51,7 +52,7 @@ public static class ByrdonisPatch
                 await CardCmd.AfflictAndPreview<ToItsOriginOwner>(new List<CardModel> { cardModel }, 1);
             }
         }
-        await PowerCmd.Apply<FrailPower>(targets, FrailPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, FrailPowerAmount, instance.Creature, null);
     }
 
     private static async Task PeckMove(Byrdonis instance)
@@ -73,7 +74,7 @@ public static class ByrdonisPatch
                 continue;
             }
 
-            await PowerCmd.Apply<WeakPower>(instance.Creature, WeakAmount, player.Creature, null);
+            await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), instance.Creature, WeakAmount, player.Creature, null);
             return;
         }
     }

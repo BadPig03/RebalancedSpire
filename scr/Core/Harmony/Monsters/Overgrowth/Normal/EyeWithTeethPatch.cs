@@ -23,7 +23,7 @@ public static class EyeWithTeethPatch
         SfxCmd.Play(instance.AttackSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Attack", 0.7f);
         VfxCmd.PlayOnCreatureCenters(targets, "vfx/vfx_attack_slash");
-        await CardPileCmd.AddToCombatAndPreview<Dazed>(targets, PileType.Discard, DazedAmount, addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Dazed>(targets, PileType.Discard, DazedAmount, null);
     }
 
     [HarmonyPatch(typeof(EyeWithTeeth), nameof(EyeWithTeeth.GenerateMoveStateMachine))]

@@ -36,7 +36,7 @@ public static class ChomperPatch
         TalkCmd.Play(line, instance.Creature, VfxColor.Cyan);
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 1f);
-        await CardPileCmd.AddToCombatAndPreview<Dazed>(targets, PileType.Discard, DazedAmount, addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Dazed>(targets, PileType.Discard, DazedAmount, null);
     }
 
     [HarmonyPatch(typeof(Chomper), nameof(Chomper.GenerateMoveStateMachine))]

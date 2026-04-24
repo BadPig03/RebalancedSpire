@@ -38,7 +38,7 @@ public class FabricatorPatch
         }
 
         Creature bot = await CreatureCmd.Add(monsterModel.ToMutable(), instance.CombatState, CombatSide.Enemy, instance.CombatState.Encounter?.GetNextSlot(instance.CombatState));
-        await PowerCmd.Apply<MinionPower>(bot, MinionPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), bot, MinionPowerAmount, instance.Creature, null);
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, new DamageVar(FabricatorPower.GetSpawnBotDamage(instance.Creature), DamageProps.nonCardHpLoss), instance.Creature, null);
     }
 
@@ -55,7 +55,7 @@ public class FabricatorPatch
 
     private static async Task AfterAddedToRoom(Fabricator instance)
     {
-        await PowerCmd.Apply<FabricatorPower>(instance.Creature, FabricatorPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<FabricatorPower>(new ThrowingPlayerChoiceContext(), instance.Creature, FabricatorPowerAmount, instance.Creature, null);
     }
 
     private static bool CanFabricate(Fabricator instance)

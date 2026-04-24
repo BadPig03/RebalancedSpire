@@ -3,6 +3,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -16,7 +17,7 @@ public static class ExoskeletonPatch
 
     private static async Task AfterAddedToRoom(Exoskeleton instance)
     {
-        await PowerCmd.Apply<HardToKillPower>(instance.Creature, HardToKillPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<HardToKillPower>(new ThrowingPlayerChoiceContext(), instance.Creature, HardToKillPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(Exoskeleton), nameof(Exoskeleton.AfterAddedToRoom))]

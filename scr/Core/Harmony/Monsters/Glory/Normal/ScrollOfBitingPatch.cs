@@ -3,6 +3,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -16,7 +17,7 @@ public static class ScrollOfBitingPatch
 
     private static async Task AfterAddedToRoom(ScrollOfBiting instance)
     {
-        await PowerCmd.Apply<PaperCutsPower>(instance.Creature, PaperCutsPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<PaperCutsPower>(new ThrowingPlayerChoiceContext(), instance.Creature, PaperCutsPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(ScrollOfBiting), nameof(ScrollOfBiting.ChompDamage), MethodType.Getter)]

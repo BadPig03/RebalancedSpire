@@ -9,11 +9,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace RebalancedSpire.scr.Core.Harmony.Powers;
 
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class SkittishPowerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.PhantasmalGardenerConfig;
+
+    private static int StrengthPowerAmount => 1;
 
     private static async Task AfterAttack(SkittishPower instance)
     {
@@ -21,7 +25,7 @@ public static class SkittishPowerPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/phantasmal_gardeners/phantasmal_gardeners_retract");
         await CreatureCmd.TriggerAnim(instance.Owner, "BlockStart", 0.3f);
         await CreatureCmd.GainBlock(instance.Owner, instance.Amount, ValueProp.Unpowered, null);
-        await PowerCmd.Apply<StrengthPower>(instance.Owner, -1, instance.Owner, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Owner, -StrengthPowerAmount, instance.Owner, null);
     }
 
     [HarmonyPatch(typeof(SkittishPower), nameof(SkittishPower.AfterAttack))]

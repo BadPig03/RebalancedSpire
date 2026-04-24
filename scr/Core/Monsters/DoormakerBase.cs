@@ -14,6 +14,8 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Screens.Bestiary;
+using MegaCrit.Sts2.Core.Rooms;
 
 public abstract class DoormakerBase : CustomMonsterModel
 {
@@ -168,7 +170,7 @@ public abstract class DoormakerBase : CustomMonsterModel
             {
                 temporaryPower.IgnoreNextInstance();
             }
-            await PowerCmd.Apply(power, Creature, power.Amount, Creature, null);
+            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, power.Amount, Creature, null);
         }
         _powerModels.Clear();
     }
@@ -194,6 +196,6 @@ public abstract class DoormakerBase : CustomMonsterModel
             return;
         }
 
-        CombatState._enemies.Sort((_, _) => 1);
+        ((CombatRoom?) CombatState.RunState.CurrentRoom)?.CombatState._enemies.Sort((_, _) => 1);
     }
 }

@@ -36,7 +36,7 @@ public static class MytePatch
         }
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/mite/mite_cast");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.6f);
-        await CardPileCmd.AddToCombatAndPreview<Toxic>(targets, PileType.Hand, ToxicAmount, addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Toxic>(targets, PileType.Hand, ToxicAmount, null);
     }
 
     private static async Task BiteMove(Myte instance, IReadOnlyList<Creature> targets)

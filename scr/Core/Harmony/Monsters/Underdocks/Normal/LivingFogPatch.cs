@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -49,7 +50,7 @@ public static class LivingFogPatch
 
             SfxCmd.Play("event:/sfx/enemy/enemy_attacks/living_fog/living_fog_minion_appear");
             Creature gasBomb = await CreatureCmd.Add<GasBomb>(instance.CombatState, nextSlot);
-            await PowerCmd.Apply<PingPongPower>(gasBomb, PingPingPowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<PingPongPower>(new ThrowingPlayerChoiceContext(), gasBomb, PingPingPowerAmount, instance.Creature, null);
         }
         instance.BloatAmount = Math.Min(instance.BloatAmount + 1, MaxGasBombs);
         await DamageCmd.Attack(instance.BloatDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.1f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/living_fog/living_fog_attack_blow").WithHitVfxNode(_ => NGaseousImpactVfx.Create(CombatSide.Player, instance.CombatState, new Color("#402f45"))).Execute(null);

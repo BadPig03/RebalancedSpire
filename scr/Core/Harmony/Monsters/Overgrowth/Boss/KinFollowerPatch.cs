@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -47,7 +48,7 @@ public static class KinFollowerPatch
         var currentMaxHp = instance.Creature.MaxHp;
         if (instance.StartsWithDance)
         {
-            await PowerCmd.Apply<MinionFakePower>(instance.Creature, MinionPowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<MinionFakePower>(new ThrowingPlayerChoiceContext(), instance.Creature, MinionPowerAmount, instance.Creature, null);
             await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, currentMaxHp * 0.5m);
         }
         else
@@ -90,21 +91,21 @@ public static class KinFollowerPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_buff");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.9f);
         await CreatureCmd.GainBlock(instance.Creature, new BlockVar(GuardBlock, ValueProp.Move), null);
-        await PowerCmd.Apply<GuardPower>(instance.Creature, 1, instance.Creature, null);
+        await PowerCmd.Apply<GuardPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
     }
 
     private static async Task PowerDanceMove(KinFollower instance)
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_buff");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.9f);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, instance.DanceStrength, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.DanceStrength, instance.Creature, null);
     }
 
     private static async Task RevengeDanceMove(KinFollower instance)
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_buff");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.9f);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, RevengeDamage, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, RevengeDamage, instance.Creature, null);
     }
 
     private static async Task RevengeMove(KinFollower instance)

@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -35,15 +36,15 @@ public static class EntomancerPatch
         PersonalHivePower? personalHivePower = instance.Creature.Powers.OfType<PersonalHivePower>().FirstOrDefault();
         if (personalHivePower == null)
         {
-            await PowerCmd.Apply<PersonalHivePower>(instance.Creature, 1, instance.Creature, null);
+            await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
         } else if (personalHivePower.Amount < 3)
         {
-            await PowerCmd.Apply<PersonalHivePower>(instance.Creature, 1, instance.Creature, null);
-            await PowerCmd.Apply<StrengthPower>(instance.Creature, 1, instance.Creature, null);
+            await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
         }
         else
         {
-            await PowerCmd.Apply<StrengthPower>(instance.Creature, 2, instance.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 2, instance.Creature, null);
         }
     }
 

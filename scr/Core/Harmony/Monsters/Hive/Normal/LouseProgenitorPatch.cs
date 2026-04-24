@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -21,7 +22,7 @@ public static class LouseProgenitorPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/giant_louse/giant_louse_curl");
         await CreatureCmd.TriggerAnim(instance.Creature, "Curl", 0.25f);
         await CreatureCmd.GainBlock(instance.Creature, instance.CurlBlock, ValueProp.Move, null);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAMount, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAMount, instance.Creature, null);
         instance.Curled = true;
     }
 

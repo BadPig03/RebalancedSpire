@@ -27,7 +27,7 @@ public static class RocketPatch
     private static async Task TargetingReticleMove(Rocket instance, IReadOnlyList<Creature> targets)
     {
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Right, "attack", 0.35f);
-        await PowerCmd.Apply<FrailPower>(targets, FrailPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, FrailPowerAmount, instance.Creature, null);
     }
 
     private static async Task PrecisionBeamMove(Rocket instance, IReadOnlyList<Creature> targets)
@@ -43,7 +43,7 @@ public static class RocketPatch
     private static async Task ChargeUpMove(Rocket instance)
     {
         await instance.Background.PlayRightSideChargeUpAnim(0.7f);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 
     private static async Task LaserMove(Rocket instance)

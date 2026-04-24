@@ -82,7 +82,7 @@ public static class TunnelerPatch
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("BITE_MOVE", _ => BiteMove(__instance), new SingleAttackIntent(__instance.BelowDamage));
         MoveState moveState2 = new MoveState("BURROW_MOVE", t => BurrowMove(__instance, t), new BuffIntent(), new DefendIntent());
-        MoveState moveState3 = new MoveState("BELOW_MOVE_1", t => BelowMove(__instance, t), new SingleAttackIntent(__instance.BiteDamage));
+        MoveState moveState3 = new MoveState("BELOW_MOVE", t => BelowMove(__instance, t), new SingleAttackIntent(__instance.BiteDamage));
         MoveState moveState4 = new MoveState("DIZZY_MOVE", t => StillDizzyMove(__instance, t), new StunIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;

@@ -28,6 +28,6 @@ public sealed class ShiftingPower : CustomPowerModel
             return;
         }
 
-        await PowerCmd.Apply<StrengthPower>(Owner, -damage, dealer, cardSource);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, -damage, dealer, cardSource);
     }
 }

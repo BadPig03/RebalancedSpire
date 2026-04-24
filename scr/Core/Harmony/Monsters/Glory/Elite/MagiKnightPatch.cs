@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.scr.Core.Harmony.Monsters.Glory.Elite;
 
+using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -8,7 +9,10 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.ValueProps;
 
 [HarmonyPatch]
@@ -18,7 +22,6 @@ public static class MagiKnightPatch
     private static readonly bool Disabled = !RebalancedSpireConfig.KnightsConfig;
 
     private static readonly Func<MagiKnight, IReadOnlyList<Creature>, Task>? _dampenMoveDelegate = Helpers.GetDelegate<MagiKnight>("DampenMove");
-    private static readonly Func<MagiKnight, IReadOnlyList<Creature>, Task>? _magicBombMoveDelegate = Helpers.GetDelegate<MagiKnight>("MagicBombMove");
 
     private static async Task PowerShieldMove(MagiKnight instance)
     {
@@ -49,12 +52,44 @@ public static class MagiKnightPatch
 
     private static async Task MagicBombMove(MagiKnight instance, IReadOnlyList<Creature> targets)
     {
-        if (_magicBombMoveDelegate == null)
+        if (TestMode.IsOff && targets.Count > 0)
         {
-            return;
+            Vector2? vector = null;
+            foreach (Creature target in targets)
+            {
+                NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                if (creatureNode != null && (!vector.HasValue || vector.Value.X > creatureNode.GlobalPosition.X))
+                {
+                    vector = creatureNode.GlobalPosition;
+                }
+            }
+
+            NCreature? creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            if (creatureNode2 != null)
+            {
+                Node2D? specialNode = creatureNode2.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
+                if (specialNode != null && vector.HasValue)
+                {
+                    var x = creatureNode2.Visuals.GetCurrentBody().Scale.X;
+                    specialNode.Position = Vector2.Left * ((creatureNode2.GlobalPosition.X - vector.Value.X - 600f) / x);
+                }
+            }
+        }
+        await DamageCmd.Attack(instance.BombDamage).FromMonster(instance).WithAttackerAnim("BombCast", 1.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/magi_knight/magi_knight_attack_bomb").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+    }
+
+    [HarmonyPatch(typeof(MagiKnight), nameof(MagiKnight.ShouldShowMoveInBestiary))]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool Prefix_ShouldShowMoveInBestiary(MagiKnight __instance, string moveStateId, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
         }
 
-        await _magicBombMoveDelegate(instance, targets);
+        __result = moveStateId == "MAGIC_BOMB";
+        return false;
     }
 
     [HarmonyPatch(typeof(MagiKnight), nameof(MagiKnight.GenerateMoveStateMachine))]

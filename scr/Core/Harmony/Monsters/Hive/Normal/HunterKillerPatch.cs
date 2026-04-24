@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -44,11 +45,11 @@ public static class HunterKillerPatch
         await DamageCmd.Attack(PunctureDamage).WithHitCount(PunctureCount).OnlyPlayAnimOnce().FromMonster(instance).WithAttackerAnim("TripleAttack", 0.3f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
     }
 
-    private static async Task BuffMove(HunterKiller instance, IReadOnlyList<Creature> targets)
+    private static async Task WeakGoopMove(HunterKiller instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.4f);
-        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(HunterKiller), nameof(HunterKiller.GenerateMoveStateMachine))]
@@ -65,7 +66,7 @@ public static class HunterKillerPatch
         MoveState moveState = new MoveState("TENDERIZING_GOOP_MOVE", t => GoopMove(__instance, t), new DebuffIntent());
         MoveState moveState2 = new MoveState("BITE_MOVE", _ => BiteMove(__instance), new SingleAttackIntent(BiteDamage));
         MoveState moveState3 = new MoveState("PUNCTURE_MOVE", _ => PunctureMove(__instance), new MultiAttackIntent(PunctureDamage, PunctureCount));
-        MoveState moveState4 = new MoveState("BUFF_MOVE", t => BuffMove(__instance, t), new BuffIntent());
+        MoveState moveState4 = new MoveState("WEAK_GOOP_MOVE", t => WeakGoopMove(__instance, t), new DebuffIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;

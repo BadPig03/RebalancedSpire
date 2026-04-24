@@ -36,7 +36,7 @@ public class MechaKnightPatch
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/mechaknight/mechaknight_flamethrower");
         await CreatureCmd.TriggerAnim(instance.Creature, "flamethrower", 1.5f);
-        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, BurnAmount, addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Hand, BurnAmount, null);
     }
 
     private static async Task WindupMove(MechaKnight instance, IReadOnlyList<Creature> targets)

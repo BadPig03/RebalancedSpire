@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -41,7 +42,7 @@ public static class BygoneEffigyPatch
         {
             NRunMusicController.Instance?.TriggerEliteSecondPhase();
         }
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
         LocString line = MonsterModel.L10NMonsterLookup("BYGONE_EFFIGY.moves.SLEEP.speakLine2");
         TalkCmd.Play(line, instance.Creature, VfxColor.DarkGray, VfxDuration.Long);
         await Cmd.Wait(0.5f);
@@ -55,7 +56,7 @@ public static class BygoneEffigyPatch
         }
 
         await _slashMoveDelegate(instance, targets);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(BygoneEffigy), nameof(BygoneEffigy.GenerateMoveStateMachine))]
@@ -69,7 +70,7 @@ public static class BygoneEffigyPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("INITIAL_SLEEP_MOVE", t => InitialSleepMove(__instance, t), new SleepIntent());
+        MoveState moveState = new MoveState("SLEEP_MOVE", t => InitialSleepMove(__instance, t), new SleepIntent());
         MoveState moveState2 = new MoveState("WAKE_MOVE", _ => WakeMove(__instance), new BuffIntent());
         MoveState moveState3 = new MoveState("SLASHES_MOVE", t => SlashMove(__instance, t), new SingleAttackIntent(__instance.SlashDamage), new BuffIntent());
         moveState.FollowUpState = moveState2;

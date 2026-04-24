@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -34,7 +35,7 @@ public static class PhrogParasitePatch
         NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.ScaleTo(InitSize + GetInfestedAmount(instance) * IncreasedSize, 0.75f);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.75f);
         await CreatureCmd.GainMaxHp(instance.Creature, (int) (instance.Creature.MaxHp * MaxHpRatio));
-        await PowerCmd.Apply<InfestedPlusPower>(instance.Creature, InfectedAmount, instance.Creature, null);
+        await PowerCmd.Apply<InfestedPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, InfectedAmount, instance.Creature, null);
     }
 
     private static async Task InfectMove(PhrogParasite instance, IReadOnlyList<Creature> targets)
@@ -49,7 +50,7 @@ public static class PhrogParasitePatch
                 NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(nWormyImpactVfx);
             }
         }
-        await CardPileCmd.AddToCombatAndPreview<Infection>(targets, PileType.Discard, GetInfestedAmount(instance), addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Infection>(targets, PileType.Discard, GetInfestedAmount(instance), null);
     }
 
     private static async Task LashMove(PhrogParasite instance)
@@ -60,7 +61,7 @@ public static class PhrogParasitePatch
     private static async Task AfterAddedToRoom(PhrogParasite instance)
     {
         NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.ScaleTo(InitSize + GetInfestedAmount(instance) * IncreasedSize, 0);
-        await PowerCmd.Apply<InfestedPlusPower>(instance.Creature, InitInfectedAmount, instance.Creature, null);
+        await PowerCmd.Apply<InfestedPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, InitInfectedAmount, instance.Creature, null);
     }
 
     private static int GetInfestedAmount(PhrogParasite instance)

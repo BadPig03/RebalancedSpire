@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -47,9 +48,9 @@ public static class VantomPatch
         MegaAnimationState? megaAnimationState = NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.SpineAnimation.GetAnimationState();
         megaAnimationState?.SetAnimation("_tracks/charge_up_2", loop: false, 1);
         megaAnimationState?.AddAnimation("_tracks/charged_2", 0f, loop: true, 1);
-        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, instance.Creature, null);
-        await PowerCmd.Apply<SlipperyPower>(instance.Creature, SlipperyPowerAmount, instance.Creature, null);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<SlipperyPower>(new ThrowingPlayerChoiceContext(), instance.Creature, SlipperyPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 
     private static async Task InkyLanceMove(Vantom instance, IReadOnlyList<Creature> targets)
@@ -100,8 +101,8 @@ public static class VantomPatch
 
     private static async Task AfterAddedToRoom(Vantom instance)
     {
-        await PowerCmd.Apply<PainfulStabsPower>(instance.Creature, PainfulStabsPowerAmount, instance.Creature, null);
-        await PowerCmd.Apply<SlipperyPower>(instance.Creature, InitSlipperyPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<PainfulStabsPower>(new ThrowingPlayerChoiceContext(), instance.Creature, PainfulStabsPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<SlipperyPower>(new ThrowingPlayerChoiceContext(), instance.Creature, InitSlipperyPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(Vantom), nameof(Vantom.InkyLanceDamage), MethodType.Getter)]

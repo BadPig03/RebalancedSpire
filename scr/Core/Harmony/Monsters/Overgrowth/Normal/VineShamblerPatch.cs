@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -41,7 +42,7 @@ public static class VineShamblerPatch
         VfxCmd.PlayOnCreatures(targets, "vfx/monsters/vine_shambler_vines/vine_shambler_vines_vfx");
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/vine_shambler/vine_shambler_cast");
         await CreatureCmd.TriggerAnim(instance.Creature, "Vines", 0.5f);
-        await PowerCmd.Apply<TangledPower>(targets, TangledPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<TangledPower>(new ThrowingPlayerChoiceContext(), targets, TangledPowerAmount, instance.Creature, null);
         await CreatureCmd.GainBlock(instance.Creature, new BlockVar(BlockAmount, ValueProp.Move), null);
     }
 

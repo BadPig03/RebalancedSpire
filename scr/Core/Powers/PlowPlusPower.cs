@@ -38,6 +38,6 @@ public sealed class PlowPlusPower : CustomPowerModel
         await monster.SetStunned();
         await CreatureCmd.Stun(Owner, monster.StunnedMove, target.GetPower<PlowedPower>() != null ? "BEAST_CRY_MOVE" : "SECOND_STAMP_MOVE");
         await PowerCmd.Remove(this);
-        await PowerCmd.Apply<PlowedPower>(target, 1, target, null);
+        await PowerCmd.Apply<PlowedPower>(new ThrowingPlayerChoiceContext(), target, 1, target, null);
     }
 }

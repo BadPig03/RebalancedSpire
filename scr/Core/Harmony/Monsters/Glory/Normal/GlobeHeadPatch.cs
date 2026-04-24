@@ -3,6 +3,7 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -16,7 +17,7 @@ public static class GlobeHeadPatch
 
     private static async Task AfterAddedToRoom(GlobeHead instance)
     {
-        await PowerCmd.Apply<GalvanicPower>(instance.Creature, GalvanicPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<GalvanicPower>(new ThrowingPlayerChoiceContext(), instance.Creature, GalvanicPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(GlobeHead), nameof(GlobeHead.AfterAddedToRoom))]

@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -26,6 +27,7 @@ public static class ThievingHopperPatch
 	private static readonly bool Disabled = !RebalancedSpireConfig.ThievingHopperConfig;
 
 	private static int WeakPowerAmount => 2;
+	private static int SwipePowerAmount => 1;
 	private static int EscapeArtistPowerAmount => 6;
 	private static int AttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 13);
 
@@ -37,7 +39,7 @@ public static class ThievingHopperPatch
     private static async Task AttackMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(AttackDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.3f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-	    await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, instance.Creature, null);
+	    await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task ThieveryMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
@@ -108,7 +110,7 @@ public static class ThievingHopperPatch
 			}
 			SwipePower swipe = (SwipePower)ModelDb.Power<SwipePower>().ToMutable();
 			await swipe.Steal(item);
-			await PowerCmd.Apply(swipe, instance.Creature, 1m, instance.Creature, null);
+			await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), swipe, instance.Creature, SwipePowerAmount, instance.Creature, null);
 		}
     }
 
@@ -154,7 +156,7 @@ public static class ThievingHopperPatch
 
     private static async Task AfterAddedToRoom(ThievingHopper instance)
     {
-	    await PowerCmd.Apply<EscapeArtistPower>(instance.Creature, EscapeArtistPowerAmount, instance.Creature, null);
+	    await PowerCmd.Apply<EscapeArtistPower>(new ThrowingPlayerChoiceContext(), instance.Creature, EscapeArtistPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(ThievingHopper), nameof(ThievingHopper.AfterAddedToRoom))]

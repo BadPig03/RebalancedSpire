@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -30,26 +31,26 @@ public static class SpectralKnightPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/spectral_knight/spectral_knight_hex");
         foreach (Creature target in targets)
         {
-            await PowerCmd.Apply<HexPower>(target, HexPowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<HexPower>(new ThrowingPlayerChoiceContext(), target, HexPowerAmount, instance.Creature, null);
         }
-        await PowerCmd.Apply<IntangiblePower>(instance.Creature, IntangiblePowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<IntangiblePower>(new ThrowingPlayerChoiceContext(), instance.Creature, IntangiblePowerAmount, instance.Creature, null);
     }
 
     private static async Task SoulSlashMove(SpectralKnight instance)
     {
         await DamageCmd.Attack(SoulSlashDamage).FromMonster(instance).WithAttackerAnim("AttackSword", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/spectral_knight/spectral_knight_soul_slash").WithHitFx("vfx/vfx_attack_slash").Execute(null);
-        await PowerCmd.Apply<IntangiblePower>(instance.Creature, IntangiblePowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<IntangiblePower>(new ThrowingPlayerChoiceContext(), instance.Creature, IntangiblePowerAmount, instance.Creature, null);
     }
 
     private static async Task SoulFlameMove(SpectralKnight instance)
     {
         await DamageCmd.Attack(SoulFlameDamage).WithHitCount(SoulFlameCount).FromMonster(instance).OnlyPlayAnimOnce().WithAttackerAnim("AttackFlame", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/spectral_knight/spectral_knight_soul_flame").Execute(null);
-        await PowerCmd.Apply<IntangiblePower>(instance.Creature, IntangiblePowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<IntangiblePower>(new ThrowingPlayerChoiceContext(), instance.Creature, IntangiblePowerAmount, instance.Creature, null);
     }
 
     private static async Task AfterAddedToRoom(SpectralKnight instance)
     {
-        await PowerCmd.Apply<IntangiblePower>(instance.Creature, IntangiblePowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<IntangiblePower>(new ThrowingPlayerChoiceContext(), instance.Creature, IntangiblePowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(SpectralKnight), nameof(SpectralKnight.MinInitialHp), MethodType.Getter)]

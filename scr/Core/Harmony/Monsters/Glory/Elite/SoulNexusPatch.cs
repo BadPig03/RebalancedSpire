@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -50,7 +51,7 @@ public static class SoulNexusPatch
         {
             power.Reset();
         }
-        await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), targets, VulnerablePowerAmount, instance.Creature, null);
     }
 
     private static async Task SoulBurnMove(SoulNexus instance)
@@ -64,7 +65,7 @@ public static class SoulNexusPatch
         {
             SoulWitherPower soulWitherPower = (SoulWitherPower) ModelDb.Power<SoulWitherPower>().ToMutable();
             soulWitherPower.Target = creature;
-            await PowerCmd.Apply(soulWitherPower, instance.Creature, SoulWitherAmount, instance.Creature, null);
+            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), soulWitherPower, instance.Creature, SoulWitherAmount, instance.Creature, null);
         }
     }
 

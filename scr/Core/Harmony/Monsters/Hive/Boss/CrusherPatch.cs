@@ -4,6 +4,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -38,10 +39,10 @@ public static class CrusherPatch
     private static async Task EnlargingStrikeMove(Crusher instance, IReadOnlyList<Creature> targets)
     {
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_med", 0.65f);
-        await PowerCmd.Apply<WeakPower>(targets, 2, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 2, instance.Creature, null);
     }
 
-    private static async Task BugStingMove(Crusher instance, IReadOnlyList<Creature> targets)
+    private static async Task BugStingMove(Crusher instance)
     {
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_double", 0.5f);
         await DamageCmd.Attack(instance.BugStingDamage).WithHitCount(instance.BugStingTimes).FromMonster(instance).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
@@ -106,7 +107,7 @@ public static class CrusherPatch
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("THRASH_MOVE", t => ThrashMove(__instance, t), new SingleAttackIntent(__instance.ThrashDamage));
         MoveState moveState2 = new MoveState("ENLARGING_STRIKE_MOVE", t => EnlargingStrikeMove(__instance, t), new DebuffIntent());
-        MoveState moveState3 = new MoveState("BUG_STING_MOVE", t => BugStingMove(__instance, t), new MultiAttackIntent(__instance.BugStingDamage, __instance.BugStingTimes));
+        MoveState moveState3 = new MoveState("BUG_STING_MOVE", _ => BugStingMove(__instance), new MultiAttackIntent(__instance.BugStingDamage, __instance.BugStingTimes));
         MoveState moveState4 = new MoveState("ADAPT_MOVE", t => AdaptMove(__instance, t), new BuffIntent());
         MoveState moveState5 = new MoveState("GUARDED_STRIKE_MOVE", t => GuardedStrikeMove(__instance, t), new SingleAttackIntent(__instance.GuardedStrikeDamage), new DefendIntent());
         moveState.FollowUpState = moveState2;

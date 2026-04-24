@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -41,7 +42,7 @@ public static class TestSubjectPatch
     private static async Task GrowlMove(TestSubject instance)
     {
         await CreatureCmd.TriggerAnim(instance.Creature, "BurnTrigger", 1.25f);
-        await PowerCmd.Apply<EnragePower>(instance.Creature, EnragePowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<EnragePower>(new ThrowingPlayerChoiceContext(), instance.Creature, EnragePowerAmount, instance.Creature, null);
     }
 
     private static async Task RespawnMove(TestSubject instance)
@@ -53,16 +54,21 @@ public static class TestSubjectPatch
         await Cmd.Wait(0.8f);
         NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.SetDefaultScaleTo(1f + instance.Respawns * 0.1f, 0.1f);
         await Cmd.Wait(1.15f);
+        if (instance.Creature.CombatState == null)
+        {
+            return;
+        }
+
         instance.Creature.GetPower<AdaptablePower>()?.DoRevive();
         switch (instance.Respawns)
         {
             case 1:
                 await instance.Revive(instance.SecondFormHp);
-                await PowerCmd.Apply<PainfulStabsPower>(instance.Creature, PainfulStabsPowerAmount, instance.Creature, null);
+                await PowerCmd.Apply<PainfulStabsPower>(new ThrowingPlayerChoiceContext(), instance.Creature, PainfulStabsPowerAmount, instance.Creature, null);
                 break;
             case 2:
                 await instance.Revive(instance.ThirdFormHp);
-                NemesisPower? nemesisPower = await PowerCmd.Apply<NemesisPower>(instance.Creature, NemesisPowerAmount, instance.Creature, null);
+                NemesisPower? nemesisPower = await PowerCmd.Apply<NemesisPower>(new ThrowingPlayerChoiceContext(), instance.Creature, NemesisPowerAmount, instance.Creature, null);
                 if (nemesisPower != null)
                 {
                     nemesisPower._shouldApplyIntangible = true;
@@ -73,15 +79,15 @@ public static class TestSubjectPatch
         }
     }
 
-    private static async Task SkullBashMove(TestSubject instance, IReadOnlyList<Creature> targets)
-    {
-        await DamageCmd.Attack(SkullBashDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f) .WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite") .WithHitFx("vfx/vfx_attack_blunt") .Execute(null);
-        await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, instance.Creature, null);
-    }
-
-    private static async Task BiteMove(TestSubject instance)
+    private static async Task BiteMove(TestSubject instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(BiteDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+    }
+
+    private static async Task SkullBashMove(TestSubject instance, IReadOnlyList<Creature> targets)
+    {
+        await DamageCmd.Attack(SkullBashDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), targets, VulnerablePowerAmount, instance.Creature, null);
     }
 
     private static async Task MultiClawMove(TestSubject instance)
@@ -110,13 +116,13 @@ public static class TestSubjectPatch
         instance.SetColor(Colors.White);
         NCombatRoom.Instance?.BackCombatVfxContainer.AddChildSafely(NTestSubjectBurnVfx.Create());
         await CreatureCmd.TriggerAnim(instance.Creature, "BurnTrigger", 1.25f);
-        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Discard, BurnCount, addedByPlayer: false);
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Discard, BurnCount, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 
     private static async Task AfterAddedToRoom(TestSubject instance)
     {
-        await PowerCmd.Apply<AdaptablePower>(instance.Creature, AdaptablePowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<AdaptablePower>(new ThrowingPlayerChoiceContext(), instance.Creature, AdaptablePowerAmount, instance.Creature, null);
         instance.Creature.PowerApplied += instance.AfterPowerApplied;
         instance.Creature.PowerRemoved += instance.AfterPowerRemoved;
     }
@@ -163,6 +169,20 @@ public static class TestSubjectPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(TestSubject), nameof(TestSubject.ShouldShowMoveInBestiary))]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool Prefix_ShouldShowMoveInBestiary(TestSubject __instance, string moveStateId, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = true;
+        return false;
+    }
+
     [HarmonyPatch(typeof(TestSubject), nameof(TestSubject.GenerateMoveStateMachine))]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -180,7 +200,7 @@ public static class TestSubjectPatch
         };
         MoveState moveState = new MoveState("GROWL_MOVE", _ => GrowlMove(__instance), new BuffIntent());
         MoveState moveState2 = new MoveState("SKULL_BASH_MOVE", t => SkullBashMove(__instance, t), new SingleAttackIntent(SkullBashDamage), new DebuffIntent());
-        MoveState moveState3 = new MoveState("BITE_MOVE", _ => BiteMove(__instance), new SingleAttackIntent(BiteDamage));
+        MoveState moveState3 = new MoveState("BITE_MOVE", t => BiteMove(__instance, t), new SingleAttackIntent(BiteDamage));
         MoveState moveState4 = new MoveState("MULTI_CLAW_MOVE", _ => MultiClawMove(__instance), new MultiAttackIntent(MultiClawDamage, () => __instance.MultiClawTotalCount));
         MoveState moveState5 = new MoveState("POUNCE_MOVE", _ => PounceMove(__instance), new SingleAttackIntent(PounceDamage));
         MoveState moveState6 = new MoveState("PHASE3_LACERATE_MOVE", _ => Phase3LacerateMove(__instance), new MultiAttackIntent(LacerateDamage, LacerateCount));
