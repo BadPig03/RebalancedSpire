@@ -2,6 +2,7 @@
 
 using System.Reflection;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Commands;
 
 public static class HarmonyExtensions
 {

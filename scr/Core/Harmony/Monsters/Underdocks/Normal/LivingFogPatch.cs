@@ -39,7 +39,6 @@ public static class LivingFogPatch
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/living_fog/living_fog_summon");
         await CreatureCmd.TriggerAnim(instance.Creature, "SpawnBomb", 0.35f);
-        instance.BloatAmount = Math.Min(instance.BloatAmount + 1, MaxGasBombs);
         for (var i = 0; i < instance.BloatAmount; i++)
         {
             var nextSlot = instance.CombatState.Encounter?.GetNextSlot(instance.CombatState);
@@ -52,6 +51,7 @@ public static class LivingFogPatch
             Creature gasBomb = await CreatureCmd.Add<GasBomb>(instance.CombatState, nextSlot);
             await PowerCmd.Apply<PingPongPower>(gasBomb, PingPingPowerAmount, instance.Creature, null);
         }
+        instance.BloatAmount = Math.Min(instance.BloatAmount + 1, MaxGasBombs);
         await DamageCmd.Attack(instance.BloatDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.1f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/living_fog/living_fog_attack_blow").WithHitVfxNode(_ => NGaseousImpactVfx.Create(CombatSide.Player, instance.CombatState, new Color("#402f45"))).Execute(null);
     }
 
