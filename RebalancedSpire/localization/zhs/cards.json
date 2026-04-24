@@ -1,5 +1,5 @@
 ﻿{
-  "REBALANCEDSPIRE-NEOWS_FURY.description": "造成{Damage:diff()}点伤害。\n从[gold]弃牌堆[/gold]中选择{Cards:diff()}张牌放入你的[gold]手牌[/gold]。",
-  "REBALANCEDSPIRE-NEOWS_FURY.selectionScreenPrompt": "选择{Cards:diff()}张牌放入你的手牌。",
+  "REBALANCEDSPIRE-NEOWS_FURY.description": "造成{Damage:diff()}点伤害。\\n将你[gold]弃牌堆[/gold]中的至多{Cards:diff()}张牌放入你的[gold]手牌[/gold]。",
+  "REBALANCEDSPIRE-NEOWS_FURY.selectionScreenPrompt": "选择至多{Amount}张牌放入你的[gold]手牌[/gold]。",
   "REBALANCEDSPIRE-WISH.description": "将你[gold]抽牌堆[/gold]和[gold]弃牌堆[/gold]中的一张牌放入你的[gold]手牌[/gold]。"
 }

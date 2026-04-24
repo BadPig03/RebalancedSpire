@@ -75,7 +75,7 @@ public static class TestSubjectPatch
 
     private static async Task SkullBashMove(TestSubject instance, IReadOnlyList<Creature> targets)
     {
-        await DamageCmd.Attack(SkullBashDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f) .WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite") .WithHitFx("vfx/vfx_attack_blunt") .Execute(null);
+        await DamageCmd.Attack(SkullBashDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, instance.Creature, null);
     }
 

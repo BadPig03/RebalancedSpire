@@ -110,7 +110,7 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (wasRemovalPrevented)
+        if (wasRemovalPrevented || creature.Monster is not DoormakerBase)
         {
             return Task.CompletedTask;
         }

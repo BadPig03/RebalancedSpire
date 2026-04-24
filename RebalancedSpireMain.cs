@@ -15,7 +15,7 @@ using scr.Core.Harmony;
 public partial class RebalancedSpireMain : Node
 {
     private const string ModId = "RebalancedSpire";
-    public const string Version = "v0.0.6-hotfix";
+    public const string Version = "v0.0.7_stable";
 
     // ReSharper disable once UnusedMember.Global
     public static Logger Logger { get; } = new(ModId, LogType.Generic);

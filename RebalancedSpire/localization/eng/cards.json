@@ -1,5 +1,5 @@
 ﻿{
-  "REBALANCEDSPIRE-NEOWS_FURY.description": "Deal {Damage:diff()} damage.\nPut {Cards:plural:a card|{:diff()} cards} from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
-  "REBALANCEDSPIRE-NEOWS_FURY.selectionScreenPrompt": "Choose {Cards:plural:a card|{:diff()} cards} to put back in your Hand.",
+  "REBALANCEDSPIRE-NEOWS_FURY.description": "Deal {Damage:diff()} damage.\\nPut up to {Cards:diff()} {Cards:plural:card|cards} from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
+  "REBALANCEDSPIRE-NEOWS_FURY.selectionScreenPrompt": "Choose up to {Amount} {Amount:plural:card|cards} to put into your [gold]Hand[/gold].",
   "REBALANCEDSPIRE-WISH.description": "Put a card from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] into your [gold]Hand[/gold]."
 }

@@ -28,7 +28,7 @@ public static class NeowsFuryPatch
         }
 
         await DamageCmd.Attack(instance.DynamicVars.Damage.BaseValue).FromCard(instance).Targeting(target).WithHitFx("vfx/vfx_attack_slash").Execute(choiceContext);
-        var cards = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Discard.GetPile(instance.Owner).Cards, instance.Owner, new CardSelectorPrefs(instance.SelectionScreenPrompt, instance.DynamicVars.Cards.IntValue))).ToList();
+        var cards = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Discard.GetPile(instance.Owner).Cards, instance.Owner, new CardSelectorPrefs(instance.SelectionScreenPrompt, 0, instance.DynamicVars.Cards.IntValue))).ToList();
         if (cards.Count == 0)
         {
             return;
@@ -89,7 +89,7 @@ public static class NeowsFuryPatch
 
         __result = new ReadOnlyCollection<DynamicVar>([
             new DamageVar(10, ValueProp.Move),
-            new CardsVar(1)
+            new CardsVar(2)
         ]);
     }
 
