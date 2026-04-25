@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Runs;
 // ReSharper disable InconsistentNaming
 public static class LavaRockPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.LavaRockConfig;
 
     private static int EnemiesDefeatedRequired => 6;
     private static readonly SavedSpireField<LavaRock, int> EnemiesDefeated = new(() => 0, "REBALANCEDSPIRE-LAVA_ROCK");

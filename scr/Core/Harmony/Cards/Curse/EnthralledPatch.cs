@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class EnthralledPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.BloodSoakedRoseConfig;
 
     [HarmonyPatch(typeof(Enthralled), nameof(Enthralled.CanonicalKeywords), MethodType.Getter)]
     [HarmonyPrefix]

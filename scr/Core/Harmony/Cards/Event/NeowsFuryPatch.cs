@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class NeowsFuryPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.NeowsTormentConfig;
 
     private static async Task OnPlay(NeowsFury instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

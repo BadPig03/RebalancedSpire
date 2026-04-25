@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class ToastyMittensPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TezcataraConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.ToastyMittensConfig;
 
     private static async Task AfterPlayerTurnStart(ToastyMittens instance, PlayerChoiceContext choiceContext, Player player)
     {

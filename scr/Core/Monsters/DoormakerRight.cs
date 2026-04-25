@@ -83,6 +83,7 @@ public sealed class DoormakerRight : DoormakerBase
     public override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         List<MonsterState> list = [];
+        SleepState = new MoveState("SLEEP_MOVE", _ => Task.CompletedTask, new SleepIntent());
         DramaticOpenState = new MoveState("DRAMATIC_OPEN_MOVE", DramaticOpenMove, new SummonIntent());
         MoveState moveState2 = new MoveState("HUNGER_MOVE", HungerMove, new SingleAttackIntent(HungerDamage), new CardDebuffIntent());
         MoveState moveState3 = new MoveState("CHARGE_UP_MOVE", ChargeUpMove, new MultiAttackIntent(ChargeUpDamage, ChargeUpCount), new BuffIntent());
@@ -95,6 +96,7 @@ public sealed class DoormakerRight : DoormakerBase
         ConditionalBranchState branchState2 = new ConditionalBranchState("DOORMAKER_RIGHT_2");
         branchState2.AddState(moveState2, () => !ShouldClose());
         branchState2.AddState(moveState5, ShouldClose);
+        SleepState.FollowUpState = DramaticOpenState;
         DramaticOpenState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;

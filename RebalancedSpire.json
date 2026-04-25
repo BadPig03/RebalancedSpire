@@ -3,7 +3,7 @@
   "name": "RebalancedSpire",
   "author": "ty, Oroboro",
   "description": "Supports public stable v0.103.2.",
-  "version": "v0.0.7_stable",
+  "version": "v0.0.8_stable",
   "has_pck": true,
   "has_dll": true,
   "dependencies": ["BaseLib"],

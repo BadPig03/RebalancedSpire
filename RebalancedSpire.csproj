@@ -167,6 +167,7 @@
       <Content Include="scr\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Necrobinder\DefyPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\HarmonyExtensions.cs.uid" />
       <Content Include="scr\Core\Harmony\Merchant\MerchantCardRemovalEntryPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Boss\DoormakerBossPatch.cs.uid" />

@@ -33,6 +33,8 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     private int _originalHp;
 
+    private MoveState? _sleepState;
+
     private MoveState? _dramaticOpenState;
 
     private readonly List<PowerModel> _powerModels = [];
@@ -44,6 +46,16 @@ public abstract class DoormakerBase : CustomMonsterModel
         {
             AssertMutable();
             _isPortalOpen = value;
+        }
+    }
+
+    protected MoveState SleepState
+    {
+        get => _sleepState ?? throw new InvalidOperationException();
+        set
+        {
+            AssertMutable();
+            _sleepState = value;
         }
     }
 
@@ -120,7 +132,7 @@ public abstract class DoormakerBase : CustomMonsterModel
         }
         else if (creature != Creature)
         {
-            SetMoveImmediate(DramaticOpenState);
+            SetMoveImmediate(SleepState);
         }
         return Task.CompletedTask;
     }

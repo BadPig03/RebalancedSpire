@@ -55,12 +55,6 @@ public static class LivingFogPatch
         await DamageCmd.Attack(instance.BloatDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.1f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/living_fog/living_fog_attack_blow").WithHitVfxNode(_ => NGaseousImpactVfx.Create(CombatSide.Player, instance.CombatState, new Color("#402f45"))).Execute(null);
     }
 
-    private static async Task ChargeUpMove(LivingFog instance)
-    {
-        await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 1.25f);
-        await CreatureCmd.GainBlock(instance.Creature, new BlockVar(instance.SuperGasBlastDamage, BlockProps.monsterMove), null);
-    }
-
     [HarmonyPatch(typeof(LivingFog), nameof(LivingFog.MinInitialHp), MethodType.Getter)]
     [HarmonyPostfix]
     [UsedImplicitly]
@@ -87,7 +81,7 @@ public static class LivingFogPatch
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("ADVANCED_GAS_MOVE", t => AdvancedGasMove(__instance, t), new SingleAttackIntent(__instance.AdvancedGasDamage), new CardDebuffIntent());
         MoveState moveState2 = new MoveState("BLOAT_MOVE", _ => BloatMove(__instance), new SingleAttackIntent(__instance.BloatDamage), new SummonIntent());
-        MoveState moveState3 = new MoveState("CHARGE_UP_MOVE", _ => ChargeUpMove(__instance), new DefendIntent());
+        MoveState moveState3 = new MoveState("CHARGE_UP_MOVE", _ => Task.CompletedTask, new DefendIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState2;
