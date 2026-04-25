@@ -14,7 +14,6 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.Nodes.Screens.Bestiary;
 using MegaCrit.Sts2.Core.Rooms;
 
 public abstract class DoormakerBase : CustomMonsterModel
@@ -35,6 +34,8 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     private int _originalHp;
 
+    private MoveState? _sleepState;
+
     private MoveState? _dramaticOpenState;
 
     private readonly List<PowerModel> _powerModels = [];
@@ -46,6 +47,16 @@ public abstract class DoormakerBase : CustomMonsterModel
         {
             AssertMutable();
             _isPortalOpen = value;
+        }
+    }
+
+    protected MoveState SleepState
+    {
+        get => _sleepState ?? throw new InvalidOperationException();
+        set
+        {
+            AssertMutable();
+            _sleepState = value;
         }
     }
 
@@ -107,12 +118,19 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override bool ShouldAllowHitting(Creature creature)
     {
-        return creature != Creature ? base.ShouldAllowHitting(creature) : IsPortalOpen;
+        foreach (Creature enemy in CombatState.Enemies)
+        {
+            if (enemy.Monster is DoormakerBase { IsPortalOpen: true })
+            {
+                return !creature.ShowsInfiniteHp;
+            }
+        }
+        return true;
     }
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (wasRemovalPrevented)
+        if (wasRemovalPrevented || creature.Monster is not DoormakerBase)
         {
             return Task.CompletedTask;
         }
@@ -122,7 +140,7 @@ public abstract class DoormakerBase : CustomMonsterModel
         }
         else if (creature != Creature)
         {
-            SetMoveImmediate(DramaticOpenState);
+            SetMoveImmediate(SleepState);
         }
         return Task.CompletedTask;
     }

@@ -11,13 +11,23 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool OrobasConfig { get; set; } = true;
     public static bool TezcataraConfig { get; set; } = true;
     public static bool PaelConfig { get; set; } = true;
-    public static bool VakuuConfig { get; set; } = true;
+
+    [ConfigSection("Vakuu")]
+    public static bool BloodSoakedRoseConfig { get; set; } = true;
+    public static bool FiddleConfig { get; set; } = true;
+    public static bool PreservedFogConfig { get; set; } = true;
+    public static bool SereTalonConfig { get; set; } = true;
+    public static bool LordsParasolConfig { get; set; } = true;
+    public static bool VakuuChoicesConfig { get; set; } = true;
+    public static bool VakuuArtConfig { get; set; } = false;
+    public static bool ApparitionArtConfig { get; set; } = false;
 
     [ConfigSection("Merchant")]
     public static bool MerchantConfig { get; set; } = true;
 
     [ConfigSection("Silent")]
     public static bool AcrobaticsConfig { get; set; } = true;
+    public static bool UntouchableConfig { get; set; } = true;
 
     [ConfigSection("Necrobinder")]
     public static bool DefyConfig { get; set; } = true;

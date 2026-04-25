@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class WishPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.SereTalonConfig;
 
     private static async Task OnPlay(Wish instance, PlayerChoiceContext choiceContext)
     {

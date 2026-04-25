@@ -82,7 +82,7 @@ public static class BoomingConchPatch
     [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.AfterCardPlayed))]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterCardPlayed(AbstractModel __instance, PlayerChoiceContext context, CardPlay cardPlay, ref Task __result)
+    private static bool PreFix_AfterCardPlayed(AbstractModel __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
     {
         if (Disabled)
         {

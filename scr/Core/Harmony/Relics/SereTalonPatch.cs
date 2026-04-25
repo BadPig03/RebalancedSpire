@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class SereTalonPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.SereTalonConfig;
 
     private static async Task AfterObtained(SereTalon instance)
     {

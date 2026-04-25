@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class PreservedFogPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.PreservedFogConfig;
 
     [HarmonyPatch(typeof(PreservedFog), nameof(PreservedFog.CanonicalVars), MethodType.Getter)]
     [HarmonyPrefix]

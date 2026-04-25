@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class LordsParasolPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.LordsParasolConfig;
 
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.CanonicalVars), MethodType.Getter)]
     [HarmonyPrefix]

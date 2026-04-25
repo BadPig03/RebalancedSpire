@@ -13,12 +13,12 @@ using Godot.Bridge;
 using scr.Core.Harmony;
 
 [ModInitializer(nameof(Initialize))]
+// ReSharper disable once UnusedMember.Global
 public partial class RebalancedSpireMain : Node
 {
     private const string ModId = "RebalancedSpire";
-    public const string Version = "v0.0.7";
+    public const string Version = "v0.0.7_beta";
 
-    // ReSharper disable once UnusedMember.Global
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
 
     private static Harmony? _mainHarmony;

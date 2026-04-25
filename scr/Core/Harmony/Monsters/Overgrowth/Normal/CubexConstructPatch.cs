@@ -74,7 +74,7 @@ public static class CubexConstructPatch
         MoveState moveState = new MoveState("CHARGE_UP_MOVE", t => ChargeUpMove(__instance, t), new BuffIntent());
         MoveState moveState2 = new MoveState("REPEATER_BLAST_MOVE", _ => RepeaterBlastMove(__instance), new SingleAttackIntent(__instance.BlastDamage));
         MoveState moveState3 = new MoveState("REPEATER_BLAST_MOVE_2", _ => RepeaterBlastMove(__instance), new SingleAttackIntent(__instance.BlastDamage));
-        MoveState moveState4 = new MoveState("EXPEL_BLAST_MOVE", t => ExpelBlastMove(__instance, t), new MultiAttackIntent(__instance.ExpelDamage, ExpelCount));
+        MoveState moveState4 = new MoveState("EXPEL_MOVE", t => ExpelBlastMove(__instance, t), new MultiAttackIntent(__instance.ExpelDamage, ExpelCount));
         MoveState moveState5 = new MoveState("SUBMERGE_MOVE", t => SubmergeMove(__instance, t), new DefendIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;

@@ -3,6 +3,8 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
 
@@ -10,7 +12,26 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class VakuuPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuChoicesConfig;
+
+    [HarmonyPatch(typeof(EventModel), nameof(EventModel.BackgroundScenePath), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_BackgroundScenePath(EventModel __instance, ref string __result)
+    {
+        if (!RebalancedSpireConfig.VakuuArtConfig)
+        {
+            return true;
+        }
+
+        if (__instance is not Vakuu)
+        {
+            return true;
+        }
+
+        __result = SceneHelper.GetScenePath("events/background_scenes/vakuu_beta_art");
+        return false;
+    }
 
     [HarmonyPatch(typeof(Vakuu), nameof(Vakuu.Pool1), MethodType.Getter)]
     [HarmonyPrefix]

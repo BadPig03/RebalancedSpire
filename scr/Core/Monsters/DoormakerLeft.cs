@@ -102,7 +102,7 @@ public sealed class DoormakerLeft : DoormakerBase
     public override MonsterMoveStateMachine GenerateMoveStateMachine()
     {
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("SLEEP_MOVE", _ => Task.CompletedTask, new SleepIntent());
+        SleepState = new MoveState("SLEEP_MOVE", _ => Task.CompletedTask, new SleepIntent());
         DramaticOpenState = new MoveState("DRAMATIC_OPEN_MOVE", DramaticOpenMove, new SummonIntent());
         MoveState moveState3 = new MoveState("SCRUTINY_MOVE", ScrutinyMove, new MultiAttackIntent(ScrutinyDamage, ScrutinyCount), new CardDebuffIntent());
         MoveState moveState4 = new MoveState("BEAM_MOVE", BeamMove, new SingleAttackIntent(BeamDamage), new DebuffIntent());
@@ -110,7 +110,7 @@ public sealed class DoormakerLeft : DoormakerBase
         MoveState moveState6 = new MoveState("CLOSE_MOVE", CloseMove, new EscapeIntent());
         MoveState moveState7 = new MoveState("CLOSED_MOVE", _ => Task.CompletedTask, new SleepIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("DOORMAKER_LEFT");
-        branchState.AddState(moveState, () => !ShouldWakeUp());
+        branchState.AddState(SleepState, () => !ShouldWakeUp());
         branchState.AddState(DramaticOpenState, ShouldWakeUp);
         ConditionalBranchState branchState2 = new ConditionalBranchState("DOORMAKER_LEFT_2");
         branchState2.AddState(moveState7, () => !ShouldWakeUp());
@@ -118,14 +118,14 @@ public sealed class DoormakerLeft : DoormakerBase
         ConditionalBranchState branchState3 = new ConditionalBranchState("DOORMAKER_LEFT_3");
         branchState3.AddState(moveState3, () => !ShouldClose());
         branchState3.AddState(moveState6, ShouldClose);
-        moveState.FollowUpState = branchState;
+        SleepState.FollowUpState = branchState;
         DramaticOpenState.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;
         moveState4.FollowUpState = moveState5;
         moveState5.FollowUpState = branchState3;
         moveState6.FollowUpState = moveState7;
         moveState7.FollowUpState = branchState2;
-        list.Add(moveState);
+        list.Add(SleepState);
         list.Add(DramaticOpenState);
         list.Add(moveState3);
         list.Add(moveState4);
@@ -135,6 +135,6 @@ public sealed class DoormakerLeft : DoormakerBase
         list.Add(branchState);
         list.Add(branchState2);
         list.Add(branchState3);
-        return new MonsterMoveStateMachine(list, moveState);
+        return new MonsterMoveStateMachine(list, SleepState);
     }
 }

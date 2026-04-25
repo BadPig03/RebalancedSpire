@@ -31,7 +31,7 @@ public static class SkulkingColonyPatch
 
     private static async Task ZoomMove(SkulkingColony instance)
     {
-        await DamageCmd.Attack(ZoomDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.15f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+        await DamageCmd.Attack(ZoomDamage).FromMonster(instance).WithAttackerAnim("AttackHeavy", 0.25f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
         await CreatureCmd.GainBlock(instance.Creature, ZoomBlock, ValueProp.Move, null);
     }
 
@@ -42,7 +42,7 @@ public static class SkulkingColonyPatch
 
     private static async Task PiercingStabsMove(SkulkingColony instance)
     {
-        await DamageCmd.Attack(PiercingStabsDamage).WithHitCount(PiercingStabsCount).FromMonster(instance).WithAttackerAnim("Attack", 0.15f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+        await DamageCmd.Attack(PiercingStabsDamage).WithHitCount(PiercingStabsCount).OnlyPlayAnimOnce().FromMonster(instance).WithAttackerAnim("AttackDouble", 0.45f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
     }
 
     private static async Task AfterAddedToRoom(SkulkingColony instance)

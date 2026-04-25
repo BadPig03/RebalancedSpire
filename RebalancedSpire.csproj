@@ -77,7 +77,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.0.6" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.0.9" PrivateAssets="All" />
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
         <AdditionalFiles Include="RebalancedSpire/localization/**/*.json"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
@@ -117,6 +117,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="images\ancients\vakuu_beta_art.png" />
+      <Content Include="images\ancients\vakuu_beta_art.png.import" />
       <Content Include="images\powers\rebalancedspire-disillusion_power.png" />
       <Content Include="images\powers\rebalancedspire-disillusion_power.png.import" />
       <Content Include="images\powers\rebalancedspire-fabricator_power.png" />
@@ -153,6 +155,7 @@
       <Content Include="scenes\creature_visuals\rebalancedspire-doormaker_left.tscn" />
       <Content Include="scenes\creature_visuals\rebalancedspire-doormaker_right.tscn" />
       <Content Include="scenes\encounters\doormaker_boss.tscn" />
+      <Content Include="scenes\events\background_scenes\vakuu_beta_art.tscn" />
       <Content Include="scr\Core\Afflictions\ToItsOriginOwner.cs.uid" />
       <Content Include="scr\Core\Harmony\Afflictions\WeightedPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\NeowPatch.cs.uid" />
@@ -161,12 +164,14 @@
       <Content Include="scr\Core\Harmony\AttackCommandPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\EnthralledPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\FollyPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Event\ApparitionPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\ByrdonisEggPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\NeowsFuryPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Necrobinder\DefyPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\HarmonyExtensions.cs.uid" />
       <Content Include="scr\Core\Harmony\Merchant\MerchantCardRemovalEntryPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Boss\DoormakerBossPatch.cs.uid" />
@@ -277,6 +282,10 @@
       <Content Include="scr\Core\Powers\SoulWitherPower.cs.uid" />
       <Content Include="scr\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
       <Content Include="scr\Core\Relics\NeowsLament.cs.uid" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="images\packed\" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">
