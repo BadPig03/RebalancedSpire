@@ -7,6 +7,10 @@
         <DefaultItemExcludes>packages/**</DefaultItemExcludes>
         <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
         <PathMap>$(AppOutputBase)=.\</PathMap>
+        <!-- Mods must be IL-only / AnyCPU so the same dll loads on Win x64, macOS arm64, and macOS x64. -->
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <Platforms>AnyCPU</Platforms>
+        <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
 
     <!-- OS Detection -->
@@ -50,11 +54,13 @@
     <!-- macOS -->
     <PropertyGroup Condition="'$(IsOSX)' == 'true'">
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(HOME)/Library/Application Support/Steam/steamapps</SteamLibraryPath>
+        <GodotPath Condition="'$(GodotPath)' == '' and Exists('$(HOME)/Applications/MegaDot.app/Contents/MacOS/Godot')">$(HOME)/Applications/MegaDot.app/Contents/MacOS/Godot</GodotPath>
         <GodotPath Condition="'$(GodotPath)' == ''">$(HOME)/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath>
 
         <!-- The below should not need to be changed. -->
         <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
         <ModsPath>$(Sts2Path)/SlayTheSpire2.app/Contents/MacOS/mods/</ModsPath>
+        <!-- Force x86_64 dll on Mac: BepInEx.AssemblyPublicizer 0.4.2 fails on arm64 PE during write. -->
         <Sts2DataDir>$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_x86_64</Sts2DataDir>
     </PropertyGroup>
 
