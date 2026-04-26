@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class BoomingConchPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.BoomingConchConfig;
 
     private static int MaxCards => 2;
     private static readonly SpireField<RelicModel, int> CardsPlayed = new(() => 0);

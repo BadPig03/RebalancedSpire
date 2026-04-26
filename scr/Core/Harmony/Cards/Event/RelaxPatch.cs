@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class RelaxPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.PaelConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.PaelsHornConfig;
 
     [HarmonyPatch(typeof(Relax), nameof(Relax.CanonicalVars), MethodType.Getter)]
     [HarmonyPrefix]

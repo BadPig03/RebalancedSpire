@@ -2,15 +2,96 @@
 
 namespace RebalancedSpire.scr.Core;
 
+using System.ComponentModel;
+using System.Reflection;
+using System.Text.Json;
+using Godot;
+using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.Localization;
+
 // ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
 [ConfigHoverTipsByDefault]
 internal class RebalancedSpireConfig : SimpleModConfig
 {
-    [ConfigSection("Ancients")]
-    public static bool NeowConfig { get; set; } = true;
-    public static bool OrobasConfig { get; set; } = true;
-    public static bool TezcataraConfig { get; set; } = true;
-    public static bool PaelConfig { get; set; } = true;
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        WriteIndented = true
+    };
+
+    [ConfigSection("Configurations")]
+    [ConfigButton("LoadConfigFileButton")]
+    [UsedImplicitly]
+    public static void LoadConfigFile(ModConfig config)
+    {
+        if (Engine.GetMainLoop() is not SceneTree tree || config is not RebalancedSpireConfig rebalancedSpireConfig)
+        {
+            return;
+        }
+
+        var dialog = new FileDialog
+        {
+            Title = new LocString("settings_ui", "REBALANCEDSPIRE-SAVE_CONFIG_FILE.title").GetFormattedText(),
+            FileMode = FileDialog.FileModeEnum.OpenFile,
+            Access = FileDialog.AccessEnum.Filesystem
+        };
+
+        dialog.AddFilter("*.json", "Json files (*.json)|*.json");
+        dialog.FileSelected += path =>
+        {
+            rebalancedSpireConfig.LoadConfigFromJsonFile(path);
+            dialog.QueueFree();
+        };
+        dialog.Canceled += dialog.QueueFree;
+        tree.Root.AddChild(dialog);
+        dialog.PopupCenteredRatio(0.55f);
+    }
+
+    [ConfigButton("SaveConfigFileButton")]
+    [UsedImplicitly]
+    public static void SaveConfigFile(ModConfig config)
+    {
+        if (Engine.GetMainLoop() is not SceneTree tree)
+        {
+            return;
+        }
+
+        if (config is not RebalancedSpireConfig rebalancedSpireConfig)
+        {
+            return;
+        }
+
+        var dialog = new FileDialog
+        {
+            Title = new LocString("settings_ui", "REBALANCEDSPIRE-SAVE_CONFIG_FILE.title").GetFormattedText(),
+            FileMode = FileDialog.FileModeEnum.SaveFile,
+            Access = FileDialog.AccessEnum.Filesystem,
+            CurrentFile = "rebalanced_spire_settings.json"
+        };
+        dialog.AddFilter("*.json", "Json files (*.json)|*.json");
+        dialog.FileSelected += path =>
+        {
+            rebalancedSpireConfig.SaveConfigToJsonFile(path);
+            dialog.QueueFree();
+        };
+        dialog.Canceled += dialog.QueueFree;
+        tree.Root.AddChild(dialog);
+        dialog.PopupCenteredRatio(0.55f);
+    }
+
+    [ConfigSection("Neow")]
+    public static bool BoomingConchConfig { get; set; } = true;
+    public static bool LavaRockConfig { get; set; } = true;
+    public static bool NutritiousOysterConfig { get; set; } = true;
+    public static bool NeowChoicesConfig { get; set; } = true;
+
+    [ConfigSection("Orobas")]
+    public static bool OrobasChoicesConfig { get; set; } = true;
+
+    [ConfigSection("Tezcatara")]
+    public static bool ToastyMittensConfig { get; set; } = true;
+
+    [ConfigSection("Pael")]
+    public static bool PaelsHornConfig { get; set; } = true;
 
     [ConfigSection("Vakuu")]
     public static bool BloodSoakedRoseConfig { get; set; } = true;
@@ -18,6 +99,7 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool PreservedFogConfig { get; set; } = true;
     public static bool SereTalonConfig { get; set; } = true;
     public static bool LordsParasolConfig { get; set; } = true;
+    public static bool WhisperingEarringConfig { get; set; } = true;
     public static bool VakuuChoicesConfig { get; set; } = true;
     public static bool VakuuArtConfig { get; set; } = false;
     public static bool ApparitionArtConfig { get; set; } = false;
@@ -91,7 +173,6 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool TheInsatiableConfig { get; set; } = true;
 
     [ConfigSection("Glory")]
-    //public static bool AxebotConfig { get; set; } = true;
     public static bool DevotedSculptorConfig { get; set; } = true;
     public static bool FabricatorConfig { get; set; } = true;
     public static bool FrogKnightConfig { get; set; } = true;
@@ -107,4 +188,99 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool TestSubjectConfig { get; set; } = true;
     public static bool QueenConfig { get; set; } = true;
     public static bool DoormakerConfig { get; set; } = true;
+
+    private void LoadConfigFromJsonFile(string path)
+    {
+        if (!File.Exists(path))
+        {
+            return;
+        }
+
+        var failed = false;
+        try
+        {
+            using FileStream utf8Json = File.OpenRead(path);
+            var dictionary = JsonSerializer.Deserialize<Dictionary<string, string>>(utf8Json);
+            if (dictionary == null)
+            {
+                failed = true;
+            }
+            else
+            {
+                foreach (PropertyInfo configProperty in ConfigProperties)
+                {
+                    if (!dictionary.TryGetValue(configProperty.Name, out var str))
+                    {
+                        failed = true;
+                        continue;
+                    }
+
+                    try
+                    {
+                        var converter = TypeDescriptor.GetConverter(configProperty.PropertyType).ConvertFromInvariantString(str);
+                        if (converter == null)
+                        {
+                            continue;
+                        }
+
+                        var value = configProperty.GetValue(null);
+                        if (converter.Equals(value))
+                        {
+                            continue;
+                        }
+
+                        configProperty.SetValue(null, converter);
+                    }
+                    catch
+                    {
+                        // ignored
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            return;
+        }
+        if (failed)
+        {
+            return;
+        }
+
+        Save();
+        ConfigReloaded();
+    }
+
+    private void SaveConfigToJsonFile(string path)
+    {
+        var dictionary = new Dictionary<string, string>();
+        try
+        {
+            foreach (PropertyInfo configProperty in ConfigProperties)
+            {
+                var invariantString = TypeDescriptor.GetConverter(configProperty.PropertyType).ConvertToInvariantString(configProperty.GetValue(null));
+                if (invariantString == null)
+                {
+                    continue;
+                }
+
+                dictionary.Add(configProperty.Name, invariantString);
+            }
+        }
+        catch (Exception)
+        {
+            return;
+        }
+
+        try
+        {
+            new FileInfo(path).Directory?.Create();
+            using FileStream utf8Json = File.Create(path);
+            JsonSerializer.Serialize(utf8Json, dictionary, JsonOptions);
+        }
+        catch
+        {
+            // ignored
+        }
+    }
 }

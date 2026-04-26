@@ -7,6 +7,10 @@
         <DefaultItemExcludes>packages/**</DefaultItemExcludes>
         <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
         <PathMap>$(AppOutputBase)=.\</PathMap>
+        <!-- Mods must be IL-only / AnyCPU so the same dll loads on Win x64, macOS arm64, and macOS x64. -->
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <Platforms>AnyCPU</Platforms>
+        <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
 
     <!-- OS Detection -->
@@ -50,11 +54,13 @@
     <!-- macOS -->
     <PropertyGroup Condition="'$(IsOSX)' == 'true'">
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(HOME)/Library/Application Support/Steam/steamapps</SteamLibraryPath>
+        <GodotPath Condition="'$(GodotPath)' == '' and Exists('$(HOME)/Applications/MegaDot.app/Contents/MacOS/Godot')">$(HOME)/Applications/MegaDot.app/Contents/MacOS/Godot</GodotPath>
         <GodotPath Condition="'$(GodotPath)' == ''">$(HOME)/Applications/Godot_mono.app/Contents/MacOS/Godot</GodotPath>
 
         <!-- The below should not need to be changed. -->
         <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
         <ModsPath>$(Sts2Path)/SlayTheSpire2.app/Contents/MacOS/mods/</ModsPath>
+        <!-- Force x86_64 dll on Mac: BepInEx.AssemblyPublicizer 0.4.2 fails on arm64 PE during write. -->
         <Sts2DataDir>$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_x86_64</Sts2DataDir>
     </PropertyGroup>
 
@@ -94,6 +100,8 @@
         <EmbeddedResource Remove="images\packed\card_portraits\token\**" />
         <Compile Remove="images\packed\intents\**" />
         <EmbeddedResource Remove="images\packed\intents\**" />
+        <Compile Remove="images\packed\**" />
+        <EmbeddedResource Remove="images\packed\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -143,8 +151,6 @@
       <Content Include="images\powers\rebalancedspire-plow_plus_power.png.import" />
       <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png" />
       <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-shifting_power.png" />
-      <Content Include="images\powers\rebalancedspire-shifting_power.png.import" />
       <Content Include="images\powers\rebalancedspire-soul_wither_power.png" />
       <Content Include="images\powers\rebalancedspire-soul_wither_power.png.import" />
       <Content Include="images\powers\rebalancedspire-to_its_origin_owner_power.png" />
@@ -166,7 +172,6 @@
       <Content Include="scr\Core\Harmony\Cards\Curse\FollyPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\ApparitionPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\ByrdonisEggPatch.cs.uid" />
-      <Content Include="scr\Core\Harmony\Cards\Event\NeowsFuryPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Necrobinder\DefyPatch.cs.uid" />
@@ -259,6 +264,7 @@
       <Content Include="scr\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\ToastyMittensPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\VersionPatch.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerLeft.cs.uid" />
@@ -278,14 +284,9 @@
       <Content Include="scr\Core\Powers\PingPongPower.cs.uid" />
       <Content Include="scr\Core\Powers\PlowedPower.cs.uid" />
       <Content Include="scr\Core\Powers\PlowPlusPower.cs.uid" />
-      <Content Include="scr\Core\Powers\ShiftingPower.cs.uid" />
       <Content Include="scr\Core\Powers\SoulWitherPower.cs.uid" />
       <Content Include="scr\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
       <Content Include="scr\Core\Relics\NeowsLament.cs.uid" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="images\packed\" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">

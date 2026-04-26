@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class NeowPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.NeowChoicesConfig;
 
     private static List<EventOption> CurseOptions(Neow instance) =>
     [
