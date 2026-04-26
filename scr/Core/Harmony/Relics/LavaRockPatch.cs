@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Rewards;
@@ -17,10 +18,11 @@ using MegaCrit.Sts2.Core.Runs;
 // ReSharper disable InconsistentNaming
 public static class LavaRockPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.NeowConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.LavaRockConfig;
 
-    private static int EnemiesDefeatedRequired => 6;
+    private static int EnemiesDefeatedRequired => 4;
     private static readonly SavedSpireField<LavaRock, int> EnemiesDefeated = new(() => 0, "REBALANCEDSPIRE-LAVA_ROCK");
+    private static readonly SavedSpireField<LavaRock, int> TriggeredAmount = new(() => 0, "REBALANCEDSPIRE-LAVA_ROCK_TRIGGERED");
 
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
     [HarmonyPrefix]
@@ -38,6 +40,23 @@ public static class LavaRockPatch
         }
 
         __result = new LocString("relics", "REBALANCEDSPIRE-LAVA_ROCK.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(LavaRock), nameof(LavaRock.CanonicalVars), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(LavaRock __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new("Enemies", EnemiesDefeatedRequired)
+        };
         return false;
     }
 
@@ -126,7 +145,8 @@ public static class LavaRockPatch
             return true;
         }
 
-        if (player != __instance.Owner || room is not CombatRoom || EnemiesDefeated.Get(__instance) < EnemiesDefeatedRequired)
+        var triggeredAmount = TriggeredAmount.Get(__instance);
+        if (player != __instance.Owner || room is not CombatRoom || EnemiesDefeated.Get(__instance) < EnemiesDefeatedRequired + triggeredAmount)
         {
             return true;
         }
@@ -134,6 +154,8 @@ public static class LavaRockPatch
         __instance.Flash();
         rewards.Add(new CardReward(CardCreationOptions.ForNonCombatWithUniformOdds(new ReadOnlyCollection<CardPoolModel>([__instance.Owner.Character.CardPool]), c => c.Rarity == CardRarity.Uncommon).WithFlags(CardCreationFlags.NoRarityModification), 3, player));
         EnemiesDefeated.Set(__instance, 0);
+        TriggeredAmount.Set(__instance, triggeredAmount + 1);
+        __instance.DynamicVars["Enemies"].BaseValue += 1;
         __instance.InvokeDisplayAmountChanged();
         __result = true;
         return false;
