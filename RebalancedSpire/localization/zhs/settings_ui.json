@@ -1,6 +1,14 @@
 ﻿{
   "REBALANCEDSPIRE.mod_title": "平衡尖塔",
 
+  "REBALANCEDSPIRE-CONFIGURATIONS.title": "配置文件",
+  "REBALANCEDSPIRE-LOAD_CONFIG_FILE.title": "加载Json文件",
+  "REBALANCEDSPIRE-LOAD_CONFIG_FILE_BUTTON.title": "浏览…",
+  "REBALANCEDSPIRE-LOAD_CONFIG_FILE.hover.desc": "将Json文件导入并应用于配置选项。",
+  "REBALANCEDSPIRE-SAVE_CONFIG_FILE.title": "保存配置选项",
+  "REBALANCEDSPIRE-SAVE_CONFIG_FILE_BUTTON.title": "浏览…",
+  "REBALANCEDSPIRE-SAVE_CONFIG_FILE.hover.desc": "将配置选项导出成Json文件。",
+
   "REBALANCEDSPIRE-NEOW.title": "涅奥",
   "REBALANCEDSPIRE-BOOMING_CONCH_CONFIG.title": "轰鸣海螺",
   "REBALANCEDSPIRE-BOOMING_CONCH_CONFIG.hover.title": "启用轰鸣海螺相关的平衡性改动。",
@@ -49,9 +57,18 @@
   "REBALANCEDSPIRE-LORDS_PARASOL_CONFIG.title": "领主阳伞",
   "REBALANCEDSPIRE-LORDS_PARASOL_CONFIG.hover.title": "启用领主阳伞相关的平衡性改动。",
   "REBALANCEDSPIRE-LORDS_PARASOL_CONFIG.hover.desc": "重启后生效。",
+  "REBALANCEDSPIRE-WHISPERING_EARRING_CONFIG.title": "低语耳环",
+  "REBALANCEDSPIRE-WHISPERING_EARRING_CONFIG.hover.title": "启用低语耳环相关的平衡性改动。",
+  "REBALANCEDSPIRE-WHISPERING_EARRING_CONFIG.hover.desc": "重启后生效。",
   "REBALANCEDSPIRE-VAKUU_CHOICES_CONFIG.title": "先古遗物选项",
   "REBALANCEDSPIRE-VAKUU_CHOICES_CONFIG.hover.title": "启用瓦库的先古遗物选项相关的平衡性改动。",
   "REBALANCEDSPIRE-VAKUU_CHOICES_CONFIG.hover.desc": "重启后生效。",
+  "REBALANCEDSPIRE-VAKUU_ART_CONFIG.title": "瓦库美术",
+  "REBALANCEDSPIRE-VAKUU_ART_CONFIG.hover.title": "启用瓦库的Beta画风美术资源。",
+  "REBALANCEDSPIRE-VAKUU_ART_CONFIG.hover.desc": "即可生效。",
+  "REBALANCEDSPIRE-APPARITION_ART_CONFIG.title": "灵体美术",
+  "REBALANCEDSPIRE-APPARITION_ART_CONFIG.hover.title": "启用灵体的Beta画风美术资源。",
+  "REBALANCEDSPIRE-APPARITION_ART_CONFIG.hover.desc": "立刻生效。",
 
   "REBALANCEDSPIRE-SILENT.title": "静默猎手",
   "REBALANCEDSPIRE-ACROBATICS_CONFIG.title": "杂技",
@@ -67,8 +84,8 @@
   "REBALANCEDSPIRE-DEFY_CONFIG.hover.desc": "重启后生效。",
 
   "REBALANCEDSPIRE-MERCHANT.title": "商人",
-  "REBALANCEDSPIRE-MERCHANT_CONFIG.title": "商人",
-  "REBALANCEDSPIRE-MERCHANT_CONFIG.hover.title": "启用商人相关的平衡性改动。",
+  "REBALANCEDSPIRE-MERCHANT_CONFIG.title": "移除卡牌服务价格",
+  "REBALANCEDSPIRE-MERCHANT_CONFIG.hover.title": "启用商人的移除卡牌服务价格相关的平衡性改动。",
   "REBALANCEDSPIRE-MERCHANT_CONFIG.hover.desc": "重启后生效。",
 
   "REBALANCEDSPIRE-OVERGROWTH.title": "密林",
@@ -108,7 +125,6 @@
   "REBALANCEDSPIRE-VINE_SHAMBLER_CONFIG.title": "藤蔓蹒跚者",
   "REBALANCEDSPIRE-VINE_SHAMBLER_CONFIG.hover.title": "启用藤蔓蹒跚者相关的平衡性改动。",
   "REBALANCEDSPIRE-VINE_SHAMBLER_CONFIG.hover.desc": "重启后生效。",
-
   "REBALANCEDSPIRE-BYGONE_EFFIGY_CONFIG.title": "旧日雕像",
   "REBALANCEDSPIRE-BYGONE_EFFIGY_CONFIG.hover.title": "启用旧日雕像相关的平衡性改动。",
   "REBALANCEDSPIRE-BYGONE_EFFIGY_CONFIG.hover.desc": "重启后生效。",
@@ -277,8 +293,8 @@
   "REBALANCEDSPIRE-TEST_SUBJECT_CONFIG.title": "实验体",
   "REBALANCEDSPIRE-TEST_SUBJECT_CONFIG.hover.title": "启用实验体相关的平衡性改动。",
   "REBALANCEDSPIRE-TEST_SUBJECT_CONFIG.hover.desc": "重启后生效。",
-  "REBALANCEDSPIRE-QUEEN_CONFIG.title": "女王",
-  "REBALANCEDSPIRE-QUEEN_CONFIG.hover.title": "启用女王与火炬头聚合体相关的平衡性改动。",
+  "REBALANCEDSPIRE-QUEEN_CONFIG.title": "女王遭遇战",
+  "REBALANCEDSPIRE-QUEEN_CONFIG.hover.title": "启用在女王遭遇战中女王与火炬头聚合体相关的平衡性改动。",
   "REBALANCEDSPIRE-QUEEN_CONFIG.hover.desc": "重启后生效。",
   "REBALANCEDSPIRE-DOORMAKER_CONFIG.title": "门扉缔造者",
   "REBALANCEDSPIRE-DOORMAKER_CONFIG.hover.title": "启用门扉缔造者相关的平衡性改动。",

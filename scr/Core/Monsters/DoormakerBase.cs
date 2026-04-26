@@ -10,10 +10,12 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Rooms;
 
 public abstract class DoormakerBase : CustomMonsterModel
 {
@@ -33,8 +35,6 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     private int _originalHp;
 
-    private MoveState? _sleepState;
-
     private MoveState? _dramaticOpenState;
 
     private readonly List<PowerModel> _powerModels = [];
@@ -46,16 +46,6 @@ public abstract class DoormakerBase : CustomMonsterModel
         {
             AssertMutable();
             _isPortalOpen = value;
-        }
-    }
-
-    protected MoveState SleepState
-    {
-        get => _sleepState ?? throw new InvalidOperationException();
-        set
-        {
-            AssertMutable();
-            _sleepState = value;
         }
     }
 
@@ -117,7 +107,14 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override bool ShouldAllowHitting(Creature creature)
     {
-        return creature != Creature ? base.ShouldAllowHitting(creature) : IsPortalOpen;
+        foreach (Creature enemy in CombatState.Enemies)
+        {
+            if (enemy.Monster is DoormakerBase { IsPortalOpen: true })
+            {
+                return !creature.ShowsInfiniteHp;
+            }
+        }
+        return true;
     }
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
@@ -132,7 +129,7 @@ public abstract class DoormakerBase : CustomMonsterModel
         }
         else if (creature != Creature)
         {
-            SetMoveImmediate(SleepState);
+            SetMoveImmediate(DramaticOpenState);
         }
         return Task.CompletedTask;
     }
@@ -189,6 +186,13 @@ public abstract class DoormakerBase : CustomMonsterModel
     {
         IsPortalOpen = false;
         IsAboutToEscape = false;
+        var doomPower = Creature.GetPower<DoomPower>();
+        if (doomPower != null && doomPower.IsOwnerDoomed())
+        {
+            await DoomPower.DoomKill([Creature]);
+            return;
+        }
+
         OriginalMaxHp = Creature.MaxHp;
         OriginalHp = Creature.CurrentHp;
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 999999999);
@@ -206,6 +210,6 @@ public abstract class DoormakerBase : CustomMonsterModel
             return;
         }
 
-        CombatState._enemies.Sort((_, _) => 1);
+        ((CombatRoom?) CombatState.RunState.CurrentRoom)?.CombatState._enemies.Sort((_, _) => 1);
     }
 }

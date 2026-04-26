@@ -100,6 +100,7 @@
         <EmbeddedResource Remove="images\packed\card_portraits\token\**" />
         <Compile Remove="images\packed\intents\**" />
         <EmbeddedResource Remove="images\packed\intents\**" />
+        <Compile Remove="scr\Core\Powers\ShiftingPower.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -147,8 +148,6 @@
       <Content Include="images\powers\rebalancedspire-plow_plus_power.png.import" />
       <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png" />
       <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-shifting_power.png" />
-      <Content Include="images\powers\rebalancedspire-shifting_power.png.import" />
       <Content Include="images\powers\rebalancedspire-soul_wither_power.png" />
       <Content Include="images\powers\rebalancedspire-soul_wither_power.png.import" />
       <Content Include="images\powers\rebalancedspire-to_its_origin_owner_power.png" />
@@ -260,6 +259,7 @@
       <Content Include="scr\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\ToastyMittensPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\VersionPatch.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerLeft.cs.uid" />
@@ -279,7 +279,6 @@
       <Content Include="scr\Core\Powers\PingPongPower.cs.uid" />
       <Content Include="scr\Core\Powers\PlowedPower.cs.uid" />
       <Content Include="scr\Core\Powers\PlowPlusPower.cs.uid" />
-      <Content Include="scr\Core\Powers\ShiftingPower.cs.uid" />
       <Content Include="scr\Core\Powers\SoulWitherPower.cs.uid" />
       <Content Include="scr\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
       <Content Include="scr\Core\Relics\NeowsLament.cs.uid" />
