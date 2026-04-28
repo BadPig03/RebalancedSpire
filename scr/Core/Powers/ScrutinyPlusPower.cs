@@ -19,7 +19,7 @@ public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
 
     public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>
     {
-        new CardsVar(3)
+        new CardsVar(4)
     };
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)

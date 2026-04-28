@@ -11,11 +11,13 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
+using Powers;
 
 public abstract class DoormakerBase : CustomMonsterModel
 {
@@ -27,9 +29,7 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override int MaxInitialHp => MinInitialHp;
 
-    private bool _isPortalOpen;
-
-    private bool _isAboutToEscape;
+    private DoormakerBase? _otherDoormaker;
 
     private int _originalMaxHp;
 
@@ -39,13 +39,13 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     private readonly List<PowerModel> _powerModels = [];
 
-    public bool IsPortalOpen
+    protected DoormakerBase OtherDoormaker
     {
-        get => _isPortalOpen;
-        private set
+        get => _otherDoormaker ?? throw new InvalidOperationException();
+        set
         {
             AssertMutable();
-            _isPortalOpen = value;
+            _otherDoormaker = value;
         }
     }
 
@@ -56,16 +56,6 @@ public abstract class DoormakerBase : CustomMonsterModel
         {
             AssertMutable();
             _dramaticOpenState = value;
-        }
-    }
-
-    public bool IsAboutToEscape
-    {
-        get => _isAboutToEscape;
-        protected set
-        {
-            AssertMutable();
-            _isAboutToEscape = value;
         }
     }
 
@@ -89,7 +79,7 @@ public abstract class DoormakerBase : CustomMonsterModel
         }
     }
 
-    public override LocString Title => IsPortalOpen ? L10NMonsterLookup("DOORMAKER.name") : L10NMonsterLookup("DOOR.name") ;
+    public override LocString Title => Creature.ShowsInfiniteHp ? L10NMonsterLookup("DOOR.name") : L10NMonsterLookup("DOORMAKER.name") ;
 
     public override NCreatureVisuals CreateCustomVisuals()
     {
@@ -107,36 +97,66 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override bool ShouldAllowHitting(Creature creature)
     {
-        foreach (Creature enemy in CombatState.Enemies)
+        if (creature.Monster is not DoormakerBase doormakerBase)
         {
-            if (enemy.Monster is DoormakerBase { IsPortalOpen: true })
-            {
-                return !creature.ShowsInfiniteHp;
-            }
+            return base.ShouldAllowHitting(creature);
         }
-        return true;
+
+        return doormakerBase.OtherDoormaker.Creature.ShowsInfiniteHp || doormakerBase.OtherDoormaker.Creature.IsDead;
     }
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (wasRemovalPrevented || creature.Monster is not DoormakerBase)
+        if (wasRemovalPrevented || creature.Monster is not DoormakerBase doormakerBase)
         {
-            return Task.CompletedTask;
+            return;
         }
 
-        if (!CombatState.Enemies.Any(enemy => enemy.IsAlive)) {
+        if (!CombatState.Enemies.Any(c => c is { Monster: DoormakerBase, IsAlive: true })) {
             NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 5f);
+            return;
         }
-        else if (creature != Creature)
+
+        if (creature != Creature)
         {
-            SetMoveImmediate(DramaticOpenState);
+            return;
         }
-        return Task.CompletedTask;
+
+        await PowerCmd.Remove<HungerPower>(Creature);
+        await PowerCmd.Remove<ScrutinyPlusPower>(Creature);
+        var doomPower = creature.GetPower<DoomPower>();
+        if (doomPower != null && doomPower.IsOwnerDoomed())
+        {
+            return;
+        }
+
+        var state = (MoveState?) doormakerBase.OtherDoormaker.MoveStateMachine?.States["DRAMATIC_OPEN_MOVE"];
+        if (state == null)
+        {
+            return;
+        }
+
+        doormakerBase.OtherDoormaker.SetMoveImmediate(state);
     }
 
-    protected bool ShouldClose()
+    protected virtual async Task Open()
     {
-        return CombatState.Enemies.Count > 1;
+        await CreatureCmd.SetMaxHp(Creature, OriginalMaxHp);
+        await CreatureCmd.SetCurrentHp(Creature, OriginalHp);
+        Creature.ShowsInfiniteHp = false;
+        foreach (PowerModel power in Creature.Powers.ToList())
+        {
+            await PowerCmd.Remove(power);
+        }
+        foreach (PowerModel power in _powerModels)
+        {
+            if (power is ITemporaryPower temporaryPower)
+            {
+                temporaryPower.IgnoreNextInstance();
+            }
+            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, power.Amount, Creature, null);
+        }
+        _powerModels.Clear();
     }
 
     protected void UpdateVisual(string path, bool reverse = false)
@@ -161,44 +181,33 @@ public abstract class DoormakerBase : CustomMonsterModel
         tween.Parallel().TweenProperty(nCreature.Visuals.GetCurrentBody(), "modulate", Colors.White, 0.5).From(Colors.Black);
     }
 
-    protected async Task Open()
+    protected bool ShouldWakeUp()
     {
-        IsPortalOpen = true;
-        await CreatureCmd.SetMaxHp(Creature, OriginalMaxHp);
-        await CreatureCmd.SetCurrentHp(Creature, OriginalHp);
-        Creature.ShowsInfiniteHp = false;
-        foreach (PowerModel power in Creature.Powers.ToList())
+        return OtherDoormaker.Creature.ShowsInfiniteHp || !OtherDoormaker.Creature.IsAlive;
+    }
+
+    protected Task ReadyToSummon()
+    {
+        if (OtherDoormaker.Creature is not { IsAlive: true, ShowsInfiniteHp: true })
         {
-            await PowerCmd.Remove(power);
+            return Task.CompletedTask;
         }
-        foreach (PowerModel power in _powerModels)
+
+        MoveState moveState = new MoveState("READY_TO_SUMMON", _ => Task.CompletedTask, new SummonIntent())
         {
-            if (power is ITemporaryPower temporaryPower)
-            {
-                temporaryPower.IgnoreNextInstance();
-            }
-            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, power.Amount, Creature, null);
-        }
-        _powerModels.Clear();
+            FollowUpState = DramaticOpenState
+        };
+        OtherDoormaker.SetMoveImmediate(moveState);
+        return Task.CompletedTask;
     }
 
     protected async Task Close()
     {
-        IsPortalOpen = false;
-        IsAboutToEscape = false;
-        var doomPower = Creature.GetPower<DoomPower>();
-        if (doomPower != null && doomPower.IsOwnerDoomed())
-        {
-            await DoomPower.DoomKill([Creature]);
-            return;
-        }
-
         OriginalMaxHp = Creature.MaxHp;
         OriginalHp = Creature.CurrentHp;
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 999999999);
         Creature.ShowsInfiniteHp = true;
-        var powers = Creature.Powers.ToList();
-        foreach (PowerModel power in powers)
+        foreach (PowerModel power in Creature.Powers.ToList())
         {
             _powerModels.Add((PowerModel) power.ClonePreservingMutability());
             await PowerCmd.Remove(power);

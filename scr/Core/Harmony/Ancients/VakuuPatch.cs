@@ -19,12 +19,18 @@ public static class VakuuPatch
     [UsedImplicitly]
     private static bool PreFix_BackgroundScenePath(EventModel __instance, ref string __result)
     {
-        if (!RebalancedSpireConfig.VakuuArtConfig)
+        if (__instance is not Vakuu)
         {
             return true;
         }
 
-        if (__instance is not Vakuu)
+        if (RebalancedSpireConfig.VakuuFixArtConfig)
+        {
+            __result = SceneHelper.GetScenePath("events/background_scenes/vakuu_fixed_art");
+            return false;
+        }
+
+        if (!RebalancedSpireConfig.VakuuBetaArtConfig)
         {
             return true;
         }

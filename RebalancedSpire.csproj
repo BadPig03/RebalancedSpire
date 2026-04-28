@@ -100,8 +100,6 @@
         <EmbeddedResource Remove="images\packed\card_portraits\token\**" />
         <Compile Remove="images\packed\intents\**" />
         <EmbeddedResource Remove="images\packed\intents\**" />
-        <Compile Remove="images\packed\**" />
-        <EmbeddedResource Remove="images\packed\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -127,6 +125,14 @@
     <ItemGroup>
       <Content Include="images\ancients\vakuu_beta_art.png" />
       <Content Include="images\ancients\vakuu_beta_art.png.import" />
+      <Content Include="images\ancients\vakuu_fixed_placeholder.png" />
+      <Content Include="images\ancients\vakuu_fixed_placeholder.png.import" />
+      <Content Include="images\packed\card_portraits\ironclad\rebalancedspire-limit_break.png" />
+      <Content Include="images\packed\card_portraits\ironclad\rebalancedspire-limit_break.png.import" />
+      <Content Include="images\packed\card_portraits\silent\rebalancedspire-corpse_explosion.png" />
+      <Content Include="images\packed\card_portraits\silent\rebalancedspire-corpse_explosion.png.import" />
+      <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png" />
+      <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png.import" />
       <Content Include="images\powers\rebalancedspire-disillusion_power.png" />
       <Content Include="images\powers\rebalancedspire-disillusion_power.png.import" />
       <Content Include="images\powers\rebalancedspire-fabricator_power.png" />
@@ -162,7 +168,10 @@
       <Content Include="scenes\creature_visuals\rebalancedspire-doormaker_right.tscn" />
       <Content Include="scenes\encounters\doormaker_boss.tscn" />
       <Content Include="scenes\events\background_scenes\vakuu_beta_art.tscn" />
+      <Content Include="scenes\events\background_scenes\vakuu_fixed_art.tscn" />
       <Content Include="scr\Core\Afflictions\ToItsOriginOwner.cs.uid" />
+      <Content Include="scr\Core\Cards\CorpseExplosion.cs.uid" />
+      <Content Include="scr\Core\Cards\LimitBreak.cs.uid" />
       <Content Include="scr\Core\Harmony\Afflictions\WeightedPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\NeowPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\OrobasPatch.cs.uid" />
@@ -256,10 +265,14 @@
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\TwoTailedRatPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\NCompendiumSubmenuPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\HardToKillPowerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\AlchemicalCofferPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\DustyTomePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\FiddlePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\LargeCapsulePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\LavaRockPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\LordsParasolPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\NeowsTalismanPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\NutritiousOysterPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
@@ -269,6 +282,7 @@
       <Content Include="scr\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerLeft.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerRight.cs.uid" />
+      <Content Include="scr\Core\Powers\CorpseExplosionPower.cs.uid" />
       <Content Include="scr\Core\Powers\DisillusionPower.cs.uid" />
       <Content Include="scr\Core\Powers\OmnidynamicsPower.cs.uid" />
       <Content Include="scr\Core\Powers\ScrutinyPlusPower.cs.uid" />

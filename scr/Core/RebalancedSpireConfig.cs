@@ -80,11 +80,14 @@ internal class RebalancedSpireConfig : SimpleModConfig
 
     [ConfigSection("Neow")]
     public static bool BoomingConchConfig { get; set; } = true;
+    public static bool LargeCapsuleConfig { get; set; } = true;
     public static bool LavaRockConfig { get; set; } = true;
     public static bool NutritiousOysterConfig { get; set; } = true;
+    public static bool NeowsTalismanConfig { get; set; } = true;
     public static bool NeowChoicesConfig { get; set; } = true;
 
     [ConfigSection("Orobas")]
+    public static bool AlchemicalCofferConfig { get; set; } = true;
     public static bool OrobasChoicesConfig { get; set; } = true;
 
     [ConfigSection("Tezcatara")]
@@ -92,6 +95,10 @@ internal class RebalancedSpireConfig : SimpleModConfig
 
     [ConfigSection("Pael")]
     public static bool PaelsHornConfig { get; set; } = true;
+
+    [ConfigSection("Darv")]
+    public static bool DustyTomeConfig { get; set; } = true;
+    public static bool DarvChoicesConfig { get; set; } = true;
 
     [ConfigSection("Vakuu")]
     public static bool BloodSoakedRoseConfig { get; set; } = true;
@@ -101,7 +108,8 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool LordsParasolConfig { get; set; } = true;
     public static bool WhisperingEarringConfig { get; set; } = true;
     public static bool VakuuChoicesConfig { get; set; } = true;
-    public static bool VakuuArtConfig { get; set; } = false;
+    public static bool VakuuFixArtConfig { get; set; } = true;
+    public static bool VakuuBetaArtConfig { get; set; } = false;
     public static bool ApparitionArtConfig { get; set; } = false;
 
     [ConfigSection("Merchant")]

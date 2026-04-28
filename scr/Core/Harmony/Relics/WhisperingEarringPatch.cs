@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -15,7 +16,6 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Rooms;
-
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
@@ -120,6 +120,26 @@ public static class WhisperingEarringPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.AfterCardPlayedLate))]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterCardPlayedLate(AbstractModel __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not WhisperingEarring { Status: RelicStatus.Active } whisperingEarring || cardPlay.Card.Owner != whisperingEarring.Owner)
+        {
+            return true;
+        }
+
+        whisperingEarring.Status = RelicStatus.Normal;
+        __result = VakuuAutoPlay(whisperingEarring, choiceContext, whisperingEarring.Owner);
+        return false;
+    }
+
     [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.AfterEnergySpent))]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -149,9 +169,10 @@ public static class WhisperingEarringPatch
             return true;
         }
 
-        __result = VakuuAutoPlay(whisperingEarring, new BlockingPlayerChoiceContext(), whisperingEarring.Owner);
+        whisperingEarring.Status = RelicStatus.Active;
         CurrentEnergyUsed.Set(whisperingEarring, -1);
         whisperingEarring.InvokeDisplayAmountChanged();
+        __result = Task.CompletedTask;
         return false;
     }
 
