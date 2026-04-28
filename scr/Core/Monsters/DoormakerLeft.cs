@@ -16,45 +16,14 @@ using Powers;
 
 public sealed class DoormakerLeft : DoormakerBase
 {
-    private static int ScrutinyDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
+    private static int OmnidynamicsPowerAmount => 1;
+
+    private static int ScrutinyDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
     private static int ScrutinyCount => 4;
-    private static int BeamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 16);
+    private static int BeamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 18, 16);
     private static int VulnerablePowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int WeakPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
-    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 32, 30);
-
-    private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
-    {
-        await Open();
-        UpdateVisual(EyeState);
-        await Cmd.CustomScaledWait(0.2f, 0.6f);
-        NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
-    }
-
-    private async Task ScrutinyMove(IReadOnlyList<Creature> targets)
-    {
-        await DamageCmd.Attack(ScrutinyDamage).WithHitCount(ScrutinyCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<ScrutinyPlusPower>(Creature, 1, Creature, null);
-    }
-
-    private async Task BeamMove(IReadOnlyList<Creature> targets)
-    {
-        await DamageCmd.Attack(BeamDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, Creature, null);
-        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, Creature, null);
-    }
-
-    private async Task FullAttackMove(IReadOnlyList<Creature> targets)
-    {
-        IsAboutToEscape = true;
-        await PowerCmd.Remove<ScrutinyPlusPower>(Creature);
-        await DamageCmd.Attack(FullAttackDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-    }
-
-    private async Task CloseMove(IReadOnlyList<Creature> targets)
-    {
-        await Close();
-    }
+    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
 
     public override async Task AfterAddedToRoom()
     {
@@ -65,38 +34,74 @@ public sealed class DoormakerLeft : DoormakerBase
         }
 
         await base.AfterAddedToRoom();
-        foreach (Player player in CombatState.Players)
+        foreach (Creature creature in CombatState.Enemies)
         {
-            await PowerCmd.Apply<OmnidynamicsPower>(player.Creature, 1, Creature, null);
-        }
-    }
-
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
-    {
-        await base.AfterDeath(choiceContext, creature, wasRemovalPrevented, deathAnimLength);
-        if (wasRemovalPrevented || creature != Creature)
-        {
-            return;
-        }
-
-        await PowerCmd.Remove<ScrutinyPlusPower>(Creature);
-    }
-
-    private bool ShouldWakeUp()
-    {
-        DoormakerRight? doormaker = null;
-        foreach (Creature enemy in CombatState.Enemies)
-        {
-            if (enemy.Monster is not DoormakerRight doormakerRight)
+            if (creature.Monster is not DoormakerRight doormaker)
             {
                 continue;
             }
 
-            doormaker = doormakerRight;
+            OtherDoormaker = doormaker;
             break;
         }
 
-        return doormaker is null or { IsAboutToEscape: true, IsPortalOpen: true };
+        foreach (Player player in CombatState.Players)
+        {
+            await PowerCmd.Apply<OmnidynamicsPower>(player.Creature, OmnidynamicsPowerAmount, Creature, null);
+        }
+    }
+
+    protected override async Task Open()
+    {
+        await base.Open();
+        UpdateVisual(EyeState);
+        await Cmd.CustomScaledWait(0.2f, 0.6f);
+    }
+
+    private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
+    {
+        if (Creature.ShowsInfiniteHp)
+        {
+            await Open();
+        }
+        NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
+    }
+
+    private async Task ScrutinyMove(IReadOnlyList<Creature> targets)
+    {
+        if (Creature.ShowsInfiniteHp)
+        {
+            await Open();
+        }
+        await DamageCmd.Attack(ScrutinyDamage).WithHitCount(ScrutinyCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await PowerCmd.Apply<ScrutinyPlusPower>(Creature, 1, Creature, null);
+    }
+
+    private async Task BeamMove(IReadOnlyList<Creature> targets)
+    {
+        if (Creature.ShowsInfiniteHp)
+        {
+            await Open();
+        }
+        await DamageCmd.Attack(BeamDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, Creature, null);
+        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, Creature, null);
+    }
+
+    private async Task FullAttackMove(IReadOnlyList<Creature> targets)
+    {
+        if (Creature.ShowsInfiniteHp)
+        {
+            await Open();
+        }
+        await PowerCmd.Remove<ScrutinyPlusPower>(Creature);
+        await DamageCmd.Attack(FullAttackDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await ReadyToSummon();
+    }
+
+    private async Task CloseMove(IReadOnlyList<Creature> targets)
+    {
+        await Close();
     }
 
     public override MonsterMoveStateMachine GenerateMoveStateMachine()
@@ -116,8 +121,8 @@ public sealed class DoormakerLeft : DoormakerBase
         branchState2.AddState(moveState7, () => !ShouldWakeUp());
         branchState2.AddState(DramaticOpenState, ShouldWakeUp);
         ConditionalBranchState branchState3 = new ConditionalBranchState("DOORMAKER_LEFT_3");
-        branchState3.AddState(moveState3, () => !ShouldClose());
-        branchState3.AddState(moveState6, ShouldClose);
+        branchState3.AddState(moveState3, () => !OtherDoormaker.Creature.IsAlive);
+        branchState3.AddState(moveState6, () => OtherDoormaker.Creature.IsAlive);
         moveState.FollowUpState = branchState;
         DramaticOpenState.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;

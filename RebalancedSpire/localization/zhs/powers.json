@@ -1,7 +1,6 @@
 ﻿{
   "REBALANCEDSPIRE-HARD_TO_KILL_POWER.description": "[gold]外骨骼虫[/gold]受到的所有伤害和生命减少效果不会超过[blue]{Amount}[/blue]点。",
   "REBALANCEDSPIRE-HARD_TO_KILL_POWER.smartDescription": "[gold]{OwnerName}[/gold]受到的所有伤害和生命减少效果不会超过[blue]{Amount}[/blue]点。",
-
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.description": "你每打出一张[gold]黏液[/gold]，这个敌人就会变得更强大。",
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.smartDescription": "你每打出一张[gold]{Slimed}[/gold]，[gold]{SlimedBerserker}[/gold]就获得[blue]{StrengthPower}[/blue]点力量，并回复[blue]{Heal}[/blue]点生命值。",
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.title": "榨取拥抱",

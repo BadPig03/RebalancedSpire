@@ -1,7 +1,6 @@
 ﻿{
   "REBALANCEDSPIRE-HARD_TO_KILL_POWER.description": "Reduce all damage taken and HP lost by [gold]Exoskeleton[/gold] to [blue]{Amount}[/blue].",
   "REBALANCEDSPIRE-HARD_TO_KILL_POWER.smartDescription": "Reduce all damage taken and HP lost by [gold]{OwnerName}[/gold] to [blue]{Amount}[/blue].",
-
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.description": "This enemy grows stronger for each [gold]Slimed[/gold] card you play.",
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.smartDescription": "Each time you play a [gold]{Slimed}[/gold], [gold]{SlimedBerserker}[/gold] gains [blue]{StrengthPower}[/blue] Strength and heals [blue]{Heal}[/blue] HP.",
   "REBALANCEDSPIRE-LEECHING_HUG_POWER.title": "Leeching Hug",

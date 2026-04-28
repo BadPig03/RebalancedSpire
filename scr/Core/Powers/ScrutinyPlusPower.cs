@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.scr.Core.Powers;
 
-using Afflictions;
 using BaseLib.Abstracts;
 using BaseLib.Hooks;
 using MegaCrit.Sts2.Core.Commands;
@@ -19,7 +18,7 @@ public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
 
     public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>
     {
-        new CardsVar(3)
+        new CardsVar(4)
     };
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
