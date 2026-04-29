@@ -16,7 +16,6 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
-using MegaCrit.Sts2.Core.Rooms;
 using Powers;
 
 public abstract class DoormakerBase : CustomMonsterModel
@@ -148,13 +147,26 @@ public abstract class DoormakerBase : CustomMonsterModel
         {
             await PowerCmd.Remove(power);
         }
-        foreach (PowerModel power in _powerModels)
+        foreach (PowerModel item in _powerModels)
         {
-            if (power is ITemporaryPower temporaryPower)
+            PowerModel? powerById = Creature.GetPowerById(item.Id);
+            if (powerById is { IsInstanced: false })
             {
-                temporaryPower.IgnoreNextInstance();
+                if (powerById is ITemporaryPower temporaryPower)
+                {
+                    temporaryPower.IgnoreNextInstance();
+                }
+                await PowerCmd.ModifyAmount(powerById, item.Amount, powerById.Applier, null);
             }
-            await PowerCmd.Apply(power, Creature, power.Amount, Creature, null);
+            else
+            {
+                PowerModel power = (PowerModel)item.ClonePreservingMutability();
+                if (power is ITemporaryPower temporaryPower)
+                {
+                    temporaryPower.IgnoreNextInstance();
+                }
+                await PowerCmd.Apply(power, Creature, item.Amount, power.Applier, null);
+            }
         }
         _powerModels.Clear();
     }
