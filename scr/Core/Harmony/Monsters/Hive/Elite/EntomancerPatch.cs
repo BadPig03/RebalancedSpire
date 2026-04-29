@@ -92,7 +92,7 @@ public static class EntomancerPatch
         list.Add(moveState);
         list.Add(moveState2);
         list.Add(moveState3);
-        __result = new MonsterMoveStateMachine(list, moveState);
+        __result = new MonsterMoveStateMachine(list, moveState2);
         return false;
     }
 }

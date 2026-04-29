@@ -20,7 +20,7 @@ public static class SoulNexusPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SoulNexusConfig;
 
-    private static int SoulStrikeDamage => 3;
+    private static int SoulStrikeDamage => 4;
     private static int SoulStrikeRepeat => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
     private static int MaelstromDamage => 2;
     private static int MaelstromRepeat => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 12);

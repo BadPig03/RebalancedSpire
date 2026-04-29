@@ -38,9 +38,30 @@
   "REBALANCEDSPIRE-OROBAS_CHOICES_CONFIG.hover.desc": "重启后生效。",
 
   "REBALANCEDSPIRE-TEZCATARA.title": "特兹卡塔拉",
+  "REBALANCEDSPIRE-BIIIG_HUG_CONFIG.title": "大~抱抱",
+  "REBALANCEDSPIRE-BIIIG_HUG_CONFIG.hover.title": "启用大~抱抱相关的平衡性改动。",
+  "REBALANCEDSPIRE-BIIIG_HUG_CONFIG.hover.desc": "重启后生效。",
   "REBALANCEDSPIRE-TOASTY_MITTENS_CONFIG.title": "烘焙手套",
   "REBALANCEDSPIRE-TOASTY_MITTENS_CONFIG.hover.title": "启用烘焙手套相关的平衡性改动。",
   "REBALANCEDSPIRE-TOASTY_MITTENS_CONFIG.hover.desc": "重启后生效。",
+
+  "REBALANCEDSPIRE-PAEL.title": "佩尔",
+  "REBALANCEDSPIRE-PAELS_HORN_CONFIG.title": "佩尔之角",
+  "REBALANCEDSPIRE-PAELS_HORN_CONFIG.hover.title": "启用佩尔之角相关的平衡性改动。",
+  "REBALANCEDSPIRE-PAELS_HORN_CONFIG.hover.desc": "重启后生效。",
+
+  "REBALANCEDSPIRE-NONUPEIPE.title": "诺奴佩普",
+  "REBALANCEDSPIRE-LOOMING_FRUIT_CONFIG.title": "布质果实",
+  "REBALANCEDSPIRE-LOOMING_FRUIT_CONFIG.hover.title": "启用布质果实相关的平衡性改动。",
+  "REBALANCEDSPIRE-LOOMING_FRUIT_CONFIG.hover.desc": "重启后生效。",
+
+  "REBALANCEDSPIRE-TANX.title": "坦克斯",
+  "REBALANCEDSPIRE-CROSSBOW_CONFIG.title": "十字弓",
+  "REBALANCEDSPIRE-CROSSBOW_CONFIG.hover.title": "启用十字弓相关的平衡性改动。",
+  "REBALANCEDSPIRE-CROSSBOW_CONFIG.hover.desc": "重启后生效。",
+  "REBALANCEDSPIRE-WAR_HAMMER_CONFIG.title": "战锤",
+  "REBALANCEDSPIRE-WAR_HAMMER_CONFIG.hover.title": "启用战锤相关的平衡性改动。",
+  "REBALANCEDSPIRE-WAR_HAMMER_CONFIG.hover.desc": "重启后生效。",
 
   "REBALANCEDSPIRE-DARV.title": "达弗",
   "REBALANCEDSPIRE-DUSTY_TOME_CONFIG.title": "尘封魔典",
@@ -49,11 +70,6 @@
   "REBALANCEDSPIRE-DARV_CHOICES_CONFIG.title": "先古遗物选项",
   "REBALANCEDSPIRE-DARV_CHOICES_CONFIG.hover.title": "启用达弗的先古遗物选项相关的平衡性改动。",
   "REBALANCEDSPIRE-DARV_CHOICES_CONFIG.hover.desc": "重启后生效。",
-
-  "REBALANCEDSPIRE-PAEL.title": "佩尔",
-  "REBALANCEDSPIRE-PAELS_HORN_CONFIG.title": "佩尔之角",
-  "REBALANCEDSPIRE-PAELS_HORN_CONFIG.hover.title": "启用佩尔之角相关的平衡性改动。",
-  "REBALANCEDSPIRE-PAELS_HORN_CONFIG.hover.desc": "重启后生效。",
 
   "REBALANCEDSPIRE-VAKUU.title": "瓦库",
   "REBALANCEDSPIRE-BLOOD_SOAKED_ROSE_CONFIG.title": "血染玫瑰",
@@ -96,9 +112,20 @@
   "REBALANCEDSPIRE-UNTOUCHABLE_CONFIG.hover.desc": "重启后生效。",
 
   "REBALANCEDSPIRE-NECROBINDER.title": "亡灵契约师",
+  "REBALANCEDSPIRE-BANSHEES_CRY_CONFIG.title": "女妖之嚎",
+  "REBALANCEDSPIRE-BANSHEES_CRY_CONFIG.hover.title": "启用女妖之嚎相关的平衡性改动。",
+  "REBALANCEDSPIRE-BANSHEES_CRY_CONFIG.hover.desc": "重启后生效。",
   "REBALANCEDSPIRE-DEFY_CONFIG.title": "违逆",
   "REBALANCEDSPIRE-DEFY_CONFIG.hover.title": "启用违逆相关的平衡性改动。",
   "REBALANCEDSPIRE-DEFY_CONFIG.hover.desc": "重启后生效。",
+
+  "REBALANCEDSPIRE-DEFECT.title": "故障机器人",
+  "REBALANCEDSPIRE-COOLANT_CONFIG.title": "冷却剂",
+  "REBALANCEDSPIRE-COOLANT_CONFIG.hover.title": "启用冷却剂相关的平衡性改动。",
+  "REBALANCEDSPIRE-COOLANT_CONFIG.hover.desc": "重启后生效。",
+  "REBALANCEDSPIRE-DEFRAGMENT_CONFIG.title": "碎片整理",
+  "REBALANCEDSPIRE-DEFRAGMENT_CONFIG.hover.title": "启用碎片整理相关的平衡性改动。",
+  "REBALANCEDSPIRE-DEFRAGMENT_CONFIG.hover.desc": "重启后生效。",
 
   "REBALANCEDSPIRE-MERCHANT.title": "商人",
   "REBALANCEDSPIRE-MERCHANT_CONFIG.title": "移除卡牌服务价格",

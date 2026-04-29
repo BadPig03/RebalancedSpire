@@ -90,15 +90,23 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool AlchemicalCofferConfig { get; set; } = true;
     public static bool OrobasChoicesConfig { get; set; } = true;
 
-    [ConfigSection("Tezcatara")]
-    public static bool ToastyMittensConfig { get; set; } = true;
-
     [ConfigSection("Pael")]
     public static bool PaelsHornConfig { get; set; } = true;
+
+    [ConfigSection("Tezcatara")]
+    public static bool BiiigHugConfig { get; set; } = true;
+    public static bool ToastyMittensConfig { get; set; } = true;
 
     [ConfigSection("Darv")]
     public static bool DustyTomeConfig { get; set; } = true;
     public static bool DarvChoicesConfig { get; set; } = true;
+
+    [ConfigSection("Nonupeipe")]
+    public static bool LoomingFruitConfig { get; set; } = true;
+
+    [ConfigSection("Tanx")]
+    public static bool CrossbowConfig { get; set; } = true;
+    public static bool WarHammerConfig { get; set; } = true;
 
     [ConfigSection("Vakuu")]
     public static bool BloodSoakedRoseConfig { get; set; } = true;
@@ -108,9 +116,11 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool LordsParasolConfig { get; set; } = true;
     public static bool WhisperingEarringConfig { get; set; } = true;
     public static bool VakuuChoicesConfig { get; set; } = true;
-    public static bool VakuuFixArtConfig { get; set; } = true;
-    public static bool VakuuBetaArtConfig { get; set; } = false;
     public static bool ApparitionArtConfig { get; set; } = false;
+    public static bool VakuuFixedArtConfig { get; set; } = true;
+
+    [ConfigVisibleIf(nameof(VakuuFixedArtConfig), false)]
+    public static bool VakuuBetaArtConfig { get; set; } = false;
 
     [ConfigSection("Merchant")]
     public static bool MerchantConfig { get; set; } = true;
@@ -120,7 +130,13 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool UntouchableConfig { get; set; } = true;
 
     [ConfigSection("Necrobinder")]
+    public static bool BansheesCryConfig { get; set; } = true;
     public static bool DefyConfig { get; set; } = true;
+    public static bool EnergyOverflowConfig { get; set; } = true;
+
+    [ConfigSection("Defect")]
+    public static bool CoolantConfig { get; set; } = true;
+    public static bool DefragmentConfig { get; set; } = true;
 
     [ConfigSection("Overgrowth")]
     public static bool CubexConstructConfig { get; set; } = true;

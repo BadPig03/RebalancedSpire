@@ -11,11 +11,8 @@ using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace RebalancedSpire.scr.Core.Relics;
 
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Runs;
-
 [Pool(typeof(SharedRelicPool))]
-public class NeowsLament : CustomRelicModel
+public sealed class NeowsLament : CustomRelicModel
 {
     private const int MaxUsableCount = 3;
 

@@ -59,32 +59,6 @@ public class MechaKnightPatch
         await _heavyCleaveMoveDelegate(instance, targets);
     }
 
-    [HarmonyPatch(typeof(MechaKnight), nameof(MechaKnight.ChargeDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void IncreaseChargeDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result += 5;
-    }
-
-    [HarmonyPatch(typeof(MechaKnight), nameof(MechaKnight.HeavyCleaveDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceHeavyCleaveDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 15;
-    }
-
     [HarmonyPatch(typeof(MechaKnight), nameof(MechaKnight.GenerateMoveStateMachine))]
     [HarmonyPrefix]
     [UsedImplicitly]

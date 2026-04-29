@@ -18,7 +18,7 @@ public class InkletPatch
     private static readonly bool Disabled = !RebalancedSpireConfig.InkletConfig;
 
     private static int WhirlwindDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
-    private static int WhirlwindCount => 4;
+    private static int WhirlwindCount => 3;
 
     private static readonly Func<Inklet, IReadOnlyList<Creature>, Task>? _jabMoveDelegate = Helpers.GetDelegate<Inklet>("JabMove");
     private static readonly Func<Inklet, IReadOnlyList<Creature>, Task>? _piercingGazeMoveDelegate = Helpers.GetDelegate<Inklet>("PiercingGazeMove");

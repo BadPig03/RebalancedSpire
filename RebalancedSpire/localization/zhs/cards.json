@@ -1,6 +1,8 @@
 ﻿{
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "给予[blue]{PoisonPower:diff()}[/blue]层[gold]中毒[/gold]。\n当这名敌人死亡时，对所有敌人造成等于其最大生命值的伤害。",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.title": "尸爆术",
+  "REBALANCEDSPIRE-ENERGY_OVERFLOW.description": "移除所有[gold]灾厄[/gold]。\n每移除[blue]6[/blue]层[gold]灾厄[/gold]获得{Energy:energyIcons()}。",
+  "REBALANCEDSPIRE-ENERGY_OVERFLOW.title": "溢能",
   "REBALANCEDSPIRE-LIMIT_BREAK.description": "将你的[gold]力量[/gold]翻倍。",
   "REBALANCEDSPIRE-LIMIT_BREAK.title": "突破极限",
   "REBALANCEDSPIRE-WISH.description": "将你[gold]抽牌堆[/gold]和[gold]弃牌堆[/gold]中的一张牌放入你的[gold]手牌[/gold]。"

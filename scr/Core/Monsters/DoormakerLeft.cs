@@ -7,11 +7,13 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using Powers;
 
 public sealed class DoormakerLeft : DoormakerBase
@@ -64,6 +66,8 @@ public sealed class DoormakerLeft : DoormakerBase
         {
             await Open();
         }
+        TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.SCRUTINY.speakLine"), Creature, VfxColor.Purple);
+        await Cmd.CustomScaledWait(0.2f, 0.6f);
         NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
     }
 
@@ -83,6 +87,8 @@ public sealed class DoormakerLeft : DoormakerBase
         {
             await Open();
         }
+        TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.FULL_ATTACK.speakLine"), Creature, VfxColor.Purple);
+        await Cmd.CustomScaledWait(0.2f, 0.6f);
         await DamageCmd.Attack(BeamDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), targets, VulnerablePowerAmount, Creature, null);
         await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, Creature, null);

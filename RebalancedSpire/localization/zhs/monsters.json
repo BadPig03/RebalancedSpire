@@ -39,5 +39,8 @@
   "BYRDONIS.moves.ANGRY.title": "愤怒",
   "PHROG_PARASITE.moves.PROLIFERATION.title": "增殖",
   "SKULKING_COLONY.moves.SMASH.title": "砸击",
-  "LIVING_FOG.moves.CHARGE_UP.title": "蓄力"
+  "LIVING_FOG.moves.CHARGE_UP.title": "蓄力",
+  "DOORMAKER.moves.HUNGRY.speakLine": "我饥饿……",
+  "DOORMAKER.moves.FULL_ATTACK.speakLine": "去死……",
+  "DOORMAKER.moves.SCRUTINY.speakLine": "我好奇……"
 }

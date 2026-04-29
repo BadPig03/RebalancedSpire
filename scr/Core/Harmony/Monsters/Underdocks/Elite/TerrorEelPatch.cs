@@ -2,6 +2,8 @@
 
 using HarmonyLib;
 using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.Entities.Ascension;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 
 [HarmonyPatch]
@@ -20,6 +22,6 @@ public static class TerrorEelPatch
             return;
         }
 
-        __result = 140;
+        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 145, 140);
     }
 }

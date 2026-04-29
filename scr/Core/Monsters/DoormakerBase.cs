@@ -154,7 +154,7 @@ public abstract class DoormakerBase : CustomMonsterModel
             {
                 temporaryPower.IgnoreNextInstance();
             }
-            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, power.Amount, Creature, null);
+            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, power.Amount, power.Applier, null);
         }
         _powerModels.Clear();
     }

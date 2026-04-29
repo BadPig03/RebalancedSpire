@@ -83,7 +83,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.0.9" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.0" PrivateAssets="All" />
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
         <AdditionalFiles Include="RebalancedSpire/localization/**/*.json"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
@@ -131,6 +131,8 @@
       <Content Include="images\packed\card_portraits\ironclad\rebalancedspire-limit_break.png.import" />
       <Content Include="images\packed\card_portraits\silent\rebalancedspire-corpse_explosion.png" />
       <Content Include="images\packed\card_portraits\silent\rebalancedspire-corpse_explosion.png.import" />
+      <Content Include="images\potions\rebalancedspire-bone_tea_potion.png" />
+      <Content Include="images\potions\rebalancedspire-bone_tea_potion.png.import" />
       <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png" />
       <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png.import" />
       <Content Include="images\powers\rebalancedspire-disillusion_power.png" />
@@ -171,21 +173,27 @@
       <Content Include="scenes\events\background_scenes\vakuu_fixed_art.tscn" />
       <Content Include="scr\Core\Afflictions\ToItsOriginOwner.cs.uid" />
       <Content Include="scr\Core\Cards\CorpseExplosion.cs.uid" />
+      <Content Include="scr\Core\Cards\EnergyOverflow.cs.uid" />
       <Content Include="scr\Core\Cards\LimitBreak.cs.uid" />
       <Content Include="scr\Core\Harmony\Afflictions\WeightedPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Ancients\DarvPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\NeowPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\OrobasPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\VakuuPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\AttackCommandPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\EnthralledPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\FollyPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\CoolantPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\DefragmentPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\ApparitionPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\ByrdonisEggPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Necrobinder\BansheesCryPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Necrobinder\DefyPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Status\SootPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\HarmonyExtensions.cs.uid" />
       <Content Include="scr\Core\Harmony\Merchant\MerchantCardRemovalEntryPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Boss\DoormakerBossPatch.cs.uid" />
@@ -196,7 +204,6 @@
       <Content Include="scr\Core\Harmony\Monsters\Glory\Elite\MechaKnightPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Elite\SoulNexusPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Elite\SpectralKnightPatch.cs.uid" />
-      <Content Include="scr\Core\Harmony\Monsters\Glory\Normal\AxebotPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Normal\DevotedSculptorPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Normal\FabricatorPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Glory\Normal\FrogKnightPatch.cs.uid" />
@@ -267,21 +274,25 @@
       <Content Include="scr\Core\Harmony\Powers\HardToKillPowerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\AlchemicalCofferPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\CrossbowPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\DustyTomePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\FiddlePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\LargeCapsulePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\LavaRockPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\LoomingFruitPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\LordsParasolPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\NeowsTalismanPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\NutritiousOysterPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\ToastyMittensPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\VersionPatch.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerLeft.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerRight.cs.uid" />
+      <Content Include="scr\Core\Potions\BoneTeaPotion.cs.uid" />
       <Content Include="scr\Core\Powers\CorpseExplosionPower.cs.uid" />
       <Content Include="scr\Core\Powers\DisillusionPower.cs.uid" />
       <Content Include="scr\Core\Powers\OmnidynamicsPower.cs.uid" />

@@ -24,7 +24,7 @@ public static class VakuuPatch
             return true;
         }
 
-        if (RebalancedSpireConfig.VakuuFixArtConfig)
+        if (RebalancedSpireConfig.VakuuFixedArtConfig)
         {
             __result = SceneHelper.GetScenePath("events/background_scenes/vakuu_fixed_art");
             return false;

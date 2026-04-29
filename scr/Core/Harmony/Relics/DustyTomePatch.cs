@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
@@ -21,16 +22,53 @@ public static class DustyTomePatch
     private static async Task AfterObtained(DustyTome instance)
     {
         var otherCardPools = ModelDb.AllCharacterCardPools.Where(cardPoolModel => cardPoolModel != instance.Owner.Character.CardPool).ToList();
-        var otherOptions = instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.RunState.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).ToList().UnstableShuffle(instance.Owner.PlayerRng.Rewards).Take(1).Concat(new CardCreationOptions(otherCardPools, CardCreationSource.Other, CardRarityOddsType.Uniform, c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).GetPossibleCards(instance.Owner).ToList().UnstableShuffle(instance.Owner.PlayerRng.Rewards).Take(2)).ToList();
+        var otherOptions = instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.RunState.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).ToList().UnstableShuffle(instance.Owner.PlayerRng.Rewards).Take(1).Concat(new CardCreationOptions(otherCardPools, CardCreationSource.Other, CardRarityOddsType.Uniform, c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).GetPossibleCards(instance.Owner).ToList().UnstableShuffle(instance.Owner.PlayerRng.Rewards).Take(2)).Select(c => instance.Owner.RunState.CreateCard(c, instance.Owner)).ToList();
+        otherOptions.ForEach(c => CardCmd.Upgrade(c));
         var chosenCard = await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), otherOptions, instance.Owner, canSkip: false);
         if (chosenCard == null)
         {
             return;
         }
 
-        var card = instance.Owner.RunState.CreateCard(chosenCard, instance.Owner);
-        CardCmd.Upgrade(card);
-        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(card, PileType.Deck));
+        CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(chosenCard, PileType.Deck));
+    }
+
+    [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not DustyTome)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCEDSPIRE-DUSTY_TOME.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.EventDescription), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not DustyTome)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCEDSPIRE-DUSTY_TOME.eventDescription");
+        return false;
     }
 
     [HarmonyPatch(typeof(DustyTome), nameof(DustyTome.AfterObtained))]

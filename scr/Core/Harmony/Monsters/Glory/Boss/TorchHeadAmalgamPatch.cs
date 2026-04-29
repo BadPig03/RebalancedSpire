@@ -33,7 +33,7 @@ public static class TorchHeadAmalgamPatch
             return;
         }
 
-        __result -= 2;
+        __result -= 1;
     }
 
     [HarmonyPatch(typeof(TorchHeadAmalgam), nameof(TorchHeadAmalgam.WeakTackleDamage), MethodType.Getter)]

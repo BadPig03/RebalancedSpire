@@ -33,7 +33,7 @@ public static class TestSubjectPatch
     private static int PounceDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
     private static int LacerateDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
     private static int LacerateCount => 3;
-    private static int BigPounceDamage => 43;
+    private static int BigPounceDamage => 45;
     private static int BurnCount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2,1);
     private static int PainfulStabsPowerAmount => 1;
