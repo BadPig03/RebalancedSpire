@@ -1,9 +1,11 @@
 ﻿namespace RebalancedSpire.scr.Core.Harmony.Relics;
 
-using BaseLib.Patches.Hooks;
 using HarmonyLib;
 using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
@@ -13,6 +15,29 @@ using MegaCrit.Sts2.Core.Models.Relics;
 public static class FiddlePatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.FiddleConfig;
+
+    private static int MaxAllowedCardsInHand => 8;
+
+    private static async Task AfterCardDrawn(Fiddle instance, PlayerChoiceContext choiceContext)
+    {
+        var hands = CardPile.GetCards(instance.Owner, PileType.Hand).ToList();
+        if (hands.Count <= MaxAllowedCardsInHand)
+        {
+            return;
+        }
+
+        instance.Flash();
+        for (var i = MaxAllowedCardsInHand; i < CardPile.MaxCardsInHand; i++)
+        {
+            var cardModel = hands.ElementAtOrDefault(i);
+            if (cardModel == null)
+            {
+                continue;
+            }
+
+            await CardCmd.Discard(choiceContext, cardModel);
+        }
+    }
 
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
     [HarmonyPrefix]
@@ -52,6 +77,25 @@ public static class FiddlePatch
         return false;
     }
 
+    [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.AfterCardDrawn))]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterCardDrawn(AbstractModel __instance, PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Fiddle fiddle)
+        {
+            return true;
+        }
+
+        __result = AfterCardDrawn(fiddle, choiceContext);
+        return false;
+    }
+
     [HarmonyPatch(typeof(Fiddle), nameof(Fiddle.AfterPreventingDraw))]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -64,28 +108,5 @@ public static class FiddlePatch
 
         __result = Task.CompletedTask;
         return false;
-    }
-
-    [HarmonyPatch(typeof(MaxHandSizePatch), nameof(MaxHandSizePatch.GetMaxHandSize))]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    public static void PostFix_ModifyMaxHandSize(Player player, ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        var value = 0;
-        foreach (var relic in player.Relics)
-        {
-            if (relic is not Fiddle fiddle)
-            {
-                continue;
-            }
-
-            value -= fiddle.DynamicVars.Cards.IntValue;
-        }
-        __result = Math.Max(0, __result + value);
     }
 }

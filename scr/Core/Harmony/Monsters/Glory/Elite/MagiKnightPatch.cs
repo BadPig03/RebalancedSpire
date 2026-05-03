@@ -20,29 +20,6 @@ public static class MagiKnightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KnightsConfig;
 
-    private static readonly Func<MagiKnight, IReadOnlyList<Creature>, Task>? _powerShieldMoveDelegate = Helpers.GetDelegate<MagiKnight>("PowerShieldMove");
-    private static readonly Func<MagiKnight, IReadOnlyList<Creature>, Task>? _dampenMoveDelegate = Helpers.GetDelegate<MagiKnight>("DampenMove");
-
-    private static async Task PowerShieldMove(MagiKnight instance, IReadOnlyList<Creature> targets)
-    {
-        if (_powerShieldMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _powerShieldMoveDelegate(instance, targets);
-    }
-
-    private static async Task DampenMove(MagiKnight instance, IReadOnlyList<Creature> targets)
-    {
-        if (_dampenMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _dampenMoveDelegate(instance, targets);
-    }
-
     private static async Task PrepMove(MagiKnight instance)
     {
         TalkCmd.Play(new LocString("monsters", "MAGI_KNIGHT.PREP.banter"), instance.Creature, VfxColor.Orange, VfxDuration.Long);
@@ -108,8 +85,8 @@ public static class MagiKnightPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("POWER_SHIELD_MOVE", t => PowerShieldMove(__instance, t), new SingleAttackIntent(__instance.PowerShieldDamage), new DefendIntent());
-        MoveState moveState2 = new MoveState("DAMPEN_MOVE", t => DampenMove(__instance, t), new DebuffIntent());
+        MoveState moveState = new MoveState("POWER_SHIELD_MOVE", __instance.PowerShieldMove, new SingleAttackIntent(__instance.PowerShieldDamage), new DefendIntent());
+        MoveState moveState2 = new MoveState("DAMPEN_MOVE", __instance.DampenMove, new DebuffIntent());
         MoveState moveState3 = new MoveState("PREP_MOVE", _ => PrepMove(__instance), new UnknownIntent());
         MoveState moveState4 = new MoveState("PREP_2_MOVE", _ => Prep2Move(__instance), new UnknownIntent());
         MoveState moveState5 = new MoveState("MAGIC_BOMB", t => MagicBombMove(__instance, t), new SingleAttackIntent(__instance.BombDamage));

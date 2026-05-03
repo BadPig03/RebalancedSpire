@@ -16,23 +16,7 @@ public static class WaterfallGiantPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.WaterfallGiantConfig;
 
-    private static int SteamEruptionPowerAmount => 6;
-
-    private static readonly Func<WaterfallGiant, IReadOnlyList<Creature>, Task>? _pressurizeMoveDelegate = Helpers.GetDelegate<WaterfallGiant>("PressurizeMove");
-    private static readonly Func<WaterfallGiant, IReadOnlyList<Creature>, Task>? _siphonMoveDelegate = Helpers.GetDelegate<WaterfallGiant>("SiphonMove");
-    private static readonly Func<WaterfallGiant, IReadOnlyList<Creature>, Task>? _pressureUpMoveDelegate = Helpers.GetDelegate<WaterfallGiant>("PressureUpMove");
-    private static readonly Func<WaterfallGiant, IReadOnlyList<Creature>, Task>? _aboutToBlowMoveDelegate = Helpers.GetDelegate<WaterfallGiant>("AboutToBlowMove");
-    private static readonly Func<WaterfallGiant, IReadOnlyList<Creature>, Task>? _explodeMoveDelegate = Helpers.GetDelegate<WaterfallGiant>("ExplodeMove");
-
-    private static async Task PressurizeMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
-    {
-        if (_pressurizeMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _pressurizeMoveDelegate(instance, targets);
-    }
+    private static int SteamEruptionPowerAmount => 9;
 
     private static async Task StompMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
     {
@@ -45,51 +29,18 @@ public static class WaterfallGiantPatch
         await DamageCmd.Attack(instance.RamDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.3f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/waterfall_giant/waterfall_giant_attack_kick").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
     }
 
-    private static async Task SiphonMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
-    {
-        if (_siphonMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _siphonMoveDelegate(instance, targets);
-        await PowerCmd.Apply<SteamEruptionPower>(new ThrowingPlayerChoiceContext(), instance.Creature, SteamEruptionPowerAmount, instance.Creature, null);
-    }
-
     private static async Task PressureGunMove(WaterfallGiant instance)
     {
         await DamageCmd.Attack(instance.CurrentPressureGunDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.3f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/waterfall_giant/waterfall_giant_attack_kick").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         instance.CurrentPressureGunDamage += instance.PressureGunIncrease;
     }
 
-    private static async Task PressureUpMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
+    private static async Task PressureUpMove(WaterfallGiant instance)
     {
-        if (_pressureUpMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _pressureUpMoveDelegate(instance, targets);
-    }
-
-    private static async Task AboutToBlowMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
-    {
-        if (_aboutToBlowMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _aboutToBlowMoveDelegate(instance, targets);
-    }
-
-    private static async Task ExplodeMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
-    {
-        if (_explodeMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _explodeMoveDelegate(instance, targets);
+        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/waterfall_giant/waterfall_giant_eruption");
+        await CreatureCmd.TriggerAnim(instance.Creature, "Heal", 0.8f);
+        await PowerCmd.Apply<SteamEruptionPower>(new ThrowingPlayerChoiceContext(), instance.Creature, SteamEruptionPowerAmount, instance.Creature, null);
+        instance.IncrementBuildUpAnimationTrack();
     }
 
     [HarmonyPatch(typeof(WaterfallGiant), nameof(WaterfallGiant.GenerateMoveStateMachine))]
@@ -103,17 +54,17 @@ public static class WaterfallGiantPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("PRESSURIZE_MOVE", t => PressurizeMove(__instance, t), new BuffIntent());
+        MoveState moveState = new MoveState("PRESSURIZE_MOVE", __instance.PressurizeMove, new BuffIntent());
         MoveState moveState2 = new MoveState("STOMP_MOVE", t => StompMove(__instance, t), new SingleAttackIntent(__instance.StompDamage), new DebuffIntent());
         MoveState moveState3 = new MoveState("RAM_MOVE", _ => RamMove(__instance), new SingleAttackIntent(__instance.RamDamage));
-        MoveState moveState4 = new MoveState("SIPHON_MOVE", t => SiphonMove(__instance, t), new HealIntent(), new BuffIntent());
+        MoveState moveState4 = new MoveState("SIPHON_MOVE", __instance.SiphonMove, new HealIntent(), new BuffIntent());
         MoveState moveState5 = new MoveState("PRESSURE_GUN_MOVE", _ => PressureGunMove(__instance), new SingleAttackIntent(() => __instance.CurrentPressureGunDamage), new BuffIntent());
-        MoveState moveState6 = new MoveState("PRESSURE_UP_MOVE", t => PressureUpMove(__instance, t), new SingleAttackIntent(__instance.PressureUpDamage), new BuffIntent());
-        __instance.AboutToBlowState = new MoveState("ABOUT_TO_BLOW_MOVE", t => AboutToBlowMove(__instance, t), new StunIntent())
+        MoveState moveState6 = new MoveState("PRESSURE_UP_MOVE", _ => PressureUpMove(__instance), new SingleAttackIntent(__instance.PressureUpDamage), new BuffIntent());
+        __instance.AboutToBlowState = new MoveState("ABOUT_TO_BLOW_MOVE", __instance.AboutToBlowMove, new StunIntent())
         {
             MustPerformOnceBeforeTransitioning = true
         };
-        MoveState moveState7 = new MoveState("EXPLODE_MOVE", t => ExplodeMove(__instance, t), new DeathBlowIntent(() => __instance.SteamEruptionDamage));
+        MoveState moveState7 = new MoveState("EXPLODE_MOVE", __instance.ExplodeMove, new DeathBlowIntent(() => __instance.SteamEruptionDamage));
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;

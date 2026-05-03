@@ -10,19 +10,6 @@ public static class QueenPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.QueenConfig;
 
-    [HarmonyPatch(typeof(Queen), nameof(Queen.OffWithYourHeadDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceOffWithYourHeadDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 1;
-    }
-
     [HarmonyPatch(typeof(Queen), nameof(Queen.ExecutionDamage), MethodType.Getter)]
     [HarmonyPostfix]
     [UsedImplicitly]

@@ -40,13 +40,8 @@ public sealed class ToItsOriginOwner : AfflictionModel
         }
 
         List<Creature> byrdonis = [];
-        foreach (Creature enemy in enemies)
+        foreach (Creature enemy in enemies.Where(c => c.Monster is Byrdonis))
         {
-            if (enemy.Monster is not Byrdonis)
-            {
-                continue;
-            }
-
             await CreatureCmd.TriggerAnim(enemy, "NotAngry", 1f);
             byrdonis.Add(enemy);
         }

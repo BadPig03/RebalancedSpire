@@ -20,32 +20,6 @@ public static class ScrollOfBitingPatch
         await PowerCmd.Apply<PaperCutsPower>(new ThrowingPlayerChoiceContext(), instance.Creature, PaperCutsPowerAmount, instance.Creature, null);
     }
 
-    [HarmonyPatch(typeof(ScrollOfBiting), nameof(ScrollOfBiting.ChompDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceChompDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 2;
-    }
-
-    [HarmonyPatch(typeof(ScrollOfBiting), nameof(ScrollOfBiting.ChewDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceChewDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 1;
-    }
-
     [HarmonyPatch(typeof(ScrollOfBiting), nameof(ScrollOfBiting.AfterAddedToRoom))]
     [HarmonyPrefix]
     [UsedImplicitly]

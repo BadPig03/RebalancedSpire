@@ -68,18 +68,14 @@ public static class TestSubjectPatch
                 break;
             case 2:
                 await instance.Revive(instance.ThirdFormHp);
-                NemesisPower? nemesisPower = await PowerCmd.Apply<NemesisPower>(new ThrowingPlayerChoiceContext(), instance.Creature, NemesisPowerAmount, instance.Creature, null);
-                if (nemesisPower != null)
-                {
-                    nemesisPower._shouldApplyIntangible = true;
-                }
+                await PowerCmd.Apply<NemesisPower>(new ThrowingPlayerChoiceContext(), instance.Creature, NemesisPowerAmount, instance.Creature, null);
                 await PowerCmd.Remove<AdaptablePower>(instance.Creature);
                 await PowerCmd.Remove<PainfulStabsPower>(instance.Creature);
                 break;
         }
     }
 
-    private static async Task BiteMove(TestSubject instance, IReadOnlyList<Creature> targets)
+    private static async Task BiteMove(TestSubject instance)
     {
         await DamageCmd.Attack(BiteDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
     }
@@ -200,7 +196,7 @@ public static class TestSubjectPatch
         };
         MoveState moveState = new MoveState("GROWL_MOVE", _ => GrowlMove(__instance), new BuffIntent());
         MoveState moveState2 = new MoveState("SKULL_BASH_MOVE", t => SkullBashMove(__instance, t), new SingleAttackIntent(SkullBashDamage), new DebuffIntent());
-        MoveState moveState3 = new MoveState("BITE_MOVE", t => BiteMove(__instance, t), new SingleAttackIntent(BiteDamage));
+        MoveState moveState3 = new MoveState("BITE_MOVE", _ => BiteMove(__instance), new SingleAttackIntent(BiteDamage));
         MoveState moveState4 = new MoveState("MULTI_CLAW_MOVE", _ => MultiClawMove(__instance), new MultiAttackIntent(MultiClawDamage, () => __instance.MultiClawTotalCount));
         MoveState moveState5 = new MoveState("POUNCE_MOVE", _ => PounceMove(__instance), new SingleAttackIntent(PounceDamage));
         MoveState moveState6 = new MoveState("PHASE3_LACERATE_MOVE", _ => Phase3LacerateMove(__instance), new MultiAttackIntent(LacerateDamage, LacerateCount));

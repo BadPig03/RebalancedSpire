@@ -2,7 +2,6 @@
 
 using HarmonyLib;
 using JetBrains.Annotations;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
@@ -12,40 +11,6 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 public static class FossilStalkerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.FossilStalkerConfig;
-
-    private static readonly Func<FossilStalker, IReadOnlyList<Creature>, Task>? _tackleMoveDelegate = Helpers.GetDelegate<FossilStalker>("TackleMove");
-    private static readonly Func<FossilStalker, IReadOnlyList<Creature>, Task>? _latchMoveDelegate = Helpers.GetDelegate<FossilStalker>("LatchMove");
-    private static readonly Func<FossilStalker, IReadOnlyList<Creature>, Task>? _lashAttackDelegate = Helpers.GetDelegate<FossilStalker>("LashAttack");
-
-    private static async Task LashAttack(FossilStalker instance, IReadOnlyList<Creature> targets)
-    {
-        if (_lashAttackDelegate == null)
-        {
-            return;
-        }
-
-        await _lashAttackDelegate(instance, targets);
-    }
-
-    private static async Task TackleMove(FossilStalker instance, IReadOnlyList<Creature> targets)
-    {
-        if (_tackleMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _tackleMoveDelegate(instance, targets);
-    }
-
-    private static async Task LatchMove(FossilStalker instance, IReadOnlyList<Creature> targets)
-    {
-        if (_latchMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _latchMoveDelegate(instance, targets);
-    }
 
     [HarmonyPatch(typeof(FossilStalker), nameof(FossilStalker.TackleDamage), MethodType.Getter)]
     [HarmonyPostfix]
@@ -71,9 +36,9 @@ public static class FossilStalkerPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("LASH_MOVE", t => LashAttack(__instance, t), new MultiAttackIntent(__instance.LashDamage, __instance.LashRepeat));
-        MoveState moveState2 = new MoveState("TACKLE_MOVE", t => TackleMove(__instance, t), new SingleAttackIntent(__instance.TackleDamage), new DebuffIntent());
-        MoveState moveState3 = new MoveState("LATCH_MOVE", t => LatchMove(__instance, t), new SingleAttackIntent(__instance.LatchDamage));
+        MoveState moveState = new MoveState("LASH_MOVE", __instance.LashAttack, new MultiAttackIntent(__instance.LashDamage, __instance.LashRepeat));
+        MoveState moveState2 = new MoveState("TACKLE_MOVE", __instance.TackleMove, new SingleAttackIntent(__instance.TackleDamage), new DebuffIntent());
+        MoveState moveState3 = new MoveState("LATCH_MOVE", __instance.LatchMove, new SingleAttackIntent(__instance.LatchDamage));
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState;

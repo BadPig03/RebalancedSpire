@@ -38,13 +38,16 @@
   "REBALANCEDSPIRE-PLOWED_POWER.description": "",
   "REBALANCEDSPIRE-PLOWED_POWER.smartDescription": "",
   "REBALANCEDSPIRE-PLOWED_POWER.title": "Plowed",
-  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.description": "Your max hand size is reduced.",
-  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.smartDescription": "Your max hand size is reduced by [red]{Cards}[/red].",
+  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.description": "After drawing, if you have more than [blue]6[/blue] cards in hand, automatically discard cards until you have only [blue]6[/blue] cards in hand.",
+  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.smartDescription": "After drawing, if you have more than [blue]6[/blue] cards in hand, automatically discard cards until you have only [blue]6[/blue] cards in hand.",
   "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.title": "Scrutiny+",
   "REBALANCEDSPIRE-SOUL_WITHER.description": "After this enemy deals you unblocked damage [blue]16[/blue] times, it enters a special intent.",
   "REBALANCEDSPIRE-SOUL_WITHER.smartDescription": "After [gold]{SoulNexus}[/gold] deals you unblocked damage [blue]{CalculationBase:diff()}[/blue] times, it enters a special intent.",
   "REBALANCEDSPIRE-SOUL_WITHER.title": "Soul Wither",
   "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.description": "",
   "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.smartDescription": "",
-  "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.title": "To Its Origin Owner"
+  "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.title": "To Its Origin Owner",
+  "REBALANCEDSPIRE-SYNCHRONIZE_PLUS_POWER.description": "The first time you record an Orb type, gain [blue]1[/blue] [gold]Focus[/gold].",
+  "REBALANCEDSPIRE-SYNCHRONIZE_PLUS_POWER.smartDescription": "The first time you record an Orb type, gain [blue]{Amount}[/blue] [gold]Focus[/gold].",
+  "REBALANCEDSPIRE-SYNCHRONIZE_PLUS_POWER.title": "Synchronize+"
 }

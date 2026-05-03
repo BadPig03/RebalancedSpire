@@ -1,4 +1,4 @@
-﻿namespace RebalancedSpire.scr.Core.Harmony.Monsters.Overgrowth.Boss;
+﻿namespace RebalancedSpire.scr.Core.Harmony.Encounters;
 
 using HarmonyLib;
 using JetBrains.Annotations;

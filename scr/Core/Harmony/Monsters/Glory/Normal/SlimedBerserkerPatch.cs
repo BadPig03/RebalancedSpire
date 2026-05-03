@@ -78,7 +78,7 @@ public static class SlimedBerserkerPatch
 
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("VOMIT_ICHOR_MOVE", t => VomitIchorMove(__instance, t), new StatusIntent(SlimedAmount), new BuffIntent());
-        MoveState moveState2 = new MoveState("FURIOUS_PUMMELING_MOVE", _ => FuriousPummelingMove(__instance), new MultiAttackIntent(__instance.PummelingDamage, PummelingCount));
+        MoveState moveState2 = new MoveState("FURIOUS_PUMMELING_MOVE", _ => FuriousPummelingMove(__instance), new MultiAttackIntent(PummelingDamage, PummelingCount));
         MoveState moveState3 = new MoveState("LEECHING_HUG_MOVE", t => LeechingHugMove(__instance, t), new DebuffIntent());
         MoveState moveState4 = new MoveState("SMOTHER_MOVE", _ => SmotherMove(__instance), new SingleAttackIntent(SmotherDamage));
         moveState.FollowUpState = moveState2;

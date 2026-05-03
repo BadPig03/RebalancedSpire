@@ -1,4 +1,4 @@
-﻿namespace RebalancedSpire.scr.Core.Harmony.Monsters.Glory.Boss;
+﻿namespace RebalancedSpire.scr.Core.Harmony.Encounters;
 
 using Core.Monsters;
 using Godot;

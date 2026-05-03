@@ -17,7 +17,7 @@ using scr.Core.Harmony;
 public partial class RebalancedSpireMain : Node
 {
     private const string ModId = "RebalancedSpire";
-    public const string Version = "v0.0.10_beta";
+    public const string Version = "v0.1.0_beta";
 
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
 

@@ -23,19 +23,6 @@ public static class TorchHeadAmalgamPatch
         __result -= 1;
     }
 
-    [HarmonyPatch(typeof(TorchHeadAmalgam), nameof(TorchHeadAmalgam.SoulBeamDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceSoulBeamDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 1;
-    }
-
     [HarmonyPatch(typeof(TorchHeadAmalgam), nameof(TorchHeadAmalgam.WeakTackleDamage), MethodType.Getter)]
     [HarmonyPostfix]
     [UsedImplicitly]

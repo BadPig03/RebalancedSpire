@@ -43,6 +43,17 @@ public static class KinFollowerPatch
     private static int GuardFakeBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 8);
     private static int HealAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 8, 6);
 
+    private static Task AfterDeath(KinFollower instance)
+    {
+        if (instance.CombatState.Enemies.Any(c => c.IsAlive))
+        {
+            return Task.CompletedTask;
+        }
+
+        NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 5f);
+        return Task.CompletedTask;
+    }
+
     private static async Task AfterAddedToRoom(KinFollower instance)
     {
         var currentMaxHp = instance.Creature.MaxHp;
@@ -54,8 +65,8 @@ public static class KinFollowerPatch
         else
         {
             await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, currentMaxHp * 1.5m);
+            NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 0f);
         }
-        NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 0f);
     }
 
     private static async Task QuickSlashMove(KinFollower instance)
@@ -176,9 +187,35 @@ public static class KinFollowerPatch
             room.AddExtraReward(player, new PotionReward(player));
             room.AddExtraReward(player, new RelicReward(RelicRarity.Common, player));
         }
+        var creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+        if (creatureNode != null)
+        {
+            creatureNode.Visuals.SetVisible(false);
+            creatureNode.ToggleIsInteractable(false);
+        }
         instance.Creature.RemoveAllPowersInternalExcept();
         CombatManager.Instance.RemoveCreature(instance.Creature);
         instance.Creature.CombatState?.RemoveCreature(instance.Creature);
+        NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 5f);
+    }
+
+    [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.AfterDeath))]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterDeath(AbstractModel __instance, PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not KinFollower kinFollower || wasRemovalPrevented)
+        {
+            return true;
+        }
+
+        __result = AfterDeath(kinFollower);
+        return false;
     }
 
     [HarmonyPatch(typeof(KinFollower), nameof(KinFollower.AfterAddedToRoom))]

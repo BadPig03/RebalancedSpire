@@ -4,7 +4,6 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves;
@@ -20,32 +19,9 @@ public class InkletPatch
     private static int WhirlwindDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
     private static int WhirlwindCount => 3;
 
-    private static readonly Func<Inklet, IReadOnlyList<Creature>, Task>? _jabMoveDelegate = Helpers.GetDelegate<Inklet>("JabMove");
-    private static readonly Func<Inklet, IReadOnlyList<Creature>, Task>? _piercingGazeMoveDelegate = Helpers.GetDelegate<Inklet>("PiercingGazeMove");
-
-    private static async Task JabMove(Inklet instance, IReadOnlyList<Creature> targets)
-    {
-        if (_jabMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _jabMoveDelegate(instance, targets);
-    }
-
     private static async Task WhirlwindMove(Inklet instance)
     {
         await DamageCmd.Attack(WhirlwindDamage).WithHitCount(WhirlwindCount).FromMonster(instance).WithAttackerAnim("TRIPLE_ATTACK", 0.3f).OnlyPlayAnimOnce().WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/inklet/inklet_attack_triple").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-    }
-
-    private static async Task PiercingGazeMove(Inklet instance, IReadOnlyList<Creature> targets)
-    {
-        if (_piercingGazeMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _piercingGazeMoveDelegate(instance, targets);
     }
 
     [HarmonyPatch(typeof(Inklet), nameof(Inklet.PiercingGazeDamage), MethodType.Getter)]
@@ -72,9 +48,9 @@ public class InkletPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("JAB_MOVE", t => JabMove(__instance, t), new SingleAttackIntent(__instance.JabDamage));
+        MoveState moveState = new MoveState("JAB_MOVE", __instance.JabMove, new SingleAttackIntent(__instance.JabDamage));
         MoveState moveState2 = new MoveState("WHIRLWIND_MOVE", _ => WhirlwindMove(__instance), new MultiAttackIntent(WhirlwindDamage, WhirlwindCount));
-        MoveState moveState3 = new MoveState("PIERCING_GAZE_MOVE", t => PiercingGazeMove(__instance, t), new SingleAttackIntent(__instance.PiercingGazeDamage));
+        MoveState moveState3 = new MoveState("PIERCING_GAZE_MOVE", __instance.PiercingGazeMove, new SingleAttackIntent(__instance.PiercingGazeDamage));
         RandomBranchState randomBranchState = new RandomBranchState("INIT_RAND");
         RandomBranchState randomBranchState2 = (RandomBranchState) (moveState2.FollowUpState = moveState3.FollowUpState = moveState.FollowUpState = new RandomBranchState("RAND"));
         randomBranchState.AddBranch(moveState, 2, 1f);

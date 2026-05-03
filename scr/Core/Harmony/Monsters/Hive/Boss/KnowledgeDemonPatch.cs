@@ -22,40 +22,6 @@ public static class KnowledgeDemonPatch
     private static int HealAmount => 20;
     private static readonly int[] _disintegrationDamageValues = [4, 6, 8];
 
-    private static readonly Func<KnowledgeDemon, IReadOnlyList<Creature>, Task>? _curseOfKnowledgeDelegate = Helpers.GetDelegate<KnowledgeDemon>("CurseOfKnowledge");
-    private static readonly Func<KnowledgeDemon, IReadOnlyList<Creature>, Task>? _slapMoveDelegate = Helpers.GetDelegate<KnowledgeDemon>("SlapMove");
-    private static readonly Func<KnowledgeDemon, IReadOnlyList<Creature>, Task>? _knowledgeOverwhelmingMoveDelegate = Helpers.GetDelegate<KnowledgeDemon>("KnowledgeOverwhelmingMove");
-
-    private static async Task CurseOfKnowledge(KnowledgeDemon instance, IReadOnlyList<Creature> targets)
-    {
-        if (_curseOfKnowledgeDelegate == null)
-        {
-            return;
-        }
-
-        await _curseOfKnowledgeDelegate(instance, targets);
-    }
-
-    private static async Task SlapMove(KnowledgeDemon instance, IReadOnlyList<Creature> targets)
-    {
-        if (_slapMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _slapMoveDelegate(instance, targets);
-    }
-
-    private static async Task KnowledgeOverwhelmingMove(KnowledgeDemon instance, IReadOnlyList<Creature> targets)
-    {
-        if (_knowledgeOverwhelmingMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _knowledgeOverwhelmingMoveDelegate(instance, targets);
-    }
-
     private static async Task PonderMove(KnowledgeDemon instance)
     {
         await CreatureCmd.TriggerAnim(instance.Creature, "HealTrigger", 1.8f);
@@ -121,9 +87,9 @@ public static class KnowledgeDemonPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("CURSE_OF_KNOWLEDGE_MOVE", t => CurseOfKnowledge(__instance, t), new DebuffIntent());
-        MoveState moveState2 = new MoveState("SLAP_MOVE", t => SlapMove(__instance, t), new SingleAttackIntent(__instance.SlapDamage));
-        MoveState moveState3 = new MoveState("KNOWLEDGE_OVERWHELMING_MOVE", t => KnowledgeOverwhelmingMove(__instance, t), new MultiAttackIntent(__instance.KnowledgeOverwhelmingDamage, 3));
+        MoveState moveState = new MoveState("CURSE_OF_KNOWLEDGE_MOVE", __instance.CurseOfKnowledge, new DebuffIntent());
+        MoveState moveState2 = new MoveState("SLAP_MOVE", __instance.SlapMove, new SingleAttackIntent(__instance.SlapDamage));
+        MoveState moveState3 = new MoveState("KNOWLEDGE_OVERWHELMING_MOVE", __instance.KnowledgeOverwhelmingMove, new MultiAttackIntent(__instance.KnowledgeOverwhelmingDamage, 3));
         MoveState moveState4 = new MoveState("PONDER_MOVE", _ => PonderMove(__instance), new HealIntent(), new BuffIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("CurseOfKnowledgeBranch");
         moveState.FollowUpState = moveState2;

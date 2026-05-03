@@ -1,24 +1,12 @@
-﻿using HarmonyLib;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
+﻿using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 
 namespace RebalancedSpire.scr.Core;
 
-using System.ComponentModel;
-using System.Reflection;
-using System.Text.Json;
-using BaseLib.Config;
-
 public static class Helpers
 {
-    public static Func<T, IReadOnlyList<Creature>, Task> GetDelegate<T>(string name) where T : MonsterModel
-    {
-        return (Func<T, IReadOnlyList<Creature>, Task>) Delegate.CreateDelegate(typeof(Func<T, IReadOnlyList<Creature>, Task>), null, AccessTools.Method(typeof(T), name, [typeof(IReadOnlyList<Creature>)]));
-    }
-
     public static EventOption RelicOption(AncientEventModel instance, RelicModel relic, string pageName = "INITIAL", string? customDonePage = null)
     {
         relic.AssertMutable();

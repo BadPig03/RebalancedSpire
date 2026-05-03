@@ -23,9 +23,6 @@ public static class MytePatch
 
     private static int ToxicAmount => 1;
 
-    private static readonly Func<Myte, IReadOnlyList<Creature>, Task>? _biteMoveDelegate = Helpers.GetDelegate<Myte>("BiteMove");
-    private static readonly Func<Myte, IReadOnlyList<Creature>, Task>? _suckMoveDelegate = Helpers.GetDelegate<Myte>("SuckMove");
-
     private static async Task ToxicMove(Myte instance, IReadOnlyList<Creature> targets)
     {
         if (TestMode.IsOff)
@@ -39,30 +36,10 @@ public static class MytePatch
         await CardPileCmd.AddToCombatAndPreview<Toxic>(targets, PileType.Hand, ToxicAmount, null);
     }
 
-    private static async Task BiteMove(Myte instance, IReadOnlyList<Creature> targets)
-    {
-        if (_biteMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _biteMoveDelegate(instance, targets);
-    }
-
-    private static async Task SuckMove(Myte instance, IReadOnlyList<Creature> targets)
-    {
-        if (_suckMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _suckMoveDelegate(instance, targets);
-    }
-
     [HarmonyPatch(typeof(Myte), nameof(Myte.GenerateMoveStateMachine))]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix(Myte __instance, ref MonsterMoveStateMachine __result)
+    private static bool PreFix_GenerateMoveStateMachine(Myte __instance, ref MonsterMoveStateMachine __result)
     {
         if (Disabled)
         {
@@ -71,8 +48,8 @@ public static class MytePatch
 
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("TOXIC_MOVE", t => ToxicMove(__instance, t), new StatusIntent(1));
-        MoveState moveState2 = new MoveState("BITE_MOVE", t => BiteMove(__instance, t), new SingleAttackIntent(__instance.BiteDamage));
-        MoveState moveState3 = new MoveState("SUCK_MOVE", t => SuckMove(__instance, t), new SingleAttackIntent(__instance.SuckDamage), new BuffIntent());
+        MoveState moveState2 = new MoveState("BITE_MOVE", __instance.BiteMove, new SingleAttackIntent(__instance.BiteDamage));
+        MoveState moveState3 = new MoveState("SUCK_MOVE", __instance.SuckMove, new SingleAttackIntent(__instance.SuckDamage), new BuffIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("INIT_MOVE");
         branchState.AddState(moveState, () => __instance.Creature.SlotName == "first");
         branchState.AddState(moveState3, () => __instance.Creature.SlotName == "second");

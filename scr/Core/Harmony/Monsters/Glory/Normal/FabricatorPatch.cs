@@ -25,7 +25,7 @@ public class FabricatorPatch
 
     private static int FabricatorPowerAmount => 1;
     private static int MinionPowerAmount => 1;
-    public static float SpawnBotDamageRatio => 1 / 12f;
+    public static float SpawnBotDamageRatio => 1 / 15f;
     private static int DisintegrateDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 18);
 
     private static async Task SpawnBot(Fabricator instance, IEnumerable<MonsterModel> options)

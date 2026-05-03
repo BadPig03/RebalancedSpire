@@ -25,7 +25,6 @@ public static class TheInsatiablePatch
 
     private static int FranticEscapeAmount => 6;
 
-
     private static async Task LiquifyMove(TheInsatiable instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_insatiable/the_insatiable_liquify_ground");

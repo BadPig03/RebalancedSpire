@@ -79,7 +79,17 @@ public abstract class DoormakerBase : CustomMonsterModel
         }
     }
 
-    public override LocString Title => Creature.ShowsInfiniteHp ? L10NMonsterLookup("DOOR.name") : L10NMonsterLookup("DOORMAKER.name") ;
+    public override LocString Title
+    {
+        get
+        {
+            if (_creature == null)
+            {
+                return L10NMonsterLookup("DOOR.name");
+            }
+            return Creature.ShowsInfiniteHp ? L10NMonsterLookup("DOOR.name") : L10NMonsterLookup("DOORMAKER.name");
+        }
+    }
 
     public override NCreatureVisuals CreateCustomVisuals()
     {
@@ -148,13 +158,26 @@ public abstract class DoormakerBase : CustomMonsterModel
         {
             await PowerCmd.Remove(power);
         }
-        foreach (PowerModel power in _powerModels)
+        foreach (PowerModel item in _powerModels)
         {
-            if (power is ITemporaryPower temporaryPower)
+            PowerModel? powerById = Creature.GetPowerById(item.Id);
+            if (powerById is { IsInstanced: false })
             {
-                temporaryPower.IgnoreNextInstance();
+                if (powerById is ITemporaryPower temporaryPower)
+                {
+                    temporaryPower.IgnoreNextInstance();
+                }
+                await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), powerById, item.Amount, powerById.Applier, null);
             }
-            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, power.Amount, power.Applier, null);
+            else
+            {
+                PowerModel power = (PowerModel)item.ClonePreservingMutability();
+                if (power is ITemporaryPower temporaryPower)
+                {
+                    temporaryPower.IgnoreNextInstance();
+                }
+                await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, item.Amount, power.Applier, null);
+            }
         }
         _powerModels.Clear();
     }

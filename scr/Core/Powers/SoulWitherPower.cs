@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using BaseLib.Abstracts;
-using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;

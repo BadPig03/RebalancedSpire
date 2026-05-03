@@ -38,13 +38,16 @@
   "REBALANCEDSPIRE-PLOWED_POWER.description": "",
   "REBALANCEDSPIRE-PLOWED_POWER.smartDescription": "",
   "REBALANCEDSPIRE-PLOWED_POWER.title": "已横冲直撞",
-  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.description": "你的手牌上限减少。",
-  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.smartDescription": "你的手牌上限减少[red]{Cards}[/red]。",
+  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.description": "在抽牌结束后，如果你的手牌数量大于[blue]6[/blue]，则自动丢弃卡牌直至你的手牌只剩下[blue]6[/blue]张牌。",
+  "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.smartDescription": "在抽牌结束后，如果你的手牌数量大于[blue]6[/blue]，则自动丢弃卡牌直至你的手牌只剩下[blue]6[/blue]张牌。",
   "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.title": "细看+",
   "REBALANCEDSPIRE-SOUL_WITHER_POWER.description": "在这个敌人对你造成未被格挡的伤害[blue]16[/blue]次之后，它会进入特殊意图。",
   "REBALANCEDSPIRE-SOUL_WITHER_POWER.smartDescription": "在[gold]{SoulNexus}[/gold]对你造成未被格挡的伤害[blue]{CalculationBase:diff()}[/blue]次之后，它会进入特殊意图。",
   "REBALANCEDSPIRE-SOUL_WITHER_POWER.title": "灵魂凋亡",
   "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.description": "",
   "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.smartDescription": "",
-  "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.title": "物归原主"
+  "REBALANCEDSPIRE-TO_ITS_ORIGIN_OWNER_POWER.title": "物归原主",
+  "REBALANCEDSPIRE-SYNCHRONIZE_PLUS_POWER.description": "首次记录新种类的充能球时，获得[blue]1[/blue]点[gold]集中[/gold]。",
+  "REBALANCEDSPIRE-SYNCHRONIZE_PLUS_POWER.smartDescription": "首次记录新种类的充能球时，获得[blue]{Amount}[/blue]点[gold]集中[/gold]。",
+  "REBALANCEDSPIRE-SYNCHRONIZE_PLUS_POWER.title": "同步+"
 }

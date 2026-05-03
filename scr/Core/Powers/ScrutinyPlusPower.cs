@@ -1,26 +1,22 @@
 ﻿namespace RebalancedSpire.scr.Core.Powers;
 
-using Afflictions;
 using BaseLib.Abstracts;
-using BaseLib.Hooks;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Afflictions;
 
-public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
+public sealed class ScrutinyPlusPower : CustomPowerModel
 {
+    private static int MaxAllowedCardsInHand => 6;
+
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
-
-    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>
-    {
-        new CardsVar(4)
-    };
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
@@ -42,6 +38,27 @@ public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
             {
                 await Afflict(cardModel);
             }
+        }
+    }
+
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        var hands = CardPile.GetCards(card.Owner, PileType.Hand).ToList();
+        if (hands.Count <= MaxAllowedCardsInHand)
+        {
+            return;
+        }
+
+        Flash();
+        for (var i = MaxAllowedCardsInHand; i < CardPile.MaxCardsInHand; i++)
+        {
+            var cardModel = hands.ElementAtOrDefault(i);
+            if (cardModel == null)
+            {
+                continue;
+            }
+
+            await CardCmd.Discard(choiceContext, cardModel);
         }
     }
 
@@ -78,18 +95,12 @@ public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
         return Task.CompletedTask;
     }
 
-    public int ModifyMaxHandSize(Player player, int currentMaxHandSize)
-    {
-        return currentMaxHandSize - DynamicVars.Cards.IntValue;
-    }
-
     private async Task Afflict(CardModel card)
     {
         if (card.Affliction != null)
         {
             return;
         }
-
 
         await CardCmd.Afflict<Weighted>(card, Amount);
     }

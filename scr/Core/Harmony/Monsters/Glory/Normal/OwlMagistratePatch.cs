@@ -20,7 +20,7 @@ public static class OwlMagistratePatch
             return;
         }
 
-        __result -= 6;
+        __result -= 3;
     }
 
     [HarmonyPatch(typeof(OwlMagistrate), nameof(OwlMagistrate.VerdictDamage), MethodType.Getter)]
@@ -33,6 +33,6 @@ public static class OwlMagistratePatch
             return;
         }
 
-        __result -= 6;
+        __result -= 3;
     }
 }

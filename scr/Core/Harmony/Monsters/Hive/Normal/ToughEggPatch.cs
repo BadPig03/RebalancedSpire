@@ -4,7 +4,6 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -19,29 +18,6 @@ using MegaCrit.Sts2.Core.TestSupport;
 public static class ToughEggPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.OvicopterConfig;
-
-    private static readonly Func<ToughEgg, IReadOnlyList<Creature>, Task>? _hatchMoveDelegate = Helpers.GetDelegate<ToughEgg>("HatchMove");
-    private static readonly Func<ToughEgg, IReadOnlyList<Creature>, Task>? _nibbleMoveDelegate = Helpers.GetDelegate<ToughEgg>("NibbleMove");
-
-    private static async Task HatchMove(ToughEgg instance, IReadOnlyList<Creature> targets)
-    {
-        if (_hatchMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _hatchMoveDelegate(instance, targets);
-    }
-
-    private static async Task NibbleMove(ToughEgg instance, IReadOnlyList<Creature> targets)
-    {
-        if (_nibbleMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _nibbleMoveDelegate(instance, targets);
-    }
 
     private static async Task AfterAddedToRoom(ToughEgg instance)
     {
@@ -95,8 +71,8 @@ public static class ToughEggPatch
 
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("STUN_MOVE", _ => Task.CompletedTask, new StunIntent());
-        MoveState moveState2 = new MoveState("HATCH_MOVE", t => HatchMove(__instance, t), new SummonIntent());
-        MoveState moveState3 = new MoveState("NIBBLE_MOVE", t => NibbleMove(__instance, t), new SingleAttackIntent(ToughEgg.NibbleDamage));
+        MoveState moveState2 = new MoveState("HATCH_MOVE", __instance.HatchMove, new SummonIntent());
+        MoveState moveState3 = new MoveState("NIBBLE_MOVE", __instance.NibbleMove, new SingleAttackIntent(ToughEgg.NibbleDamage));
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState3;

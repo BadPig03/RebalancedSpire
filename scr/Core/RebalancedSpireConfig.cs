@@ -82,8 +82,9 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool BoomingConchConfig { get; set; } = true;
     public static bool LargeCapsuleConfig { get; set; } = true;
     public static bool LavaRockConfig { get; set; } = true;
-    public static bool NutritiousOysterConfig { get; set; } = true;
     public static bool NeowsTalismanConfig { get; set; } = true;
+    public static bool NutritiousOysterConfig { get; set; } = true;
+    public static bool PomanderConfig { get; set; } = true;
     public static bool NeowChoicesConfig { get; set; } = true;
 
     [ConfigSection("Orobas")]
@@ -125,18 +126,33 @@ internal class RebalancedSpireConfig : SimpleModConfig
     [ConfigSection("Merchant")]
     public static bool MerchantConfig { get; set; } = true;
 
+    [ConfigSection("Event")]
+    public static bool HungryForMushroomsConfig { get; set; } = true;
+    public static bool LostWispConfig { get; set; } = true;
+    public static bool MorphicGroveConfig { get; set; } = true;
+    public static bool PunchOffConfig { get; set; } = true;
+    public static bool ReflectionsConfig { get; set; } = true;
+    public static bool SpiralingWhirlpoolConfig { get; set; } = true;
+    public static bool SpiritGrafterConfig { get; set; } = true;
+    public static bool SunkenStatueConfig { get; set; } = true;
+    public static bool TeaMasterConfig { get; set; } = true;
+    public static bool TheLanternKeyConfig { get; set; } = true;
+    public static bool TrialConfig { get; set; } = true;
+    public static bool WelcomeToWongosConfig { get; set; } = true;
+
     [ConfigSection("Silent")]
     public static bool AcrobaticsConfig { get; set; } = true;
+    public static bool FollowThroughConfig { get; set; } = true;
     public static bool UntouchableConfig { get; set; } = true;
 
     [ConfigSection("Necrobinder")]
     public static bool BansheesCryConfig { get; set; } = true;
     public static bool DefyConfig { get; set; } = true;
-    public static bool EnergyOverflowConfig { get; set; } = true;
 
     [ConfigSection("Defect")]
     public static bool CoolantConfig { get; set; } = true;
     public static bool DefragmentConfig { get; set; } = true;
+    public static bool SynchronizeConfig { get; set; } = true;
 
     [ConfigSection("Overgrowth")]
     public static bool CubexConstructConfig { get; set; } = true;
@@ -181,23 +197,18 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool ChomperConfig { get; set; } = true;
     public static bool ExoskeletonConfig { get; set; } = true;
     public static bool HunterKillerConfig { get; set; } = true;
-    public static bool LouseProgenitorConfig { get; set; } = true;
     public static bool MyteConfig { get; set; } = true;
     public static bool OvicopterConfig { get; set; } = true;
     public static bool TheObscuraConfig { get; set; } = true;
-    public static bool SlumberingBeetleConfig { get; set; } = true;
-    public static bool SpinyToadConfig { get; set; } = true;
     public static bool ThievingHopperConfig { get; set; } = true;
     public static bool TunnelerConfig { get; set; } = true;
     public static bool DecimillipedeConfig { get; set; } = true;
     public static bool EntomancerConfig { get; set; } = true;
-    public static bool InfestedPrismConfig { get; set; } = true;
     public static bool KaiserCrabConfig { get; set; } = true;
     public static bool KnowledgeDemonConfig { get; set; } = true;
     public static bool TheInsatiableConfig { get; set; } = true;
 
     [ConfigSection("Glory")]
-    public static bool DevotedSculptorConfig { get; set; } = true;
     public static bool FabricatorConfig { get; set; } = true;
     public static bool FrogKnightConfig { get; set; } = true;
     public static bool GlobeHeadConfig { get; set; } = true;
@@ -306,5 +317,36 @@ internal class RebalancedSpireConfig : SimpleModConfig
         {
             // ignored
         }
+    }
+
+    public static string GetConfigJson()
+    {
+        var config = ModConfigRegistry.Get<RebalancedSpireConfig>();
+        if (config == null)
+        {
+            return "";
+        }
+
+        var dictionary = new Dictionary<string, string>();
+        try
+        {
+            foreach (PropertyInfo configProperty in config.ConfigProperties)
+            {
+                var invariantString = TypeDescriptor.GetConverter(configProperty.PropertyType).ConvertToInvariantString(configProperty.GetValue(null));
+                if (invariantString == null)
+                {
+                    continue;
+                }
+
+                dictionary.Add(configProperty.Name, invariantString);
+            }
+        }
+        catch (Exception)
+        {
+            return "";
+        }
+
+        dictionary.Add("Version", RebalancedSpireMain.Version);
+        return "\n" + JsonSerializer.Serialize(dictionary, JsonOptions);
     }
 }

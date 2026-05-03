@@ -1,7 +1,9 @@
 ﻿{
-  "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "Apply [blue]{PoisonPower:diff()}[/blue] [gold]Poison[/gold]. \nWhen the enemy dies, deal damage equal to its Max HP to ALL enemies.",
+  "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "Apply {PoisonPower:diff()} [gold]Poison[/gold]. \nWhen the enemy dies, deal damage equal to its Max HP to ALL enemies.",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.title": "Corpse Explosion",
+  "REBALANCEDSPIRE-FOLLOW_THROUGH.description": "Deal {Damage:diff()} damage to ALL enemies.\nIf the last card you played this turn was a Skill, apply {WeakPower:diff()} [gold]Weak[/gold] to ALL enemies.",
   "REBALANCEDSPIRE-LIMIT_BREAK.description": "Double your [gold]Strength[/gold].",
   "REBALANCEDSPIRE-LIMIT_BREAK.title": "Limit Break",
-  "REBALANCEDSPIRE-WISH.description": "Put a card from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] into your [gold]Hand[/gold]."
+  "REBALANCEDSPIRE-WISH.description": "Put a card from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
+  "REBALANCEDSPIRE-SYNCHRONIZE.description": "Whenever you [gold]Channel[/gold] a new Orb type, record it. The first time you record an Orb type, gain {FocusPower} [gold]Focus[/gold]."
 }

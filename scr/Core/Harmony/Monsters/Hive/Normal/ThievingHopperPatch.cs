@@ -31,11 +31,6 @@ public static class ThievingHopperPatch
 	private static int EscapeArtistPowerAmount => 6;
 	private static int AttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 13);
 
-    private static readonly Func<ThievingHopper, IReadOnlyList<Creature>, Task>? _flutterMoveDelegate = Helpers.GetDelegate<ThievingHopper>("FlutterMove");
-    private static readonly Func<ThievingHopper, IReadOnlyList<Creature>, Task>? _hatTrickMoveDelegate = Helpers.GetDelegate<ThievingHopper>("HatTrickMove");
-    private static readonly Func<ThievingHopper, IReadOnlyList<Creature>, Task>? _nabMoveDelegate = Helpers.GetDelegate<ThievingHopper>("NabMove");
-    private static readonly Func<ThievingHopper, IReadOnlyList<Creature>, Task>? _escapeMoveDelegate = Helpers.GetDelegate<ThievingHopper>("EscapeMove");
-
     private static async Task AttackMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(AttackDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.3f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
@@ -114,46 +109,6 @@ public static class ThievingHopperPatch
 		}
     }
 
-    private static async Task FlutterMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
-    {
-        if (_flutterMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _flutterMoveDelegate(instance, targets);
-    }
-
-    private static async Task HatTrickMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
-    {
-        if (_hatTrickMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _hatTrickMoveDelegate(instance, targets);
-    }
-
-    private static async Task NabMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
-    {
-        if (_nabMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _nabMoveDelegate(instance, targets);
-    }
-
-    private static async Task EscapeMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
-    {
-        if (_escapeMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _escapeMoveDelegate(instance, targets);
-    }
-
     private static async Task AfterAddedToRoom(ThievingHopper instance)
     {
 	    await PowerCmd.Apply<EscapeArtistPower>(new ThrowingPlayerChoiceContext(), instance.Creature, EscapeArtistPowerAmount, instance.Creature, null);
@@ -186,10 +141,10 @@ public static class ThievingHopperPatch
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("ATTACK_MOVE", t => AttackMove(__instance, t), new SingleAttackIntent(AttackDamage), new DebuffIntent());
         MoveState moveState2 = new MoveState("THIEVERY_MOVE", t => ThieveryMove(__instance, t), new CardDebuffIntent());
-        MoveState moveState3 = new MoveState("FLUTTER_MOVE", t => FlutterMove(__instance, t), new BuffIntent());
-        MoveState moveState4 = new MoveState("HAT_TRICK_MOVE", t => HatTrickMove(__instance, t), new SingleAttackIntent(__instance.HatTrickDamage));
-        MoveState moveState5 = new MoveState("NAB_MOVE", t => NabMove(__instance, t), new SingleAttackIntent(__instance.NabDamage));
-        MoveState moveState6 = new MoveState("ESCAPE_MOVE", t => EscapeMove(__instance, t), new EscapeIntent());
+        MoveState moveState3 = new MoveState("FLUTTER_MOVE", __instance.FlutterMove, new BuffIntent());
+        MoveState moveState4 = new MoveState("HAT_TRICK_MOVE", __instance.HatTrickMove, new SingleAttackIntent(__instance.HatTrickDamage));
+        MoveState moveState5 = new MoveState("NAB_MOVE", __instance.NabMove, new SingleAttackIntent(__instance.NabDamage));
+        MoveState moveState6 = new MoveState("ESCAPE_MOVE", __instance.EscapeMove, new EscapeIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;

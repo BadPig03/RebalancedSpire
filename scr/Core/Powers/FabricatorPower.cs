@@ -12,7 +12,6 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace RebalancedSpire.scr.Core.Powers;
 
-using Harmony.Monsters.Glory;
 using Harmony.Monsters.Glory.Normal;
 
 public sealed class FabricatorPower : CustomPowerModel
@@ -95,6 +94,6 @@ public sealed class FabricatorPower : CustomPowerModel
 
     public static bool IsHpRemainingEnough(Creature creature)
     {
-        return creature.CurrentHp > 2 * GetSpawnBotDamage(creature);
+        return creature.CurrentHp > 4 * GetSpawnBotDamage(creature);
     }
 }
