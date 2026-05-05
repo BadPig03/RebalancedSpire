@@ -2,7 +2,6 @@
 
 using HarmonyLib;
 using JetBrains.Annotations;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Models;
@@ -17,16 +16,16 @@ public static class OrobasPatch
 
     private static List<EventOption> OptionPool1(Orobas instance) =>
     [
-        Helpers.RelicOption<Driftwood>(instance),
-        Helpers.RelicOption<GlassEye>(instance),
-        Helpers.RelicOption<SandCastle>(instance)
+        RelicHelpers.RelicOption<Driftwood>(instance),
+        RelicHelpers.RelicOption<GlassEye>(instance),
+        RelicHelpers.RelicOption<SandCastle>(instance)
     ];
 
     private static List<EventOption> OptionPool2(Orobas instance) =>
     [
-        Helpers.RelicOption<AlchemicalCoffer>(instance),
-        Helpers.RelicOption<ElectricShrymp>(instance),
-        Helpers.RelicOption<RadiantPearl>(instance)
+        RelicHelpers.RelicOption<AlchemicalCoffer>(instance),
+        RelicHelpers.RelicOption<ElectricShrymp>(instance),
+        RelicHelpers.RelicOption<RadiantPearl>(instance)
     ];
 
     private static List<EventOption> OptionPool3(Orobas instance)
@@ -35,13 +34,13 @@ public static class OrobasPatch
         TouchOfOrobas touchOfOrobas = (TouchOfOrobas) ModelDb.Relic<TouchOfOrobas>().ToMutable();
         if (instance.Owner == null || touchOfOrobas.SetupForPlayer(instance.Owner))
         {
-            list.Add(Helpers.RelicOption(instance, touchOfOrobas));
+            list.Add(RelicHelpers.RelicOption(instance, touchOfOrobas));
         }
 
         ArchaicTooth archaicTooth = (ArchaicTooth)ModelDb.Relic<ArchaicTooth>().ToMutable();
         if (instance.Owner == null || archaicTooth.SetupForPlayer(instance.Owner))
         {
-            list.Add(Helpers.RelicOption(instance, archaicTooth));
+            list.Add(RelicHelpers.RelicOption(instance, archaicTooth));
         }
         if (list.Count == 0)
         {
@@ -57,12 +56,12 @@ public static class OrobasPatch
         {
             SeaGlass seaGlass = (SeaGlass) ModelDb.Relic<SeaGlass>().ToMutable();
             seaGlass.CharacterId = allCharacter.Id;
-            list.Add(Helpers.RelicOption(instance, seaGlass));
+            list.Add(RelicHelpers.RelicOption(instance, seaGlass));
         }
         return list;
     }
 
-    private static EventOption PrismaticGem(Orobas instance) => Helpers.RelicOption<PrismaticGem>(instance);
+    private static EventOption PrismaticGem(Orobas instance) => RelicHelpers.RelicOption<PrismaticGem>(instance);
 
     [HarmonyPatch(typeof(Orobas), nameof(Orobas.AllPossibleOptions), MethodType.Getter)]
     [HarmonyPrefix]
@@ -94,7 +93,7 @@ public static class OrobasPatch
             return true;
         }
 
-        Player? player = __instance.Owner;
+        var player = __instance.Owner;
         if (player == null)
         {
             return true;
@@ -111,7 +110,7 @@ public static class OrobasPatch
         {
             SeaGlass seaGlass = (SeaGlass) ModelDb.Relic<SeaGlass>().ToMutable();
             seaGlass.CharacterId = characterModel.Id;
-            list.Add(Helpers.RelicOption(__instance, seaGlass));
+            list.Add(RelicHelpers.RelicOption(__instance, seaGlass));
         }
 
         var results = new List<EventOption>();

@@ -2,7 +2,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Rewards;
@@ -34,38 +33,21 @@ public sealed class ToItsOriginOwnerPower : CustomPowerModel
 
     public override async Task AfterCombatEnd(CombatRoom room)
     {
-        CardModel? card;
-        var allCards = Owner.Player?.PlayerCombatState?.AllCards;
-        if (Owner.Player == null || allCards == null)
+        var eggList = Owner.Player?.PlayerCombatState?.AllCards.Where(c => c is ByrdonisEgg).ToList();
+        if (eggList == null || eggList.Count == 0)
         {
-            card = null;
+            return;
         }
-        else
+
+        foreach (var egg in eggList)
         {
-            CardModel? tempCard = null;
-            foreach (CardModel cardModel in allCards)
+            await CardPileCmd.RemoveFromCombat(egg);
+            if (egg.DeckVersion == null)
             {
-                if (cardModel is not ByrdonisEgg)
-                {
-                    continue;
-                }
-
-                tempCard = cardModel;
-                break;
+                continue;
             }
-            card = tempCard;
-        }
-        if (card == null)
-        {
-            return;
-        }
 
-        await CardPileCmd.RemoveFromCombat(card);
-        if (card.DeckVersion == null)
-        {
-            return;
+            await CardPileCmd.RemoveFromDeck(egg.DeckVersion);
         }
-
-        await CardPileCmd.RemoveFromDeck(card.DeckVersion);
     }
 }

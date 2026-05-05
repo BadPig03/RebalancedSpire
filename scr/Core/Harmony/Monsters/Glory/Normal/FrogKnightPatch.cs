@@ -24,30 +24,4 @@ public static class FrogKnightPatch
 
         __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 12, 10);
     }
-
-    [HarmonyPatch(typeof(FrogKnight), nameof(FrogKnight.TongueLashDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceTongueLashDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 2;
-    }
-
-    [HarmonyPatch(typeof(FrogKnight), nameof(FrogKnight.StrikeDownEvilDamage), MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceStrikeDownEvilDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 2;
-    }
 }

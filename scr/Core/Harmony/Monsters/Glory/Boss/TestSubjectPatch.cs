@@ -32,7 +32,7 @@ public static class TestSubjectPatch
     private static int PounceDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
     private static int LacerateDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
     private static int LacerateCount => 3;
-    private static int BigPounceDamage => 43;
+    private static int BigPounceDamage => 45;
     private static int BurnCount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2,1);
     private static int PainfulStabsPowerAmount => 1;
@@ -53,6 +53,11 @@ public static class TestSubjectPatch
         await Cmd.Wait(0.8f);
         NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.SetDefaultScaleTo(1f + instance.Respawns * 0.1f, 0.1f);
         await Cmd.Wait(1.15f);
+        if (instance.Creature.CombatState == null)
+        {
+            return;
+        }
+
         instance.Creature.GetPower<AdaptablePower>()?.DoRevive();
         switch (instance.Respawns)
         {
@@ -62,26 +67,22 @@ public static class TestSubjectPatch
                 break;
             case 2:
                 await instance.Revive(instance.ThirdFormHp);
-                NemesisPower? nemesisPower = await PowerCmd.Apply<NemesisPower>(instance.Creature, NemesisPowerAmount, instance.Creature, null);
-                if (nemesisPower != null)
-                {
-                    nemesisPower._shouldApplyIntangible = true;
-                }
+                await PowerCmd.Apply<NemesisPower>(instance.Creature, NemesisPowerAmount, instance.Creature, null);
                 await PowerCmd.Remove<AdaptablePower>(instance.Creature);
                 await PowerCmd.Remove<PainfulStabsPower>(instance.Creature);
                 break;
         }
     }
 
+    private static async Task BiteMove(TestSubject instance)
+    {
+        await DamageCmd.Attack(BiteDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+    }
+
     private static async Task SkullBashMove(TestSubject instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(SkullBashDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, instance.Creature, null);
-    }
-
-    private static async Task BiteMove(TestSubject instance)
-    {
-        await DamageCmd.Attack(BiteDamage).FromMonster(instance).WithAttackerAnim("BiteTrigger", 0.25f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/test_subject/test_subject_bite").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
     }
 
     private static async Task MultiClawMove(TestSubject instance)
@@ -110,7 +111,7 @@ public static class TestSubjectPatch
         instance.SetColor(Colors.White);
         NCombatRoom.Instance?.BackCombatVfxContainer.AddChildSafely(NTestSubjectBurnVfx.Create());
         await CreatureCmd.TriggerAnim(instance.Creature, "BurnTrigger", 1.25f);
-        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Discard, BurnCount, addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Burn>(targets, PileType.Discard, BurnCount, false);
         await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 

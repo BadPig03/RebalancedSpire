@@ -4,7 +4,6 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -18,29 +17,6 @@ public static class ShrinkerBeetlePatch
 
     private static int StompDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
     private static int StompCount => 2;
-
-    private static readonly Func<ShrinkerBeetle, IReadOnlyList<Creature>, Task>? _shrinkMoveDelegate = Helpers.GetDelegate<ShrinkerBeetle>("ShrinkMove");
-    private static readonly Func<ShrinkerBeetle, IReadOnlyList<Creature>, Task>? _chompMoveDelegate = Helpers.GetDelegate<ShrinkerBeetle>("ChompMove");
-
-    private static async Task ShrinkMove(ShrinkerBeetle instance, IReadOnlyList<Creature> targets)
-    {
-        if (_shrinkMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _shrinkMoveDelegate(instance, targets);
-    }
-
-    private static async Task ChompMove(ShrinkerBeetle instance, IReadOnlyList<Creature> targets)
-    {
-        if (_chompMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _chompMoveDelegate(instance, targets);
-    }
 
     private static async Task StompMove(ShrinkerBeetle instance)
     {
@@ -58,8 +34,8 @@ public static class ShrinkerBeetlePatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("SHRINKER_MOVE", t => ShrinkMove(__instance, t), new DebuffIntent(strong: true));
-        MoveState moveState2 = new MoveState("CHOMP_MOVE", t => ChompMove(__instance, t), new SingleAttackIntent(__instance.ChompDamage));
+        MoveState moveState = new MoveState("SHRINKER_MOVE", __instance.ShrinkMove, new DebuffIntent(strong: true));
+        MoveState moveState2 = new MoveState("CHOMP_MOVE", __instance.ChompMove, new SingleAttackIntent(__instance.ChompDamage));
         MoveState moveState3 = new MoveState("STOMP_MOVE", _ => StompMove(__instance), new MultiAttackIntent(StompDamage, StompCount));
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;

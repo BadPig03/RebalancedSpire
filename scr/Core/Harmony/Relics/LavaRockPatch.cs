@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.scr.Core.Harmony.Relics;
 
-using System.Collections.ObjectModel;
 using BaseLib.Utils;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -56,7 +55,7 @@ public static class LavaRockPatch
         __result = new List<DynamicVar>
         {
             new("Enemies", EnemiesDefeatedRequired)
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -152,7 +151,7 @@ public static class LavaRockPatch
         }
 
         __instance.Flash();
-        rewards.Add(new CardReward(CardCreationOptions.ForNonCombatWithUniformOdds(new ReadOnlyCollection<CardPoolModel>([__instance.Owner.Character.CardPool]), c => c.Rarity == CardRarity.Uncommon).WithFlags(CardCreationFlags.NoRarityModification), 3, player));
+        rewards.Add(new CardReward(CardCreationOptions.ForNonCombatWithUniformOdds(new List<CardPoolModel>([__instance.Owner.Character.CardPool]), c => c.Rarity == CardRarity.Uncommon).WithFlags(CardCreationFlags.NoRarityModification), 3, player));
         EnemiesDefeated.Set(__instance, 0);
         TriggeredAmount.Set(__instance, triggeredAmount + 1);
         __instance.DynamicVars["Enemies"].BaseValue += 1;

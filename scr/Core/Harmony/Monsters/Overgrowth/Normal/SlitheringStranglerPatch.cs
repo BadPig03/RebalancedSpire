@@ -25,7 +25,7 @@ public static class SlitheringStranglerPatch
     [HarmonyPatch(typeof(SlitheringStrangler), nameof(SlitheringStrangler.ConstrictMove))]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix(SlitheringStrangler __instance, IReadOnlyList<Creature> targets, ref Task __result)
+    private static bool PreFix_ConstrictMove(SlitheringStrangler __instance, IReadOnlyList<Creature> targets, ref Task __result)
     {
         if (Disabled)
         {

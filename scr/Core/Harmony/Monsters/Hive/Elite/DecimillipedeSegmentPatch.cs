@@ -19,43 +19,9 @@ public static class DecimillipedeSegmentPatch
     private static int BulkStrength => 1;
     private static int ReattachPowerAmount => 20;
 
-    private static readonly Func<DecimillipedeSegment, IReadOnlyList<Creature>, Task>? _writheMoveDelegate = Helpers.GetDelegate<DecimillipedeSegment>("WritheMove");
-    private static readonly Func<DecimillipedeSegment, IReadOnlyList<Creature>, Task>? _constrictMoveDelegate = Helpers.GetDelegate<DecimillipedeSegment>("ConstrictMove");
-    private static readonly Func<DecimillipedeSegment, IReadOnlyList<Creature>, Task>? _reattachMoveDelegate = Helpers.GetDelegate<DecimillipedeSegment>("ReattachMove");
-
-    private static async Task WritheMove(DecimillipedeSegment instance, IReadOnlyList<Creature> targets)
-    {
-        if (_writheMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _writheMoveDelegate(instance, targets);
-    }
-
     private static async Task BulkMove(DecimillipedeSegment instance)
     {
         await PowerCmd.Apply<StrengthPower>(instance.Creature, BulkStrength, instance.Creature, null);
-    }
-
-    private static async Task ConstrictMove(DecimillipedeSegment instance, IReadOnlyList<Creature> targets)
-    {
-        if (_constrictMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _constrictMoveDelegate(instance, targets);
-    }
-
-    private static async Task ReattachMove(DecimillipedeSegment instance, IReadOnlyList<Creature> targets)
-    {
-        if (_reattachMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _reattachMoveDelegate(instance, targets);
     }
 
     private static async Task AfterAddedToRoom(DecimillipedeSegment instance)
@@ -68,7 +34,7 @@ public static class DecimillipedeSegmentPatch
         var players = instance.CombatState.Players;
         var count = players.Count;
         var currentActIndex = instance.CombatState.RunState.CurrentActIndex;
-        List<Creature> source = (from c in instance.CombatState.GetTeammatesOf(instance.Creature) where c != instance.Creature select c).ToList();
+        var source = instance.CombatState.Enemies.Where(c => c != instance.Creature).ToList();
         while (source.Any(c => c.MaxHp == maxHp))
         {
             maxHp += 2;
@@ -106,11 +72,11 @@ public static class DecimillipedeSegmentPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("WRITHE_MOVE", t => WritheMove(__instance, t), new MultiAttackIntent(__instance.WritheDamage, 2));
+        MoveState moveState = new MoveState("WRITHE_MOVE", __instance.WritheMove, new MultiAttackIntent(__instance.WritheDamage, 2));
         MoveState moveState2 = new MoveState("BULK_MOVE", _ => BulkMove(__instance), new BuffIntent());
-        MoveState moveState3 = new MoveState("CONSTRICT_MOVE", t => ConstrictMove(__instance, t), new SingleAttackIntent(__instance.ConstrictDamage), new DebuffIntent());
+        MoveState moveState3 = new MoveState("CONSTRICT_MOVE", __instance.ConstrictMove, new SingleAttackIntent(__instance.ConstrictDamage), new DebuffIntent());
         __instance.DeadState = new MoveState("DEAD_MOVE", __instance.DeadMove);
-        MoveState moveState4 = new MoveState("REATTACH_MOVE", t => ReattachMove(__instance, t), new HealIntent())
+        MoveState moveState4 = new MoveState("REATTACH_MOVE", __instance.ReattachMove, new HealIntent())
         {
             MustPerformOnceBeforeTransitioning = true
         };

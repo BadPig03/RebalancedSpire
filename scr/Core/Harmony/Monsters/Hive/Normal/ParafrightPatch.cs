@@ -4,7 +4,6 @@ using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -18,18 +17,6 @@ public static class ParafrightPatch
 
     private static int IllusionPowerAmount => 1;
     private static int DisillusionPowerAmount => 1;
-
-    private static readonly Func<Parafright, IReadOnlyList<Creature>, Task>? _slamMoveDelegate = Helpers.GetDelegate<Parafright>("SlamMove");
-
-    private static async Task SlamMove(Parafright instance, IReadOnlyList<Creature> targets)
-    {
-        if (_slamMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _slamMoveDelegate(instance, targets);
-    }
 
     private static async Task AfterAddedToRoom(Parafright instance)
     {
@@ -75,7 +62,7 @@ public static class ParafrightPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("SLAM_MOVE", t => SlamMove(__instance, t), new SingleAttackIntent(__instance.SlamDamage));
+        MoveState moveState = new MoveState("SLAM_MOVE", __instance.SlamMove, new SingleAttackIntent(__instance.SlamDamage));
         moveState.FollowUpState = moveState;
         list.Add(moveState);
         __result = new MonsterMoveStateMachine(list, moveState);

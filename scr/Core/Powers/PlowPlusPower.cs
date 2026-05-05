@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -14,15 +13,17 @@ namespace RebalancedSpire.scr.Core.Powers;
 
 public sealed class PlowPlusPower : CustomPowerModel
 {
+    private static int PlowedPowerAmount => 1;
+
     public override PowerType Type => PowerType.Debuff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override IEnumerable<IHoverTip> ExtraHoverTips => new ReadOnlyCollection<IHoverTip>(
+    public override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.Static(StaticHoverTip.Stun),
         HoverTipFactory.FromPower<StrengthPower>()
-    ]);
+    ]).AsReadOnly();
 
     public override bool ShouldScaleInMultiplayer => true;
 
@@ -36,8 +37,8 @@ public sealed class PlowPlusPower : CustomPowerModel
         Flash();
         await PowerCmd.Remove<StrengthPower>(Owner);
         await monster.SetStunned();
-        await CreatureCmd.Stun(Owner, monster.StunnedMove, target.GetPower<PlowedPower>() != null ? "BEAST_CRY_MOVE" : "SECOND_STAMP_MOVE");
+        await CreatureCmd.Stun(Owner, monster.StunnedMove, target.HasPower<PlowedPower>() ? "BEAST_CRY_MOVE" : "SECOND_STAMP_MOVE");
         await PowerCmd.Remove(this);
-        await PowerCmd.Apply<PlowedPower>(target, 1, target, null);
+        await PowerCmd.Apply<PlowedPower>(Owner, PlowedPowerAmount, Owner, null);
     }
 }

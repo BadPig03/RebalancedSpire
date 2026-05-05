@@ -81,11 +81,11 @@ public sealed class OmnidynamicsPower : CustomPowerModel
         Facing = direction;
         Creature owner = Owner;
         var pets = Owner.Pets;
-        var num = 0;
         var creatures = new Creature[1 + pets.Count];
+        var num = 0;
         creatures[num] = owner;
         num++;
-        foreach (Creature creature in pets)
+        foreach (var creature in pets)
         {
             creatures[num] = creature;
             num++;

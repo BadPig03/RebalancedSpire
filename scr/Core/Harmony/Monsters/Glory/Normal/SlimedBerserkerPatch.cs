@@ -31,7 +31,7 @@ public static class SlimedBerserkerPatch
     {
         SfxCmd.Play(instance.SlimeSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Vomit", 0.7f);
-        await CardPileCmd.AddToCombatAndPreview<Slimed>(targets, PileType.Discard, SlimedAmount, addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Slimed>(targets, PileType.Discard, SlimedAmount, false);
         await PowerCmd.Apply<LeechingHugPower>(instance.Creature, LeechingHugPowerAmount, instance.Creature, null);
     }
 
@@ -39,7 +39,7 @@ public static class SlimedBerserkerPatch
     {
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Hug", 0.65f);
-        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, null, null);
+        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task SmotherMove(SlimedBerserker instance)
@@ -77,7 +77,7 @@ public static class SlimedBerserkerPatch
 
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("VOMIT_ICHOR_MOVE", t => VomitIchorMove(__instance, t), new StatusIntent(SlimedAmount), new BuffIntent());
-        MoveState moveState2 = new MoveState("FURIOUS_PUMMELING_MOVE", _ => FuriousPummelingMove(__instance), new MultiAttackIntent(__instance.PummelingDamage, PummelingCount));
+        MoveState moveState2 = new MoveState("FURIOUS_PUMMELING_MOVE", _ => FuriousPummelingMove(__instance), new MultiAttackIntent(PummelingDamage, PummelingCount));
         MoveState moveState3 = new MoveState("LEECHING_HUG_MOVE", t => LeechingHugMove(__instance, t), new DebuffIntent());
         MoveState moveState4 = new MoveState("SMOTHER_MOVE", _ => SmotherMove(__instance), new SingleAttackIntent(SmotherDamage));
         moveState.FollowUpState = moveState2;

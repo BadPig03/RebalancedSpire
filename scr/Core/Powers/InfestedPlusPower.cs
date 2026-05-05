@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -21,10 +20,10 @@ public sealed class InfestedPlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new StringVar("PhrogParasite", ModelDb.Monster<PhrogParasite>().Title.GetFormattedText()),
-    ]);
+    ]).AsReadOnly();
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, bool wasRemovalPrevented, float deathAnimLength)
     {
@@ -40,7 +39,7 @@ public sealed class InfestedPlusPower : CustomPowerModel
         }
         for (var i = 0; i < Math.Min(MaxAmount, Amount); i++)
         {
-            Wriggler wriggler = (Wriggler)ModelDb.Monster<Wriggler>().ToMutable();
+            Wriggler wriggler = (Wriggler) ModelDb.Monster<Wriggler>().ToMutable();
             wriggler.StartStunned = true;
             await CreatureCmd.Add(wriggler, CombatState, Owner.Side, PhrogParasiteElite.GetWrigglerSlotName(i));
         }

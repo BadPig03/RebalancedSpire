@@ -25,7 +25,7 @@ public static class UntouchablePatch
         __result = new List<DynamicVar>
         {
             new BlockVar(7, ValueProp.Move)
-        };
+        }.AsReadOnly();
         return false;
     }
 

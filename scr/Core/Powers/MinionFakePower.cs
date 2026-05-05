@@ -7,9 +7,6 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using MegaCrit.Sts2.Core.Rewards;
-using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Runs;
 
 namespace RebalancedSpire.scr.Core.Powers;
 
@@ -30,7 +27,7 @@ public sealed class MinionFakePower : CustomPowerModel
             return Task.CompletedTask;
         }
 
-        var enemies = Owner.CombatState?.Enemies;
+        var enemies = Owner.CombatState?.Enemies.ToList();
         if (enemies == null)
         {
             return Task.CompletedTask;

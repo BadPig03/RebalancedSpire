@@ -24,7 +24,7 @@ public static class PreservedFogPatch
         __result = new List<DynamicVar>
         {
             new CardsVar(5)
-        };
+        }.AsReadOnly();
         return false;
     }
 }

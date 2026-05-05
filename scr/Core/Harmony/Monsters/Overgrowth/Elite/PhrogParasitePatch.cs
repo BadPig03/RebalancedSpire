@@ -41,15 +41,15 @@ public static class PhrogParasitePatch
     {
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.75f);
-        foreach (Creature target in targets)
+        foreach (var target in targets)
         {
-            NWormyImpactVfx? nWormyImpactVfx = NWormyImpactVfx.Create(target);
+            var nWormyImpactVfx = NWormyImpactVfx.Create(target);
             if (nWormyImpactVfx != null)
             {
                 NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(nWormyImpactVfx);
             }
         }
-        await CardPileCmd.AddToCombatAndPreview<Infection>(targets, PileType.Discard, GetInfestedAmount(instance), addedByPlayer: false);
+        await CardPileCmd.AddToCombatAndPreview<Infection>(targets, PileType.Discard, GetInfestedAmount(instance), false);
     }
 
     private static async Task LashMove(PhrogParasite instance)
@@ -65,7 +65,7 @@ public static class PhrogParasitePatch
 
     private static int GetInfestedAmount(PhrogParasite instance)
     {
-        if (instance._creature == null || instance.Creature.GetPower<InfestedPlusPower>() == null)
+        if (instance._creature == null || !instance.Creature.HasPower<InfestedPlusPower>())
         {
             return 0;
         }

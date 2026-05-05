@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -17,10 +16,10 @@ public sealed class GuardPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new StringVar("MasterName", ModelDb.Monster<KinPriest>().Title.GetFormattedText())
-    ]);
+    ]).AsReadOnly();
 
     public override bool ShouldAllowTargeting(Creature target)
     {
@@ -35,7 +34,7 @@ public sealed class GuardPower : CustomPowerModel
             return true;
         }
 
-        foreach (Creature enemy in enemies)
+        foreach (var enemy in enemies)
         {
             if (enemy.Monster is not KinFollower { StartsWithDance: false })
             {

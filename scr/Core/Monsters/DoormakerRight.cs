@@ -8,13 +8,14 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 
 public sealed class DoormakerRight : DoormakerBase
 {
+    private static int HungerPowerAmount => 1;
     private static int HungerDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 24, 22);
     private static int ChargeUpDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 9);
     private static int ChargeUpCount => 2;
-
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackCount => 4;
@@ -22,7 +23,7 @@ public sealed class DoormakerRight : DoormakerBase
     public override async Task AfterAddedToRoom()
     {
         await base.AfterAddedToRoom();
-        foreach (Creature creature in CombatState.Enemies)
+        foreach (var creature in CombatState.Enemies)
         {
             if (creature.Monster is not DoormakerLeft doormaker)
             {
@@ -47,6 +48,8 @@ public sealed class DoormakerRight : DoormakerBase
         {
             await Open();
         }
+        TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.HUNGRY.speakLine"), Creature, VfxColor.Purple);
+        await Cmd.CustomScaledWait(0.2f, 0.6f);
         NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
     }
 
@@ -57,7 +60,7 @@ public sealed class DoormakerRight : DoormakerBase
             await Open();
         }
         await DamageCmd.Attack(HungerDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<HungerPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<HungerPower>(Creature, HungerPowerAmount, Creature, null);
     }
 
     private async Task ChargeUpMove(IReadOnlyList<Creature> targets)
@@ -66,6 +69,8 @@ public sealed class DoormakerRight : DoormakerBase
         {
             await Open();
         }
+        TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.FULL_ATTACK.speakLine"), Creature, VfxColor.Purple);
+        await Cmd.CustomScaledWait(0.2f, 0.6f);
         await DamageCmd.Attack(ChargeUpDamage).WithHitCount(ChargeUpCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Remove<HungerPower>(Creature);
         await PowerCmd.Apply<StrengthPower>(Creature, StrengthPowerAmount, Creature, null);

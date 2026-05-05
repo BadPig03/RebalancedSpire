@@ -20,13 +20,9 @@ using Powers;
 
 public abstract class DoormakerBase : CustomMonsterModel
 {
-    private const string ClosedState = "monsters/beta/door_maker_placeholder_1.png";
-    protected const string EyeState = "monsters/beta/door_maker_placeholder_2.png";
-    protected const string MouthState = "monsters/beta/door_maker_placeholder_3.png";
-
-    public override int MinInitialHp => 400;
-
-    public override int MaxInitialHp => MinInitialHp;
+    private static string ClosedState => "monsters/beta/door_maker_placeholder_1.png";
+    protected static string EyeState => "monsters/beta/door_maker_placeholder_2.png";
+    protected static string MouthState => "monsters/beta/door_maker_placeholder_3.png";
 
     private DoormakerBase? _otherDoormaker;
 
@@ -78,7 +74,21 @@ public abstract class DoormakerBase : CustomMonsterModel
         }
     }
 
-    public override LocString Title => Creature.ShowsInfiniteHp ? L10NMonsterLookup("DOOR.name") : L10NMonsterLookup("DOORMAKER.name") ;
+    public override int MinInitialHp => 400;
+
+    public override int MaxInitialHp => MinInitialHp;
+
+    public override LocString Title
+    {
+        get
+        {
+            if (_creature == null)
+            {
+                return L10NMonsterLookup("DOOR.name");
+            }
+            return Creature.ShowsInfiniteHp ? L10NMonsterLookup("DOOR.name") : L10NMonsterLookup("DOORMAKER.name");
+        }
+    }
 
     public override NCreatureVisuals CreateCustomVisuals()
     {
@@ -96,7 +106,7 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override bool ShouldAllowHitting(Creature creature)
     {
-        if (creature.Monster is not DoormakerBase doormakerBase)
+        if (_otherDoormaker == null || creature.Monster is not DoormakerBase doormakerBase)
         {
             return base.ShouldAllowHitting(creature);
         }
@@ -143,29 +153,29 @@ public abstract class DoormakerBase : CustomMonsterModel
         await CreatureCmd.SetMaxHp(Creature, OriginalMaxHp);
         await CreatureCmd.SetCurrentHp(Creature, OriginalHp);
         Creature.ShowsInfiniteHp = false;
-        foreach (PowerModel power in Creature.Powers.ToList())
+        foreach (var power in Creature.Powers.ToList())
         {
             await PowerCmd.Remove(power);
         }
-        foreach (PowerModel item in _powerModels)
+        foreach (var oldPower in _powerModels)
         {
-            PowerModel? powerById = Creature.GetPowerById(item.Id);
+            var powerById = Creature.GetPowerById(oldPower.Id);
             if (powerById is { IsInstanced: false })
             {
                 if (powerById is ITemporaryPower temporaryPower)
                 {
                     temporaryPower.IgnoreNextInstance();
                 }
-                await PowerCmd.ModifyAmount(powerById, item.Amount, powerById.Applier, null);
+                await PowerCmd.ModifyAmount(powerById, oldPower.Amount, powerById.Applier, null);
             }
             else
             {
-                PowerModel power = (PowerModel)item.ClonePreservingMutability();
+                var power = (PowerModel)oldPower.ClonePreservingMutability();
                 if (power is ITemporaryPower temporaryPower)
                 {
                     temporaryPower.IgnoreNextInstance();
                 }
-                await PowerCmd.Apply(power, Creature, item.Amount, power.Applier, null);
+                await PowerCmd.Apply(power, Creature, oldPower.Amount, power.Applier, null);
             }
         }
         _powerModels.Clear();
@@ -173,15 +183,15 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     protected void UpdateVisual(string path, bool reverse = false)
     {
-        NCreature? nCreature = NCombatRoom.Instance?.GetCreatureNode(Creature);
+        var nCreature = NCombatRoom.Instance?.GetCreatureNode(Creature);
         if (nCreature == null)
         {
             return;
         }
 
         ((Sprite2D) nCreature.Visuals.GetCurrentBody()).Texture = PreloadManager.Cache.GetTexture2D(ImageHelper.GetImagePath(path));
-        Vector2 scale = nCreature.Visuals.GetCurrentBody().Scale;
-        Tween tween = nCreature.CreateTween();
+        var scale = nCreature.Visuals.GetCurrentBody().Scale;
+        var tween = nCreature.CreateTween();
         if (reverse)
         {
             tween.TweenProperty(nCreature.Visuals.GetCurrentBody(), "scale", scale, 1.2).From(scale * 2f).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Sine);
@@ -219,7 +229,7 @@ public abstract class DoormakerBase : CustomMonsterModel
         OriginalHp = Creature.CurrentHp;
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 999999999);
         Creature.ShowsInfiniteHp = true;
-        foreach (PowerModel power in Creature.Powers.ToList())
+        foreach (var power in Creature.Powers.ToList())
         {
             _powerModels.Add((PowerModel) power.ClonePreservingMutability());
             await PowerCmd.Remove(power);

@@ -15,6 +15,25 @@ public static class LordsParasolPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.LordsParasolConfig;
 
+    [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not LordsParasol)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCEDSPIRE-LORDS_PARASOL.description");
+        return false;
+    }
+
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.CanonicalVars), MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -33,26 +52,7 @@ public static class LordsParasolPatch
         __result = new List<DynamicVar>
         {
             new EnergyVar(1)
-        };
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not LordsParasol)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-LORDS_PARASOL.description");
+        }.AsReadOnly();
         return false;
     }
 

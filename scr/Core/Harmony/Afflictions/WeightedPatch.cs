@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Afflictions;
 
 [HarmonyPatch]
+
 // ReSharper disable InconsistentNaming
 public static class WeightedPatch
 {

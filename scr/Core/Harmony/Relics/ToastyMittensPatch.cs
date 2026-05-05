@@ -22,7 +22,7 @@ public static class ToastyMittensPatch
 
     private static async Task AfterPlayerTurnStart(ToastyMittens instance, PlayerChoiceContext choiceContext, Player player)
     {
-        foreach (CardModel card in await CardSelectCmd.FromSimpleGrid(choiceContext, (from c in PileType.Draw.GetPile(player).Cards where !c.Keywords.Contains(CardKeyword.Unplayable) orderby c.Rarity, c.Id select c).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars.Cards.IntValue)))
+        foreach (var card in await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(player).Cards.Where(c => !c.Keywords.Contains(CardKeyword.Unplayable)).OrderBy(c => c.Rarity).ThenBy(c => c.Id).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars.Cards.IntValue)))
         {
             instance.Flash();
             await CardCmd.Exhaust(choiceContext, card);
@@ -63,7 +63,7 @@ public static class ToastyMittensPatch
         {
             new PowerVar<StrengthPower>(1),
             new CardsVar(1)
-        };
+        }.AsReadOnly();
         return false;
     }
 

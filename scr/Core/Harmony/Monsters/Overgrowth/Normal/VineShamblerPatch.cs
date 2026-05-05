@@ -23,19 +23,6 @@ public static class VineShamblerPatch
     private static int TangledPowerAmount => 1;
     private static int SwipeCount => 2;
 
-    private static readonly Func<VineShambler, IReadOnlyList<Creature>, Task>? _swipeMoveDelegate = Helpers.GetDelegate<VineShambler>("SwipeMove");
-    private static readonly Func<VineShambler, IReadOnlyList<Creature>, Task>? _chompMoveDelegate = Helpers.GetDelegate<VineShambler>("ChompMove");
-
-    private static async Task SwipeMove(VineShambler instance, IReadOnlyList<Creature> targets)
-    {
-        if (_swipeMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _swipeMoveDelegate(instance, targets);
-    }
-
     private static async Task GraspingVinesMove(VineShambler instance, IReadOnlyList<Creature> targets)
     {
         VfxCmd.PlayOnCreatures(targets, "vfx/monsters/vine_shambler_vines/vine_shambler_vines_vfx");
@@ -43,16 +30,6 @@ public static class VineShamblerPatch
         await CreatureCmd.TriggerAnim(instance.Creature, "Vines", 0.5f);
         await PowerCmd.Apply<TangledPower>(targets, TangledPowerAmount, instance.Creature, null);
         await CreatureCmd.GainBlock(instance.Creature, new BlockVar(BlockAmount, ValueProp.Move), null);
-    }
-
-    private static async Task ChompMove(VineShambler instance, IReadOnlyList<Creature> targets)
-    {
-        if (_chompMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _chompMoveDelegate(instance, targets);
     }
 
     [HarmonyPatch(typeof(VineShambler), nameof(VineShambler.GenerateMoveStateMachine))]
@@ -66,9 +43,9 @@ public static class VineShamblerPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("SWIPE_MOVE", t => SwipeMove(__instance, t), new MultiAttackIntent(__instance.SwipeDamage, SwipeCount));
+        MoveState moveState = new MoveState("SWIPE_MOVE", __instance.SwipeMove, new MultiAttackIntent(__instance.SwipeDamage, SwipeCount));
         MoveState moveState2 = new MoveState("GRASPING_VINES_MOVE", t => GraspingVinesMove(__instance, t), new DefendIntent(), new CardDebuffIntent());
-        MoveState moveState3 = new MoveState("CHOMP_MOVE", t => ChompMove(__instance, t), new SingleAttackIntent(__instance.ChompDamage));
+        MoveState moveState3 = new MoveState("CHOMP_MOVE", __instance.ChompMove, new SingleAttackIntent(__instance.ChompDamage));
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState;

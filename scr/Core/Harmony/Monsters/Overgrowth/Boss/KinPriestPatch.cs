@@ -35,8 +35,6 @@ public static class KinPriestPatch
     private static int BeamDamage => 0;
     private static int BeamCount => 3;
 
-    private static readonly Func<KinPriest, IReadOnlyList<Creature>, Task>? _ritualMoveDelegate = Helpers.GetDelegate<KinPriest>("RitualMove");
-
     private static async Task GuardMove(KinPriest instance)
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_priest/the_kin_priest_rally");
@@ -52,13 +50,8 @@ public static class KinPriestPatch
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_priest/the_kin_priest_rally");
         await CreatureCmd.TriggerAnim(instance.Creature, "Rally", 1f);
-        foreach (Creature enemy in instance.CombatState.Enemies)
+        foreach (var enemy in instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest))
         {
-            if (enemy.Monster is KinPriest)
-            {
-                continue;
-            }
-
             await PowerCmd.Apply<StrengthPower>(enemy, StrengthPowerAmount, instance.Creature, null);
         }
     }
@@ -67,18 +60,13 @@ public static class KinPriestPatch
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_priest/the_kin_priest_rally");
         await CreatureCmd.TriggerAnim(instance.Creature, "Rally", 1f);
-        foreach (Creature enemy in instance.CombatState.Enemies)
+        foreach (var enemy in instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest))
         {
-            if (enemy.Monster is KinPriest)
-            {
-                continue;
-            }
-
             await CreatureCmd.GainBlock(enemy, new BlockVar(BlockAmount, ValueProp.Move), null);
         }
     }
 
-    private static async Task BreakUpMove(KinPriest instance)
+    private static async Task BreakUpMove(KinPriest instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(BreakUpDamage).WithHitCount(BreakUpCount).FromMonster(instance).WithAttackerAnim("AttackLaser", 0.4f).AfterAttackerAnim(delegate
             {
@@ -87,11 +75,8 @@ public static class KinPriestPatch
                 return Task.CompletedTask;
             })
             .WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3").OnlyPlayAnimOnce().Execute(null);
-        foreach (Creature player in instance.CombatState.PlayerCreatures)
-        {
-            await PowerCmd.Apply<FrailPower>(player, FrailPowerAmount, instance.Creature, null);
-            await PowerCmd.Apply<WeakPower>(player, WeakPowerAmount, instance.Creature, null);
-        }
+        await PowerCmd.Apply<FrailPower>(targets, FrailPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task HealUpMove(KinPriest instance)
@@ -104,14 +89,9 @@ public static class KinPriestPatch
             return;
         }
 
-        foreach (Creature enemy in instance.CombatState.Enemies)
+        foreach (var enemy in instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest))
         {
-            if (enemy.Monster is KinPriest)
-            {
-                continue;
-            }
-
-            await CreatureCmd.Heal(enemy, (decimal)(HealAmount * count));
+            await CreatureCmd.Heal(enemy, (decimal) (HealAmount * count));
         }
     }
 
@@ -125,33 +105,23 @@ public static class KinPriestPatch
             }).WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3").OnlyPlayAnimOnce().Execute(null);
     }
 
-    private static async Task RitualMove(KinPriest instance, IReadOnlyList<Creature> targets)
-    {
-        if (_ritualMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _ritualMoveDelegate(instance, targets);
-    }
-
-    private static Task AfterDeath(KinPriest instance, Creature creature)
+    private static async Task AfterDeath(KinPriest instance, Creature creature)
     {
         if (creature == instance.Creature)
         {
-            NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 5f);
-            foreach (Creature enemy in instance.CombatState.Enemies)
+            foreach (var enemy in instance.CombatState.Enemies)
             {
                 if (enemy.Monster is not KinFollower { StartsWithDance: false } follower)
                 {
                     continue;
                 }
 
+                NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 1f);
                 TalkCmd.Play(MonsterModel.L10NMonsterLookup("KIN_FOLLOWER.rageLine"), enemy, VfxColor.Purple, VfxDuration.Standard);
                 var state = (MoveState?) follower.MoveStateMachine?.States["REVENGE_DANCE_MOVE"];
                 if (state == null)
                 {
-                    return Task.CompletedTask;
+                    return;
                 }
 
                 follower.SetMoveImmediate(state);
@@ -159,7 +129,7 @@ public static class KinPriestPatch
         }
         else if (creature.Monster is KinFollower)
         {
-            foreach (Creature enemy in instance.CombatState.Enemies)
+            foreach (var enemy in instance.CombatState.Enemies)
             {
                 if (enemy.Monster is not KinPriest priest)
                 {
@@ -168,13 +138,13 @@ public static class KinPriestPatch
 
                 NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 1f);
                 priest.AllFollowerDeathResponse();
-                PowerCmd.Apply<StrengthPower>(enemy, StrengthPowerAmount, enemy, null);
+                await PowerCmd.Apply<StrengthPower>(enemy, StrengthPowerAmount, enemy, null);
                 if (priest.SpeechUsed)
                 {
                     var state = (MoveState?) priest.MoveStateMachine?.States["RITUAL_MOVE"];
                     if (state == null)
                     {
-                        return Task.CompletedTask;
+                        return;
                     }
 
                     priest.SetMoveImmediate(state);
@@ -182,7 +152,6 @@ public static class KinPriestPatch
                 priest.SpeechUsed = true;
             }
         }
-        return Task.CompletedTask;
     }
 
     [HarmonyPatch(typeof(KinPriest), nameof(KinPriest.AfterDeath))]
@@ -213,10 +182,10 @@ public static class KinPriestPatch
         MoveState moveState = new MoveState("GUARD_MOVE", _ => GuardMove(__instance), new SummonIntent());
         MoveState moveState2 = new MoveState("POWER_UP_MOVE", _ => PowerUpMove(__instance), new BuffIntent());
         MoveState moveState3 = new MoveState("SHIELD_UP_MOVE", _ => ShieldUpMove(__instance), new DefendIntent());
-        MoveState moveState4 = new MoveState("BREAK_UP_MOVE", _ => BreakUpMove(__instance), new MultiAttackIntent(BreakUpDamage, BreakUpCount), new DebuffIntent());
+        MoveState moveState4 = new MoveState("BREAK_UP_MOVE", t => BreakUpMove(__instance, t), new MultiAttackIntent(BreakUpDamage, BreakUpCount), new DebuffIntent());
         MoveState moveState5 = new MoveState("HEAL_UP_MOVE", _ => HealUpMove(__instance), new HealIntent());
         MoveState moveState6 = new MoveState("BEAM_MOVE", _ => BeamMove(__instance), new MultiAttackIntent(BeamDamage, BeamCount));
-        MoveState moveState7 = new MoveState("RITUAL_MOVE", t => RitualMove(__instance, t), new BuffIntent());
+        MoveState moveState7 = new MoveState("RITUAL_MOVE", __instance.RitualMove, new BuffIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;

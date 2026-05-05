@@ -4,20 +4,19 @@ using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using Powers;
 
 public sealed class DoormakerLeft : DoormakerBase
 {
     private static int OmnidynamicsPowerAmount => 1;
-
+    private static int ScrutinyPlusPowerAmount => 1;
     private static int ScrutinyDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
     private static int ScrutinyCount => 4;
     private static int BeamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 18, 16);
@@ -27,14 +26,14 @@ public sealed class DoormakerLeft : DoormakerBase
 
     public override async Task AfterAddedToRoom()
     {
-        Node2D? body = NCombatRoom.Instance?.GetCreatureNode(Creature)?.Body;
+        var body = NCombatRoom.Instance?.GetCreatureNode(Creature)?.Body;
         if (body != null)
         {
             body.Scale *= new Vector2(-1f, 1f);
         }
 
         await base.AfterAddedToRoom();
-        foreach (Creature creature in CombatState.Enemies)
+        foreach (var creature in CombatState.Enemies)
         {
             if (creature.Monster is not DoormakerRight doormaker)
             {
@@ -45,7 +44,7 @@ public sealed class DoormakerLeft : DoormakerBase
             break;
         }
 
-        foreach (Player player in CombatState.Players)
+        foreach (var player in CombatState.Players)
         {
             await PowerCmd.Apply<OmnidynamicsPower>(player.Creature, OmnidynamicsPowerAmount, Creature, null);
         }
@@ -64,6 +63,8 @@ public sealed class DoormakerLeft : DoormakerBase
         {
             await Open();
         }
+        TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.SCRUTINY.speakLine"), Creature, VfxColor.Purple);
+        await Cmd.CustomScaledWait(0.2f, 0.6f);
         NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
     }
 
@@ -74,7 +75,7 @@ public sealed class DoormakerLeft : DoormakerBase
             await Open();
         }
         await DamageCmd.Attack(ScrutinyDamage).WithHitCount(ScrutinyCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<ScrutinyPlusPower>(Creature, 1, Creature, null);
+        await PowerCmd.Apply<ScrutinyPlusPower>(Creature, ScrutinyPlusPowerAmount, Creature, null);
     }
 
     private async Task BeamMove(IReadOnlyList<Creature> targets)
@@ -83,6 +84,8 @@ public sealed class DoormakerLeft : DoormakerBase
         {
             await Open();
         }
+        TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.FULL_ATTACK.speakLine"), Creature, VfxColor.Purple);
+        await Cmd.CustomScaledWait(0.2f, 0.6f);
         await DamageCmd.Attack(BeamDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<VulnerablePower>(targets, VulnerablePowerAmount, Creature, null);
         await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, Creature, null);

@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.scr.Core.Harmony.Monsters.Overgrowth.Elite;
 
+using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -11,6 +12,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.TestSupport;
 
@@ -21,19 +23,6 @@ public static class BygoneEffigyPatch
     private static readonly bool Disabled = !RebalancedSpireConfig.BygoneEffigyConfig;
 
     private static int StrengthPowerAmount => 3;
-
-    private static readonly Func<BygoneEffigy, IReadOnlyList<Creature>, Task>? _initialSleepMoveDelegate = Helpers.GetDelegate<BygoneEffigy>("InitialSleepMove");
-    private static readonly Func<BygoneEffigy, IReadOnlyList<Creature>, Task>? _slashMoveDelegate = Helpers.GetDelegate<BygoneEffigy>("SlashMove");
-
-    private static async Task InitialSleepMove(BygoneEffigy instance, IReadOnlyList<Creature> targets)
-    {
-        if (_initialSleepMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _initialSleepMoveDelegate(instance, targets);
-    }
 
     private static async Task WakeMove(BygoneEffigy instance)
     {
@@ -49,13 +38,28 @@ public static class BygoneEffigyPatch
 
     private static async Task SlashMove(BygoneEffigy instance, IReadOnlyList<Creature> targets)
     {
-        if (_slashMoveDelegate == null)
+        if (TestMode.IsOff)
         {
-            return;
+            Vector2? vector = null;
+            foreach (var target in targets)
+            {
+                var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                if (creatureNode != null && (!vector.HasValue || vector.Value.X > creatureNode.GlobalPosition.X))
+                {
+                    vector = creatureNode.GlobalPosition;
+                }
+            }
+            var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var node2D = creatureNode2?.GetSpecialNode<Node2D>("Visuals/SpineBoneNode");
+            if (creatureNode2 != null && node2D != null && vector.HasValue)
+            {
+                node2D.Position = Vector2.Left * (vector.Value.X - creatureNode2.GlobalPosition.X - 300f);
+            }
         }
-
-        await _slashMoveDelegate(instance, targets);
+        NCombatRoom.Instance?.RadialBlur(VfxPosition.Left);
+        await DamageCmd.Attack(instance.SlashDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.1f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
         await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await Cmd.Wait(0.25f);
     }
 
     [HarmonyPatch(typeof(BygoneEffigy), nameof(BygoneEffigy.GenerateMoveStateMachine))]
@@ -69,7 +73,7 @@ public static class BygoneEffigyPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("INITIAL_SLEEP_MOVE", t => InitialSleepMove(__instance, t), new SleepIntent());
+        MoveState moveState = new MoveState("SLEEP_MOVE", __instance.InitialSleepMove, new SleepIntent());
         MoveState moveState2 = new MoveState("WAKE_MOVE", _ => WakeMove(__instance), new BuffIntent());
         MoveState moveState3 = new MoveState("SLASHES_MOVE", t => SlashMove(__instance, t), new SingleAttackIntent(__instance.SlashDamage), new BuffIntent());
         moveState.FollowUpState = moveState2;

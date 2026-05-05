@@ -4,7 +4,6 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -21,29 +20,6 @@ public static class SludgeSpinnerPatch
 
     private static int StrengthPowerAmount => 2;
     private static int BlockAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
-
-    private static readonly Func<SludgeSpinner, IReadOnlyList<Creature>, Task>? _oilSprayMoveDelegate = Helpers.GetDelegate<SludgeSpinner>("OilSprayMove");
-    private static readonly Func<SludgeSpinner, IReadOnlyList<Creature>, Task>? _slamMoveDelegate = Helpers.GetDelegate<SludgeSpinner>("SlamMove");
-
-    private static async Task OilSprayMove(SludgeSpinner instance, IReadOnlyList<Creature> targets)
-    {
-        if (_oilSprayMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _oilSprayMoveDelegate(instance, targets);
-    }
-
-    private static async Task SlamMove(SludgeSpinner instance, IReadOnlyList<Creature> targets)
-    {
-        if (_slamMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _slamMoveDelegate(instance, targets);
-    }
 
     private static async Task RageMove(SludgeSpinner instance)
     {
@@ -62,8 +38,8 @@ public static class SludgeSpinnerPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("OIL_SPRAY_MOVE", t => OilSprayMove(__instance, t), new SingleAttackIntent(__instance.OilSprayDamage), new DebuffIntent());
-        MoveState moveState2 = new MoveState("SLAM_MOVE", t => SlamMove(__instance, t), new SingleAttackIntent(__instance.SlamDamage));
+        MoveState moveState = new MoveState("OIL_SPRAY_MOVE", __instance.OilSprayMove, new SingleAttackIntent(__instance.OilSprayDamage), new DebuffIntent());
+        MoveState moveState2 = new MoveState("SLAM_MOVE", __instance.SlamMove, new SingleAttackIntent(__instance.SlamDamage));
         MoveState moveState3 = new MoveState("RAGE_MOVE", _ => RageMove(__instance), new DefendIntent(), new BuffIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;

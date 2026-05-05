@@ -18,21 +18,9 @@ public static class HunterKillerPatch
     private static readonly bool Disabled = !RebalancedSpireConfig.HunterKillerConfig;
 
     private static int BiteDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 14);
-    private static int PunctureDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
+    private static int PunctureDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
     private static int PunctureCount => 3;
     private static int WeakPowerAmount => 1;
-
-    private static readonly Func<HunterKiller, IReadOnlyList<Creature>, Task>? _goopMoveDelegate = Helpers.GetDelegate<HunterKiller>("GoopMove");
-
-    private static async Task GoopMove(HunterKiller instance, IReadOnlyList<Creature> targets)
-    {
-        if (_goopMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _goopMoveDelegate(instance, targets);
-    }
 
     private static async Task BiteMove(HunterKiller instance)
     {
@@ -62,7 +50,7 @@ public static class HunterKillerPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("TENDERIZING_GOOP_MOVE", t => GoopMove(__instance, t), new DebuffIntent());
+        MoveState moveState = new MoveState("TENDERIZING_GOOP_MOVE", __instance.GoopMove, new DebuffIntent());
         MoveState moveState2 = new MoveState("BITE_MOVE", _ => BiteMove(__instance), new SingleAttackIntent(BiteDamage));
         MoveState moveState3 = new MoveState("PUNCTURE_MOVE", _ => PunctureMove(__instance), new MultiAttackIntent(PunctureDamage, PunctureCount));
         MoveState moveState4 = new MoveState("WEAK_GOOP_MOVE", t => WeakGoopMove(__instance, t), new DebuffIntent());

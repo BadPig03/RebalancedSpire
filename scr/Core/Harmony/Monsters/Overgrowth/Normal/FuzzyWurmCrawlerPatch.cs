@@ -2,7 +2,6 @@
 
 using HarmonyLib;
 using JetBrains.Annotations;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
@@ -12,29 +11,6 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 public static class FuzzyWurmCrawlerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.FuzzyWurmCrawlerConfig;
-
-    private static readonly Func<FuzzyWurmCrawler, IReadOnlyList<Creature>, Task>? _inhaleMoveDelegate = Helpers.GetDelegate<FuzzyWurmCrawler>("Inhale");
-    private static readonly Func<FuzzyWurmCrawler, IReadOnlyList<Creature>, Task>? _acidGoopMoveDelegate = Helpers.GetDelegate<FuzzyWurmCrawler>("AcidGoop");
-
-    private static async Task InhaleMove(FuzzyWurmCrawler instance, IReadOnlyList<Creature> targets)
-    {
-        if (_inhaleMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _inhaleMoveDelegate(instance, targets);
-    }
-
-    private static async Task AcidGoopMove(FuzzyWurmCrawler instance, IReadOnlyList<Creature> targets)
-    {
-        if (_acidGoopMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _acidGoopMoveDelegate(instance, targets);
-    }
 
     [HarmonyPatch(typeof(FuzzyWurmCrawler), nameof(FuzzyWurmCrawler.GenerateMoveStateMachine))]
     [HarmonyPrefix]
@@ -47,9 +23,9 @@ public static class FuzzyWurmCrawlerPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("ACID_GOOP", t => AcidGoopMove(__instance, t), new SingleAttackIntent(__instance.AcidGoopDamage));
-        MoveState moveState2 = new MoveState("ACID_GOOP2", t => AcidGoopMove(__instance, t), new SingleAttackIntent(__instance.AcidGoopDamage));
-        MoveState moveState3 = new MoveState("INHALE", t => InhaleMove(__instance, t), new BuffIntent());
+        MoveState moveState = new MoveState("ACID_GOOP", __instance.AcidGoop, new SingleAttackIntent(__instance.AcidGoopDamage));
+        MoveState moveState2 = new MoveState("ACID_GOOP2", __instance.AcidGoop, new SingleAttackIntent(__instance.AcidGoopDamage));
+        MoveState moveState3 = new MoveState("INHALE", __instance.Inhale, new BuffIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState;

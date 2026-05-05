@@ -6,7 +6,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -26,16 +25,16 @@ public static class NoisebotPatch
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.6f);
         List<CardPileAddResult> statusCards = [];
-        foreach (Creature target in targets)
+        foreach (var target in targets)
         {
-            Player? player = target.Player ?? target.PetOwner;
+            var player = target.Player ?? target.PetOwner;
             if (player == null)
             {
                 continue;
             }
 
             CardModel card = instance.CombatState.CreateCard<Dazed>(player);
-            statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, addedByPlayer: false));
+            statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, false));
             if (!LocalContext.IsMe(player))
             {
                 continue;

@@ -32,13 +32,13 @@ public static class AttackCommandPatch
             throw new InvalidOperationException("Targets already set.");
         }
         if (__instance._combatState != null) {
-            throw new InvalidOperationException("Already set to target opponents of attacker");
+            throw new InvalidOperationException("Already set to target opponents of attacker.");
         }
         if (__instance.Attacker == null) {
-            throw new InvalidOperationException("We require an attacker to be able to grab its opponents");
+            throw new InvalidOperationException("We require an attacker to be able to grab its opponents.");
         }
 
-        if (__instance.Attacker.GetPower<OmnidynamicsPower>() == null && __instance.Attacker.PetOwner?.Creature.GetPower<OmnidynamicsPower>() == null)
+        if (!__instance.Attacker.HasPower<OmnidynamicsPower>() && __instance.Attacker.PetOwner?.Creature.HasPower<OmnidynamicsPower>() == false)
         {
             return true;
         }

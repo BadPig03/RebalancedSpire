@@ -27,7 +27,7 @@ public static class RelaxPatch
             new BlockVar(20, ValueProp.Move),
             new CardsVar(2),
             new EnergyVar(3)
-        };
+        }.AsReadOnly();
         return false;
     }
 

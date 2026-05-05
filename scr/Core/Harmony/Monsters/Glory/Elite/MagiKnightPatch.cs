@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.scr.Core.Harmony.Monsters.Glory.Elite;
 
+using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -8,32 +9,15 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.TestSupport;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class MagiKnightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KnightsConfig;
-
-    private static readonly Func<MagiKnight, IReadOnlyList<Creature>, Task>? _dampenMoveDelegate = Helpers.GetDelegate<MagiKnight>("DampenMove");
-    private static readonly Func<MagiKnight, IReadOnlyList<Creature>, Task>? _magicBombMoveDelegate = Helpers.GetDelegate<MagiKnight>("MagicBombMove");
-
-    private static async Task PowerShieldMove(MagiKnight instance)
-    {
-        await CreatureCmd.GainBlock(instance.Creature, instance.PowerShieldBlock, BlockProps.monsterMove, null);
-    }
-
-    private static async Task DampenMove(MagiKnight instance, IReadOnlyList<Creature> targets)
-    {
-        if (_dampenMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _dampenMoveDelegate(instance, targets);
-    }
 
     private static async Task PrepMove(MagiKnight instance)
     {
@@ -49,12 +33,27 @@ public static class MagiKnightPatch
 
     private static async Task MagicBombMove(MagiKnight instance, IReadOnlyList<Creature> targets)
     {
-        if (_magicBombMoveDelegate == null)
+        if (TestMode.IsOff && targets.Count > 0)
         {
-            return;
-        }
+            Vector2? vector = null;
+            foreach (var target in targets)
+            {
+                var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                if (creatureNode != null && (!vector.HasValue || vector.Value.X > creatureNode.GlobalPosition.X))
+                {
+                    vector = creatureNode.GlobalPosition;
+                }
+            }
 
-        await _magicBombMoveDelegate(instance, targets);
+            var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
+            if (creatureNode2 != null && specialNode != null && vector.HasValue)
+            {
+                var x = creatureNode2.Visuals.GetCurrentBody().Scale.X;
+                specialNode.Position = Vector2.Left * ((creatureNode2.GlobalPosition.X - vector.Value.X - 600f) / x);
+            }
+        }
+        await DamageCmd.Attack(instance.BombDamage).FromMonster(instance).WithAttackerAnim("BombCast", 1.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/magi_knight/magi_knight_attack_bomb").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
     }
 
     [HarmonyPatch(typeof(MagiKnight), nameof(MagiKnight.GenerateMoveStateMachine))]
@@ -68,8 +67,8 @@ public static class MagiKnightPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("POWER_SHIELD_MOVE", _ => PowerShieldMove(__instance), new DefendIntent());
-        MoveState moveState2 = new MoveState("DAMPEN_MOVE", t => DampenMove(__instance, t), new DebuffIntent());
+        MoveState moveState = new MoveState("POWER_SHIELD_MOVE", __instance.PowerShieldMove, new SingleAttackIntent(__instance.PowerShieldDamage), new DefendIntent());
+        MoveState moveState2 = new MoveState("DAMPEN_MOVE", __instance.DampenMove, new DebuffIntent());
         MoveState moveState3 = new MoveState("PREP_MOVE", _ => PrepMove(__instance), new UnknownIntent());
         MoveState moveState4 = new MoveState("PREP_2_MOVE", _ => Prep2Move(__instance), new UnknownIntent());
         MoveState moveState5 = new MoveState("MAGIC_BOMB", t => MagicBombMove(__instance, t), new SingleAttackIntent(__instance.BombDamage));

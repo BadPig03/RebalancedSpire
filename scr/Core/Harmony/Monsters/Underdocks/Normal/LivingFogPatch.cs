@@ -7,7 +7,6 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
@@ -21,18 +20,6 @@ public static class LivingFogPatch
 
     private static int MaxGasBombs => 5;
     private static int PingPingPowerAmount => 1;
-
-    private static readonly Func<LivingFog, IReadOnlyList<Creature>, Task>? _advancedGasMoveDelegate = Helpers.GetDelegate<LivingFog>("AdvancedGasMove");
-
-    private static async Task AdvancedGasMove(LivingFog instance, IReadOnlyList<Creature> targets)
-    {
-        if (_advancedGasMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _advancedGasMoveDelegate(instance, targets);
-    }
 
     private static async Task BloatMove(LivingFog instance)
     {
@@ -78,7 +65,7 @@ public static class LivingFogPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("ADVANCED_GAS_MOVE", t => AdvancedGasMove(__instance, t), new SingleAttackIntent(__instance.AdvancedGasDamage), new CardDebuffIntent());
+        MoveState moveState = new MoveState("ADVANCED_GAS_MOVE", __instance.AdvancedGasMove, new SingleAttackIntent(__instance.AdvancedGasDamage), new CardDebuffIntent());
         MoveState moveState2 = new MoveState("BLOAT_MOVE", _ => BloatMove(__instance), new SingleAttackIntent(__instance.BloatDamage), new SummonIntent());
         MoveState moveState3 = new MoveState("CHARGE_UP_MOVE", _ => Task.CompletedTask, new SleepIntent());
         moveState.FollowUpState = moveState2;

@@ -3,7 +3,6 @@
 using Core.Relics;
 using HarmonyLib;
 using JetBrains.Annotations;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Models.Events;
@@ -17,36 +16,36 @@ public static class NeowPatch
 
     private static List<EventOption> CurseOptions(Neow instance) =>
     [
-        Helpers.RelicOption<CursedPearl>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        Helpers.RelicOption<HeftyTablet>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        Helpers.RelicOption<LargeCapsule>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        Helpers.RelicOption<LeafyPoultice>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        Helpers.RelicOption<NeowsBones>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        Helpers.RelicOption<PrecariousShears>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        Helpers.RelicOption<ScrollBoxes>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        Helpers.RelicOption<SilverCrucible>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description")
+        RelicHelpers.RelicOption<CursedPearl>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        RelicHelpers.RelicOption<HeftyTablet>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        RelicHelpers.RelicOption<LargeCapsule>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        RelicHelpers.RelicOption<LeafyPoultice>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        RelicHelpers.RelicOption<NeowsBones>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        RelicHelpers.RelicOption<PrecariousShears>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        RelicHelpers.RelicOption<ScrollBoxes>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        RelicHelpers.RelicOption<SilverCrucible>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description")
     ];
 
     private static List<EventOption> PositiveOptions(Neow instance) =>
     [
-        Helpers.RelicOption<ArcaneScroll>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<BoomingConch>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<GoldenPearl>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<LavaRock>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<LeadPaperweight>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<LostCoffer>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<MassiveScroll>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<NeowsTalisman>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<NeowsTorment>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<NeowsLament>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<NewLeaf>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<NutritiousOyster>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<Pomander>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<PreciseScissors>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<PhialHolster>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<StoneHumidifier>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<SmallCapsule>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-        Helpers.RelicOption<WingedBoots>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description")
+        RelicHelpers.RelicOption<ArcaneScroll>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<BoomingConch>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<GoldenPearl>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<LavaRock>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<LeadPaperweight>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<LostCoffer>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<MassiveScroll>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<NeowsTalisman>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<NeowsTorment>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<NeowsLament>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<NewLeaf>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<NutritiousOyster>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<Pomander>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<PreciseScissors>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<PhialHolster>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<StoneHumidifier>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<SmallCapsule>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+        RelicHelpers.RelicOption<WingedBoots>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description")
     ];
 
     [HarmonyPatch(typeof(Neow), nameof(Neow.AllPossibleOptions), MethodType.Getter)]
@@ -62,7 +61,7 @@ public static class NeowPatch
         List<EventOption> options = [];
         options.AddRange(CurseOptions(__instance));
         options.AddRange(PositiveOptions(__instance));
-        __result = options;
+        __result = options.AsReadOnly();
         return false;
     }
 
@@ -76,7 +75,7 @@ public static class NeowPatch
             return true;
         }
 
-        Player? player = __instance.Owner;
+        var player = __instance.Owner;
         if (player == null || player.RunState.Modifiers.Count > 0)
         {
             return true;

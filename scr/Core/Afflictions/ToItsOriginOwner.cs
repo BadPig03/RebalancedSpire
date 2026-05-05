@@ -2,7 +2,6 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -13,6 +12,8 @@ namespace RebalancedSpire.scr.Core.Afflictions;
 
 public sealed class ToItsOriginOwner : AfflictionModel
 {
+    private static int ToItsOriginOwnerPowerAmount => 1;
+
     public override bool HasExtraCardText => true;
 
     public override bool CanAfflict(CardModel card)
@@ -40,17 +41,11 @@ public sealed class ToItsOriginOwner : AfflictionModel
         }
 
         List<Creature> byrdonis = [];
-        foreach (Creature enemy in enemies)
+        foreach (var enemy in enemies.Where(c => c.Monster is Byrdonis))
         {
-            if (enemy.Monster is not Byrdonis)
-            {
-                continue;
-            }
-
             await CreatureCmd.TriggerAnim(enemy, "NotAngry", 1f);
             byrdonis.Add(enemy);
         }
-
         if (byrdonis.Count == 0)
         {
             return;
@@ -62,12 +57,12 @@ public sealed class ToItsOriginOwner : AfflictionModel
             return;
         }
 
-        foreach (Player player in players)
+        foreach (var player in players)
         {
-            await PowerCmd.Apply<ToItsOriginOwnerPower>(player.Creature, 1, player.Creature, null);
+            await PowerCmd.Apply<ToItsOriginOwnerPower>(player.Creature, ToItsOriginOwnerPowerAmount, player.Creature, null);
         }
         await Cmd.Wait(0.5f);
-        foreach (Creature enemy in byrdonis)
+        foreach (var enemy in byrdonis)
         {
             enemy.RemoveAllPowersInternalExcept();
             CombatManager.Instance.RemoveCreature(enemy);

@@ -19,13 +19,18 @@ public static class SoulNexusPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SoulNexusConfig;
 
-    private static int SoulStrikeDamage => 3;
+    private static int SoulStrikeDamage => 4;
     private static int SoulStrikeRepeat => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
     private static int MaelstromDamage => 2;
     private static int MaelstromRepeat => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 12);
     private static int DrainLifeDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 19);
     private static int VulnerablePowerAmount => 1;
     private static int SoulWitherAmount => 1;
+
+    private static bool IsAnyPlayerExceedLimit(SoulNexus instance)
+    {
+        return instance.Creature.GetPowerInstances<SoulWitherPower>().Any(power => power.IsLimitExceeded());
+    }
 
     private static async Task SoulStrikeMove(SoulNexus instance)
     {
@@ -46,7 +51,7 @@ public static class SoulNexusPatch
     {
         SfxCmd.Play(instance.CastSfx, 0.8f);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.8f);
-        foreach (SoulWitherPower power in instance.Creature.GetPowerInstances<SoulWitherPower>())
+        foreach (var power in instance.Creature.GetPowerInstances<SoulWitherPower>())
         {
             power.Reset();
         }
@@ -60,17 +65,12 @@ public static class SoulNexusPatch
 
     private static async Task AfterAddedToRoom(SoulNexus instance)
     {
-        foreach (Creature creature in instance.CombatState.PlayerCreatures)
+        foreach (var creature in instance.CombatState.PlayerCreatures)
         {
             SoulWitherPower soulWitherPower = (SoulWitherPower) ModelDb.Power<SoulWitherPower>().ToMutable();
             soulWitherPower.Target = creature;
             await PowerCmd.Apply(soulWitherPower, instance.Creature, SoulWitherAmount, instance.Creature, null);
         }
-    }
-
-    private static bool IsAnyPlayerExceedLimit(SoulNexus instance)
-    {
-        return instance.Creature.GetPowerInstances<SoulWitherPower>().Any(power => power.ExceedLimit());
     }
 
     [HarmonyPatch(typeof(SoulNexus), nameof(SoulNexus.AfterAddedToRoom))]

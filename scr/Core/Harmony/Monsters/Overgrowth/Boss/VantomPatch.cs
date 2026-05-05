@@ -31,8 +31,6 @@ public static class VantomPatch
     private static int StrengthPowerAmount => 2;
     private static int WeakPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
 
-    private static readonly Func<Vantom, IReadOnlyList<Creature>, Task>? _inkyLanceMoveDelegate = Helpers.GetDelegate<Vantom>("InkyLanceMove");
-
     private static async Task InkBlotMove(Vantom instance, IReadOnlyList<Creature> targets)
     {
         if (!TestMode.IsOff || !instance.Creature.IsAlive)
@@ -50,16 +48,6 @@ public static class VantomPatch
         await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, instance.Creature, null);
         await PowerCmd.Apply<SlipperyPower>(instance.Creature, SlipperyPowerAmount, instance.Creature, null);
         await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
-    }
-
-    private static async Task InkyLanceMove(Vantom instance, IReadOnlyList<Creature> targets)
-    {
-        if (_inkyLanceMoveDelegate == null)
-        {
-            return;
-        }
-
-        await _inkyLanceMoveDelegate(instance, targets);
     }
 
     private static async Task DismemberMove(Vantom instance)
@@ -156,7 +144,7 @@ public static class VantomPatch
 
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("INK_BLOT_MOVE", t => InkBlotMove(__instance, t), new BuffIntent(), new DebuffIntent());
-        MoveState moveState2 = new MoveState("INKY_LANCE_MOVE", t => InkyLanceMove(__instance, t), new MultiAttackIntent(__instance.InkyLanceDamage, 2));
+        MoveState moveState2 = new MoveState("INKY_LANCE_MOVE", __instance.InkyLanceMove, new MultiAttackIntent(__instance.InkyLanceDamage, 2));
         MoveState moveState3 = new MoveState("DISMEMBER_MOVE", _ => DismemberMove(__instance), new SingleAttackIntent(__instance.DismemberDamage));
         MoveState moveState4 = new MoveState("PREPARE_MOVE", _ => PrepareMove(__instance), new StunIntent());
         moveState.FollowUpState = moveState2;

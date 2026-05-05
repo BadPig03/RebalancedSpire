@@ -8,8 +8,8 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,7 +19,6 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Rewards;
@@ -42,6 +41,17 @@ public static class KinFollowerPatch
     private static int GuardFakeBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 8);
     private static int HealAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 8, 6);
 
+    private static Task AfterDeath(KinFollower instance)
+    {
+        if (instance.CombatState.Enemies.Any(c => c.IsAlive))
+        {
+            return Task.CompletedTask;
+        }
+
+        NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 5f);
+        return Task.CompletedTask;
+    }
+
     private static async Task AfterAddedToRoom(KinFollower instance)
     {
         var currentMaxHp = instance.Creature.MaxHp;
@@ -53,8 +63,8 @@ public static class KinFollowerPatch
         else
         {
             await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, currentMaxHp * 1.5m);
+            NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 0f);
         }
-        NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 0f);
     }
 
     private static async Task QuickSlashMove(KinFollower instance)
@@ -67,16 +77,16 @@ public static class KinFollowerPatch
         if (TestMode.IsOff)
         {
             Vector2? vector = null;
-            foreach (Creature target in targets)
+            foreach (var target in targets)
             {
-                NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
                 if (!vector.HasValue || vector.Value.X > creatureNode?.GlobalPosition.X)
                 {
                     vector = creatureNode?.GlobalPosition;
                 }
             }
-            NCreature? creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
-            Node2D? specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
+            var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
             if (vector != null && creatureNode2 != null && specialNode != null)
             {
                 specialNode.Position = Vector2.Left * (creatureNode2.GlobalPosition.X - vector.Value.X) / creatureNode2.Body.Scale;
@@ -122,16 +132,16 @@ public static class KinFollowerPatch
         if (TestMode.IsOff)
         {
             Vector2? vector = null;
-            foreach (Creature target in targets)
+            foreach (var target in targets)
             {
-                NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
                 if (!vector.HasValue || vector.Value.X > creatureNode?.GlobalPosition.X)
                 {
                     vector = creatureNode?.GlobalPosition;
                 }
             }
-            NCreature? creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
-            Node2D? specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
+            var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
             if (vector != null && creatureNode2 != null && specialNode != null)
             {
                 specialNode.Position = Vector2.Left * (creatureNode2.GlobalPosition.X - vector.Value.X) / creatureNode2.Body.Scale;
@@ -164,7 +174,7 @@ public static class KinFollowerPatch
         }
 
         await Cmd.Wait(0.5f);
-        foreach (Player player in instance.CombatState.Players)
+        foreach (var player in instance.CombatState.Players)
         {
             var room = (CombatRoom?) player.RunState.CurrentRoom;
             if (room == null)
@@ -175,9 +185,35 @@ public static class KinFollowerPatch
             room.AddExtraReward(player, new PotionReward(player));
             room.AddExtraReward(player, new RelicReward(RelicRarity.Common, player));
         }
+        var creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+        if (creatureNode != null)
+        {
+            creatureNode.Visuals.SetVisible(false);
+            creatureNode.ToggleIsInteractable(false);
+        }
         instance.Creature.RemoveAllPowersInternalExcept();
         CombatManager.Instance.RemoveCreature(instance.Creature);
         instance.Creature.CombatState?.RemoveCreature(instance.Creature);
+        NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 5f);
+    }
+
+    [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.AfterDeath))]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterDeath(AbstractModel __instance, PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not KinFollower kinFollower || wasRemovalPrevented)
+        {
+            return true;
+        }
+
+        __result = AfterDeath(kinFollower);
+        return false;
     }
 
     [HarmonyPatch(typeof(KinFollower), nameof(KinFollower.AfterAddedToRoom))]

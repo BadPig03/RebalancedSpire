@@ -17,6 +17,7 @@ public static class SkulkingColonyPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SkulkingColonyConfig;
 
+    private static int HardenedShellPowerAmount => 20;
     private static int SmashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 9);
     private static int ZoomDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 17, 16);
     private static int ZoomBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 13, 10);
@@ -30,7 +31,7 @@ public static class SkulkingColonyPatch
 
     private static async Task ZoomMove(SkulkingColony instance)
     {
-        await DamageCmd.Attack(ZoomDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.15f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+        await DamageCmd.Attack(ZoomDamage).FromMonster(instance).WithAttackerAnim("AttackHeavy", 0.25f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
         await CreatureCmd.GainBlock(instance.Creature, ZoomBlock, ValueProp.Move, null);
     }
 
@@ -41,12 +42,12 @@ public static class SkulkingColonyPatch
 
     private static async Task PiercingStabsMove(SkulkingColony instance)
     {
-        await DamageCmd.Attack(PiercingStabsDamage).WithHitCount(PiercingStabsCount).FromMonster(instance).WithAttackerAnim("Attack", 0.15f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+        await DamageCmd.Attack(PiercingStabsDamage).WithHitCount(PiercingStabsCount).OnlyPlayAnimOnce().FromMonster(instance).WithAttackerAnim("AttackDouble", 0.45f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
     }
 
     private static async Task AfterAddedToRoom(SkulkingColony instance)
     {
-        await PowerCmd.Apply<HardenedShellPower>(instance.Creature, 20, instance.Creature, null);
+        await PowerCmd.Apply<HardenedShellPower>(instance.Creature, HardenedShellPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(SkulkingColony), nameof(SkulkingColony.AfterAddedToRoom))]

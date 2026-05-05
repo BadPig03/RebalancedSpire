@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -24,7 +23,6 @@ public static class TheInsatiablePatch
 
     private static int FranticEscapeAmount => 6;
 
-
     private static async Task LiquifyMove(TheInsatiable instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_insatiable/the_insatiable_liquify_ground");
@@ -32,18 +30,17 @@ public static class TheInsatiablePatch
         await Cmd.Wait(0.5f);
         VfxCmd.PlayOnCreatureCenter(instance.Creature, "vfx/vfx_scream");
         await Cmd.Wait(0.75f);
-        foreach (Creature target in targets)
+        foreach (var target in targets)
         {
             SandpitPower sandpitPower = (SandpitPower) ModelDb.Power<SandpitPower>().ToMutable();
             sandpitPower.Target = target;
             await PowerCmd.Apply(sandpitPower, instance.Creature, SandpitPowerAmount, instance.Creature, null);
             await PowerCmd.Apply<LongDistancePower>(target, LongDistancePowerAmount, instance.Creature, null);
         }
-
         var statusCards = new List<CardPileAddResult>();
-        foreach (Creature target in targets)
+        foreach (var target in targets)
         {
-            Player? player = target.Player ?? target.PetOwner;
+            var player = target.Player ?? target.PetOwner;
             if (player == null)
             {
                 continue;
@@ -53,9 +50,8 @@ public static class TheInsatiablePatch
             {
                 CardModel card = instance.CombatState.CreateCard<FranticEscape>(player);
                 PileType newPileType = i < FranticEscapeAmount / 2 ? PileType.Draw : PileType.Discard;
-                statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, newPileType, addedByPlayer: false, CardPilePosition.Random));
+                statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(card, newPileType, false, CardPilePosition.Random));
             }
-
             if (!LocalContext.IsMe(player))
             {
                 continue;
