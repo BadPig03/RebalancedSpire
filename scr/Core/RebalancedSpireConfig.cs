@@ -34,7 +34,6 @@ internal class RebalancedSpireConfig : SimpleModConfig
             FileMode = FileDialog.FileModeEnum.OpenFile,
             Access = FileDialog.AccessEnum.Filesystem
         };
-
         dialog.AddFilter("*.json", "Json files (*.json)|*.json");
         dialog.FileSelected += path =>
         {
@@ -119,7 +118,6 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool VakuuChoicesConfig { get; set; } = true;
     public static bool ApparitionArtConfig { get; set; } = false;
     public static bool VakuuFixedArtConfig { get; set; } = true;
-
     [ConfigVisibleIf(nameof(VakuuFixedArtConfig), false)]
     public static bool VakuuBetaArtConfig { get; set; } = false;
 

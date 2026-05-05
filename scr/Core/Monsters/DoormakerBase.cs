@@ -107,7 +107,7 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override bool ShouldAllowHitting(Creature creature)
     {
-        if (creature.Monster is not DoormakerBase doormakerBase)
+        if (_otherDoormaker == null || creature.Monster is not DoormakerBase doormakerBase)
         {
             return base.ShouldAllowHitting(creature);
         }

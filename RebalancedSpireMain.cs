@@ -17,11 +17,11 @@ using scr.Core.Harmony;
 public partial class RebalancedSpireMain : Node
 {
     private const string ModId = "RebalancedSpire";
-    public const string Version = "v0.1.1_beta";
-
-    public static Logger Logger { get; } = new(ModId, LogType.Generic);
+    public const string Version = "v0.1.2_beta";
 
     private static Harmony? _mainHarmony;
+
+    public static Logger Logger { get; } = new(ModId, LogType.Generic);
 
     public static void Initialize()
     {
