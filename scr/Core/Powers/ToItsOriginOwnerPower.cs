@@ -33,38 +33,21 @@ public sealed class ToItsOriginOwnerPower : CustomPowerModel
 
     public override async Task AfterCombatEnd(CombatRoom room)
     {
-        CardModel? card;
-        var allCards = Owner.Player?.PlayerCombatState?.AllCards;
-        if (Owner.Player == null || allCards == null)
+        var eggList = Owner.Player?.PlayerCombatState?.AllCards.Where(c => c is ByrdonisEgg).ToList();
+        if (eggList == null || eggList.Count == 0)
         {
-            card = null;
+            return;
         }
-        else
+
+        foreach (var egg in eggList)
         {
-            CardModel? tempCard = null;
-            foreach (CardModel cardModel in allCards)
+            await CardPileCmd.RemoveFromCombat(egg);
+            if (egg.DeckVersion == null)
             {
-                if (cardModel is not ByrdonisEgg)
-                {
-                    continue;
-                }
-
-                tempCard = cardModel;
-                break;
+                continue;
             }
-            card = tempCard;
-        }
-        if (card == null)
-        {
-            return;
-        }
 
-        await CardPileCmd.RemoveFromCombat(card);
-        if (card.DeckVersion == null)
-        {
-            return;
+            await CardPileCmd.RemoveFromDeck(egg.DeckVersion);
         }
-
-        await CardPileCmd.RemoveFromDeck(card.DeckVersion);
     }
 }

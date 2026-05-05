@@ -41,6 +41,8 @@
   "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.description": "After drawing, if you have more than [blue]6[/blue] cards in hand, automatically discard cards until you have only [blue]6[/blue] cards in hand.",
   "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.smartDescription": "After drawing, if you have more than [blue]6[/blue] cards in hand, automatically discard cards until you have only [blue]6[/blue] cards in hand.",
   "REBALANCEDSPIRE-SCRUTINY_PLUS_POWER.title": "Scrutiny+",
+  "REBALANCEDSPIRE-SKITTISH_POWER.description": "The first time this creature is hit each turn, it gains [blue]1[/blue] [gold]Block[/gold] and loses [blue]1[/blue] [gold]Strength[/gold].",
+  "REBALANCEDSPIRE-SKITTISH_POWER.smartDescription": "The first time [gold]{OwnerName}[/gold] is hit each turn, it gains [blue]{Amount}[/blue] [gold]Block[/gold] and loses [blue]1[/blue] [gold]Strength[/gold].",
   "REBALANCEDSPIRE-SOUL_WITHER.description": "After this enemy deals you unblocked damage [blue]16[/blue] times, it enters a special intent.",
   "REBALANCEDSPIRE-SOUL_WITHER.smartDescription": "After [gold]{SoulNexus}[/gold] deals you unblocked damage [blue]{CalculationBase:diff()}[/blue] times, it enters a special intent.",
   "REBALANCEDSPIRE-SOUL_WITHER.title": "Soul Wither",

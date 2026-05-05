@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -14,20 +13,7 @@ namespace RebalancedSpire.scr.Core.Relics;
 [Pool(typeof(SharedRelicPool))]
 public sealed class NeowsLament : CustomRelicModel
 {
-    private const int MaxUsableCount = 3;
-
-    public override RelicRarity Rarity => RelicRarity.Ancient;
-
-    public override bool IsUsedUp => TimesUsed >= MaxUsableCount;
-
-    public override bool ShowCounter => !IsUsedUp;
-
-    public override int DisplayAmount => MaxUsableCount - TimesUsed;
-
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
-    [
-        new DynamicVar("Rooms", MaxUsableCount)
-    ]);
+    private static int MaxUsableCount => 3;
 
     private int _timesUsed;
 
@@ -45,6 +31,19 @@ public sealed class NeowsLament : CustomRelicModel
         }
     }
 
+    public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    public override bool IsUsedUp => TimesUsed >= MaxUsableCount;
+
+    public override bool ShowCounter => !IsUsedUp;
+
+    public override int DisplayAmount => MaxUsableCount - TimesUsed;
+
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
+    [
+        new DynamicVar("Rooms", MaxUsableCount)
+    ]).AsReadOnly();
+
     public override async Task BeforeCombatStart()
     {
         if (IsUsedUp)
@@ -52,7 +51,7 @@ public sealed class NeowsLament : CustomRelicModel
             return;
         }
 
-        var enemies = Owner.Creature.CombatState?.HittableEnemies;
+        var enemies = Owner.Creature.CombatState?.HittableEnemies.ToList();
         if (enemies == null)
         {
             return;
@@ -61,7 +60,7 @@ public sealed class NeowsLament : CustomRelicModel
         Flash();
         TimesUsed++;
         VfxCmd.PlayOnCreatureCenters(enemies, "vfx/vfx_bite");
-        foreach (Creature creature in enemies)
+        foreach (var creature in enemies)
         {
             await CreatureCmd.SetCurrentHp(creature, 1);
         }

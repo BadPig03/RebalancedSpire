@@ -98,7 +98,7 @@ public static class AlchemicalCofferPatch
         __result = new List<DynamicVar>
         {
             new("PotionSlots", 1)
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -130,6 +130,7 @@ public static class AlchemicalCofferPatch
         {
             return true;
         }
+
         __result = AfterPotionUsed(alchemicalCoffer, potion);
         return false;
     }

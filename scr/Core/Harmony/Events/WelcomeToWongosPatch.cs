@@ -3,7 +3,6 @@
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Factories;
@@ -40,7 +39,7 @@ public static class WelcomeToWongosPatch
             return true;
         }
 
-        Player? owner = __instance.Owner;
+        var owner = __instance.Owner;
         if (owner == null)
         {
             return true;
@@ -48,14 +47,13 @@ public static class WelcomeToWongosPatch
 
         __instance.FeaturedItem = RelicFactory.PullNextRelicFromFront(owner, RelicRarity.Rare, r => r.IsAllowedInShops);
         ((StringVar) __instance.DynamicVars["RandomRelic"]).StringValue = __instance.FeaturedItem.Title.GetFormattedText();
-        var list = new List<EventOption>
+        __result = new List<EventOption>
         {
             owner.Gold >= __instance.DynamicVars["BargainBinCost"].BaseValue ? new EventOption(__instance, __instance.BuyBargainBin, "WELCOME_TO_WONGOS.pages.INITIAL.options.BARGAIN_BIN") : new EventOption(__instance, null, "WELCOME_TO_WONGOS.pages.INITIAL.options.BARGAIN_BIN_LOCKED"),
             owner.Gold >= __instance.DynamicVars["FeaturedItemCost"].BaseValue ? new EventOption(__instance, __instance.BuyFeaturedItem, "WELCOME_TO_WONGOS.pages.INITIAL.options.FEATURED_ITEM", __instance.FeaturedItem.HoverTips) : new EventOption(__instance, null, "WELCOME_TO_WONGOS.pages.INITIAL.options.FEATURED_ITEM_LOCKED"),
             owner.Gold >= __instance.DynamicVars["MysteryBoxCost"].BaseValue ? new EventOption(__instance, __instance.BuyMysteryBox, "WELCOME_TO_WONGOS.pages.INITIAL.options.MYSTERY_BOX") : new EventOption(__instance, null, "WELCOME_TO_WONGOS.pages.INITIAL.options.MYSTERY_BOX_LOCKED"),
             new EventOption(__instance, () => Leave(__instance), "REBALANCEDSPIRE-WELCOME_TO_WONGOS.pages.INITIAL.options.LEAVE").ThatDoesDamage(__instance.DynamicVars.Damage.BaseValue)
-        };
-        __result = list;
+        }.AsReadOnly();
         return false;
     }
 
@@ -95,7 +93,7 @@ public static class WelcomeToWongosPatch
             new("TotalWongoBadgeAmount", 0),
             new DamageVar(3, ValueProp.Unblockable | ValueProp.Unpowered),
             new StringVar("RandomRelic")
-        };
+        }.AsReadOnly();
         return false;
     }
 }

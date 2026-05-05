@@ -10,7 +10,6 @@ using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
@@ -30,9 +29,9 @@ public static class TrialPatch
 	    }
 
 	    var list = (await CardSelectCmd.FromDeckForUpgrade(prefs: new CardSelectorPrefs(CardSelectorPrefs.UpgradeSelectionPrompt, 1), player: instance.Owner)).ToList();
-	    foreach (CardModel cardModel in list)
+	    foreach (var card in list)
 	    {
-		    CardCmd.Upgrade(cardModel);
+		    CardCmd.Upgrade(card);
 	    }
 	    instance.SetTrialFinished("TRIAL.pages.MERCHANT_INNOCENT.description");
     }
@@ -45,9 +44,9 @@ public static class TrialPatch
 	    }
 
 	    var list = (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), player: instance.Owner)).ToList();
-	    foreach (CardModel cardModel in list)
+	    foreach (var card in list)
 	    {
-		    await CardCmd.TransformToRandom(cardModel, instance.Owner.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
+		    await CardCmd.TransformToRandom(card, instance.Owner.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
 	    }
 	    instance.SetTrialFinished("TRIAL.pages.NONDESCRIPT_INNOCENT.description");
     }

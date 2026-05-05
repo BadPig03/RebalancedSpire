@@ -25,7 +25,7 @@ public static class CoolantPatch
         __result = new List<DynamicVar>
         {
             new PowerVar<CoolantPower>(3)
-        };
+        }.AsReadOnly();
         return false;
     }
 }

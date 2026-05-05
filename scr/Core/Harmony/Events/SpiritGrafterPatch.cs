@@ -38,13 +38,12 @@ public static class SpiritGrafterPatch
             return true;
         }
 
-        var list = new List<EventOption>
+        __result = new List<EventOption>
         {
             new(__instance, __instance.LetItIn, "SPIRIT_GRAFTER.pages.INITIAL.options.LET_IT_IN", HoverTipFactory.FromCardWithCardHoverTips<Metamorphosis>()),
             __instance.Owner?.Deck.Cards.Any(c => c.Type == CardType.Attack) == true ? new EventOption(__instance, () => StrikeBack(__instance), "REBALANCEDSPIRE-SPIRIT_GRAFTER.pages.INITIAL.options.STRIKE_BACK") : new EventOption(__instance, null, "REBALANCEDSPIRE-SPIRIT_GRAFTER.pages.INITIAL.options.STRIKE_BACK_LOCKED"),
             new EventOption(__instance, __instance.Rejection, "SPIRIT_GRAFTER.pages.INITIAL.options.REJECTION").ThatDoesDamage(__instance.DynamicVars["RejectionHpLoss"].BaseValue)
-        };
-        __result = list;
+        }.AsReadOnly();
         return false;
     }
 }

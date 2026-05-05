@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.scr.Core.Harmony.Relics;
 
-using System.Collections.ObjectModel;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,19 +17,14 @@ public static class NeowsTalismanPatch
     private static Task AfterObtained(NeowsTalisman instance)
     {
         var source = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.Rarity == CardRarity.Basic).ToList();
-        var enumerable = new ReadOnlyCollection<CardModel?>([
+        var basicCards = new List<CardModel?>([
             source.FirstOrDefault(c => c.Tags.Contains(CardTag.Strike)),
             source.LastOrDefault(c => c.Tags.Contains(CardTag.Strike)),
             source.FirstOrDefault(c => c.Tags.Contains(CardTag.Defend)),
             source.LastOrDefault(c => c.Tags.Contains(CardTag.Defend))
         ]);
-        foreach (CardModel? card in enumerable)
+        foreach (var card in basicCards.OfType<CardModel>())
         {
-            if (card == null)
-            {
-                continue;
-            }
-
             CardCmd.Upgrade(card);
         }
         return Task.CompletedTask;

@@ -29,7 +29,7 @@ public static class SpectralKnightPatch
     {
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.3f);
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/spectral_knight/spectral_knight_hex");
-        foreach (Creature target in targets)
+        foreach (var target in targets)
         {
             await PowerCmd.Apply<HexPower>(new ThrowingPlayerChoiceContext(), target, HexPowerAmount, instance.Creature, null);
         }

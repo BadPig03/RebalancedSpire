@@ -20,7 +20,7 @@ public static class WishPatch
     {
         var cards = PileType.Draw.GetPile(instance.Owner).Cards.ToList();
         cards.AddRange(PileType.Discard.GetPile(instance.Owner).Cards);
-        CardModel? cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, (from c in cards orderby c.Rarity, c.Id select c).ToList(), instance.Owner, new CardSelectorPrefs(instance.SelectionScreenPrompt, 1))).FirstOrDefault();
+        var cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cards.OrderBy(c => c.Rarity).ThenBy(c => c.Id).ToList(), instance.Owner, new CardSelectorPrefs(instance.SelectionScreenPrompt, 1))).FirstOrDefault();
         if (cardModel == null)
         {
             return;

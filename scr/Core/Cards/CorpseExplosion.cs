@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.scr.Core.Cards;
 
-using System.Collections.ObjectModel;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using JetBrains.Annotations;
@@ -19,16 +18,16 @@ public sealed class CorpseExplosion() : CustomCardModel(2, CardType.Skill, CardR
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.DustyTomeConfig;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new PowerVar<PoisonPower>(6),
         new PowerVar<CorpseExplosionPower>(1)
-    ]);
+    ]).AsReadOnly();
 
-    public override IEnumerable<IHoverTip> ExtraHoverTips => new ReadOnlyCollection<IHoverTip>(
+    public override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<PoisonPower>()
-    ]);
+    ]).AsReadOnly();
 
     public override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

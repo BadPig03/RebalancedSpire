@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Nodes.Debug;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
-public static class VersionPatch
+public static class NDebugInfoLabelManagerPatch
 {
     [HarmonyPatch(typeof(NDebugInfoLabelManager), nameof(NDebugInfoLabelManager.UpdateText))]
     [HarmonyPostfix]

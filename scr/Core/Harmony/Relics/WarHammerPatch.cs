@@ -20,15 +20,13 @@ public static class WarHammerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.WarHammerConfig;
 
-    private static Task AfterDeath(WarHammer instance)
+    private static Task UpgradeARandomCard(WarHammer instance)
     {
         instance.Flash();
-        var enumerable = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.RunState.Rng.Niche).Take(instance.DynamicVars.Cards.IntValue);
-        foreach (CardModel item in enumerable)
+        foreach (var card in PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).Take(instance.DynamicVars.Cards.IntValue))
         {
-            CardCmd.Upgrade(item);
+            CardCmd.Upgrade(card);
         }
-
         return Task.CompletedTask;
     }
 
@@ -64,7 +62,7 @@ public static class WarHammerPatch
         __result = new List<DynamicVar>
         {
             new CardsVar(1)
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -78,12 +76,12 @@ public static class WarHammerPatch
             return true;
         }
 
-        if (__instance is not WarHammer warHammer || wasRemovalPrevented || creature.HasPower<MinionPower>())
+        if (__instance is not WarHammer warHammer || creature.HasPower<MinionPower>() || creature.IsPet || !creature.IsMonster || creature.CombatState?.Enemies.Any(c => c.IsAlive) == false)
         {
             return true;
         }
 
-        __result = AfterDeath(warHammer);
+        __result = UpgradeARandomCard(warHammer);
         return false;
     }
 
@@ -97,7 +95,7 @@ public static class WarHammerPatch
             return true;
         }
 
-        __result = Task.CompletedTask;
+        __result = UpgradeARandomCard(__instance);
         return false;
     }
 }

@@ -19,11 +19,12 @@ public static class EntomancerPatch
     {
         SfxCmd.Play(instance.CastSfx);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.5f);
-        PersonalHivePower? personalHivePower = instance.Creature.Powers.OfType<PersonalHivePower>().FirstOrDefault();
+        var personalHivePower = instance.Creature.Powers.OfType<PersonalHivePower>().FirstOrDefault();
         if (personalHivePower == null)
         {
             await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
-        } else if (personalHivePower.Amount < 3)
+        }
+        else if (personalHivePower.Amount < 3)
         {
             await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
             await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);

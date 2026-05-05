@@ -51,10 +51,10 @@ public static class VakuuPatch
 
         __result = new List<EventOption>
         {
-            Helpers.RelicOption<BloodSoakedRose>(__instance),
-            Helpers.RelicOption<LordsParasol>(__instance),
-            Helpers.RelicOption<WhisperingEarring>(__instance)
-        };
+            RelicHelpers.RelicOption<BloodSoakedRose>(__instance),
+            RelicHelpers.RelicOption<LordsParasol>(__instance),
+            RelicHelpers.RelicOption<WhisperingEarring>(__instance)
+        }.AsReadOnly();
         return false;
     }
 
@@ -70,11 +70,11 @@ public static class VakuuPatch
 
         __result = new List<EventOption>
         {
-            Helpers.RelicOption<Fiddle>(__instance),
-            Helpers.RelicOption<PreservedFog>(__instance),
-            Helpers.RelicOption<SereTalon>(__instance),
-            Helpers.RelicOption<DistinguishedCape>(__instance).ThatDecreasesMaxHp(9)
-        };
+            RelicHelpers.RelicOption<Fiddle>(__instance),
+            RelicHelpers.RelicOption<PreservedFog>(__instance),
+            RelicHelpers.RelicOption<SereTalon>(__instance),
+            RelicHelpers.RelicOption<DistinguishedCape>(__instance).ThatDecreasesMaxHp(9)
+        }.AsReadOnly();
         return false;
     }
 
@@ -90,10 +90,10 @@ public static class VakuuPatch
 
         __result = new List<EventOption>
         {
-            Helpers.RelicOption<ChoicesParadox>(__instance),
-            Helpers.RelicOption<MusicBox>(__instance),
-            Helpers.RelicOption<JeweledMask>(__instance)
-        };
+            RelicHelpers.RelicOption<ChoicesParadox>(__instance),
+            RelicHelpers.RelicOption<MusicBox>(__instance),
+            RelicHelpers.RelicOption<JeweledMask>(__instance)
+        }.AsReadOnly();
         return false;
     }
 }

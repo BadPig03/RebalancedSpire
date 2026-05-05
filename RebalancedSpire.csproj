@@ -186,7 +186,6 @@
       <Content Include="scr\Core\Harmony\Ancients\OrobasPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\VakuuPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\AttackCommandPatch.cs.uid" />
-      <Content Include="scr\Core\Harmony\Cards\Curse\BadLuckPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\EnthralledPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\FollyPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Defect\CoolantPatch.cs.uid" />
@@ -201,10 +200,12 @@
       <Content Include="scr\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\FollowThroughPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Silent\WellLaidPlansPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Status\SootPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Encounters\DoormakerBossPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Encounters\PunchOffEventEncounterPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Encounters\TheKinBossPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\EventRelicPoolPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Events\LostWispPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Events\MorphicGrovePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Events\ReflectionsPatch.cs.uid" />
@@ -308,7 +309,7 @@
       <Content Include="scr\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\RunHistorySaveManagerPatch.cs.uid" />
-      <Content Include="scr\Core\Harmony\VersionPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\NDebugInfoLabelManagerPatch.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerLeft.cs.uid" />
       <Content Include="scr\Core\Monsters\DoormakerRight.cs.uid" />
@@ -322,7 +323,7 @@
       <Content Include="scr\Core\Powers\SynchronizePlusPower.cs.uid" />
       <Content Include="scr\Core\RebalancedSpireConfig.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\SkittishPowerPatch.cs.uid" />
-      <Content Include="scr\Core\Helpers.cs.uid" />
+      <Content Include="scr\Core\RelicHelpers.cs.uid" />
       <Content Include="scr\Core\Powers\FabricatorPower.cs.uid" />
       <Content Include="scr\Core\Powers\InfestedPlusPower.cs.uid" />
       <Content Include="scr\Core\Powers\GuardPower.cs.uid" />

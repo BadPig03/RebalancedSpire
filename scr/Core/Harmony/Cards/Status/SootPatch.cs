@@ -44,7 +44,7 @@ public static class SootPatch
         __result = new List<CardKeyword>
         {
             CardKeyword.Exhaust
-        };
+        }.AsReadOnly();
         return false;
     }
 }

@@ -17,6 +17,7 @@ public static class NutritiousOysterPatch
 
     private static async Task AfterCombatVictory(NutritiousOyster nutritiousOyster)
     {
+        nutritiousOyster.Flash();
         await CreatureCmd.Heal(nutritiousOyster.Owner.Creature, nutritiousOyster.DynamicVars.Heal.BaseValue);
     }
 
@@ -72,7 +73,7 @@ public static class NutritiousOysterPatch
         {
             new MaxHpVar(11),
             new HealVar(1)
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -91,7 +92,6 @@ public static class NutritiousOysterPatch
             return true;
         }
 
-        nutritiousOyster.Flash();
         __result = AfterCombatVictory(nutritiousOyster);
         return false;
     }

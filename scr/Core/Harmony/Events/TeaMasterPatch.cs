@@ -81,7 +81,7 @@ public static class TeaMasterPatch
             new StringVar("BoneTeaDescription", ModelDb.Potion<BoneTeaPotion>().DynamicDescription.GetFormattedText()),
             new StringVar("EmberTeaDescription", ModelDb.Potion<EmberTeaPotion>().DynamicDescription.GetFormattedText()),
             new StringVar("TeaOfDiscourtesyDescription", ModelDb.Potion<TeaOfDiscourtesyPotion>().DynamicDescription.GetFormattedText())
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -109,13 +109,12 @@ public static class TeaMasterPatch
             return true;
         }
 
-        var list = new List<EventOption>
+        __result = new List<EventOption>
         {
             __instance.Owner?.Gold < __instance.DynamicVars["BoneTeaCost"].BaseValue ? new EventOption(__instance, null, "TEA_MASTER.pages.INITIAL.options.BONE_TEA_LOCKED") : new EventOption(__instance, () => BoneTea(__instance), "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.BONE_TEA", HoverTipFactory.FromPotion<BoneTeaPotion>()),
             __instance.Owner?.Gold < __instance.DynamicVars["EmberTeaCost"].BaseValue ? new EventOption(__instance, null, "TEA_MASTER.pages.INITIAL.options.EMBER_TEA_LOCKED") : new EventOption(__instance, () => EmberTea(__instance), "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.EMBER_TEA", HoverTipFactory.FromPotion<EmberTeaPotion>()),
             new(__instance, () => TeaOfDiscourtesy(__instance), "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.TEA_OF_DISCOURTESY", HoverTipFactory.FromPotion<TeaOfDiscourtesyPotion>())
-        };
-        __result = list;
+        }.AsReadOnly();
         return false;
     }
 }

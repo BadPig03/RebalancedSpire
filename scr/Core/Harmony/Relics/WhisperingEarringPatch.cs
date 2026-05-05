@@ -6,7 +6,6 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -42,14 +41,13 @@ public static class WhisperingEarringPatch
                     break;
                 }
 
-                CardPile pile = PileType.Hand.GetPile(instance.Owner);
-                var card = pile.Cards.FirstOrDefault(c => c.CanPlay());
+                var card = PileType.Hand.GetPile(instance.Owner).Cards.FirstOrDefault(c => c.CanPlay());
                 if (card == null)
                 {
                     break;
                 }
 
-                Creature? target = instance.GetTarget(card, combatState);
+                var target = instance.GetTarget(card, combatState);
                 await card.SpendResources();
                 await CardCmd.AutoPlay(choiceContext, card, target, skipXCapture: true);
             }
@@ -211,7 +209,7 @@ public static class WhisperingEarringPatch
         {
             new EnergyVar("TotalEnergy", maxCardsToPlay),
             new EnergyVar(1)
-        };
+        }.AsReadOnly();
         return false;
     }
 

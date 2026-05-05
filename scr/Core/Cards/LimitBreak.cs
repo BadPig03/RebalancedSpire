@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.scr.Core.Cards;
 
-using System.Collections.ObjectModel;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using JetBrains.Annotations;
@@ -18,15 +17,15 @@ public sealed class LimitBreak() : CustomCardModel(1, CardType.Skill, CardRarity
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.DustyTomeConfig;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => new ReadOnlyCollection<CardKeyword>(
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new List<CardKeyword>(
     [
         CardKeyword.Exhaust
-    ]);
+    ]).AsReadOnly();
 
-    public override IEnumerable<IHoverTip> ExtraHoverTips => new ReadOnlyCollection<IHoverTip>(
+    public override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<StrengthPower>()
-    ]);
+    ]).AsReadOnly();
 
     public override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay play)
     {

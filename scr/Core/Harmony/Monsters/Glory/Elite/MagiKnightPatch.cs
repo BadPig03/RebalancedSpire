@@ -9,7 +9,6 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.TestSupport;
@@ -37,24 +36,21 @@ public static class MagiKnightPatch
         if (TestMode.IsOff && targets.Count > 0)
         {
             Vector2? vector = null;
-            foreach (Creature target in targets)
+            foreach (var target in targets)
             {
-                NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
                 if (creatureNode != null && (!vector.HasValue || vector.Value.X > creatureNode.GlobalPosition.X))
                 {
                     vector = creatureNode.GlobalPosition;
                 }
             }
 
-            NCreature? creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
-            if (creatureNode2 != null)
+            var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
+            if (creatureNode2 != null && specialNode != null && vector.HasValue)
             {
-                Node2D? specialNode = creatureNode2.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
-                if (specialNode != null && vector.HasValue)
-                {
-                    var x = creatureNode2.Visuals.GetCurrentBody().Scale.X;
-                    specialNode.Position = Vector2.Left * ((creatureNode2.GlobalPosition.X - vector.Value.X - 600f) / x);
-                }
+                var x = creatureNode2.Visuals.GetCurrentBody().Scale.X;
+                specialNode.Position = Vector2.Left * ((creatureNode2.GlobalPosition.X - vector.Value.X - 600f) / x);
             }
         }
         await DamageCmd.Attack(instance.BombDamage).FromMonster(instance).WithAttackerAnim("BombCast", 1.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/magi_knight/magi_knight_attack_bomb").WithHitFx("vfx/vfx_attack_blunt").Execute(null);

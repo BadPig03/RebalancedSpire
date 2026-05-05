@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.TestSupport;
 
@@ -27,14 +26,14 @@ public static class TunnelerPatch
     {
         if (TestMode.IsOff)
         {
-            NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
-            NCreature? targetNode = NCombatRoom.Instance?.GetCreatureNode(targets[0]);
+            var creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var targetNode = NCombatRoom.Instance?.GetCreatureNode(targets[0]);
             if (creatureNode == null || targetNode == null)
             {
                 return;
             }
 
-            Node2D? specialNode = creatureNode.GetSpecialNode<Node2D>("Visuals/SpineBoneNode");
+            var specialNode = creatureNode.GetSpecialNode<Node2D>("Visuals/SpineBoneNode");
             if (specialNode != null)
             {
                 specialNode.Position = Vector2.Right * (targetNode.GlobalPosition.X - creatureNode.GlobalPosition.X) * 3f;

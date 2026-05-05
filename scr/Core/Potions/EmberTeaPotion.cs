@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.scr.Core.Potions;
 
-using System.Collections.ObjectModel;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using Godot;
@@ -24,15 +23,15 @@ public sealed class EmberTeaPotion : CustomPotionModel
 
     public override TargetType TargetType => TargetType.AnyPlayer;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new PowerVar<StrengthPower>(5)
-    ]);
+    ]).AsReadOnly();
 
-    public override IEnumerable<IHoverTip> ExtraHoverTips => new ReadOnlyCollection<IHoverTip>(
+    public override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<StrengthPower>()
-    ]);
+    ]).AsReadOnly();
 
     public override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {

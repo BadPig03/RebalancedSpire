@@ -1,8 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -20,18 +18,18 @@ public sealed class LeechingHugPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override IEnumerable<IHoverTip> ExtraHoverTips => new ReadOnlyCollection<IHoverTip>(
+    public override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<StrengthPower>()
-    ]);
+    ]).AsReadOnly();
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new StringVar("Slimed", ModelDb.Card<Slimed>().Title),
         new StringVar("SlimedBerserker", ModelDb.Monster<SlimedBerserker>().Title.GetFormattedText()),
         new PowerVar<StrengthPower>(1),
         new HealVar(5)
-    ]);
+    ]).AsReadOnly();
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
@@ -40,11 +38,10 @@ public sealed class LeechingHugPower : CustomPowerModel
             return;
         }
 
-        var enumerable = CombatState.Enemies.Where(c => c.Monster is SlimedBerserker);
-        foreach (Creature creature in enumerable)
+        foreach (var creature in CombatState.Enemies.Where(c => c.Monster is SlimedBerserker))
         {
-            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Strength.IntValue, creature, null);
-            await CreatureCmd.Heal(creature, DynamicVars.Heal.IntValue);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Strength.BaseValue, cardPlay.Card.Owner.Creature, null);
+            await CreatureCmd.Heal(creature, DynamicVars.Heal.BaseValue);
         }
     }
 }

@@ -28,9 +28,9 @@ public static class DarvPatch
             return true;
         }
 
-        var list = Darv._validRelicSets.Where(s => s.filter(__instance.Owner)).Select(s => Helpers.RelicOption(__instance, __instance.Rng.NextItem(s.relics)!.ToMutable())).ToList().UnstableShuffle(__instance.Rng).Take(2).ToList();
-        list.Add(Helpers.RelicOption<DustyTome>(__instance));
-        __result = list;
+        var list = Darv._validRelicSets.Where(s => s.filter(__instance.Owner)).Select(s => RelicHelpers.RelicOption(__instance, __instance.Rng.NextItem(s.relics)!.ToMutable())).ToList().UnstableShuffle(__instance.Rng).Take(2).ToList();
+        list.Add(RelicHelpers.RelicOption<DustyTome>(__instance));
+        __result = list.AsReadOnly();
         return false;
     }
 }

@@ -21,16 +21,16 @@ public sealed class CorpseExplosionPower : CustomPowerModel
             return;
         }
 
-        var enemies = creature.CombatState?.HittableEnemies;
+        var enemies = creature.CombatState?.HittableEnemies.ToList();
         if (enemies == null)
         {
             return;
         }
 
-        var damage = creature.MaxHp;
-        foreach (Creature enemy in enemies)
+        var damageVar = new DamageVar(creature.MaxHp * Amount, DamageProps.cardUnpowered);
+        foreach (var enemy in enemies)
         {
-            await CreatureCmd.Damage(choiceContext, enemy, new DamageVar(damage, DamageProps.cardUnpowered), Applier, null);
+            await CreatureCmd.Damage(choiceContext, enemy, damageVar, Applier, null);
         }
     }
 }

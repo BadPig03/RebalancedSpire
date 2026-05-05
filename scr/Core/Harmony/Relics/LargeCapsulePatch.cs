@@ -103,7 +103,7 @@ public static class LargeCapsulePatch
         {
             new IntVar("Relics", 1),
             new StringVar("Writhe", ModelDb.Card<Writhe>().Title)
-        };
+        }.AsReadOnly();
         return false;
     }
 

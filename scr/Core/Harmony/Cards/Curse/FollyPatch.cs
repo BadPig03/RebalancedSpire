@@ -26,7 +26,7 @@ public static class FollyPatch
             CardKeyword.Unplayable,
             CardKeyword.Eternal,
             CardKeyword.Innate
-        };
+        }.AsReadOnly();
         return false;
     }
 }

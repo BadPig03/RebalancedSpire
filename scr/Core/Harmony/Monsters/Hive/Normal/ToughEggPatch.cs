@@ -9,7 +9,6 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.TestSupport;
 
@@ -23,7 +22,7 @@ public static class ToughEggPatch
     {
         if (TestMode.IsOff && instance.HatchPos.HasValue)
         {
-            NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
             if (creatureNode != null)
             {
                 creatureNode.GlobalPosition = instance.HatchPos.Value;

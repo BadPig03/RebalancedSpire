@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Potions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
@@ -23,14 +22,14 @@ public sealed class BoneTeaPotion : CustomPotionModel
 
     public override Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
-        NCombatRoom.Instance?.PlaySplashVfx(Owner.Creature, new Color("cd683d"));
-        foreach (CardModel card in PileType.Draw.GetPile(Owner).Cards)
+        if (target != null)
         {
-            if (!card.IsUpgradable)
-            {
-                continue;
-            }
+            return Task.CompletedTask;
+        }
 
+        NCombatRoom.Instance?.PlaySplashVfx(Owner.Creature, new Color("cd683d"));
+        foreach (var card in PileType.Draw.GetPile(Owner).Cards.Where(c => c.IsUpgradable))
+        {
             CardCmd.Upgrade(card);
         }
         return Task.CompletedTask;

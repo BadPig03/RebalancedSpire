@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
@@ -41,7 +40,7 @@ public static class ReflectionsPatch
                 break;
             }
 
-            CardModel? card = instance.Rng.NextItem(upgradableCards);
+            var card = instance.Rng.NextItem(upgradableCards);
             if (card == null)
             {
                 break;
@@ -62,10 +61,8 @@ public static class ReflectionsPatch
             return;
         }
 
-        var cards = await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_COPY"), 0, instance.Owner.Deck.Cards.Count));
-        foreach (var card in cards)
+        foreach (var copiedCard in (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_COPY"), 0, instance.Owner.Deck.Cards.Count))).Select(c => instance.Owner.RunState.CloneCard(c)).ToList())
         {
-            CardModel copiedCard = instance.Owner.RunState.CloneCard(card);
             CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(copiedCard, PileType.Deck), 1.2f, CardPreviewStyle.MessyLayout);
             await Cmd.CustomScaledWait(0.1f, 0.2f);
         }
@@ -81,7 +78,7 @@ public static class ReflectionsPatch
             return;
         }
 
-        foreach (var copiedCard in instance.Owner.Deck.Cards.ToList().Select(card => instance.Owner.RunState.CloneCard(card)))
+        foreach (var copiedCard in instance.Owner.Deck.Cards.Select(c => instance.Owner.RunState.CloneCard(c)).ToList())
         {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(copiedCard, PileType.Deck), 1.2f, CardPreviewStyle.MessyLayout);
             await Cmd.CustomScaledWait(0.1f, 0.2f);
@@ -100,13 +97,12 @@ public static class ReflectionsPatch
             return true;
         }
 
-        var list = new List<EventOption>
+        __result = new List<EventOption>
         {
             new(__instance, () => TouchAMirror(__instance), "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.TOUCH_A_MIRROR"),
             new(__instance, () => Stare(__instance), "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE", HoverTipFactory.FromCardWithCardHoverTips<BadLuck>()),
             new(__instance, () => Shatter(__instance), "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.SHATTER")
-        };
-        __result = list;
+        }.AsReadOnly();
         return false;
     }
 }

@@ -25,6 +25,7 @@ public static class SereTalonPatch
             CardModel card = instance.Owner.RunState.CreateCard(ModelDb.Card<Writhe>(), instance.Owner);
             curseResults.Add(await CardPileCmd.Add(card, PileType.Deck));
         }
+        CardCmd.PreviewCardPileAdd(curseResults, 2f);
 
         List<CardPileAddResult> wishResults = [];
         for (var i = 0; i < instance.DynamicVars["WishCards"].IntValue; i++)
@@ -32,7 +33,6 @@ public static class SereTalonPatch
             CardModel card = instance.Owner.RunState.CreateCard(ModelDb.Card<Wish>(), instance.Owner);
             wishResults.Add(await CardPileCmd.Add(card, PileType.Deck));
         }
-        CardCmd.PreviewCardPileAdd(curseResults, 2f);
         CardCmd.PreviewCardPileAdd(wishResults, 2f);
         await Cmd.Wait(0.75f);
     }
@@ -91,7 +91,7 @@ public static class SereTalonPatch
             new StringVar("Wish", ModelDb.Card<Wish>().Title),
             new CardsVar("CurseCards", 1),
             new CardsVar("WishCards", 2)
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -108,7 +108,7 @@ public static class SereTalonPatch
         var list = new List<IHoverTip>();
         list.AddRange(HoverTipFactory.FromCardWithCardHoverTips<Writhe>());
         list.AddRange(HoverTipFactory.FromCardWithCardHoverTips<Wish>());
-        __result = list;
+        __result = list.AsReadOnly();
         return false;
     }
 

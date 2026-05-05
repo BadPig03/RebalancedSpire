@@ -4,10 +4,10 @@ using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Encounters;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -24,13 +24,13 @@ public static class PunchConstructPatch
 
     private static bool ShouldFight(PunchConstruct instance)
     {
-        return instance.CombatState.Enemies.Count > 1;
+        return instance.CombatState is { Encounter: PunchOffEventEncounter, Enemies.Count: > 1 };
     }
 
     private static async Task FightWithMe(PunchConstruct instance)
     {
-        Node2D? body = NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.Body;
-        Control? vfxContainer = NCombatRoom.Instance?.CombatVfxContainer;
+        var body = NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.Body;
+        var vfxContainer = NCombatRoom.Instance?.CombatVfxContainer;
         if (instance.StartsWithStrongPunch && body != null)
         {
             body.Scale *= new Vector2(-1f, 1f);
@@ -43,7 +43,7 @@ public static class PunchConstructPatch
             return;
         }
 
-        foreach (Creature enemy in enemies.ToList().Where(enemy => enemy != instance.Creature))
+        foreach (var enemy in enemies.Where(c => c != instance.Creature).ToList())
         {
             await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemy, new DamageVar(instance.FastPunchDamage, DamageProps.monsterMove), instance.Creature);
             VfxCmd.PlayOnCreatureCenter(enemy, "vfx/vfx_attack_blunt");
@@ -71,8 +71,7 @@ public static class PunchConstructPatch
         }
 
         instance.Rng.FastForwardCounter(instance.StartingHpReduction);
-        var hp = instance.Creature.CurrentHp * instance.Rng.NextInt(60, 81) / 100;
-        await CreatureCmd.SetCurrentHp(instance.Creature, hp);
+        await CreatureCmd.SetCurrentHp(instance.Creature, instance.Creature.CurrentHp * instance.Rng.NextInt(60, 81) / 100m);
     }
 
     [HarmonyPatch(typeof(PunchConstruct), nameof(PunchConstruct.AfterAddedToRoom))]

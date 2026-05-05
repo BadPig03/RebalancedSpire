@@ -40,13 +40,12 @@ public static class SpiralingWhirlpoolPatch
             return true;
         }
 
-        var list = new List<EventOption>
+        __result = new List<EventOption>
         {
             new (__instance, __instance.ObserveTheSpiral, "SPIRALING_WHIRLPOOL.pages.INITIAL.options.OBSERVE", HoverTipFactory.FromEnchantment<Spiral>()),
             new (__instance, __instance.Drink, "SPIRALING_WHIRLPOOL.pages.INITIAL.options.DRINK"),
             new (__instance, () => ReachIn(__instance), "REBALANCEDSPIRE-SPIRALING_WHIRLPOOL.pages.INITIAL.options.REACH_IN", HoverTipFactory.FromCardWithCardHoverTips<Injury>())
-        };
-        __result = list;
+        }.AsReadOnly();
         return false;
     }
 }

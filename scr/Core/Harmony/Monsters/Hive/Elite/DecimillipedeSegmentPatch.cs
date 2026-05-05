@@ -35,7 +35,7 @@ public static class DecimillipedeSegmentPatch
         var players = instance.CombatState.Players;
         var count = players.Count;
         var currentActIndex = instance.CombatState.RunState.CurrentActIndex;
-        List<Creature> source = (from c in instance.CombatState.GetTeammatesOf(instance.Creature) where c != instance.Creature select c).ToList();
+        var source = instance.CombatState.Enemies.Where(c => c != instance.Creature).ToList();
         while (source.Any(c => c.MaxHp == maxHp))
         {
             maxHp += 2;

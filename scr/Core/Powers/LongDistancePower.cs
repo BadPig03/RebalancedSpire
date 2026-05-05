@@ -1,11 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -28,10 +26,10 @@ public sealed class LongDistancePower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new StringVar("TheInsatiable", ModelDb.Monster<TheInsatiable>().Title.GetFormattedText())
-    ]);
+    ]).AsReadOnly();
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
@@ -58,7 +56,7 @@ public sealed class LongDistancePower : CustomPowerModel
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (cardPlay.Card is not FranticEscape || cardPlay.Card.Owner.Creature != Owner)
+        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card is not FranticEscape)
         {
             return;
         }
@@ -76,7 +74,7 @@ public sealed class LongDistancePower : CustomPowerModel
             return;
         }
 
-        foreach (Player player in CombatState.Players)
+        foreach (var player in CombatState.Players)
         {
             Node2D? body = NCombatRoom.Instance?.GetCreatureNode(player.Creature)?.Body;
             if (body != null)
@@ -86,13 +84,8 @@ public sealed class LongDistancePower : CustomPowerModel
             room.AddExtraReward(player, new PotionReward(player));
             room.AddExtraReward(player, new RelicReward(RelicRarity.Rare, player));
         }
-        foreach (Creature enemy in CombatState.Enemies)
+        foreach (var enemy in CombatState.Enemies.Where(c => c.Monster is TheInsatiable))
         {
-            if (enemy.Monster is not TheInsatiable)
-            {
-                continue;
-            }
-
             enemy.RemoveAllPowersInternalExcept();
             CombatManager.Instance.RemoveCreature(enemy);
             enemy.CombatState?.RemoveCreature(enemy);
@@ -101,11 +94,11 @@ public sealed class LongDistancePower : CustomPowerModel
 
     private static decimal CalculatePlayerMultiplier(int amount)
     {
-        return (decimal) Math.Max(0.2, 1.3 - 0.1 * amount - 0.1 * Math.Max(0, amount - 5) + 0.2 * Math.Max(0, amount - 8));
+        return Math.Max(0.2m, 1.3m - 0.1m * amount - 0.1m * Math.Max(0, amount - 5) + 0.2m * Math.Max(0, amount - 8));
     }
 
     private static decimal CalculateEnemyMultiplier(int amount)
     {
-        return (decimal) Math.Max(0.2, 1.4 - 0.1 * amount - 0.1 * Math.Max(0, amount - 6) + 0.2 * Math.Max(0, amount - 9));
+        return Math.Max(0.2m, 1.4m - 0.1m * amount - 0.1m * Math.Max(0, amount - 6) + 0.2m * Math.Max(0, amount - 9));
     }
 }

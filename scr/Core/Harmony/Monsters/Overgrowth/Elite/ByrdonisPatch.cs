@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
@@ -30,11 +29,16 @@ public static class ByrdonisPatch
     private static int SwoopDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 18, 16);
     private static int WeakAmount => 99;
 
+    private static bool IsAngry(Byrdonis instance)
+    {
+        return instance.Creature.HasPower<TerritorialPower>();
+    }
+
     private static async Task AngryMove(Byrdonis instance, IReadOnlyList<Creature> targets)
     {
         await CreatureCmd.TriggerAnim(instance.Creature, "AngryPermanently", 0.8f);
         await PowerCmd.Apply<TerritorialPower>(new ThrowingPlayerChoiceContext(), instance.Creature, TerritorialPowerAmount, instance.Creature, null);
-        foreach (Player player in instance.CombatState.Players)
+        foreach (var player in instance.CombatState.Players)
         {
             var allCards = player.PlayerCombatState?.AllCards;
             if (allCards == null)
@@ -42,7 +46,7 @@ public static class ByrdonisPatch
                 continue;
             }
 
-            foreach (CardModel cardModel in allCards)
+            foreach (var cardModel in allCards)
             {
                 if (cardModel is not ByrdonisEgg)
                 {
@@ -67,21 +71,10 @@ public static class ByrdonisPatch
 
     private static async Task AfterAddedToRoom(Byrdonis instance)
     {
-        foreach (Player player in instance.CombatState.Players)
+        foreach (var player in instance.CombatState.Players.Where(p => p.GetRelic<Byrdpip>() != null))
         {
-            if (player.GetRelic<Byrdpip>() == null)
-            {
-                continue;
-            }
-
             await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), instance.Creature, WeakAmount, player.Creature, null);
-            return;
         }
-    }
-
-    private static bool IsAngry(Byrdonis instance)
-    {
-        return instance.Creature.GetPower<TerritorialPower>() != null;
     }
 
     [HarmonyPatch(typeof(Byrdonis), nameof(Byrdonis.AfterAddedToRoom))]

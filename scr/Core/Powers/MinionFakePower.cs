@@ -27,7 +27,7 @@ public sealed class MinionFakePower : CustomPowerModel
             return Task.CompletedTask;
         }
 
-        var enemies = Owner.CombatState?.Enemies;
+        var enemies = Owner.CombatState?.Enemies.ToList();
         if (enemies == null)
         {
             return Task.CompletedTask;

@@ -22,13 +22,13 @@ public static class FollowThroughPatch
 
     private static bool WasLastCardPlayedSkill(FollowThrough instance)
     {
-        var cardPlayStartedEntry = CombatManager.Instance.History.CardPlaysStarted.LastOrDefault(e => e.CardPlay.Card.Owner == instance.Owner && e.HappenedThisTurn(instance.CombatState) && e.CardPlay.Card != instance);
-        if (cardPlayStartedEntry == null)
+        var entry = CombatManager.Instance.History.CardPlaysStarted.LastOrDefault(e => e.CardPlay.Card.Owner == instance.Owner && e.HappenedThisTurn(instance.CombatState) && e.CardPlay.Card != instance);
+        if (entry == null)
         {
             return false;
         }
 
-        return cardPlayStartedEntry.CardPlay.Card.Type == CardType.Skill;
+        return entry.CardPlay.Card.Type == CardType.Skill;
     }
 
     private static async Task OnPlay(FollowThrough instance, PlayerChoiceContext choiceContext)
@@ -122,7 +122,7 @@ public static class FollowThroughPatch
         __result = new List<IHoverTip>
         {
             HoverTipFactory.FromPower<WeakPower>()
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -140,7 +140,7 @@ public static class FollowThroughPatch
         {
             new DamageVar(6, ValueProp.Move),
             new PowerVar<WeakPower>(1)
-        };
+        }.AsReadOnly();
         return false;
     }
 

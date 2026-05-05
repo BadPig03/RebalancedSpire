@@ -107,7 +107,13 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_TryModifyEnergyCostInCombat(AbstractModel __instance, CardModel card, decimal originalCost, out decimal modifiedCost, ref bool __result)
     {
-        if (Disabled || __instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
+        if (Disabled)
+        {
+            modifiedCost = originalCost;
+            return true;
+        }
+
+        if (__instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
         {
             modifiedCost = originalCost;
             return true;
@@ -123,7 +129,13 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_TryModifyStarCost(AbstractModel __instance, CardModel card, decimal originalCost, out decimal modifiedCost, ref bool __result)
     {
-        if (Disabled || __instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
+        if (Disabled)
+        {
+            modifiedCost = originalCost;
+            return true;
+        }
+
+        if (__instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || card.Owner != boomingConch.Owner)
         {
             modifiedCost = originalCost;
             return true;

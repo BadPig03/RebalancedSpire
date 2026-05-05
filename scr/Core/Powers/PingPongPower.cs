@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -19,10 +18,10 @@ public sealed class PingPongPower : CustomPowerModel
 
     public override bool ShouldPowerBeRemovedAfterOwnerDeath() => false;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new StringVar("LivingFog", ModelDb.Monster<LivingFog>().Title.GetFormattedText())
-    ]);
+    ]).AsReadOnly();
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
@@ -37,6 +36,6 @@ public sealed class PingPongPower : CustomPowerModel
             return;
         }
 
-        await CreatureCmd.Damage(choiceContext, Applier, creature.MaxHp, DamageProps.monsterMove, null, null);
+        await CreatureCmd.Damage(choiceContext, Applier, creature.MaxHp, DamageProps.monsterMove, Applier, null);
     }
 }

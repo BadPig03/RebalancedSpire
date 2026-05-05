@@ -20,24 +20,15 @@ public sealed class ScrutinyPlusPower : CustomPowerModel
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
-        var players = Owner.CombatState?.Players;
+        var players = Owner.CombatState?.Players.ToList();
         if (players == null)
         {
             return;
         }
 
-        foreach (Player player in players)
+        foreach (var cardModel in players.Select(player => player.PlayerCombatState?.AllCards).OfType<IEnumerable<CardModel>>().SelectMany(list => list))
         {
-            var list = player.PlayerCombatState?.AllCards;
-            if (list == null)
-            {
-                continue;
-            }
-
-            foreach (CardModel cardModel in list)
-            {
-                await Afflict(cardModel);
-            }
+            await Afflict(cardModel);
         }
     }
 
@@ -87,7 +78,7 @@ public sealed class ScrutinyPlusPower : CustomPowerModel
                 continue;
             }
 
-            foreach (CardModel cardModel in list)
+            foreach (var cardModel in list)
             {
                 CardCmd.ClearAffliction(cardModel);
             }

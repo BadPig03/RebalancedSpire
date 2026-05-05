@@ -12,21 +12,20 @@ public static class BansheesCryPatch
     private static readonly bool Disabled = !RebalancedSpireConfig.BansheesCryConfig;
 
     [HarmonyPatch(typeof(CardModel), nameof(CardModel.CanonicalEnergyCost), MethodType.Getter)]
-    [HarmonyPrefix]
+    [HarmonyPostfix]
     [UsedImplicitly]
-    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
+    private static void PostFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
     {
         if (Disabled)
         {
-            return true;
+            return;
         }
 
         if (__instance is not BansheesCry)
         {
-            return true;
+            return;
         }
 
-        __result = 8;
-        return false;
+        __result -= 1;
     }
 }

@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.Models;
 
 namespace RebalancedSpire.scr.Core;
 
-public static class Helpers
+public static class RelicHelpers
 {
     public static EventOption RelicOption(AncientEventModel instance, RelicModel relic, string pageName = "INITIAL", string? customDonePage = null)
     {
@@ -24,7 +24,6 @@ public static class Helpers
 
     public static EventOption RelicOption<T>(AncientEventModel instance, string pageName = "INITIAL", string? customDonePage = null) where T : RelicModel
     {
-        RelicModel relic = ModelDb.Relic<T>().ToMutable();
-        return RelicOption(instance, relic, pageName, customDonePage);
+        return RelicOption(instance, ModelDb.Relic<T>().ToMutable(), pageName, customDonePage);
     }
 }

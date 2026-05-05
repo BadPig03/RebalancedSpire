@@ -2,8 +2,11 @@
 
 using HarmonyLib;
 using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 
@@ -12,6 +15,18 @@ using MegaCrit.Sts2.Core.Models.Relics;
 public static class PomanderPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.PomanderConfig;
+
+    private static async Task AfterObtained(Pomander instance)
+    {
+        foreach (var card in (await CardSelectCmd.FromDeckForUpgrade(prefs: new CardSelectorPrefs(CardSelectorPrefs.UpgradeSelectionPrompt, instance.DynamicVars.Cards.IntValue), player: instance.Owner)).ToList())
+        {
+            CardCmd.Upgrade(card);
+        }
+        foreach (var card in PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.RunState.Rng.Niche).Take(instance.DynamicVars.Cards.IntValue))
+        {
+            CardCmd.Upgrade(card);
+        }
+    }
 
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
     [HarmonyPrefix]
@@ -51,20 +66,17 @@ public static class PomanderPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(Pomander), nameof(Pomander.CanonicalVars), MethodType.Getter)]
+    [HarmonyPatch(typeof(Pomander), nameof(Pomander.AfterObtained))]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(Pomander __instance, ref IEnumerable<DynamicVar> __result)
+    private static bool PreFix_AfterObtained(Pomander __instance, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __result = new List<DynamicVar>
-        {
-            new CardsVar(2)
-        };
+        __result = AfterObtained(__instance);
         return false;
     }
 }

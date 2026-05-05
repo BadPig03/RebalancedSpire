@@ -24,7 +24,7 @@ public static class SwordOfStonePatch
         __result = new List<DynamicVar>
         {
             new("Elites", 3)
-        };
+        }.AsReadOnly();
         return false;
     }
 }

@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Entities.Gold;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 
@@ -26,8 +25,7 @@ public static class MorphicGrovePatch
         }
 
         await PlayerCmd.LoseGold(instance.DynamicVars["GroupCost"].BaseValue, instance.Owner, GoldLossType.Stolen);
-        var list = (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 2), player: instance.Owner)).ToList();
-        foreach (CardModel cardModel in list)
+        foreach (var cardModel in (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 2), player: instance.Owner)).ToList())
         {
             await CardCmd.TransformToRandom(cardModel, instance.Owner.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
         }
@@ -48,7 +46,7 @@ public static class MorphicGrovePatch
         {
             new("GroupCost", 99),
             new MaxHpVar(5)
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -62,12 +60,11 @@ public static class MorphicGrovePatch
             return true;
         }
 
-        var list = new List<EventOption>
+        __result = new List<EventOption>
         {
             new(__instance, () => Group(__instance), "REBALANCEDSPIRE-MORPHIC_GROVE.pages.INITIAL.options.GROUP", HoverTipFactory.Static(StaticHoverTip.Transform)),
             new(__instance, __instance.Loner, "MORPHIC_GROVE.pages.INITIAL.options.LONER")
-        };
-        __result = list;
+        }.AsReadOnly();
         return false;
     }
 }

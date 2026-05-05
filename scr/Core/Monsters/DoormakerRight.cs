@@ -16,7 +16,6 @@ public sealed class DoormakerRight : DoormakerBase
     private static int HungerDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 24, 22);
     private static int ChargeUpDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 9);
     private static int ChargeUpCount => 2;
-
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackCount => 4;
@@ -24,7 +23,7 @@ public sealed class DoormakerRight : DoormakerBase
     public override async Task AfterAddedToRoom()
     {
         await base.AfterAddedToRoom();
-        foreach (Creature creature in CombatState.Enemies)
+        foreach (var creature in CombatState.Enemies)
         {
             if (creature.Monster is not DoormakerLeft doormaker)
             {

@@ -53,13 +53,13 @@ public static class KnowledgeDemonPatch
             }
             return card;
         }).ToList();
-        CardModel? cardModel = await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), cards, target.Player);
-        if (cardModel == null)
+        var chosen = await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), cards, target.Player);
+        if (chosen == null)
         {
             return;
         }
 
-        await ((KnowledgeDemon.IChoosable) cardModel).OnChosen();
+        await ((KnowledgeDemon.IChoosable) chosen).OnChosen();
     }
 
     [HarmonyPatch(typeof(KnowledgeDemon), nameof(KnowledgeDemon.ChooseCurse))]

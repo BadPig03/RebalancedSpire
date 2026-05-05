@@ -26,12 +26,7 @@ public sealed class SynchronizePlusPower : CustomPowerModel
 
     public override async Task AfterOrbChanneled(PlayerChoiceContext choiceContext, Player player, OrbModel orb)
     {
-        if (player != Owner.Player)
-        {
-            return;
-        }
-
-        if (GetInternalData<Data>().ChanneledOrbs.Contains(orb.Id))
+        if (player != Owner.Player || GetInternalData<Data>().ChanneledOrbs.Contains(orb.Id))
         {
             return;
         }

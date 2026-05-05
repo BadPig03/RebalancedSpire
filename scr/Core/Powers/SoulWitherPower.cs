@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -13,21 +12,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 public sealed class SoulWitherPower : CustomPowerModel
 {
-    private const int MaxHitCount = 12;
-
-    public override PowerType Type => PowerType.Buff;
-
-    public override PowerStackType StackType => PowerStackType.Counter;
-
-    public override int DisplayAmount => HitCount;
-
-    public override bool IsInstanced => true;
-
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
-    [
-        new StringVar("SoulNexus", ModelDb.Monster<SoulNexus>().Title.GetFormattedText()),
-        new CalculationBaseVar(MaxHitCount)
-    ]);
+    private static int MaxHitCount => 12;
 
     private int _hitCount;
 
@@ -43,6 +28,20 @@ public sealed class SoulWitherPower : CustomPowerModel
         }
     }
 
+    public override PowerType Type => PowerType.Buff;
+
+    public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override int DisplayAmount => HitCount;
+
+    public override bool IsInstanced => true;
+
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
+    [
+        new StringVar("SoulNexus", ModelDb.Monster<SoulNexus>().Title.GetFormattedText()),
+        new CalculationBaseVar(MaxHitCount)
+    ]).AsReadOnly();
+
     public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
         if (dealer != Owner || !target.IsPlayer || !props.IsPoweredAttack() || result.UnblockedDamage <= 0)
@@ -55,7 +54,7 @@ public sealed class SoulWitherPower : CustomPowerModel
         return Task.CompletedTask;
     }
 
-    public bool ExceedLimit()
+    public bool IsLimitExceeded()
     {
         return HitCount >= MaxHitCount;
     }

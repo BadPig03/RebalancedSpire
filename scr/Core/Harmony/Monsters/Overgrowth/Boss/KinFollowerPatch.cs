@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -20,7 +19,6 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Rewards;
@@ -79,16 +77,16 @@ public static class KinFollowerPatch
         if (TestMode.IsOff)
         {
             Vector2? vector = null;
-            foreach (Creature target in targets)
+            foreach (var target in targets)
             {
-                NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
                 if (!vector.HasValue || vector.Value.X > creatureNode?.GlobalPosition.X)
                 {
                     vector = creatureNode?.GlobalPosition;
                 }
             }
-            NCreature? creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
-            Node2D? specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
+            var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
             if (vector != null && creatureNode2 != null && specialNode != null)
             {
                 specialNode.Position = Vector2.Left * (creatureNode2.GlobalPosition.X - vector.Value.X) / creatureNode2.Body.Scale;
@@ -134,16 +132,16 @@ public static class KinFollowerPatch
         if (TestMode.IsOff)
         {
             Vector2? vector = null;
-            foreach (Creature target in targets)
+            foreach (var target in targets)
             {
-                NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
+                var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
                 if (!vector.HasValue || vector.Value.X > creatureNode?.GlobalPosition.X)
                 {
                     vector = creatureNode?.GlobalPosition;
                 }
             }
-            NCreature? creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
-            Node2D? specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
+            var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
             if (vector != null && creatureNode2 != null && specialNode != null)
             {
                 specialNode.Position = Vector2.Left * (creatureNode2.GlobalPosition.X - vector.Value.X) / creatureNode2.Body.Scale;
@@ -176,7 +174,7 @@ public static class KinFollowerPatch
         }
 
         await Cmd.Wait(0.5f);
-        foreach (Player player in instance.CombatState.Players)
+        foreach (var player in instance.CombatState.Players)
         {
             var room = (CombatRoom?) player.RunState.CurrentRoom;
             if (room == null)

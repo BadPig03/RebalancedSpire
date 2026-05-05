@@ -64,7 +64,7 @@ public static class LostWispPatch
             new GoldVar(60),
             new DamageVar(8, ValueProp.Unblockable | ValueProp.Unpowered),
             new StringVar("Relic", ModelDb.Relic<MegaCrit.Sts2.Core.Models.Relics.LostWisp>().Title.GetFormattedText())
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -78,12 +78,11 @@ public static class LostWispPatch
             return true;
         }
 
-        var list = new List<EventOption>
+        __result = new List<EventOption>
         {
             new(__instance, () => Claim(__instance), "REBALANCEDSPIRE-LOST_WISP.pages.INITIAL.options.CLAIM", HoverTipFactory.FromRelic<MegaCrit.Sts2.Core.Models.Relics.LostWisp>()),
             new(__instance, __instance.Search, "LOST_WISP.pages.INITIAL.options.SEARCH")
-        };
-        __result = list;
+        }.AsReadOnly();
         return false;
     }
 }

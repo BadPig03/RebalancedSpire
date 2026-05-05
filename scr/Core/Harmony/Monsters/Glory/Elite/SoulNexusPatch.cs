@@ -28,6 +28,11 @@ public static class SoulNexusPatch
     private static int VulnerablePowerAmount => 1;
     private static int SoulWitherAmount => 1;
 
+    private static bool IsAnyPlayerExceedLimit(SoulNexus instance)
+    {
+        return instance.Creature.GetPowerInstances<SoulWitherPower>().Any(power => power.IsLimitExceeded());
+    }
+
     private static async Task SoulStrikeMove(SoulNexus instance)
     {
         await DamageCmd.Attack(SoulStrikeDamage).WithHitCount(SoulStrikeRepeat).FromMonster(instance).OnlyPlayAnimOnce().WithAttackerAnim("Attack", 0.8f).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
@@ -47,7 +52,7 @@ public static class SoulNexusPatch
     {
         SfxCmd.Play(instance.CastSfx, 0.8f);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.8f);
-        foreach (SoulWitherPower power in instance.Creature.GetPowerInstances<SoulWitherPower>())
+        foreach (var power in instance.Creature.GetPowerInstances<SoulWitherPower>())
         {
             power.Reset();
         }
@@ -61,17 +66,12 @@ public static class SoulNexusPatch
 
     private static async Task AfterAddedToRoom(SoulNexus instance)
     {
-        foreach (Creature creature in instance.CombatState.PlayerCreatures)
+        foreach (var creature in instance.CombatState.PlayerCreatures)
         {
             SoulWitherPower soulWitherPower = (SoulWitherPower) ModelDb.Power<SoulWitherPower>().ToMutable();
             soulWitherPower.Target = creature;
             await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), soulWitherPower, instance.Creature, SoulWitherAmount, instance.Creature, null);
         }
-    }
-
-    private static bool IsAnyPlayerExceedLimit(SoulNexus instance)
-    {
-        return instance.Creature.GetPowerInstances<SoulWitherPower>().Any(power => power.ExceedLimit());
     }
 
     [HarmonyPatch(typeof(SoulNexus), nameof(SoulNexus.AfterAddedToRoom))]

@@ -57,7 +57,7 @@ public static class SwordOfJadePatch
         {
             new PowerVar<StrengthPower>(2),
             new PowerVar<DexterityPower>(1)
-        };
+        }.AsReadOnly();
         return false;
     }
 
@@ -75,7 +75,7 @@ public static class SwordOfJadePatch
         {
             HoverTipFactory.FromPower<StrengthPower>(),
             HoverTipFactory.FromPower<DexterityPower>()
-        };
+        }.AsReadOnly();
         return false;
     }
 

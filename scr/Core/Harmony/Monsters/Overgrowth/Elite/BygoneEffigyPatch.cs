@@ -13,7 +13,6 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.TestSupport;
@@ -43,16 +42,16 @@ public static class BygoneEffigyPatch
         if (TestMode.IsOff)
         {
             Vector2? vector = null;
-            foreach (Creature target in targets)
+            foreach (var target in targets)
             {
-                NCreature? creatureNode = target.GetCreatureNode();
+                var creatureNode = target.GetCreatureNode();
                 if (creatureNode != null && (!vector.HasValue || vector.Value.X > creatureNode.GlobalPosition.X))
                 {
                     vector = creatureNode.GlobalPosition;
                 }
             }
-            NCreature? creatureNode2 = instance.Creature.GetCreatureNode();
-            Node2D? node2D = creatureNode2?.GetSpecialNode<Node2D>("Visuals/SpineBoneNode");
+            var creatureNode2 = instance.Creature.GetCreatureNode();
+            var node2D = creatureNode2?.GetSpecialNode<Node2D>("Visuals/SpineBoneNode");
             if (creatureNode2 != null && node2D != null && vector.HasValue)
             {
                 node2D.Position = Vector2.Left * (vector.Value.X - creatureNode2.GlobalPosition.X - 300f);

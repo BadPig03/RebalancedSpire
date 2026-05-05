@@ -134,7 +134,7 @@ public static class DoormakerBossPatch
         [
             ModelDb.Monster<DoormakerLeft>().ToMutable(),
             ModelDb.Monster<DoormakerRight>().ToMutable()
-        ]);
+        ]).AsReadOnly();
         return false;
     }
 

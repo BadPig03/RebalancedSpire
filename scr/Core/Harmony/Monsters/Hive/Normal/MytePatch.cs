@@ -10,7 +10,6 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.TestSupport;
@@ -27,8 +26,8 @@ public static class MytePatch
     {
         if (TestMode.IsOff)
         {
-            NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
-            Creature? target = LocalContext.GetMe(instance.CombatState)?.Creature;
+            var creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+            var target = LocalContext.GetMe(instance.CombatState)?.Creature;
             creatureNode?.GetSpecialNode<NMyteVfx>("%NMyteVfx")?.SetTarget(target);
         }
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/mite/mite_cast");

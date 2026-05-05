@@ -116,6 +116,9 @@
   "REBALANCEDSPIRE-UNTOUCHABLE_CONFIG.title": "Untouchable",
   "REBALANCEDSPIRE-UNTOUCHABLE_CONFIG.hover.title": "Enable balance changes related to the Untouchable.",
   "REBALANCEDSPIRE-UNTOUCHABLE_CONFIG.hover.desc": "Takes effect after restarting.",
+  "REBALANCEDSPIRE-WELL_LAID_PLANS_CONFIG.title": "Well Laid Plans",
+  "REBALANCEDSPIRE-WELL_LAID_PLANS_CONFIG.hover.title": "Enable balance changes related to the Well Laid Plans.",
+  "REBALANCEDSPIRE-WELL_LAID_PLANS_CONFIG.hover.desc": "Takes effect after restarting.",
 
   "REBALANCEDSPIRE-NECROBINDER.title": "Necrobinder",
   "REBALANCEDSPIRE-BANSHEES_CRY_CONFIG.title": "Banshee's Cry",

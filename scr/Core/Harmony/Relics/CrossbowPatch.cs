@@ -18,7 +18,7 @@ public static class CrossbowPatch
 
     private static async Task AfterSideTurnStart(Crossbow instance)
     {
-        var cardModels = (from c in instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint) where c.Type == CardType.Attack select c).ToList();
+        var cardModels = instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint).Where(c => c.Type == CardType.Attack).ToList();
         if (cardModels.Count == 0)
         {
             return;
@@ -26,7 +26,7 @@ public static class CrossbowPatch
 
         instance.Flash();
         var chosenCards = CardFactory.GetDistinctForCombat(instance.Owner, cardModels, 1, instance.Owner.RunState.Rng.CombatCardGeneration).ToList();
-        foreach (CardModel cardModel in chosenCards)
+        foreach (var cardModel in chosenCards)
         {
             cardModel.SetToFreeThisCombat();
             CardCmd.ApplyKeyword(cardModel, CardKeyword.Exhaust);

@@ -8,7 +8,6 @@ using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
@@ -17,7 +16,6 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Cards;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
 [HarmonyPatch]
@@ -39,12 +37,12 @@ public static class ThievingHopperPatch
 
     private static async Task ThieveryMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
     {
-        NCreature? creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
+        var creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
 		if (creatureNode != null)
 		{
 			Creature creature = LocalContext.GetMe(targets) ?? targets[0];
-			NCreature? creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(creature);
-			Node2D? specialNode = creatureNode.GetSpecialNode<Node2D>("Visuals/SpineBoneNode");
+			var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(creature);
+			var specialNode = creatureNode.GetSpecialNode<Node2D>("Visuals/SpineBoneNode");
 			if (specialNode != null && creatureNode2 != null)
 			{
 				specialNode.Position = Vector2.Right * (creatureNode2.GlobalPosition.X - creatureNode.GlobalPosition.X);
@@ -53,16 +51,16 @@ public static class ThievingHopperPatch
 		await CreatureCmd.TriggerAnim(instance.Creature, "Steal", 0.25f);
 		SfxCmd.Play("event:/sfx/enemy/enemy_attacks/thieving_hopper/thieving_hopper_steal");
 		List<CardModel> cardsToSteal = [];
-		foreach (Creature target in targets)
+		foreach (var target in targets)
 		{
-			Player? victim = target.Player ?? target.PetOwner;
-			if (victim == null)
+			var player = target.Player ?? target.PetOwner;
+			if (player == null)
 			{
 				continue;
 			}
 
-			List<CardModel> list = (from c in CardPile.GetCards(victim, PileType.Draw, PileType.Discard) where c.DeckVersion != null select c).ToList();
-			IEnumerable<CardModel> items = list;
+			var list = CardPile.GetCards(player, PileType.Draw, PileType.Discard).Where(c => c.DeckVersion != null).ToList();
+			var items = list;
 			foreach (var predicate in ThievingHopper._stealPriorities)
 			{
 				var matchingItems = list.Where(predicate).ToList();
@@ -75,7 +73,7 @@ public static class ThievingHopperPatch
 				break;
 			}
 
-			CardModel? cardToSteal = instance.RunRng.CombatCardGeneration.NextItem(items);
+			var cardToSteal = instance.RunRng.CombatCardGeneration.NextItem(items);
 			if (cardToSteal == null)
 			{
 				return;
@@ -85,14 +83,14 @@ public static class ThievingHopperPatch
 			cardsToSteal.Add(cardToSteal);
 		}
 		await Cmd.Wait(0.6f);
-		foreach (CardModel item in cardsToSteal)
+		foreach (var item in cardsToSteal)
 		{
 			if (creatureNode != null && LocalContext.IsMine(item))
 			{
-				Marker2D? specialNode2 = creatureNode.GetSpecialNode<Marker2D>("%StolenCardPos");
+				var specialNode2 = creatureNode.GetSpecialNode<Marker2D>("%StolenCardPos");
 				if (specialNode2 != null)
 				{
-					NCard? nCard = NCard.Create(item);
+					var nCard = NCard.Create(item);
 					if (nCard == null)
 					{
 						continue;
@@ -103,7 +101,7 @@ public static class ThievingHopperPatch
 					nCard.UpdateVisuals(PileType.Deck, CardPreviewMode.Normal);
 				}
 			}
-			SwipePower swipe = (SwipePower)ModelDb.Power<SwipePower>().ToMutable();
+			SwipePower swipe = (SwipePower) ModelDb.Power<SwipePower>().ToMutable();
 			await swipe.Steal(item);
 			await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), swipe, instance.Creature, SwipePowerAmount, instance.Creature, null);
 		}

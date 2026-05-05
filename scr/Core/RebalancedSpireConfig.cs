@@ -144,6 +144,7 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool AcrobaticsConfig { get; set; } = true;
     public static bool FollowThroughConfig { get; set; } = true;
     public static bool UntouchableConfig { get; set; } = true;
+    public static bool WellLaidPlansConfig { get; set; } = true;
 
     [ConfigSection("Necrobinder")]
     public static bool BansheesCryConfig { get; set; } = true;

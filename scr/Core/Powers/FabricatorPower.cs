@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using BaseLib.Abstracts;
+﻿using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -20,10 +19,10 @@ public sealed class FabricatorPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new HpLossVar(0)
-    ]);
+    ]).AsReadOnly();
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)
     {
@@ -56,7 +55,7 @@ public sealed class FabricatorPower : CustomPowerModel
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (creature.GetPower<MinionPower>() == null || !IsHpRemainingEnough(Owner) || wasRemovalPrevented)
+        if (wasRemovalPrevented || !creature.HasPower<MinionPower>() || !IsHpRemainingEnough(Owner))
         {
             return Task.CompletedTask;
         }
@@ -84,7 +83,7 @@ public sealed class FabricatorPower : CustomPowerModel
             return 1;
         }
 
-        return CombatState.Enemies.Any(c => c.IsAlive && c.GetPower<MinionPower>() != null) ? 0.5m : 1;
+        return CombatState.Enemies.Any(c => c.IsAlive && c.HasPower<MinionPower>()) ? 0.5m : 1;
     }
 
     public static int GetSpawnBotDamage(Creature creature)

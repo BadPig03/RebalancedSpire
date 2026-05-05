@@ -33,7 +33,7 @@ public static class IllusionPowerPatch
     [HarmonyPatch(typeof(IllusionPower), nameof(IllusionPower.ReviveMove))]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix(IllusionPower __instance, IReadOnlyList<Creature> targets, ref Task __result)
+    private static bool PreFix_ReviveMove(IllusionPower __instance, IReadOnlyList<Creature> targets, ref Task __result)
     {
         if (Disabled)
         {

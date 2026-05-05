@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.scr.Core.Potions;
 
-using System.Collections.ObjectModel;
 using BaseLib.Abstracts;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Combat;
@@ -16,7 +15,6 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Nodes;
-using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rooms;
@@ -30,11 +28,11 @@ public class TeaOfDiscourtesyPotion : CustomPotionModel
 
     public override TargetType TargetType => !CombatManager.Instance.IsInProgress ? TargetType.TargetedNoCreature : TargetType.AnyPlayer;
 
-    public override IEnumerable<DynamicVar> CanonicalVars => new ReadOnlyCollection<DynamicVar>(
+    public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new CardsVar(2),
         new StringVar("Dazed", ModelDb.Card<Dazed>().Title)
-    ]);
+    ]).AsReadOnly();
 
     public override bool PassesCustomUsabilityCheck => CombatManager.Instance.IsInProgress || Owner.RunState.CurrentRoom is MerchantRoom;
 
@@ -46,7 +44,6 @@ public class TeaOfDiscourtesyPotion : CustomPotionModel
             {
                 await CardPileCmd.AddToCombatAndPreview<Dazed>(target, PileType.Discard, DynamicVars.Cards.IntValue, Owner, CardPilePosition.Random);
             }
-
             return;
         }
 
@@ -55,7 +52,7 @@ public class TeaOfDiscourtesyPotion : CustomPotionModel
             return;
         }
 
-        NMerchantRoom? nMerchantRoom = NRun.Instance?.MerchantRoom;
+        var nMerchantRoom = NRun.Instance?.MerchantRoom;
         if (nMerchantRoom != null)
         {
             SfxCmd.Play("event:/sfx/npcs/merchant/merchant_thank_yous");
@@ -65,7 +62,7 @@ public class TeaOfDiscourtesyPotion : CustomPotionModel
                 NGame.Instance?.ScreenRumble(ShakeStrength.Medium, ShakeDuration.Short, RumbleStyle.Rumble);
             }
         }
-        foreach (CardModel cardModel in PileType.Deck.GetPile(Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(Owner.RunState.Rng.Niche).Take(1))
+        foreach (var cardModel in PileType.Deck.GetPile(Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(Owner.RunState.Rng.Niche).Take(1))
         {
             CardCmd.Upgrade(cardModel);
         }

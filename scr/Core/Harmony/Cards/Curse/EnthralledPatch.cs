@@ -25,7 +25,7 @@ public static class EnthralledPatch
         {
             CardKeyword.Ethereal,
             CardKeyword.Eternal
-        };
+        }.AsReadOnly();
         return false;
     }
 }

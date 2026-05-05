@@ -16,12 +16,13 @@ public static class WaterfallGiantPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.WaterfallGiantConfig;
 
+    private static int WeakPowerAmount => 1;
     private static int SteamEruptionPowerAmount => 9;
 
     private static async Task StompMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(instance.StompDamage).FromMonster(instance).WithAttackerAnim("AttackDebuff", 0.3f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/waterfall_giant/waterfall_giant_attack_stomp").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 1, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task RamMove(WaterfallGiant instance)
@@ -37,8 +38,7 @@ public static class WaterfallGiantPatch
 
     private static async Task PressureUpMove(WaterfallGiant instance)
     {
-        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/waterfall_giant/waterfall_giant_eruption");
-        await CreatureCmd.TriggerAnim(instance.Creature, "Heal", 0.8f);
+        await DamageCmd.Attack(instance.PressureUpDamage).FromMonster(instance).WithAttackerAnim("AttackBuff", 0.15f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/waterfall_giant/waterfall_giant_attack_stomp").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await PowerCmd.Apply<SteamEruptionPower>(new ThrowingPlayerChoiceContext(), instance.Creature, SteamEruptionPowerAmount, instance.Creature, null);
         instance.IncrementBuildUpAnimationTrack();
     }

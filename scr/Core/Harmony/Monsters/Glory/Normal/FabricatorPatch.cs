@@ -30,14 +30,14 @@ public class FabricatorPatch
 
     private static async Task SpawnBot(Fabricator instance, IEnumerable<MonsterModel> options)
     {
-        var items = options.Where(m => m != instance._lastSpawned).ToList();
-        MonsterModel? monsterModel = instance._lastSpawned = instance.RunRng.MonsterAi.NextItem(items);
-        if (monsterModel == null)
+        var bots = options.Where(m => m != instance._lastSpawned).ToList();
+        var spawnBot = instance._lastSpawned = instance.RunRng.MonsterAi.NextItem(bots);
+        if (spawnBot == null)
         {
             return;
         }
 
-        Creature bot = await CreatureCmd.Add(monsterModel.ToMutable(), instance.CombatState, CombatSide.Enemy, instance.CombatState.Encounter?.GetNextSlot(instance.CombatState));
+        Creature bot = await CreatureCmd.Add(spawnBot.ToMutable(), instance.CombatState, CombatSide.Enemy, instance.CombatState.Encounter?.GetNextSlot(instance.CombatState));
         await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), bot, MinionPowerAmount, instance.Creature, null);
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, new DamageVar(FabricatorPower.GetSpawnBotDamage(instance.Creature), DamageProps.nonCardHpLoss), instance.Creature, null);
     }
@@ -60,7 +60,7 @@ public class FabricatorPatch
 
     private static bool CanFabricate(Fabricator instance)
     {
-        return instance.Creature.CombatState?.Enemies.Count(c => c.IsAlive && c.GetPower<MinionPower>() != null) <= 2 && FabricatorPower.IsHpRemainingEnough(instance.Creature);
+        return instance.Creature.CombatState?.Enemies.Count(c => c.IsAlive && c.HasPower<MinionPower>()) <= 2 && FabricatorPower.IsHpRemainingEnough(instance.Creature);
     }
 
     [HarmonyPatch(typeof(Fabricator), nameof(Fabricator.MinInitialHp), MethodType.Getter)]

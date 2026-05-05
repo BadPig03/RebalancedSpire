@@ -34,7 +34,7 @@ public static class SynchronizePatch
             return true;
         }
 
-        __result = [];
+        __result = new List<CardKeyword>().AsReadOnly();
         return false;
     }
 
@@ -108,7 +108,7 @@ public static class SynchronizePatch
         __result = new List<DynamicVar>
         {
             new PowerVar<FocusPower>(1)
-        };
+        }.AsReadOnly();
         return false;
     }
 
