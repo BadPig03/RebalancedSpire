@@ -14,6 +14,10 @@ public static class EntomancerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.EntomancerConfig;
 
+    private static int PersonalHivePowerAmount => 1;
+    private static int WeakStrengthPowerAmount => 1;
+    private static int PoweredStrengthPowerAmount => 1;
+
     private static async Task SpitMove(Entomancer instance)
     {
         SfxCmd.Play(instance.CastSfx);
@@ -21,16 +25,16 @@ public static class EntomancerPatch
         var personalHivePower = instance.Creature.Powers.OfType<PersonalHivePower>().FirstOrDefault();
         if (personalHivePower == null)
         {
-            await PowerCmd.Apply<PersonalHivePower>(instance.Creature, 1, instance.Creature, null);
+            await PowerCmd.Apply<PersonalHivePower>(instance.Creature, PersonalHivePowerAmount, instance.Creature, null);
         }
         else if (personalHivePower.Amount < 3)
         {
-            await PowerCmd.Apply<PersonalHivePower>(instance.Creature, 1, instance.Creature, null);
-            await PowerCmd.Apply<StrengthPower>(instance.Creature, 1, instance.Creature, null);
+            await PowerCmd.Apply<PersonalHivePower>(instance.Creature, PersonalHivePowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(instance.Creature, WeakStrengthPowerAmount, instance.Creature, null);
         }
         else
         {
-            await PowerCmd.Apply<StrengthPower>(instance.Creature, 2, instance.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(instance.Creature, PoweredStrengthPowerAmount, instance.Creature, null);
         }
     }
 

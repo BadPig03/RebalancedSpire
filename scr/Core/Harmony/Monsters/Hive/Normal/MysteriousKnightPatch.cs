@@ -12,10 +12,13 @@ public class MysteriousKnightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheLanternKeyConfig;
 
+    private static int StrengthPowerAmount => 3;
+    private static int PlatingPowerAmount => 3;
+
     private static async Task AfterAddedToRoom(MysteriousKnight instance)
     {
-        await PowerCmd.Apply<StrengthPower>(instance.Creature, 3, instance.Creature, null);
-        await PowerCmd.Apply<PlatingPower>(instance.Creature, 3, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<PlatingPower>(instance.Creature, PlatingPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(MysteriousKnight), nameof(MysteriousKnight.AfterAddedToRoom))]

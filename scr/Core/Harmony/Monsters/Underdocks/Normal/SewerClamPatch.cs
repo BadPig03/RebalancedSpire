@@ -14,9 +14,11 @@ public static class SewerClamPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SewerClamConfig;
 
+    private static int PlatingPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 6, 5);
+
     private static async Task AfterAddedToRoom(SewerClam instance)
     {
-        await PowerCmd.Apply<PlatingPower>(instance.Creature, AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 6, 5), instance.Creature, null);
+        await PowerCmd.Apply<PlatingPower>(instance.Creature, PlatingPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(SewerClam), nameof(SewerClam.AfterAddedToRoom))]

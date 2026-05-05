@@ -16,10 +16,12 @@ public static class CrusherPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KaiserCrabConfig;
 
+    private static int WeakPowerAmount => 2;
+
     private static async Task EnlargingStrikeMove(Crusher instance, IReadOnlyList<Creature> targets)
     {
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_med", 0.65f);
-        await PowerCmd.Apply<WeakPower>(targets, 2, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task BugStingMove(Crusher instance)
