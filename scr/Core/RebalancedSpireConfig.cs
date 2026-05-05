@@ -82,6 +82,7 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool LargeCapsuleConfig { get; set; } = true;
     public static bool LavaRockConfig { get; set; } = true;
     public static bool NeowsTalismanConfig { get; set; } = true;
+    public static bool NeowsTormentConfig { get; set; } = true;
     public static bool NutritiousOysterConfig { get; set; } = true;
     public static bool PomanderConfig { get; set; } = true;
     public static bool NeowChoicesConfig { get; set; } = true;
@@ -116,10 +117,6 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool LordsParasolConfig { get; set; } = true;
     public static bool WhisperingEarringConfig { get; set; } = true;
     public static bool VakuuChoicesConfig { get; set; } = true;
-    public static bool ApparitionArtConfig { get; set; } = false;
-    public static bool VakuuFixedArtConfig { get; set; } = true;
-    [ConfigVisibleIf(nameof(VakuuFixedArtConfig), false)]
-    public static bool VakuuBetaArtConfig { get; set; } = false;
 
     [ConfigSection("Merchant")]
     public static bool MerchantConfig { get; set; } = true;
@@ -142,7 +139,6 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool AcrobaticsConfig { get; set; } = true;
     public static bool FollowThroughConfig { get; set; } = true;
     public static bool UntouchableConfig { get; set; } = true;
-    public static bool WellLaidPlansConfig { get; set; } = true;
 
     [ConfigSection("Necrobinder")]
     public static bool BansheesCryConfig { get; set; } = true;

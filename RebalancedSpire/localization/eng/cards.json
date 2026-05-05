@@ -4,6 +4,8 @@
   "REBALANCEDSPIRE-FOLLOW_THROUGH.description": "Deal {Damage:diff()} damage to ALL enemies.\nIf the last card you played this turn was a Skill, apply {WeakPower:diff()} [gold]Weak[/gold] to ALL enemies.",
   "REBALANCEDSPIRE-LIMIT_BREAK.description": "Double your [gold]Strength[/gold].",
   "REBALANCEDSPIRE-LIMIT_BREAK.title": "Limit Break",
+  "REBALANCEDSPIRE-NEOWS_FURY.description": "Deal {Damage:diff()} damage.\nPut up to {Cards:diff()} {Cards:plural:card|cards} from your [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
+  "REBALANCEDSPIRE-NEOWS_FURY.selectionScreenPrompt": "Choose up to {Amount} {Amount:plural:card|cards} to put into your [gold]Hand[/gold].",
   "REBALANCEDSPIRE-WISH.description": "Put a card from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
   "REBALANCEDSPIRE-SYNCHRONIZE.description": "Whenever you [gold]Channel[/gold] a new Orb type, record it. The first time you record an Orb type, gain {FocusPower} [gold]Focus[/gold]."
 }
