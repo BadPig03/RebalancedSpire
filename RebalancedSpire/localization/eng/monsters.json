@@ -40,5 +40,12 @@
   "PHROG_PARASITE.moves.PROLIFERATION.title": "Proliferation",
   "PUNCH_CONSTRUCT.moves.FIGHT_WITH_ME.title": "Fight With Me",
   "SKULKING_COLONY.moves.SMASH.title": "Smash",
-  "LIVING_FOG.moves.CHARGE_UP.title": "Charge Up"
+  "LIVING_FOG.moves.CHARGE_UP.title": "Charge Up",
+  "DOOR.name": "Door",
+  "DOORMAKER.moves.DRAMATIC_OPEN": "Dramatic Open",
+  "DOORMAKER.moves.DRAMATIC_OPEN.speakLine": "I hunger...",
+  "DOORMAKER.moves.GRASP_MOVE.title": "Grasp",
+  "DOORMAKER.moves.HUNGER_MOVE.title": "Hunger",
+  "DOORMAKER.moves.SCRUTINY_MOVE.title": "Scrutiny",
+  "DOORMAKER.name": "Doormaker"
 }

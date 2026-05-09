@@ -24,6 +24,8 @@ public sealed class DoormakerLeft : DoormakerBase
     private static int WeakPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
 
+    public override bool ShouldShowInCompendium => false;
+
     public override async Task AfterAddedToRoom()
     {
         var body = NCombatRoom.Instance?.GetCreatureNode(Creature)?.Body;
@@ -59,7 +61,7 @@ public sealed class DoormakerLeft : DoormakerBase
 
     private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }
@@ -70,7 +72,7 @@ public sealed class DoormakerLeft : DoormakerBase
 
     private async Task ScrutinyMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }
@@ -80,7 +82,7 @@ public sealed class DoormakerLeft : DoormakerBase
 
     private async Task BeamMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }
@@ -93,7 +95,7 @@ public sealed class DoormakerLeft : DoormakerBase
 
     private async Task FullAttackMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }

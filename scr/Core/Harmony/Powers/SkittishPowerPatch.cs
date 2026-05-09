@@ -81,7 +81,7 @@ public static class SkittishPowerPatch
             return true;
         }
 
-        var damageResult = command.Results.FirstOrDefault(r => r.Receiver == __instance.Owner);
+        var damageResult = command.Results.SelectMany(r => r).FirstOrDefault(r => r.Receiver == __instance.Owner);
         if (damageResult == null || damageResult.UnblockedDamage == 0)
         {
             return true;

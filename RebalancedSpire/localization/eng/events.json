@@ -7,7 +7,7 @@
   "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.TEA_OF_DISCOURTESY.title": "Tea of Discourtesy",
   "REBALANCEDSPIRE-MORPHIC_GROVE.pages.INITIAL.options.GROUP.description": "{IsMultiplayer:Everyone loses|Lose} [red]{GroupCost}[/red] [gold]Gold[/gold]. [gold]Transform[/gold] [blue]2[/blue] cards.",
   "REBALANCEDSPIRE-MORPHIC_GROVE.pages.INITIAL.options.GROUP.title": "Group",
-  "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE.description": "Choose any number of cards in your [gold]Deck[/gold] to [gold]Duplicate[/gold].",
+  "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE.description": "Choose at most [blue]13[/blue] cards in your [gold]Deck[/gold] to [gold]Duplicate[/gold].",
   "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE.title": "Stare",
   "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.SHATTER.description": "Duplicate your [gold]Deck[/gold]. Receive [purple]Bad Luck[/purple].",
   "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.SHATTER.title": "Shatter",

@@ -22,7 +22,7 @@ public static class DustyTomePatch
     private static async Task AfterObtained(DustyTome instance)
     {
         var otherCardPools = ModelDb.AllCharacterCardPools.Where(cardPoolModel => cardPoolModel != instance.Owner.Character.CardPool).ToList();
-        var otherOptions = instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.RunState.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).ToList().UnstableShuffle(instance.Owner.PlayerRng.Rewards).Take(1).Concat(new CardCreationOptions(otherCardPools, CardCreationSource.Other, CardRarityOddsType.Uniform, c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).GetPossibleCards(instance.Owner).ToList().UnstableShuffle(instance.Owner.PlayerRng.Rewards).Take(2)).Select(c => instance.Owner.RunState.CreateCard(c, instance.Owner)).ToList();
+        var otherOptions = instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.RunState.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).ToList().StableShuffle(instance.Owner.RunState.Rng.Shuffle).Take(1).Concat(new CardCreationOptions(otherCardPools, CardCreationSource.Other, CardRarityOddsType.Uniform, c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).GetPossibleCards(instance.Owner).ToList().StableShuffle(instance.Owner.RunState.Rng.Shuffle).Take(2)).Select(c => instance.Owner.RunState.CreateCard(c, instance.Owner)).ToList();
         foreach (var card in otherOptions)
         {
             CardCmd.Upgrade(card);

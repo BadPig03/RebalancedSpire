@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using Powers;
 
 public sealed class DoormakerRight : DoormakerBase
 {
@@ -44,7 +45,7 @@ public sealed class DoormakerRight : DoormakerBase
 
     private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }
@@ -55,7 +56,7 @@ public sealed class DoormakerRight : DoormakerBase
 
     private async Task HungerMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }
@@ -65,10 +66,11 @@ public sealed class DoormakerRight : DoormakerBase
 
     private async Task ChargeUpMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }
+
         TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.FULL_ATTACK.speakLine"), Creature, VfxColor.Purple);
         await Cmd.CustomScaledWait(0.2f, 0.6f);
         await DamageCmd.Attack(ChargeUpDamage).WithHitCount(ChargeUpCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
@@ -78,7 +80,7 @@ public sealed class DoormakerRight : DoormakerBase
 
     private async Task FullAttackMove(IReadOnlyList<Creature> targets)
     {
-        if (Creature.ShowsInfiniteHp)
+        if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();
         }

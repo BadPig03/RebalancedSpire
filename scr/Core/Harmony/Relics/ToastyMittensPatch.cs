@@ -20,14 +20,16 @@ public static class ToastyMittensPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ToastyMittensConfig;
 
+    private static int CardLimit => 5;
+
     private static async Task AfterPlayerTurnStart(ToastyMittens instance, PlayerChoiceContext choiceContext, Player player)
     {
-        foreach (var card in await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(player).Cards.Where(c => !c.Keywords.Contains(CardKeyword.Unplayable)).OrderBy(c => c.Rarity).ThenBy(c => c.Id).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars.Cards.IntValue)))
+        instance.Flash();
+        foreach (var card in await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(player).Cards.Where(c => !c.Keywords.Contains(CardKeyword.Unplayable)).Take(CardLimit).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars.Cards.IntValue)))
         {
-            instance.Flash();
             await CardCmd.Exhaust(choiceContext, card);
-            await PowerCmd.Apply<StrengthPower>(choiceContext, player.Creature, instance.DynamicVars.Strength.BaseValue, player.Creature, null);
         }
+        await PowerCmd.Apply<StrengthPower>(choiceContext, player.Creature, instance.DynamicVars.Strength.BaseValue, player.Creature, null);
     }
 
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]

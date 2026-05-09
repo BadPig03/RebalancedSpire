@@ -33,10 +33,10 @@ public static class MagiKnightPatch
 
     private static async Task MagicBombMove(MagiKnight instance, IReadOnlyList<Creature> targets)
     {
-        if (TestMode.IsOff && targets.Count > 0)
+        if (TestMode.IsOff)
         {
             Vector2? vector = null;
-            foreach (var target in targets)
+            foreach (Creature target in targets)
             {
                 var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
                 if (creatureNode != null && (!vector.HasValue || vector.Value.X > creatureNode.GlobalPosition.X))
@@ -44,30 +44,15 @@ public static class MagiKnightPatch
                     vector = creatureNode.GlobalPosition;
                 }
             }
-
             var creatureNode2 = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);
             var specialNode = creatureNode2?.GetSpecialNode<Node2D>("Visuals/AttackDistanceControl");
-            if (creatureNode2 != null && specialNode != null && vector.HasValue)
+            if (specialNode != null && creatureNode2 != null && vector.HasValue)
             {
                 var x = creatureNode2.Visuals.GetCurrentBody().Scale.X;
                 specialNode.Position = Vector2.Left * ((creatureNode2.GlobalPosition.X - vector.Value.X - 600f) / x);
             }
         }
         await DamageCmd.Attack(instance.BombDamage).FromMonster(instance).WithAttackerAnim("BombCast", 1.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/magi_knight/magi_knight_attack_bomb").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-    }
-
-    [HarmonyPatch(typeof(MagiKnight), nameof(MagiKnight.ShouldShowMoveInBestiary))]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool Prefix_ShouldShowMoveInBestiary(MagiKnight __instance, string moveStateId, ref bool __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = moveStateId == "MAGIC_BOMB";
-        return false;
     }
 
     [HarmonyPatch(typeof(MagiKnight), nameof(MagiKnight.GenerateMoveStateMachine))]

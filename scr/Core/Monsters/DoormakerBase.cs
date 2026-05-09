@@ -79,6 +79,8 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     public override int MaxInitialHp => MinInitialHp;
 
+    public override bool CanChangeScale => false;
+
     public override LocString Title
     {
         get
@@ -87,13 +89,15 @@ public abstract class DoormakerBase : CustomMonsterModel
             {
                 return L10NMonsterLookup("DOOR.name");
             }
-            return Creature.ShowsInfiniteHp ? L10NMonsterLookup("DOOR.name") : L10NMonsterLookup("DOORMAKER.name");
+            return Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers ? L10NMonsterLookup("DOOR.name") : L10NMonsterLookup("DOORMAKER.name");
         }
     }
 
+    public override string CustomVisualPath => "scenes/creature_visuals/doormaker_boss.tscn";
+
     public override NCreatureVisuals CreateCustomVisuals()
     {
-        return NodeFactory<NCreatureVisuals>.CreateFromScene("res://scenes/creature_visuals/doormaker.tscn");
+        return NodeFactory<NCreatureVisuals>.CreateFromScene("res://scenes/creature_visuals/doormaker_boss.tscn");
     }
 
     public override async Task AfterAddedToRoom()
@@ -102,7 +106,7 @@ public abstract class DoormakerBase : CustomMonsterModel
         OriginalMaxHp = Creature.MaxHp;
         OriginalHp = Creature.CurrentHp;
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 999999999);
-        Creature.ShowsInfiniteHp = true;
+        Creature.HpDisplay = HpDisplay.InfiniteWithoutNumbers;
     }
 
     public override bool ShouldAllowHitting(Creature creature)
@@ -112,7 +116,7 @@ public abstract class DoormakerBase : CustomMonsterModel
             return base.ShouldAllowHitting(creature);
         }
 
-        return doormakerBase.OtherDoormaker.Creature.ShowsInfiniteHp || doormakerBase.OtherDoormaker.Creature.IsDead;
+        return doormakerBase.OtherDoormaker.Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers || doormakerBase.OtherDoormaker.Creature.IsDead;
     }
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
@@ -153,21 +157,21 @@ public abstract class DoormakerBase : CustomMonsterModel
     {
         await CreatureCmd.SetMaxHp(Creature, OriginalMaxHp);
         await CreatureCmd.SetCurrentHp(Creature, OriginalHp);
-        Creature.ShowsInfiniteHp = false;
+        Creature.HpDisplay = HpDisplay.Normal;
         foreach (var power in Creature.Powers.ToList())
         {
             await PowerCmd.Remove(power);
         }
         foreach (var oldPower in _powerModels)
         {
-            var powerById = Creature.GetPowerById(oldPower.Id);
-            if (powerById is { IsInstanced: false })
+            var powerModel = PowerCmd.FindExistingInstanceForStacking(oldPower, Creature, oldPower.Applier);
+            if (powerModel != null)
             {
-                if (powerById is ITemporaryPower temporaryPower)
+                if (powerModel is ITemporaryPower temporaryPower)
                 {
                     temporaryPower.IgnoreNextInstance();
                 }
-                await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), powerById, oldPower.Amount, powerById.Applier, null);
+                await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), powerModel, oldPower.Amount, oldPower.Applier, null);
             }
             else
             {
@@ -176,7 +180,7 @@ public abstract class DoormakerBase : CustomMonsterModel
                 {
                     temporaryPower.IgnoreNextInstance();
                 }
-                await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, oldPower.Amount, power.Applier, null);
+                await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, oldPower.Amount, oldPower.Applier, null);
             }
         }
         _powerModels.Clear();
@@ -206,12 +210,12 @@ public abstract class DoormakerBase : CustomMonsterModel
 
     protected bool ShouldWakeUp()
     {
-        return OtherDoormaker.Creature.ShowsInfiniteHp || !OtherDoormaker.Creature.IsAlive;
+        return OtherDoormaker.Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers || !OtherDoormaker.Creature.IsAlive;
     }
 
     protected Task ReadyToSummon()
     {
-        if (OtherDoormaker.Creature is not { IsAlive: true, ShowsInfiniteHp: true })
+        if (OtherDoormaker.Creature is not { IsAlive: true, HpDisplay: HpDisplay.InfiniteWithoutNumbers })
         {
             return Task.CompletedTask;
         }
@@ -229,7 +233,7 @@ public abstract class DoormakerBase : CustomMonsterModel
         OriginalMaxHp = Creature.MaxHp;
         OriginalHp = Creature.CurrentHp;
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 999999999);
-        Creature.ShowsInfiniteHp = true;
+        Creature.HpDisplay = HpDisplay.InfiniteWithoutNumbers;
         foreach (var power in Creature.Powers.ToList())
         {
             _powerModels.Add((PowerModel) power.ClonePreservingMutability());

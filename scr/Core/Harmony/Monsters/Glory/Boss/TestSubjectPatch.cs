@@ -165,20 +165,6 @@ public static class TestSubjectPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(TestSubject), nameof(TestSubject.ShouldShowMoveInBestiary))]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool Prefix_ShouldShowMoveInBestiary(TestSubject __instance, string moveStateId, ref bool __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = true;
-        return false;
-    }
-
     [HarmonyPatch(typeof(TestSubject), nameof(TestSubject.GenerateMoveStateMachine))]
     [HarmonyPrefix]
     [UsedImplicitly]

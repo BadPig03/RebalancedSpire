@@ -29,6 +29,11 @@ public static class ThievingHopperPatch
 	private static int EscapeArtistPowerAmount => 6;
 	private static int AttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 13);
 
+	private static async Task AfterAddedToRoom(ThievingHopper instance)
+	{
+		await PowerCmd.Apply<EscapeArtistPower>(new ThrowingPlayerChoiceContext(), instance.Creature, EscapeArtistPowerAmount, instance.Creature, null);
+	}
+
     private static async Task AttackMove(ThievingHopper instance, IReadOnlyList<Creature> targets)
     {
         await DamageCmd.Attack(AttackDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.3f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
@@ -105,11 +110,6 @@ public static class ThievingHopperPatch
 			await swipe.Steal(item);
 			await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), swipe, instance.Creature, SwipePowerAmount, instance.Creature, null);
 		}
-    }
-
-    private static async Task AfterAddedToRoom(ThievingHopper instance)
-    {
-	    await PowerCmd.Apply<EscapeArtistPower>(new ThrowingPlayerChoiceContext(), instance.Creature, EscapeArtistPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(ThievingHopper), nameof(ThievingHopper.AfterAddedToRoom))]

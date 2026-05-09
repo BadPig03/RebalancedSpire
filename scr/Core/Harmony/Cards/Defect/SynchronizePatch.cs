@@ -10,7 +10,6 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Powers;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
@@ -21,7 +20,7 @@ public static class SynchronizePatch
     private static async Task OnPlay(Synchronize instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<SynchronizePlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["FocusPower"].IntValue, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<SynchronizePlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["SynchronizePlusPower"].IntValue, instance.Owner.Creature, instance);
     }
 
     [HarmonyPatch(typeof(Synchronize), nameof(Synchronize.CanonicalKeywords), MethodType.Getter)]
@@ -76,6 +75,25 @@ public static class SynchronizePatch
         return false;
     }
 
+    [HarmonyPatch(typeof(CardModel), nameof(CardModel.CanonicalEnergyCost), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Synchronize)
+        {
+            return true;
+        }
+
+        __result = 2;
+        return false;
+    }
+
     [HarmonyPatch(typeof(CardModel), nameof(CardModel.Rarity), MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -107,7 +125,7 @@ public static class SynchronizePatch
 
         __result = new List<DynamicVar>
         {
-            new PowerVar<FocusPower>(1)
+            new PowerVar<SynchronizePlusPower>(1)
         }.AsReadOnly();
         return false;
     }
@@ -136,7 +154,7 @@ public static class SynchronizePatch
             return true;
         }
 
-        __instance.AddKeyword(CardKeyword.Innate);
+        __instance.EnergyCost.UpgradeBy(-1);
         return false;
     }
 }

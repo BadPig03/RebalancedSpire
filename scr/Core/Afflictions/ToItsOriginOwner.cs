@@ -1,4 +1,6 @@
-﻿using MegaCrit.Sts2.Core.Combat;
+﻿namespace RebalancedSpire.scr.Core.Afflictions;
+
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -6,9 +8,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
-using RebalancedSpire.scr.Core.Powers;
-
-namespace RebalancedSpire.scr.Core.Afflictions;
+using Powers;
 
 public sealed class ToItsOriginOwner : AfflictionModel
 {

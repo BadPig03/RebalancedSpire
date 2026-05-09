@@ -1,4 +1,5 @@
 ﻿{
   "REBALANCEDSPIRE-TO_DOWNGRADE": "Choose {Amount:plural:a card|[blue]{}[/blue] cards} to [gold]Downgrade[/gold].",
-  "REBALANCEDSPIRE-TO_COPY": "Choose any number of cards to [gold]Copy[/gold]."
+  "REBALANCEDSPIRE-TO_COPY": "Choose at most [blue]13[/blue] cards to [gold]Copy[/gold].",
+  "REBALANCEDSPIRE-ATTACK_TO_PLAY": "Choose {Amount:plural:a card|[blue]{}[/blue] cards} Attacks to [gold]Play[/gold]."
 }

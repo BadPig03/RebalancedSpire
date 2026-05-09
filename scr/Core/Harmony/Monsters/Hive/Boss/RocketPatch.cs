@@ -23,18 +23,21 @@ public static class RocketPatch
 
     private static async Task TargetingReticleMove(Rocket instance, IReadOnlyList<Creature> targets)
     {
+        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_right_attack_snap");
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Right, "attack", 0.35f);
         await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, FrailPowerAmount, instance.Creature, null);
     }
 
     private static async Task ChargeUpMove(Rocket instance)
     {
+        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_right_buff");
         await instance.Background.PlayRightSideChargeUpAnim(0.7f);
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 
     private static async Task LaserMove(Rocket instance)
     {
+        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_rocket");
         await instance.Background.PlayRightSideHeavy(0.5f);
         await DamageCmd.Attack(instance.LaserDamage).FromMonster(instance).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, 10, ValueProp.Unblockable | ValueProp.Unpowered, null, null);

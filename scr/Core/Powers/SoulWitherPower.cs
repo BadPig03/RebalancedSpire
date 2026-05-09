@@ -34,7 +34,7 @@ public sealed class SoulWitherPower : CustomPowerModel
 
     public override int DisplayAmount => HitCount;
 
-    public override bool IsInstanced => true;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [

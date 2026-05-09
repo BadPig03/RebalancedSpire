@@ -196,6 +196,20 @@ public static class BoomingConchPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(BoomingConch), nameof(BoomingConch.AfterSideTurnStart))]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterSideTurnStart(BoomingConch __instance, CombatSide side, ICombatState combatState, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = Task.CompletedTask;
+        return false;
+    }
+
     [HarmonyPatch(typeof(BoomingConch), nameof(BoomingConch.ModifyHandDraw))]
     [HarmonyPrefix]
     [UsedImplicitly]

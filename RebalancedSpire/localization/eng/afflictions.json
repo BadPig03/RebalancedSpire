@@ -2,5 +2,8 @@
   "TO_ITS_ORIGIN_OWNER.description": "Return the [gold]Byrdonis Egg[/gold] and befriend the [gold]Byrdonis[/gold].",
   "TO_ITS_ORIGIN_OWNER.extraCardText": "Victory.",
   "TO_ITS_ORIGIN_OWNER.title": "To Its Origin Owner",
-  "REBALANCEDSPIRE-WEIGHTED.description": "Your [gold]max hand size[/gold] is reduced."
+  "DEVOURED.description": "Add [gold]Exhaust[/gold] to this card.",
+  "DEVOURED.title": "Devoured",
+  "WEIGHTED.description": "Your [gold]Max Hand Size[/gold] is reduced.",
+  "WEIGHTED.title": "Weighted"
 }

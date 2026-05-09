@@ -7,7 +7,7 @@
   "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.TEA_OF_DISCOURTESY.title": "无礼之茶",
   "REBALANCEDSPIRE-MORPHIC_GROVE.pages.INITIAL.options.GROUP.description": "{IsMultiplayer:所有人|}失去[red]{GroupCost}[/red][gold]金币[/gold]。[gold]变化[/gold][blue]2[/blue]张牌。",
   "REBALANCEDSPIRE-MORPHIC_GROVE.pages.INITIAL.options.GROUP.title": "大群变形灵",
-  "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE.description": "选择[gold]牌组[/gold]中的任意张牌进行[gold]复制[/gold]。获得[purple]霉运[/purple]。",
+  "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE.description": "选择[gold]牌组[/gold]中的至多[blue]13[/blue]张牌进行[gold]复制[/gold]。获得[purple]霉运[/purple]。",
   "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE.title": "注视",
   "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.SHATTER.description": "复制你的整个[gold]牌组[/gold]。",
   "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.SHATTER.title": "打碎",

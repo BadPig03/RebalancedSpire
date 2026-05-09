@@ -17,16 +17,20 @@ public static class CrusherPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KaiserCrabConfig;
 
+    private static int WeakPowerAmount => 2;
+
     private static async Task EnlargingStrikeMove(Crusher instance, IReadOnlyList<Creature> targets)
     {
+        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_left_attack_slam");
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_med", 0.65f);
-        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, 2, instance.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task BugStingMove(Crusher instance)
     {
+        SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_left_attack_scissor");
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_double", 0.5f);
-        await DamageCmd.Attack(instance.BugStingDamage).WithHitCount(instance.BugStingTimes).FromMonster(instance).WithAttackerFx(null, instance.AttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+        await DamageCmd.Attack(instance.BugStingDamage).WithHitCount(instance.BugStingTimes).FromMonster(instance).WithHitFx("vfx/vfx_attack_slash").Execute(null);
     }
 
     [HarmonyPatch(typeof(Crusher), nameof(Crusher.MinInitialHp), MethodType.Getter)]

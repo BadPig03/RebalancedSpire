@@ -18,6 +18,8 @@ public static class ReflectionsPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ReflectionsConfig;
 
+    private static int CloneCardsLimit => 13;
+
     private static async Task TouchAMirror(Reflections instance)
     {
         if (instance.Owner == null)
@@ -61,7 +63,7 @@ public static class ReflectionsPatch
             return;
         }
 
-        foreach (var copiedCard in (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_COPY"), 0, instance.Owner.Deck.Cards.Count))).Select(c => instance.Owner.RunState.CloneCard(c)).ToList())
+        foreach (var copiedCard in (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_COPY"), 0, CloneCardsLimit))).Select(c => instance.Owner.RunState.CloneCard(c)).ToList())
         {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(copiedCard, PileType.Deck), 1.2f, CardPreviewStyle.MessyLayout);
             await Cmd.CustomScaledWait(0.1f, 0.2f);

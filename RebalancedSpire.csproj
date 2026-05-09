@@ -83,7 +83,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.0" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.2" PrivateAssets="All" />
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
         <AdditionalFiles Include="RebalancedSpire/localization/**/*.json"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
@@ -91,9 +91,7 @@
 
     <ItemGroup>
         <Compile Remove="materials/**"/>
-        <Compile Remove="shaders/**"/>
-        <EmbeddedResource Remove="materials/**"/>
-        <EmbeddedResource Remove="shaders/**"/>
+        <EmbeddedResource Remove="materials/**" />
         <Compile Remove="animations\**" />
         <EmbeddedResource Remove="animations\**" />
         <Compile Remove="images\packed\card_portraits\token\**" />
@@ -127,6 +125,16 @@
       <Content Include="images\ancients\vakuu_beta_art.png.import" />
       <Content Include="images\ancients\vakuu_fixed_placeholder.png" />
       <Content Include="images\ancients\vakuu_fixed_placeholder.png.import" />
+      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon.png" />
+      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon.png.import" />
+      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon_outline.png" />
+      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon_outline.png.import" />
+      <Content Include="images\monsters\beta\door_maker_placeholder_1.png" />
+      <Content Include="images\monsters\beta\door_maker_placeholder_1.png.import" />
+      <Content Include="images\monsters\beta\door_maker_placeholder_2.png" />
+      <Content Include="images\monsters\beta\door_maker_placeholder_2.png.import" />
+      <Content Include="images\monsters\beta\door_maker_placeholder_3.png" />
+      <Content Include="images\monsters\beta\door_maker_placeholder_3.png.import" />
       <Content Include="images\packed\card_portraits\ironclad\rebalancedspire-limit_break.png" />
       <Content Include="images\packed\card_portraits\ironclad\rebalancedspire-limit_break.png.import" />
       <Content Include="images\packed\card_portraits\silent\rebalancedspire-corpse_explosion.png" />
@@ -137,6 +145,10 @@
       <Content Include="images\potions\rebalancedspire-bone_tea_potion.png.import" />
       <Content Include="images\potions\rebalancedspire-tea_of_discourtesy_potion.png" />
       <Content Include="images\potions\rebalancedspire-tea_of_discourtesy_potion.png.import" />
+      <Content Include="images\powers\rebalancedspire-hunger_power.png" />
+      <Content Include="images\powers\rebalancedspire-hunger_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-consuming_shadow_plus_power.png" />
+      <Content Include="images\powers\rebalancedspire-consuming_shadow_plus_power.png.import" />
       <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png" />
       <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png.import" />
       <Content Include="images\powers\rebalancedspire-disillusion_power.png" />
@@ -169,18 +181,27 @@
       <Content Include="images\powers\rebalancedspire-to_its_origin_owner_power.png.import" />
       <Content Include="images\powers\rebalancedspire-synchronize_plus_power.png" />
       <Content Include="images\powers\rebalancedspire-synchronize_plus_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-spinner_plus_power.png" />
+      <Content Include="images\powers\rebalancedspire-spinner_plus_power.png.import" />
       <Content Include="images\relics\rebalancedspire-neows_lament.png" />
       <Content Include="images\relics\rebalancedspire-neows_lament.png.import" />
+      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss.png" />
+      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss.png.import" />
+      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss_outline.png" />
+      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss_outline.png.import" />
       <Content Include="RebalancedSpireMain.cs.uid" />
-      <Content Include="scenes\creature_visuals\rebalancedspire-doormaker_left.tscn" />
-      <Content Include="scenes\creature_visuals\rebalancedspire-doormaker_right.tscn" />
+      <Content Include="scenes\cards\overlays\afflictions\devoured.tscn" />
+      <Content Include="scenes\cards\overlays\afflictions\weighted.tscn" />
+      <Content Include="scenes\creature_visuals\doormaker_boss.tscn" />
       <Content Include="scenes\encounters\doormaker_boss.tscn" />
       <Content Include="scenes\events\background_scenes\vakuu_beta_art.tscn" />
       <Content Include="scenes\events\background_scenes\vakuu_fixed_art.tscn" />
+      <Content Include="scr\Core\Afflictions\Devoured.cs.uid" />
       <Content Include="scr\Core\Afflictions\ToItsOriginOwner.cs.uid" />
+      <Content Include="scr\Core\Afflictions\Weighted.cs.uid" />
       <Content Include="scr\Core\Cards\CorpseExplosion.cs.uid" />
       <Content Include="scr\Core\Cards\LimitBreak.cs.uid" />
-      <Content Include="scr\Core\Harmony\Afflictions\WeightedPatch.cs.uid" />
+      <Content Include="scr\Core\Encounters\DoormakerBoss.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\DarvPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\NeowPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\OrobasPatch.cs.uid" />
@@ -188,9 +209,15 @@
       <Content Include="scr\Core\Harmony\AttackCommandPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\EnthralledPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\FollyPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\ConsumingShadowPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Defect\CoolantPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Defect\DefragmentPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\GlassworkPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\RefractPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\SpinnerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Defect\SynchronizePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\LeapPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Defect\VoltaicPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\ApparitionPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\ByrdonisEggPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
@@ -202,7 +229,6 @@
       <Content Include="scr\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\WellLaidPlansPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Status\SootPatch.cs.uid" />
-      <Content Include="scr\Core\Harmony\Encounters\DoormakerBossPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Encounters\PunchOffEventEncounterPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Encounters\TheKinBossPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\EventRelicPoolPatch.cs.uid" />
@@ -284,7 +310,6 @@
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\SludgeSpinnerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\ToadpolePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\TwoTailedRatPatch.cs.uid" />
-      <Content Include="scr\Core\Harmony\NCompendiumSubmenuPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\HardToKillPowerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\IllusionPowerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\AlchemicalCofferPatch.cs.uid" />
@@ -293,6 +318,7 @@
       <Content Include="scr\Core\Harmony\Relics\CrossbowPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\DustyTomePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\FiddlePatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\FishingRodPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\FragrantMushroomPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\LargeCapsulePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\LavaRockPatch.cs.uid" />
@@ -316,10 +342,14 @@
       <Content Include="scr\Core\Potions\BoneTeaPotion.cs.uid" />
       <Content Include="scr\Core\Potions\EmberTeaPotion.cs.uid" />
       <Content Include="scr\Core\Potions\TeaOfDiscourtesyPotion.cs.uid" />
+      <Content Include="scr\Core\Powers\ConsumingShadowPlusPower.cs.uid" />
       <Content Include="scr\Core\Powers\CorpseExplosionPower.cs.uid" />
       <Content Include="scr\Core\Powers\DisillusionPower.cs.uid" />
+      <Content Include="scr\Core\Powers\HungerPower.cs.uid" />
+      <Content Include="scr\Core\Powers\LeapPower.cs.uid" />
       <Content Include="scr\Core\Powers\OmnidynamicsPower.cs.uid" />
       <Content Include="scr\Core\Powers\ScrutinyPlusPower.cs.uid" />
+      <Content Include="scr\Core\Powers\SpinnerPlusPower.cs.uid" />
       <Content Include="scr\Core\Powers\SynchronizePlusPower.cs.uid" />
       <Content Include="scr\Core\RebalancedSpireConfig.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\SkittishPowerPatch.cs.uid" />
@@ -336,6 +366,8 @@
       <Content Include="scr\Core\Powers\SoulWitherPower.cs.uid" />
       <Content Include="scr\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
       <Content Include="scr\Core\Relics\NeowsLament.cs.uid" />
+      <Content Include="shaders\afflictions\devoured.gdshader" />
+      <Content Include="shaders\afflictions\devoured.gdshader.uid" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">

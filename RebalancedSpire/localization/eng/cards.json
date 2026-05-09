@@ -1,9 +1,14 @@
 ﻿{
+  "REBALANCEDSPIRE-CONSUMING_SHADOW.description": "Channeled [gold]Dark[/gold] gain {IfUpgraded:show:100|50}% of the damage of the last [gold]Evoked Dark[/gold].",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "Apply {PoisonPower:diff()} [gold]Poison[/gold]. \nWhen the enemy dies, deal damage equal to its Max HP to ALL enemies.",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.title": "Corpse Explosion",
   "REBALANCEDSPIRE-FOLLOW_THROUGH.description": "Deal {Damage:diff()} damage to ALL enemies.\nIf the last card you played this turn was a Skill, apply {WeakPower:diff()} [gold]Weak[/gold] to ALL enemies.",
+  "REBALANCEDSPIRE-LEAP.description": "Gain {Block:diff()} [gold]Block[/gold].\nGain {FocusPower:diff()} [gold]Focus[/gold] this turn.",
   "REBALANCEDSPIRE-LIMIT_BREAK.description": "Double your [gold]Strength[/gold].",
   "REBALANCEDSPIRE-LIMIT_BREAK.title": "Limit Break",
-  "REBALANCEDSPIRE-WISH.description": "Put a card from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] into your [gold]Hand[/gold].",
-  "REBALANCEDSPIRE-SYNCHRONIZE.description": "Whenever you [gold]Channel[/gold] a new Orb type, record it. The first time you record an Orb type, gain {FocusPower} [gold]Focus[/gold]."
+  "REBALANCEDSPIRE-GLASSWORK.description": "[gold]Channel[/gold] 1 [gold]Glass[/gold].\nIncrease the effectiveness of your [gold]Glass[/gold] Orbs by {IfUpgraded:show:3|2}.",
+  "REBALANCEDSPIRE-REFRACT.description": "[gold]Channel[/gold] {Repeat:diff()} [gold]Glass[/gold].",
+  "REBALANCEDSPIRE-SPINNER.description": "At the start of your turn, [gold]Channel[/gold] {IfUpgraded:show:2|1} [gold]Glass[/gold], and trigger the passive ability of all [gold]Glass[/gold] Orbs.",
+  "REBALANCEDSPIRE-SYNCHRONIZE.description": "Record newly [gold]Channeled[/gold] orb.\nThe first time you record a new type of Orb, gain {SynchronizePlusPower:diff()} [gold]Focus[/gold].",
+  "REBALANCEDSPIRE-WISH.description": "Put a card from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] into your [gold]Hand[/gold]."
 }

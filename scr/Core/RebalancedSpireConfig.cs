@@ -149,9 +149,15 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool DefyConfig { get; set; } = true;
 
     [ConfigSection("Defect")]
+    public static bool ConsumingShadowConfig { get; set; } = true;
     public static bool CoolantConfig { get; set; } = true;
     public static bool DefragmentConfig { get; set; } = true;
+    public static bool GlassworkConfig { get; set; } = true;
+    public static bool LeapConfig { get; set; } = true;
+    public static bool RefractConfig { get; set; } = true;
+    public static bool SpinnerConfig { get; set; } = true;
     public static bool SynchronizeConfig { get; set; } = true;
+    public static bool VoltaicConfig { get; set; } = true;
 
     [ConfigSection("Overgrowth")]
     public static bool CubexConstructConfig { get; set; } = true;
