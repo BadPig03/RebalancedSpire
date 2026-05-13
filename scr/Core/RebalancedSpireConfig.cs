@@ -95,6 +95,7 @@ internal class RebalancedSpireConfig : SimpleModConfig
 
     [ConfigSection("Tezcatara")]
     public static bool BiiigHugConfig { get; set; } = true;
+    public static bool SealOfGoldConfig { get; set; } = true;
     public static bool ToastyMittensConfig { get; set; } = true;
 
     [ConfigSection("Darv")]
@@ -145,8 +146,13 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool WellLaidPlansConfig { get; set; } = true;
 
     [ConfigSection("Necrobinder")]
+    public static bool AfterlifeConfig { get; set; } = true;
     public static bool BansheesCryConfig { get; set; } = true;
     public static bool DefyConfig { get; set; } = true;
+    public static bool PullAggroConfig { get; set; } = true;
+    public static bool RightHandHandConfig { get; set; } = true;
+    public static bool SicEmConfig { get; set; } = true;
+    public static bool SpurConfig { get; set; } = true;
 
     [ConfigSection("Defect")]
     public static bool ConsumingShadowConfig { get; set; } = true;
@@ -158,6 +164,10 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool SpinnerConfig { get; set; } = true;
     public static bool SynchronizeConfig { get; set; } = true;
     public static bool VoltaicConfig { get; set; } = true;
+
+    [ConfigSection("Colorless")]
+    public static bool EternalArmorConfig { get; set; } = true;
+    public static bool RollingBoulderConfig { get; set; } = true;
 
     [ConfigSection("Overgrowth")]
     public static bool CubexConstructConfig { get; set; } = true;

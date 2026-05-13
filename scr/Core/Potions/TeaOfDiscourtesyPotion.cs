@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rooms;
 
-[Pool(typeof(SharedPotionPool))]
+[Pool(typeof(EventPotionPool))]
 public class TeaOfDiscourtesyPotion : CustomPotionModel
 {
     public override PotionRarity Rarity => PotionRarity.Event;

@@ -19,6 +19,8 @@ public static class SpectralKnightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KnightsConfig;
 
+
+    private static int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 12, 10);
     private static int IntangiblePowerAmount => 1;
     private static int HexPowerAmount => 1;
     private static int SoulSlashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 8);
@@ -51,6 +53,13 @@ public static class SpectralKnightPatch
     private static async Task AfterAddedToRoom(SpectralKnight instance)
     {
         await PowerCmd.Apply<IntangiblePower>(new ThrowingPlayerChoiceContext(), instance.Creature, IntangiblePowerAmount, instance.Creature, null);
+        var count = instance.CombatState.Players.Count;
+        if (count <= 1)
+        {
+            return;
+        }
+
+        await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, (int) Math.Sqrt(instance.Creature.MaxHp * MinInitialHp));
     }
 
     [HarmonyPatch(typeof(SpectralKnight), nameof(SpectralKnight.MinInitialHp), MethodType.Getter)]
@@ -63,7 +72,7 @@ public static class SpectralKnightPatch
             return;
         }
 
-        __result -= 85;
+        __result = MinInitialHp;
     }
 
     [HarmonyPatch(typeof(MonsterModel), nameof(MonsterModel.AfterAddedToRoom))]

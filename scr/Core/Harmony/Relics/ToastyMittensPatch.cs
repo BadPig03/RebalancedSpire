@@ -20,12 +20,10 @@ public static class ToastyMittensPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ToastyMittensConfig;
 
-    private static int CardLimit => 5;
-
     private static async Task AfterPlayerTurnStart(ToastyMittens instance, PlayerChoiceContext choiceContext, Player player)
     {
         instance.Flash();
-        foreach (var card in await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(player).Cards.Where(c => !c.Keywords.Contains(CardKeyword.Unplayable)).Take(CardLimit).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars.Cards.IntValue)))
+        foreach (var card in await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(player).Cards.TakeLast(instance.DynamicVars["AllCards"].IntValue).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars["ChooseCards"].IntValue)))
         {
             await CardCmd.Exhaust(choiceContext, card);
         }
@@ -64,7 +62,8 @@ public static class ToastyMittensPatch
         __result = new List<DynamicVar>
         {
             new PowerVar<StrengthPower>(1),
-            new CardsVar(1)
+            new CardsVar("ChooseCards", 1),
+            new CardsVar("AllCards", 5)
         }.AsReadOnly();
         return false;
     }

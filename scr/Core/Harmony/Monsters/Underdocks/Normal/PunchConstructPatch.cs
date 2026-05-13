@@ -71,7 +71,7 @@ public static class PunchConstructPatch
         }
 
         instance.Rng.FastForwardCounter(instance.StartingHpReduction);
-        await CreatureCmd.SetCurrentHp(instance.Creature, instance.Creature.CurrentHp * instance.Rng.NextInt(60, 81) / 100m);
+        await CreatureCmd.SetCurrentHp(instance.Creature, instance.Creature.CurrentHp * instance.Rng.NextInt(70, 81) / 100m);
     }
 
     [HarmonyPatch(typeof(PunchConstruct), nameof(PunchConstruct.AfterAddedToRoom))]

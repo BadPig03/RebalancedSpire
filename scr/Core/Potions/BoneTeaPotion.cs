@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
-[Pool(typeof(SharedPotionPool))]
+[Pool(typeof(EventPotionPool))]
 public sealed class BoneTeaPotion : CustomPotionModel
 {
     public override PotionRarity Rarity => PotionRarity.Event;

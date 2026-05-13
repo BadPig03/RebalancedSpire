@@ -10,6 +10,8 @@ using MegaCrit.Sts2.Core.Saves.Runs;
 
 namespace RebalancedSpire.scr.Core.Relics;
 
+using MegaCrit.Sts2.Core.Rooms;
+
 [Pool(typeof(SharedRelicPool))]
 public sealed class NeowsLament : CustomRelicModel
 {
@@ -58,12 +60,23 @@ public sealed class NeowsLament : CustomRelicModel
         }
 
         Flash();
-        TimesUsed++;
         VfxCmd.PlayOnCreatureCenters(enemies, "vfx/vfx_bite");
         foreach (var creature in enemies)
         {
             await CreatureCmd.SetCurrentHp(creature, 1);
         }
+    }
+
+    public override Task AfterCombatVictory(CombatRoom room)
+    {
+        if (IsUsedUp)
+        {
+            return Task.CompletedTask;
+        }
+
+        Flash();
+        TimesUsed++;
+        return Task.CompletedTask;
     }
 
     public override async Task AfterCreatureAddedToCombat(Creature creature)

@@ -59,6 +59,25 @@ public static class SpinnerPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(CardModel), nameof(CardModel.CanonicalEnergyCost), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Spinner)
+        {
+            return true;
+        }
+
+        __result = 2;
+        return false;
+    }
+
     [HarmonyPatch(typeof(Spinner), nameof(Spinner.OnPlay))]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -73,7 +92,7 @@ public static class SpinnerPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(CardModel), nameof(CardModel.OnUpgrade))]
+    [HarmonyPatch(typeof(CardModel), nameof(Spinner.OnUpgrade))]
     [HarmonyPrefix]
     [UsedImplicitly]
     private static bool PreFix_OnUpgrade(CardModel __instance)

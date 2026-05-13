@@ -1,15 +1,16 @@
 namespace RebalancedSpire.scr.Core.Encounters;
 
+using Afflictions;
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using Godot;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using Monsters;
+using Powers;
 
 [UsedImplicitly]
 public sealed class DoormakerBoss() : CustomEncounterModel(RoomType.Boss, !Disabled)
@@ -43,6 +44,16 @@ public sealed class DoormakerBoss() : CustomEncounterModel(RoomType.Boss, !Disab
 	[
 		ModelDb.Monster<DoormakerLeft>(),
 		ModelDb.Monster<DoormakerRight>()
+	]).AsReadOnly();
+
+	public override IEnumerable<string> ExtraAssetPaths => new List<string>(
+	[
+		"res://scenes/creature_visuals/doormaker_boss.tscn",
+		"res://images/" + DoormakerBase.ClosedState,
+		"res://images/" + DoormakerBase.EyeState,
+		"res://images/" + DoormakerBase.MouthState,
+		ModelDb.Affliction<Devoured>().OverlayPath,
+		ModelDb.Affliction<Weighted>().OverlayPath
 	]).AsReadOnly();
 
 	public override IReadOnlyList<string> Slots => new List<string>(

@@ -21,9 +21,9 @@ using Powers;
 
 public abstract class DoormakerBase : CustomMonsterModel
 {
-    private static string ClosedState => "monsters/beta/door_maker_placeholder_1.png";
-    protected static string EyeState => "monsters/beta/door_maker_placeholder_2.png";
-    protected static string MouthState => "monsters/beta/door_maker_placeholder_3.png";
+    public static string ClosedState => "monsters/beta/door_maker_placeholder_1.png";
+    public static string EyeState => "monsters/beta/door_maker_placeholder_2.png";
+    public static string MouthState => "monsters/beta/door_maker_placeholder_3.png";
 
     private DoormakerBase? _otherDoormaker;
 

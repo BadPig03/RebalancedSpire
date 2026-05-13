@@ -1,14 +1,19 @@
 ﻿{
-  "REBALANCEDSPIRE-CONSUMING_SHADOW.description": "你生成的[gold]黑暗[/gold]充能球会额外增加最后[gold]激发[/gold]的[gold]黑暗[/gold]充能球的{IfUpgraded:show:100|50}%伤害。",
+  "REBALANCEDSPIRE-AFTERLIFE.description": "在回合开始时，[gold]奥斯提[/gold]回复{Heal:diff()}点生命。\n如果[gold]奥斯提[/gold]未存活，则改为[gold]召唤[/gold]{Summon:diff()}。",
+  "REBALANCEDSPIRE-CONSUMING_SHADOW.description": "你生成的[gold]黑暗[/gold]充能球会额外增加最后[gold]激发[/gold]的[gold]黑暗[/gold]充能球的一半伤害。",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "给予{PoisonPower:diff()}层[gold]中毒[/gold]。\n当这名敌人死亡时，对所有敌人造成等于其最大生命值的伤害。",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.title": "尸爆术",
+  "REBALANCEDSPIRE-ETERNAL_ARMOR.description": "获得{PlatingPower:diff()}层[gold]覆甲[/gold]。\n[gold]覆甲[/gold]的层数不再减少。",
   "REBALANCEDSPIRE-FOLLOW_THROUGH.description": "对所有敌人造成{Damage:diff()}点伤害。\n如果在本回合，你打出的上一张牌是技能牌，则给予所有敌人{WeakPower:diff()}层[gold]虚弱[/gold]。",
   "REBALANCEDSPIRE-LEAP.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合获得{FocusPower:diff()}点[gold]集中[/gold]。",
   "REBALANCEDSPIRE-LIMIT_BREAK.description": "将你的[gold]力量[/gold]翻倍。",
   "REBALANCEDSPIRE-LIMIT_BREAK.title": "突破极限",
-  "REBALANCEDSPIRE-GLASSWORK.description": "[gold]生成[/gold]1个[gold]玻璃[/gold]充能球。\n你的[gold]玻璃[/gold]充能球的效力提升{IfUpgraded:show:3|2}点。",
+  "REBALANCEDSPIRE-GLASSWORK.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]生成[/gold]1个[gold]玻璃[/gold]充能球。\n提升所有[gold]玻璃[/gold]充能球的伤害{IfUpgraded:show:3|2}点。",
   "REBALANCEDSPIRE-REFRACT.description": "[gold]生成[/gold]{Repeat:diff()}个[gold]玻璃[/gold]充能球。",
+  "REBALANCEDSPIRE-RIGHT_HAND_HAND.description": "[gold]奥斯提[/gold]造成{OstyDamage:diff()}点伤害。\n你每打出耗能为{Required:energyIcons()}或以上的牌，就将这张牌放入你的[gold]手牌[/gold]，且耗能减少{Energy:energyIcons()}。",
+  "REBALANCEDSPIRE-SIC_EM.description": "[gold]奥斯提[/gold]造成{OstyDamage:diff()}点伤害。\n每当[gold]奥斯提[/gold]攻击这名敌人时，[gold]召唤[/gold]{SicEmPlusPower:diff()}。",
   "REBALANCEDSPIRE-SPINNER.description": "在你的回合开始时，[gold]生成[/gold]{IfUpgraded:show:2|1}个[gold]玻璃[/gold]充能球，并触发所有[gold]玻璃[/gold]充能球的被动。",
+  "REBALANCEDSPIRE-SPUR.description": "[gold]奥斯提[/gold]回复{Heal:diff()}点生命。\n超出最大生命值的回复被视作[gold]召唤[/gold]。",
   "REBALANCEDSPIRE-SYNCHRONIZE.description": "记录你[gold]生成[/gold]的新充能球。\n首次记录一种新的充能球时，获得{SynchronizePlusPower:diff()}点[gold]集中[/gold]。",
   "REBALANCEDSPIRE-WISH.description": "将你[gold]抽牌堆[/gold]和[gold]弃牌堆[/gold]中的一张牌放入你的[gold]手牌[/gold]。"
 }

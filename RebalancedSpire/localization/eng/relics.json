@@ -7,8 +7,8 @@
   "REBALANCEDSPIRE-CROSSBOW.description": "At the start of your turn, add a random [gold]Attack[/gold] into your [gold]Hand[/gold]. It's free to play this combat and [gold]Exhausts[/gold] when played.",
   "REBALANCEDSPIRE-DUSTY_TOME.description": "Upon pickup, choose [blue]1[/blue] of [blue]{Cards}[/blue] upgraded [gold]Ancient Cards[/gold] to add to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-DUSTY_TOME.eventDescription": "Upon pickup, choose [blue]1[/blue] of [blue]{Cards}[/blue] upgraded [gold]Ancient Cards[/gold] to add to your [gold]Deck[/gold].",
-  "REBALANCEDSPIRE-FIDDLE.description": "At the start of each turn, draw [blue]{Cards}[/blue] additional {Cards:plural:card|cards}. After drawing, if you have more than [blue]8[/blue] cards in hand, automatically discard cards until you have only [blue]8[/blue] cards in hand.",
-  "FISHING_ROD.description": "Every [blue]{Combats}[/blue] normal {Combats:plural:combat|combats}, [gold]Upgrade[/gold] a random card in your [gold]Deck[/gold].",
+  "REBALANCEDSPIRE-FIDDLE.description": "At the start of each turn, draw [blue]{Cards}[/blue] additional {Cards:plural:card|cards}. Your max [gold]Hand Size[/gold] is reduced by [blue]{Cards}[/blue].",
+  "REBALANCEDSPIRE-FISHING_ROD.description": "Every [blue]{Combats}[/blue] normal {Combats:plural:combat|combats}, [gold]Upgrade[/gold] a random card in your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-LARGE_CAPSULE.description": "Upon pickup, obtain [blue]{Relics}[/blue] random [gold]Uncommon[/gold] Relic and [blue]{Relics}[/blue] random [gold]Rare[/gold] Relic. Add a [gold]{Writhe}[/gold] to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-LARGE_CAPSULE.eventDescription": "Obtain [blue]{Relics}[/blue] random [gold]Uncommon[/gold] Relic and [blue]{Relics}[/blue] random [gold]Rare[/gold] Relic. Add a [gold]{Writhe}[/gold] to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-LAVA_ROCK.description": "For every [blue]{Enemies}[/blue] combats, enemies drop an additional [gold]Uncommon[/gold] card reward. And the total number of combats needed to victory increases by [blue]1[/blue].",
@@ -25,10 +25,11 @@
   "REBALANCEDSPIRE-NUTRITIOUS_OYSTER.eventDescription": "Raise your Max HP by [blue]{MaxHp}[/blue]. At the end of combat, heal [green]{Heal}[/green] HP.",
   "REBALANCEDSPIRE-POMANDER.description": "Upon pickup, [gold]Upgrade[/gold] [blue]{Cards}[/blue] {Cards:plural:card|cards} and [blue]{Cards}[/blue] random {Cards:plural:card|cards}.",
   "REBALANCEDSPIRE-POMANDER.eventDescription": "[gold]Upgrade[/gold] [blue]{Cards}[/blue] {Cards:plural:card|cards} and [blue]{Cards}[/blue] random {Cards:plural:card|cards}.",
+  "REBALANCEDSPIRE-SEAL_OF_GOLD.description": "On the first right-click each turn, spend [blue]{Gold}[/blue] [gold]Gold[/gold] to gain {Energy:energyIcons()}.",
   "REBALANCEDSPIRE-SERE_TALON.description": "Upon pickup, add [blue]{CurseCards}[/blue] [red]{Writhe}[/red] and [blue]{WishCards}[/blue] [purple]{Wish}[/purple] to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-SERE_TALON.eventDescription": "Add [blue]{CurseCards}[/blue] [red]{Writhe}[/red] and [blue]{WishCards}[/blue] [purple]{Wish}[/purple] to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-SWORD_OF_JADE.description": "Start each combat with [blue]{StrengthPower}[/blue] [gold]Strength[/gold] and [blue]{DexterityPower}[/blue] [gold]Dexterity[/gold].",
-  "REBALANCEDSPIRE-TOASTY_MITTENS.description": "At the start of your turn, choose [blue]{Cards}[/blue] playable cards from among the top [blue]5[/blue] cards of your [gold]Draw Pile[/gold] and [gold]Exhaust[/gold] them. Gain [blue]{StrengthPower}[/blue] [gold]Strength[/gold].",
+  "REBALANCEDSPIRE-TOASTY_MITTENS.description": "At the start of your turn, choose [blue]{ChooseCards}[/blue] cards from among the last [blue]{AllCards}[/blue] cards of your [gold]Draw Pile[/gold] and [gold]Exhaust[/gold] them. Gain [blue]{StrengthPower}[/blue] [gold]Strength[/gold].",
   "REBALANCEDSPIRE-WAR_HAMMER.description": "Whenever an [gold]non-Minion[/gold] Enemy is killed, [gold]Upgrade[/gold] [blue]{Cards}[/blue] random {Cards:plural:card|cards}.",
   "REBALANCEDSPIRE-WHISPERING_EARRING.description": "Gain {Energy:energyIcons()} at the start of each turn. The first time you spend a total of [blue]{TotalEnergy:energyIcons()}[/blue] in combat, [red]Vakuu plays the current turn for you[/red]."
 }

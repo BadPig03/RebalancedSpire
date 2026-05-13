@@ -2,9 +2,8 @@
 
 using HarmonyLib;
 using JetBrains.Annotations;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
@@ -12,9 +11,9 @@ using MegaCrit.Sts2.Core.Models.Relics;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
-public static class FiddlePatch
+public static class SealOfGoldPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FiddleConfig;
+    private static readonly bool Disabled = !RebalancedSpireConfig.SealOfGoldConfig;
 
     [HarmonyPatch(typeof(RelicModel), nameof(RelicModel.Description), MethodType.Getter)]
     [HarmonyPrefix]
@@ -26,44 +25,51 @@ public static class FiddlePatch
             return true;
         }
 
-        if (__instance is not Fiddle)
+        if (__instance is not SealOfGold)
         {
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-FIDDLE.description");
+        __result = new LocString("relics", "REBALANCEDSPIRE-SEAL_OF_GOLD.description");
         return false;
     }
 
-    [HarmonyPatch(typeof(Fiddle), nameof(Fiddle.ShouldDraw))]
+    [HarmonyPatch(typeof(SealOfGold), nameof(SealOfGold.AfterSideTurnStart))]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_ShouldDraw(Fiddle __instance, Player player, bool fromHandDraw, ref bool __result)
+    private static bool PreFix_AfterSideTurnStart(SealOfGold __instance, CombatSide side, ICombatState combatState, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (player != __instance.Owner)
+        if (side != CombatSide.Player)
         {
             return true;
         }
 
-        __result = true;
+        __instance.Status = RelicStatus.Active;
+        __result = Task.CompletedTask;
         return false;
     }
 
-    [HarmonyPatch(typeof(Fiddle), nameof(Fiddle.AfterPreventingDraw))]
+    [HarmonyPatch(typeof(AbstractModel), nameof(AbstractModel.AfterTurnEnd))]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterPreventingDraw(ref Task __result)
+    private static bool PreFix_AfterTurnEnd(AbstractModel __instance, PlayerChoiceContext choiceContext, CombatSide side, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
+        if (__instance is not SealOfGold sealOfGold || side != CombatSide.Player)
+        {
+            return true;
+        }
+
+        sealOfGold.Status = RelicStatus.Normal;
         __result = Task.CompletedTask;
         return false;
     }

@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
-[Pool(typeof(SharedPotionPool))]
+[Pool(typeof(EventPotionPool))]
 public sealed class EmberTeaPotion : CustomPotionModel
 {
     public override PotionRarity Rarity => PotionRarity.Event;

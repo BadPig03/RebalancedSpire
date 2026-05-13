@@ -78,6 +78,28 @@ public static class ConsumingShadowPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(CardModel), nameof(CardModel.CanonicalKeywords), MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalKeywords(CardModel __instance, ref IEnumerable<CardKeyword> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not ConsumingShadow)
+        {
+            return true;
+        }
+
+        __result = new List<CardKeyword>
+        {
+            CardKeyword.Ethereal
+        }.AsReadOnly();
+        return false;
+    }
+
     [HarmonyPatch(typeof(ConsumingShadow), nameof(ConsumingShadow.OnUpgrade))]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -88,7 +110,7 @@ public static class ConsumingShadowPatch
             return true;
         }
 
-        __instance.DynamicVars["ConsumingShadowPlusPower"].UpgradeValueBy(1);
+        __instance.RemoveKeyword(CardKeyword.Ethereal);
         return false;
     }
 

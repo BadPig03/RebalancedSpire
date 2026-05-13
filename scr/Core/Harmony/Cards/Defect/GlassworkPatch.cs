@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Orbs;
+using MegaCrit.Sts2.Core.ValueProps;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
@@ -17,9 +18,10 @@ public static class GlassworkPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.GlassworkConfig;
 
-    private static async Task OnPlay(Glasswork instance, PlayerChoiceContext choiceContext)
+    private static async Task OnPlay(Glasswork instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
+        await CreatureCmd.GainBlock(instance.Owner.Creature, instance.DynamicVars.Block, cardPlay);
         await OrbCmd.Channel<GlassOrb>(choiceContext, instance.Owner);
         var orbs = instance.Owner.PlayerCombatState?.OrbQueue.Orbs.OfType<GlassOrb>().ToList();
         if (orbs == null)
@@ -64,22 +66,9 @@ public static class GlassworkPatch
 
         __result = new List<DynamicVar>
         {
+            new BlockVar(5, ValueProp.Move),
             new("Value", 2)
         }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Glasswork), nameof(Glasswork.GainsBlock), MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_GainsBlock(Glasswork __instance, ref bool __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = false;
         return false;
     }
 
@@ -93,7 +82,7 @@ public static class GlassworkPatch
             return true;
         }
 
-        __result = OnPlay(__instance, choiceContext);
+        __result = OnPlay(__instance, choiceContext, cardPlay);
         return false;
     }
 
@@ -107,6 +96,7 @@ public static class GlassworkPatch
             return true;
         }
 
+        __instance.DynamicVars.Block.UpgradeValueBy(3);
         __instance.DynamicVars["Value"].UpgradeValueBy(1);
         return false;
     }

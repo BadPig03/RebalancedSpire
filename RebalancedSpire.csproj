@@ -83,7 +83,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.2" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.3" PrivateAssets="All" />
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
         <AdditionalFiles Include="RebalancedSpire/localization/**/*.json"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
@@ -145,6 +145,10 @@
       <Content Include="images\potions\rebalancedspire-bone_tea_potion.png.import" />
       <Content Include="images\potions\rebalancedspire-tea_of_discourtesy_potion.png" />
       <Content Include="images\potions\rebalancedspire-tea_of_discourtesy_potion.png.import" />
+      <Content Include="images\powers\rebalancedspire-afterlife_power.png" />
+      <Content Include="images\powers\rebalancedspire-afterlife_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-eternal_armor_power.png" />
+      <Content Include="images\powers\rebalancedspire-eternal_armor_power.png.import" />
       <Content Include="images\powers\rebalancedspire-hunger_power.png" />
       <Content Include="images\powers\rebalancedspire-hunger_power.png.import" />
       <Content Include="images\powers\rebalancedspire-consuming_shadow_plus_power.png" />
@@ -183,6 +187,8 @@
       <Content Include="images\powers\rebalancedspire-synchronize_plus_power.png.import" />
       <Content Include="images\powers\rebalancedspire-spinner_plus_power.png" />
       <Content Include="images\powers\rebalancedspire-spinner_plus_power.png.import" />
+      <Content Include="images\powers\rebalancedspire-sic_em_plus_power.png" />
+      <Content Include="images\powers\rebalancedspire-sic_em_plus_power.png.import" />
       <Content Include="images\relics\rebalancedspire-neows_lament.png" />
       <Content Include="images\relics\rebalancedspire-neows_lament.png.import" />
       <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss.png" />
@@ -202,11 +208,15 @@
       <Content Include="scr\Core\Cards\CorpseExplosion.cs.uid" />
       <Content Include="scr\Core\Cards\LimitBreak.cs.uid" />
       <Content Include="scr\Core\Encounters\DoormakerBoss.cs.uid" />
+      <Content Include="scr\Core\GameActions\NetUseSealOfGoldAction.cs.uid" />
+      <Content Include="scr\Core\GameActions\UseSealOfGoldAction.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\DarvPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\NeowPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\OrobasPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Ancients\VakuuPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\AttackCommandPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Colorless\EternalArmorPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Colorless\RollingBoulderPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\EnthralledPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Curse\FollyPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Defect\ConsumingShadowPatch.cs.uid" />
@@ -222,8 +232,13 @@
       <Content Include="scr\Core\Harmony\Cards\Event\ByrdonisEggPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Necrobinder\AfterlifePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Necrobinder\BansheesCryPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Necrobinder\DefyPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Necrobinder\PullAggroPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Necrobinder\RightHandHandPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Necrobinder\SicEmPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\FollowThroughPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />
@@ -310,8 +325,10 @@
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\SludgeSpinnerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\ToadpolePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Monsters\Underdocks\Normal\TwoTailedRatPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\NRelicInventoryHolderPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\HardToKillPowerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Powers\IllusionPowerPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Powers\PlatingPowerPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\AlchemicalCofferPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\BigMushroomPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
@@ -328,6 +345,7 @@
       <Content Include="scr\Core\Harmony\Relics\NutritiousOysterPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\PomanderPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
+      <Content Include="scr\Core\Harmony\Relics\SealOfGoldPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\SwordOfJadePatch.cs.uid" />
       <Content Include="scr\Core\Harmony\Relics\SwordOfStonePatch.cs.uid" />
@@ -342,13 +360,16 @@
       <Content Include="scr\Core\Potions\BoneTeaPotion.cs.uid" />
       <Content Include="scr\Core\Potions\EmberTeaPotion.cs.uid" />
       <Content Include="scr\Core\Potions\TeaOfDiscourtesyPotion.cs.uid" />
+      <Content Include="scr\Core\Powers\AfterlifePower.cs.uid" />
       <Content Include="scr\Core\Powers\ConsumingShadowPlusPower.cs.uid" />
       <Content Include="scr\Core\Powers\CorpseExplosionPower.cs.uid" />
       <Content Include="scr\Core\Powers\DisillusionPower.cs.uid" />
+      <Content Include="scr\Core\Powers\EternalArmorPower.cs.uid" />
       <Content Include="scr\Core\Powers\HungerPower.cs.uid" />
       <Content Include="scr\Core\Powers\LeapPower.cs.uid" />
       <Content Include="scr\Core\Powers\OmnidynamicsPower.cs.uid" />
       <Content Include="scr\Core\Powers\ScrutinyPlusPower.cs.uid" />
+      <Content Include="scr\Core\Powers\SicEmPlusPower.cs.uid" />
       <Content Include="scr\Core\Powers\SpinnerPlusPower.cs.uid" />
       <Content Include="scr\Core\Powers\SynchronizePlusPower.cs.uid" />
       <Content Include="scr\Core\RebalancedSpireConfig.cs.uid" />
@@ -366,6 +387,7 @@
       <Content Include="scr\Core\Powers\SoulWitherPower.cs.uid" />
       <Content Include="scr\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
       <Content Include="scr\Core\Relics\NeowsLament.cs.uid" />
+      <Content Include="scr\Core\Singletons\FiddleSingleton.cs.uid" />
       <Content Include="shaders\afflictions\devoured.gdshader" />
       <Content Include="shaders\afflictions\devoured.gdshader.uid" />
     </ItemGroup>

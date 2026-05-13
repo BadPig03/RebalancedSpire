@@ -2,17 +2,16 @@
 
 using Afflictions;
 using BaseLib.Abstracts;
+using BaseLib.Hooks;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
-public sealed class ScrutinyPlusPower : CustomPowerModel
+public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
 {
-    private static int MaxAllowedCardsInHand => 6;
+    private static int ReduceHandSize => 4;
 
     public override PowerType Type => PowerType.Buff;
 
@@ -32,25 +31,9 @@ public sealed class ScrutinyPlusPower : CustomPowerModel
         }
     }
 
-    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public int ModifyMaxHandSize(Player player, int currentMaxHandSize)
     {
-        var hands = CardPile.GetCards(card.Owner, PileType.Hand).ToList();
-        if (hands.Count <= MaxAllowedCardsInHand)
-        {
-            return;
-        }
-
-        Flash();
-        for (var i = MaxAllowedCardsInHand; i < CardPile.MaxCardsInHand; i++)
-        {
-            var cardModel = hands.ElementAtOrDefault(i);
-            if (cardModel == null)
-            {
-                continue;
-            }
-
-            await CardCmd.Discard(choiceContext, cardModel);
-        }
+        return currentMaxHandSize - ReduceHandSize;
     }
 
     public override async Task AfterCardEnteredCombat(CardModel card)

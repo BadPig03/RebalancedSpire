@@ -1,14 +1,19 @@
 ﻿{
-  "REBALANCEDSPIRE-CONSUMING_SHADOW.description": "Channeled [gold]Dark[/gold] gain {IfUpgraded:show:100|50}% of the damage of the last [gold]Evoked Dark[/gold].",
+  "REBALANCEDSPIRE-AFTERLIFE.description": "At the start of your turn, [gold]Osty[/gold] heals {Heal:diff()} HP.\nIf [gold]Osty[/gold] is dead, [gold]Summon[/gold] {Summon:diff()} instead.",
+  "REBALANCEDSPIRE-CONSUMING_SHADOW.description": "Channeled [gold]Dark[/gold] gain half of the damage of the last [gold]Evoked Dark[/gold].",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "Apply {PoisonPower:diff()} [gold]Poison[/gold]. \nWhen the enemy dies, deal damage equal to its Max HP to ALL enemies.",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.title": "Corpse Explosion",
+  "REBALANCEDSPIRE-ETERNAL_ARMOR.description": "Gain {PlatingPower:diff()} [gold]Plating[/gold].",
   "REBALANCEDSPIRE-FOLLOW_THROUGH.description": "Deal {Damage:diff()} damage to ALL enemies.\nIf the last card you played this turn was a Skill, apply {WeakPower:diff()} [gold]Weak[/gold] to ALL enemies.",
   "REBALANCEDSPIRE-LEAP.description": "Gain {Block:diff()} [gold]Block[/gold].\nGain {FocusPower:diff()} [gold]Focus[/gold] this turn.",
   "REBALANCEDSPIRE-LIMIT_BREAK.description": "Double your [gold]Strength[/gold].",
   "REBALANCEDSPIRE-LIMIT_BREAK.title": "Limit Break",
-  "REBALANCEDSPIRE-GLASSWORK.description": "[gold]Channel[/gold] 1 [gold]Glass[/gold].\nIncrease the effectiveness of your [gold]Glass[/gold] Orbs by {IfUpgraded:show:3|2}.",
+  "REBALANCEDSPIRE-GLASSWORK.description": "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Channel[/gold] 1 [gold]Glass[/gold].\nIncrease the damage of your [gold]Glass[/gold] Orbs by {IfUpgraded:show:3|2}.",
   "REBALANCEDSPIRE-REFRACT.description": "[gold]Channel[/gold] {Repeat:diff()} [gold]Glass[/gold].",
+  "REBALANCEDSPIRE-RIGHT_HAND_HAND.description": "[gold]Osty[/gold] deals {OstyDamage:diff()} damage.\nWhenever you play a card costing {Required:energyIcons()} or more, put this into your [gold]Hand[/gold] and reduce its cost by {Energy:energyIcons()}.",
+  "REBALANCEDSPIRE-SIC_EM.description": "[gold]Osty[/gold] deals {OstyDamage:diff()} damage.\nWhenever [gold]Osty[/gold] hits this enemy, [gold]Summon[/gold] {SicEmPlusPower:diff()}.",
   "REBALANCEDSPIRE-SPINNER.description": "At the start of your turn, [gold]Channel[/gold] {IfUpgraded:show:2|1} [gold]Glass[/gold], and trigger the passive ability of all [gold]Glass[/gold] Orbs.",
+  "REBALANCEDSPIRE-SPUR.description": "[gold]Osty[/gold] heals {Heal:diff()} HP.\nExcess healing beyond max HP counts as [gold]Summon[/gold].",
   "REBALANCEDSPIRE-SYNCHRONIZE.description": "Record newly [gold]Channeled[/gold] orb.\nThe first time you record a new type of Orb, gain {SynchronizePlusPower:diff()} [gold]Focus[/gold].",
   "REBALANCEDSPIRE-WISH.description": "Put a card from your [gold]Draw Pile[/gold] and [gold]Discard Pile[/gold] into your [gold]Hand[/gold]."
 }
