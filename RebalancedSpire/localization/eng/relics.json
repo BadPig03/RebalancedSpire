@@ -14,7 +14,7 @@
   "REBALANCEDSPIRE-LAVA_ROCK.description": "For every [blue]{Enemies}[/blue] combats, enemies drop an additional [gold]Uncommon[/gold] card reward. And the total number of combats needed to victory increases by [blue]1[/blue].",
   "REBALANCEDSPIRE-LOOMING_FRUIT.description": "Upon pickup, raise your Max HP by [blue]{MaxHp}[/blue]. Whenever you obtain a relic reward, also gain a random fruit [gold]Relic[/gold].",
   "REBALANCEDSPIRE-LOOMING_FRUIT.eventDescription": "Raise your Max HP by [blue]{MaxHp}[/blue]. Whenever you obtain a relic reward, also gain a random fruit [gold]Relic[/gold].",
-  "REBALANCEDSPIRE-LORDS_PARASOL.description": "Gain {Energy:energyIcons()} at the start of each turn. When you encounter the [gold]Merchant[/gold], immediately obtain EVERYTHING he sells. The chance for a Shop to appear in [gold]?[/gold] rooms is doubled.",
+  "REBALANCEDSPIRE-LORDS_PARASOL.description": "Gain {Energy:energyIcons()} at the start of each turn. When you encounter the [gold]Merchant[/gold], immediately obtain EVERYTHING he sells.",
   "REBALANCEDSPIRE-NEOWS_LAMENT.description": "Enemies in your first [blue]{Rooms}[/blue] combats will have [blue]1[/blue] HP.",
   "REBALANCEDSPIRE-NEOWS_LAMENT.eventDescription": "Enemies in your first [blue]{Rooms}[/blue] combats will have [blue]1[/blue] HP.",
   "REBALANCEDSPIRE-NEOWS_LAMENT.flavor": "[red]Details for this relic will be revealed in the future...[/red]",
