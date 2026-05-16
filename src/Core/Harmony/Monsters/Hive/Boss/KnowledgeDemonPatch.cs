@@ -1,0 +1,109 @@
+﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Boss;
+
+using HarmonyLib;
+using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Monsters;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.MonsterMoves.Intents;
+using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using MegaCrit.Sts2.Core.Nodes.Audio;
+
+[HarmonyPatch]
+// ReSharper disable InconsistentNaming
+public static class KnowledgeDemonPatch
+{
+    private static readonly bool Disabled = !RebalancedSpireConfig.KnowledgeDemonConfig;
+
+    private static int HealAmount => 20;
+    private static readonly int[] _disintegrationDamageValues = [4, 6, 8];
+
+    private static async Task PonderMove(KnowledgeDemon instance)
+    {
+        await CreatureCmd.TriggerAnim(instance.Creature, "HealTrigger", 1.8f);
+        NRunMusicController.Instance?.UpdateMusicParameter("knowledge_demon_progress", 1f);
+        instance.IsBurnt = false;
+        if (instance.Creature.CombatState == null)
+        {
+            return;
+        }
+
+        await CreatureCmd.Heal(instance.Creature, HealAmount * instance.Creature.CombatState.Players.Count);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.PonderStrength, instance.Creature, null);
+    }
+
+    private static async Task ChooseCurse(KnowledgeDemon instance, Creature target)
+    {
+        if (target.IsDead || target.Player == null)
+        {
+            return;
+        }
+
+        var disintegrationDamage = _disintegrationDamageValues[instance.CurseOfKnowledgeCounter];
+        var cards = KnowledgeDemon._curseOfKnowledgeSets[instance.CurseOfKnowledgeCounter].Select(delegate(KnowledgeDemon.IChoosable c)
+        {
+            CardModel card = instance.CombatState.CreateCard((CardModel)c, target.Player);
+            if (card is Disintegration)
+            {
+                card.DynamicVars["DisintegrationPower"].BaseValue = disintegrationDamage;
+            }
+            return card;
+        }).ToList();
+        var chosen = await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), cards, target.Player);
+        if (chosen == null)
+        {
+            return;
+        }
+
+        await ((KnowledgeDemon.IChoosable) chosen).OnChosen();
+    }
+
+    [HarmonyPatch(typeof(KnowledgeDemon), "ChooseCurse")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    public static bool PreFix_ChooseCurse(KnowledgeDemon __instance, Creature target, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = ChooseCurse(__instance, target);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(KnowledgeDemon), "GenerateMoveStateMachine")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_GenerateMoveStateMachine(KnowledgeDemon __instance, ref MonsterMoveStateMachine __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        List<MonsterState> list = [];
+        MoveState moveState = new MoveState("CURSE_OF_KNOWLEDGE_MOVE", __instance.CurseOfKnowledge, new DebuffIntent());
+        MoveState moveState2 = new MoveState("SLAP_MOVE", __instance.SlapMove, new SingleAttackIntent(__instance.SlapDamage));
+        MoveState moveState3 = new MoveState("KNOWLEDGE_OVERWHELMING_MOVE", __instance.KnowledgeOverwhelmingMove, new MultiAttackIntent(__instance.KnowledgeOverwhelmingDamage, 3));
+        MoveState moveState4 = new MoveState("PONDER_MOVE", _ => PonderMove(__instance), new HealIntent(), new BuffIntent());
+        ConditionalBranchState branchState = new ConditionalBranchState("CurseOfKnowledgeBranch");
+        moveState.FollowUpState = moveState2;
+        moveState2.FollowUpState = moveState3;
+        moveState3.FollowUpState = moveState4;
+        moveState4.FollowUpState = branchState;
+        branchState.AddState(moveState, () => __instance._curseOfKnowledgeCounter < 3);
+        branchState.AddState(moveState2, () => __instance._curseOfKnowledgeCounter >= 3);
+        list.Add(branchState);
+        list.Add(moveState);
+        list.Add(moveState2);
+        list.Add(moveState4);
+        list.Add(moveState3);
+        __result = new MonsterMoveStateMachine(list, moveState);
+        return false;
+    }
+}

@@ -1,0 +1,35 @@
+﻿namespace RebalancedSpire.Core;
+
+using System.Reflection;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Models;
+
+public static class SrcHelpers
+{
+    public static EventOption RelicOption(AncientEventModel instance, RelicModel relic, string pageName = "INITIAL", string? customDonePage = null)
+    {
+        relic.AssertMutable();
+        relic.Owner = instance.Owner!;
+        var textKey = $"{StringHelper.Slugify(instance.GetType().Name)}.pages.{pageName}.options.{relic.Id.Entry}";
+        return EventOption.FromRelic(relic, instance, OnChosen, textKey);
+
+        async Task OnChosen()
+        {
+            await RelicCmd.Obtain(relic, instance.Owner!);
+            instance.CustomDonePage = customDonePage;
+            instance.Done();
+        }
+    }
+
+    public static EventOption RelicOption<T>(AncientEventModel instance, string pageName = "INITIAL", string? customDonePage = null) where T : RelicModel
+    {
+        return RelicOption(instance, ModelDb.Relic<T>().ToMutable(), pageName, customDonePage);
+    }
+
+    public static string? GetSfx<T>(T instance, string name) where T : MonsterModel
+    {
+        return (string?) typeof(T).GetProperty(name, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty)?.GetValue(instance);
+    }
+}
