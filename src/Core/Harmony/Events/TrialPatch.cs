@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Events;
 
 using System.Reflection;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Assets;

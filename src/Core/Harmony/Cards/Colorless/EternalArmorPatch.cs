@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Colorless;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -21,8 +22,8 @@ public static class EternalArmorPatch
 
     private static async Task OnPlay(EternalArmor instance, PlayerChoiceContext choiceContext)
     {
-        await PowerCmd.Apply<PlatingPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["PlatingPower"].IntValue, instance.Owner.Creature, instance);
-        await PowerCmd.Apply<EternalArmorPower>(choiceContext, instance.Owner.Creature, 1, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<PlatingPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["PlatingPower"].BaseValue, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<EternalArmorPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["EternalArmorPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
     [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
@@ -75,7 +76,8 @@ public static class EternalArmorPatch
 
         __result = new List<DynamicVar>
         {
-            new PowerVar<PlatingPower>(11)
+            new PowerVar<PlatingPower>(11),
+            new PowerVar<EternalArmorPower>(1)
         }.AsReadOnly();
         return false;
     }

@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -15,8 +16,9 @@ public static class ShrinkerBeetlePatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ShrinkerBeetleConfig;
 
+    private const int StompCount = 2;
+
     private static int StompDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
-    private static int StompCount => 2;
 
     private static async Task StompMove(ShrinkerBeetle instance)
     {

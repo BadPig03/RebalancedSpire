@@ -23,6 +23,7 @@ public sealed class DoormakerLeft : DoormakerBase
     private static int VulnerablePowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int WeakPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
+    private const int ScrutinyPlusPowerAmount = 1;
 
     public override bool ShouldShowInCompendium => false;
 
@@ -77,7 +78,7 @@ public sealed class DoormakerLeft : DoormakerBase
             await Open();
         }
         await DamageCmd.Attack(ScrutinyDamage).WithHitCount(ScrutinyCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<ScrutinyPlusPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
+        await PowerCmd.Apply<ScrutinyPlusPower>(new ThrowingPlayerChoiceContext(), Creature, ScrutinyPlusPowerAmount, Creature, null);
     }
 
     private async Task BeamMove(IReadOnlyList<Creature> targets)

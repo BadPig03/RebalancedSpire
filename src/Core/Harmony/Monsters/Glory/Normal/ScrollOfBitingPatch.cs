@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,7 +14,7 @@ public static class ScrollOfBitingPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ScrollOfBitingConfig;
 
-    private static int PaperCutsPowerAmount => 1;
+    private const int PaperCutsPowerAmount = 1;
 
     private static async Task AfterAddedToRoom(ScrollOfBiting instance)
     {

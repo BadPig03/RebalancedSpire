@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Event;
 
 using Afflictions;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Models;

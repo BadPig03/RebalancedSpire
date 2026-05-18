@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,7 +14,7 @@ public static class GlobeHeadPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.GlobeHeadConfig;
 
-    private static int GalvanicPowerAmount => 3;
+    private const int GalvanicPowerAmount = 3;
 
     private static async Task AfterAddedToRoom(GlobeHead instance)
     {

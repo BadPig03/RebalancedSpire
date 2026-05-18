@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Ironclad;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;

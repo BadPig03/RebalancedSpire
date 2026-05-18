@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
 using BaseLib.Utils;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;

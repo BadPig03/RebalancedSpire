@@ -1,5 +1,6 @@
-﻿namespace RebalancedSpire.Core.Harmony;
+﻿namespace RebalancedSpire.Core.Harmony.Saves;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Runs;

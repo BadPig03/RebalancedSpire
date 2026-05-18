@@ -1,4 +1,4 @@
-﻿namespace RebalancedSpire.Core.Harmony;
+﻿namespace RebalancedSpire.Core.Harmony.Nodes;
 
 using HarmonyLib;
 using JetBrains.Annotations;

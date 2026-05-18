@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Elite;
 
 using Afflictions;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Animation;
@@ -24,10 +25,11 @@ public static class ByrdonisPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ByrdonisConfig;
 
-    private static int TerritorialPowerAmount => 1;
-    private static int FrailPowerAmount => 2;
+    private const int FrailPowerAmount = 2;
+    private const int TerritorialPowerAmount = 1;
+    private const int WeakAmount = 99;
+
     private static int SwoopDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 18, 16);
-    private static int WeakAmount => 99;
 
     private static bool IsAngry(Byrdonis instance)
     {

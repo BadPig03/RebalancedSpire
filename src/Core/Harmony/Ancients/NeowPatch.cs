@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Ancients;
 
+using Configs;
 using Core.Relics;
 using HarmonyLib;
 using JetBrains.Annotations;

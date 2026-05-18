@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Events;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.CardSelection;

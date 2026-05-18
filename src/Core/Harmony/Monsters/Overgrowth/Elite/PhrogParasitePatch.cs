@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Elite;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -22,15 +23,15 @@ public static class PhrogParasitePatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.PhrogParasiteConfig;
 
-    private static int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 73, 67);
-    private static int MaxInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 77, 73);
+    private const float IncreasedSize = 0.3f;
+    private const float InitSize = 0.3f;
+    private const float MaxHpRatio = 0.2f;
+    private const int InfectedAmount = 1;
+    private const int InitInfectedAmount = 2;
 
-    private static int InitInfectedAmount => 2;
-    private static int InfectedAmount => 1;
-    private static float InitSize => 0.3f;
-    private static float IncreasedSize => 0.3f;
-    private static float MaxHpRatio => 0.2f;
     private static int LashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
+    private static int MaxInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 77, 73);
+    private static int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 73, 67);
 
     private static async Task ProliferationMove(PhrogParasite instance)
     {

@@ -1,5 +1,6 @@
-﻿namespace RebalancedSpire.Core.Harmony;
+﻿namespace RebalancedSpire.Core.Harmony.Nodes;
 
+using Configs;
 using GameActions;
 using Godot;
 using HarmonyLib;

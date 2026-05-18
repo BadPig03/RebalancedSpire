@@ -1,5 +1,6 @@
-﻿namespace RebalancedSpire.Core.Harmony;
+﻿namespace RebalancedSpire.Core.Harmony.Commands;
 
+using Configs;
 using Core.Monsters;
 using Core.Powers;
 using HarmonyLib;

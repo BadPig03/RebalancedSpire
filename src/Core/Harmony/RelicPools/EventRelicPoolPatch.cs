@@ -1,5 +1,6 @@
-﻿namespace RebalancedSpire.Core.Harmony;
+﻿namespace RebalancedSpire.Core.Harmony.RelicPools;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Models;
@@ -12,7 +13,7 @@ public static class EventRelicPoolPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TeaMasterConfig;
 
-    private static readonly List<RelicModel> _relicsToRemove =
+    private static List<RelicModel> RelicsToRemove =>
     [
         ModelDb.Relic<BoneTea>(),
         ModelDb.Relic<EmberTea>(),
@@ -30,7 +31,7 @@ public static class EventRelicPoolPatch
         }
 
         var list = new List<RelicModel>(__result);
-        foreach (var relic in _relicsToRemove)
+        foreach (var relic in RelicsToRemove)
         {
             list.Remove(relic);
         }

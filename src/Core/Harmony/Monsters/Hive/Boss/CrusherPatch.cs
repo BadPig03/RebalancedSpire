@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Boss;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,7 +18,7 @@ public static class CrusherPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KaiserCrabConfig;
 
-    private static int WeakPowerAmount => 2;
+    private const int WeakPowerAmount = 2;
 
     private static async Task EnlargingStrikeMove(Crusher instance, IReadOnlyList<Creature> targets)
     {

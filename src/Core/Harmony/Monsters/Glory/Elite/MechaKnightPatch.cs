@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Elite;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,7 +17,7 @@ public class MechaKnightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.MechaKnightConfig;
 
-    private static int BurnAmount => 2;
+    private const int BurnAmount = 2;
 
     private static async Task FlamethrowerMove(MechaKnight instance, IReadOnlyList<Creature> targets)
     {

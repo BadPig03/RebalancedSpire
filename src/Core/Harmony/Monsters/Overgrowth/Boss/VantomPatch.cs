@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Boss;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -26,10 +27,11 @@ public static class VantomPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.VantomConfig;
 
-    private static int PainfulStabsPowerAmount => 1;
-    private static int InitSlipperyPowerAmount => 3;
-    private static int SlipperyPowerAmount => 2;
-    private static int StrengthPowerAmount => 2;
+    private const int PainfulStabsPowerAmount = 1;
+    private const int InitSlipperyPowerAmount = 3;
+    private const int SlipperyPowerAmount = 2;
+    private const int StrengthPowerAmount = 2;
+
     private static int WeakPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
 
     private static async Task InkBlotMove(Vantom instance, IReadOnlyList<Creature> targets)

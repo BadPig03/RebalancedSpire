@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -16,8 +17,8 @@ public static class ParafrightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheObscuraConfig;
 
-    private static int IllusionPowerAmount => 1;
-    private static int DisillusionPowerAmount => 1;
+    private const int IllusionPowerAmount = 1;
+    private const int DisillusionPowerAmount = 1;
 
     private static async Task AfterAddedToRoom(Parafright instance)
     {

@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;

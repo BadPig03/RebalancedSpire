@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Ancients;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Events;
@@ -24,18 +25,12 @@ public static class VakuuPatch
             return true;
         }
 
-        if (RebalancedSpireConfig.VakuuFixedArtConfig)
-        {
-            __result = SceneHelper.GetScenePath("events/background_scenes/vakuu_fixed_art");
-            return false;
-        }
-
-        if (!RebalancedSpireConfig.VakuuBetaArtConfig)
+        if (!RebalancedSpireConfig.VakuuFixedArtConfig)
         {
             return true;
         }
 
-        __result = SceneHelper.GetScenePath("events/background_scenes/vakuu_beta_art");
+        __result = SceneHelper.GetScenePath("events/background_scenes/vakuu_fixed_art");
         return false;
     }
 

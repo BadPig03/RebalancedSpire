@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -12,7 +13,7 @@ public static class LeafSlimeSPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.LeafSlimeSConfig;
 
-    private static int SlimedAmount => 1;
+    private const int SlimedAmount = 1;
 
     [HarmonyPatch(typeof(LeafSlimeS), "GenerateMoveStateMachine")]
     [HarmonyPrefix]

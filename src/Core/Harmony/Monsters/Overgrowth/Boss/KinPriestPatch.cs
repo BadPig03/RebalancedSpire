@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Boss;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
@@ -25,15 +26,16 @@ public static class KinPriestPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheKinConfig;
 
-    private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
+    private const int BeamCount = 3;
+    private const int BeamDamage = 0;
+    private const int BreakUpCount = 3;
+    private const int FrailPowerAmount = 1;
+    private const int WeakPowerAmount = 1;
+
     private static int BlockAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 8);
-    private static int FrailPowerAmount => 1;
-    private static int WeakPowerAmount => 1;
-    private static int HealAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
     private static int BreakUpDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
-    private static int BreakUpCount => 3;
-    private static int BeamDamage => 0;
-    private static int BeamCount => 3;
+    private static int HealAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
+    private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
 
     private static async Task GuardMove(KinPriest instance)
     {

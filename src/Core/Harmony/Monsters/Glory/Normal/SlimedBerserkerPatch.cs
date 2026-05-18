@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Normal;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -21,12 +22,13 @@ public static class SlimedBerserkerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SlimedBerserkerConfig;
 
-    private static int SlimedAmount => 5;
-    private static int LeechingHugPowerAmount => 1;
-    private static int WeakPowerAmount => 3;
-    private static int SmotherDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 33, 30);
+    private const int LeechingHugPowerAmount = 1;
+    private const int PummelingCount = 4;
+    private const int SlimedAmount = 5;
+    private const int WeakPowerAmount = 3;
+
     private static int PummelingDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
-    private static int PummelingCount => 4;
+    private static int SmotherDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 33, 30);
 
     private static async Task VomitIchorMove(SlimedBerserker instance, IReadOnlyList<Creature> targets)
     {

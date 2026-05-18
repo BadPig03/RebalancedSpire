@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Boss;
 
+using Configs;
 using Core.Powers;
 using Godot;
 using HarmonyLib;
@@ -32,14 +33,16 @@ public static class KinFollowerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheKinConfig;
 
-    private static int MinionPowerAmount => 1;
-    private static int QuickSlashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
+    private const int BoomerangCount = 2;
+    private const int GuardPowerAmount = 1;
+    private const int MinionPowerAmount = 1;
+
     private static int BoomerangDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 3, 2);
-    private static int BoomerangCount => 2;
     private static int GuardBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 13);
-    private static int RevengeDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 8, 6);
     private static int GuardFakeBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 8);
     private static int HealAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 8, 6);
+    private static int QuickSlashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
+    private static int RevengeDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 8, 6);
 
     private static Task AfterDeath(KinFollower instance)
     {
@@ -100,7 +103,7 @@ public static class KinFollowerPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_buff");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.9f);
         await CreatureCmd.GainBlock(instance.Creature, new BlockVar(GuardBlock, ValueProp.Move), null);
-        await PowerCmd.Apply<GuardPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
+        await PowerCmd.Apply<GuardPower>(new ThrowingPlayerChoiceContext(), instance.Creature, GuardPowerAmount, instance.Creature, null);
     }
 
     private static async Task PowerDanceMove(KinFollower instance)

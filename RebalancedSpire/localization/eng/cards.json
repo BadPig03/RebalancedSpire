@@ -1,5 +1,6 @@
 ﻿{
   "REBALANCEDSPIRE-AFTERLIFE.description": "At the start of your turn, [gold]Osty[/gold] heals {Heal:diff()} HP.\nIf [gold]Osty[/gold] is dead, [gold]Summon[/gold] {Summon:diff()} instead.",
+  "REBALANCEDSPIRE-BOLAS.description": "Deal {Damage:diff()} damage.\nAt the start of your next turn, return this to your [gold]Hand[/gold], and increase its attack damage by {IncrementAmount:diff()}.",
   "REBALANCEDSPIRE-CONSUMING_SHADOW.description": "Channeled [gold]Dark[/gold] gain half of the damage of the last [gold]Evoked Dark[/gold].",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "Apply {PoisonPower:diff()} [gold]Poison[/gold]. \nWhen the enemy dies, deal damage equal to its Max HP to ALL enemies.",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.title": "Corpse Explosion",

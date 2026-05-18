@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -14,7 +15,7 @@ public static class SlitheringStranglerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SlitheringStranglerConfig;
 
-    private static int ConstrictPowerAmount => 2;
+    private const int ConstrictPowerAmount = 2;
 
     private static async Task ConstrictMove(SlitheringStrangler instance, IReadOnlyList<Creature> targets)
     {

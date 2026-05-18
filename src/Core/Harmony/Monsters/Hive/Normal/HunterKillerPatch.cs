@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,10 +19,11 @@ public static class HunterKillerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.HunterKillerConfig;
 
+    private const int PunctureCount = 3;
+    private const int WeakPowerAmount = 2;
+
     private static int BiteDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 14);
     private static int PunctureDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
-    private static int PunctureCount => 3;
-    private static int WeakPowerAmount => 2;
 
     private static async Task BiteMove(HunterKiller instance)
     {

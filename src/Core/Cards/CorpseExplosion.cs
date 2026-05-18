@@ -2,6 +2,7 @@
 
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using Configs;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -36,8 +37,8 @@ public sealed class CorpseExplosion() : CustomCardModel(2, CardType.Skill, CardR
             return;
         }
 
-        await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target, DynamicVars.Poison.IntValue, Owner.Creature, this);
-        await PowerCmd.Apply<CorpseExplosionPower>(choiceContext, cardPlay.Target, DynamicVars["CorpseExplosionPower"].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, cardPlay.Target, DynamicVars.Poison.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<CorpseExplosionPower>(choiceContext, cardPlay.Target, DynamicVars["CorpseExplosionPower"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

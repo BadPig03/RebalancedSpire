@@ -20,6 +20,7 @@ public sealed class DoormakerRight : DoormakerBase
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int FullAttackCount => 4;
+    private const int HungerPowerAmount = 1;
 
     public override async Task AfterAddedToRoom()
     {
@@ -61,7 +62,7 @@ public sealed class DoormakerRight : DoormakerBase
             await Open();
         }
         await DamageCmd.Attack(HungerDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<HungerPower>(new ThrowingPlayerChoiceContext(), Creature, 1, Creature, null);
+        await PowerCmd.Apply<HungerPower>(new ThrowingPlayerChoiceContext(), Creature, HungerPowerAmount, Creature, null);
     }
 
     private async Task ChargeUpMove(IReadOnlyList<Creature> targets)

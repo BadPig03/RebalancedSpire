@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,7 +19,7 @@ public static class NoisebotPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.FabricatorConfig;
 
-    private static int DazedAmount => 1;
+    private const int DazedAmount = 1;
 
     private static async Task NoiseMove(Noisebot instance, IReadOnlyList<Creature> targets)
     {

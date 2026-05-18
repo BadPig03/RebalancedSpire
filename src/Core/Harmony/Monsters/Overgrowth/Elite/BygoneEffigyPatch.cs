@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Elite;
 
+using Configs;
 using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -23,7 +24,7 @@ public static class BygoneEffigyPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.BygoneEffigyConfig;
 
-    private static int StrengthPowerAmount => 3;
+    private const int StrengthPowerAmount = 3;
 
     private static async Task WakeMove(BygoneEffigy instance)
     {

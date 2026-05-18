@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Elite;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,8 +18,8 @@ public static class DecimillipedeSegmentPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.DecimillipedeConfig;
 
-    private static int BulkStrength => 1;
-    private static int ReattachPowerAmount => 20;
+    private const int BulkStrength = 1;
+    private const int ReattachPowerAmount = 20;
 
     private static async Task BulkMove(DecimillipedeSegment instance)
     {

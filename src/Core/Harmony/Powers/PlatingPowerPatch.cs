@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Powers;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;

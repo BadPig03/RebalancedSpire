@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Boss;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -15,8 +16,8 @@ public static class CeremonialBeastPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.CeremonialBeastConfig;
 
-    private static float FirstPlowAmount => 0.8f;
-    private static float SecondPlowAmount => 0.4f;
+    private const float FirstPlowAmount = 0.8f;
+    private const float SecondPlowAmount = 0.4f;
 
     private static async Task FirstStampMove(CeremonialBeast instance)
     {

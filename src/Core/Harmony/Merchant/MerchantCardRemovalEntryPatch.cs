@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Merchant;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Entities.Merchant;
@@ -9,8 +10,6 @@ using MegaCrit.Sts2.Core.Entities.Merchant;
 public static class MerchantCardRemovalEntryPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.MerchantConfig;
-
-    private static int PriceIncrease => 25;
 
     [HarmonyPatch(typeof(MerchantCardRemovalEntry), "PriceIncrease", MethodType.Getter)]
     [HarmonyPrefix]
@@ -22,7 +21,7 @@ public static class MerchantCardRemovalEntryPatch
             return true;
         }
 
-        __result = PriceIncrease;
+        __result = 25;
         return false;
     }
 }

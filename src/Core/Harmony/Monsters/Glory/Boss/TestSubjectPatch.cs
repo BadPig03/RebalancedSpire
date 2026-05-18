@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Boss;
 
+using Configs;
 using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -24,20 +25,21 @@ public static class TestSubjectPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TestSubjectConfig;
 
-    private static int AdaptablePowerAmount => 1;
-    private static int EnragePowerAmount => 3;
-    private static int SkullBashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 14, 12);
-    private static int VulnerablePowerAmount => 1;
+    private const int AdaptablePowerAmount = 1;
+    private const int BigPounceDamage = 45;
+    private const int EnragePowerAmount = 3;
+    private const int LacerateCount = 3;
+    private const int NemesisPowerAmount = 1;
+    private const int PainfulStabsPowerAmount = 1;
+    private const int VulnerablePowerAmount = 1;
+
     private static int BiteDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 18);
+    private static int BurnCount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
+    private static int LacerateDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
     private static int MultiClawDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
     private static int PounceDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
-    private static int LacerateDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
-    private static int LacerateCount => 3;
-    private static int BigPounceDamage => 45;
-    private static int BurnCount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
+    private static int SkullBashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 14, 12);
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2,1);
-    private static int PainfulStabsPowerAmount => 1;
-    private static int NemesisPowerAmount => 1;
 
     private static async Task GrowlMove(TestSubject instance)
     {

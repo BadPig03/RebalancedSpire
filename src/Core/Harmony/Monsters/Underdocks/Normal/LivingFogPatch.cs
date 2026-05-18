@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Underdocks.Normal;
 
+using Configs;
 using Core.Powers;
 using Godot;
 using HarmonyLib;
@@ -19,8 +20,8 @@ public static class LivingFogPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.LivingFogConfig;
 
-    private static int MaxGasBombs => 5;
-    private static int PingPingPowerAmount => 1;
+    private const int MaxGasBombs = 5;
+    private const int PingPingPowerAmount = 1;
 
     private static async Task BloatMove(LivingFog instance)
     {

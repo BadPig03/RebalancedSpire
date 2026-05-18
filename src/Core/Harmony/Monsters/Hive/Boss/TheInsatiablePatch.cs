@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Boss;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -19,10 +20,9 @@ public static class TheInsatiablePatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheInsatiableConfig;
 
-    private static int SandpitPowerAmount => 4;
-    private static int LongDistancePowerAmount => 5;
-
-    private static int FranticEscapeAmount => 6;
+    private const int SandpitPowerAmount = 4;
+    private const int LongDistancePowerAmount = 5;
+    private const int FranticEscapeAmount = 6;
 
     private static async Task LiquifyMove(TheInsatiable instance, IReadOnlyList<Creature> targets)
     {

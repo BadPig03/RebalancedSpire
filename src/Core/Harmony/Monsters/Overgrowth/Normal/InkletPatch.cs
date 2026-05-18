@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,8 +17,9 @@ public class InkletPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.InkletConfig;
 
+    private const int WhirlwindCount = 3;
+
     private static int WhirlwindDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
-    private static int WhirlwindCount => 3;
 
     private static async Task WhirlwindMove(Inklet instance)
     {

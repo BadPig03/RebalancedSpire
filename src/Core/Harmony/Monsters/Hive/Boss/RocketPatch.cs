@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Boss;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,8 +19,8 @@ public static class RocketPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KaiserCrabConfig;
 
-    private static int StrengthPowerAmount => 2;
-    private static int FrailPowerAmount => 2;
+    private const int StrengthPowerAmount = 2;
+    private const int FrailPowerAmount = 2;
 
     private static async Task TargetingReticleMove(Rocket instance, IReadOnlyList<Creature> targets)
     {

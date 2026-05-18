@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -21,9 +22,10 @@ public static class ChomperPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ChomperConfig;
 
-    private static int DazedAmount => 2;
+    private const int ClampCount = 2;
+    private const int DazedAmount = 2;
+
     private static int ClampDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
-    private static int ClampCount => 2;
 
     private static async Task ClampMove(Chomper instance)
     {

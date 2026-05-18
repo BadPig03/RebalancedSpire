@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -19,10 +20,11 @@ public static class LivingShieldPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TurretOperatorConfig;
 
-    private static int RampartPowerAmount => 15;
-    private static int SmashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 14);
+    private const int RampartPowerAmount = 15;
+    private const int StrengthPowerAmount = 2;
+
     private static int BlockAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 25, 20);
-    private static int StrengthPowerAmount => 2;
+    private static int SmashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 16, 14);
 
     private static async Task ShieldUpMove(LivingShield instance)
     {

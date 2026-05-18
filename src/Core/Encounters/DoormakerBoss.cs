@@ -3,6 +3,7 @@ namespace RebalancedSpire.Core.Encounters;
 using Afflictions;
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
+using Configs;
 using Godot;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;

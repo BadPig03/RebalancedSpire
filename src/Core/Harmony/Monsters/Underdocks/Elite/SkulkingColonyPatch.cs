@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Underdocks.Elite;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,11 +19,13 @@ public static class SkulkingColonyPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SkulkingColonyConfig;
 
-    private static int SmashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 9);
-    private static int ZoomDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 17, 16);
-    private static int ZoomBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 13, 10);
+    private const int HardenedShellPowerAmount = 20;
+    private const int PiercingStabsCount = 2;
+
     private static int PiercingStabsDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
-    private static int PiercingStabsCount => 2;
+    private static int SmashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 9);
+    private static int ZoomBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 13, 10);
+    private static int ZoomDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 17, 16);
 
     private static async Task SmashMove(SkulkingColony instance)
     {
@@ -47,7 +50,7 @@ public static class SkulkingColonyPatch
 
     private static async Task AfterAddedToRoom(SkulkingColony instance)
     {
-        await PowerCmd.Apply<HardenedShellPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 20, instance.Creature, null);
+        await PowerCmd.Apply<HardenedShellPower>(new ThrowingPlayerChoiceContext(), instance.Creature, HardenedShellPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(SkulkingColony), "AfterAddedToRoom")]

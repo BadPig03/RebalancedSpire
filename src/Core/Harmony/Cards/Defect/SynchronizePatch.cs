@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Defect;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -20,7 +21,7 @@ public static class SynchronizePatch
     private static async Task OnPlay(Synchronize instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<SynchronizePlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["SynchronizePlusPower"].IntValue, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<SynchronizePlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["SynchronizePlusPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
     [HarmonyPatch(typeof(Synchronize), "CanonicalKeywords", MethodType.Getter)]

@@ -1,5 +1,5 @@
 ﻿{
-  "REBALANCED_SPIRE_FIRST_TIME_FTUE_DESCRIPTION": "It looks like this is your first time playing with the 'Rebalanced Spire' mod enabled!\n\nSince Slay the Spire 2 is still in Early Access, its balance is not yet optimal. Therefore, the goal of the 'Rebalanced Spire' mod is to adjust certain aspects of the game, such as enemies, events, relics, and cards, to improve the player experience!\n\nNaturally, this will lower the overall game difficulty to some extent. For this reason, you can freely enable or disable any of the adjustment options in the mod configuration on the main menu, allowing you to craft your own unique gameplay experience!",
-  "REBALANCED_SPIRE_FIRST_TIME_FTUE_DISCLAIMER": "Note: Our goal is to fix problems, not remove the fun.",
-  "REBALANCED_SPIRE_FIRST_TIME_FTUE_TITLE": "A Friendly Reminder"
+  "REBALANCED_SPIRE_FIRST_TIME_FTUE_DESCRIPTION": "Welcome to the Rebalanced Spire mod!\n\nSince Slay the Spire 2 is still in Early Access, its balance is not yet in its best state. Because of this, we have made a number of adjustments to certain monsters, events, relics, cards, and other in-game content in the hope of improving the overall gameplay experience.\n\nWith the default settings, the game will be somewhat easier. To better accommodate different player preferences, we have also prepared a wide range of mod configuration options so players can customize the experience themselves!",
+  "REBALANCED_SPIRE_FIRST_TIME_FTUE_DISCLAIMER": "Note:\nOur goal is to fix problems, not remove the fun.",
+  "REBALANCED_SPIRE_FIRST_TIME_FTUE_TITLE": "A Friendly Note"
 }

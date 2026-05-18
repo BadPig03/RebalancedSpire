@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Defect;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -20,7 +21,7 @@ public static class ConsumingShadowPatch
     private static async Task OnPlay(ConsumingShadow instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<ConsumingShadowPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["ConsumingShadowPlusPower"].IntValue, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<ConsumingShadowPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["ConsumingShadowPlusPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
     [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]

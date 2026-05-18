@@ -1,5 +1,6 @@
 ﻿{
   "REBALANCEDSPIRE-AFTERLIFE.description": "在回合开始时，[gold]奥斯提[/gold]回复{Heal:diff()}点生命。\n如果[gold]奥斯提[/gold]未存活，则改为[gold]召唤[/gold]{Summon:diff()}。",
+  "REBALANCEDSPIRE-BOLAS.description": "造成{Damage:diff()}点伤害。\n在你的下个回合开始时，将此卡返回你的[gold]手牌[/gold]，并增加其攻击伤害{IncrementAmount:diff()}点。",
   "REBALANCEDSPIRE-CONSUMING_SHADOW.description": "你生成的[gold]黑暗[/gold]充能球会额外增加最后[gold]激发[/gold]的[gold]黑暗[/gold]充能球的一半伤害。",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.description": "给予{PoisonPower:diff()}层[gold]中毒[/gold]。\n当这名敌人死亡时，对所有敌人造成等于其最大生命值的伤害。",
   "REBALANCEDSPIRE-CORPSE_EXPLOSION.title": "尸爆术",

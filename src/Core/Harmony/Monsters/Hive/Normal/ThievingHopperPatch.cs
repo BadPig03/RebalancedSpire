@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -24,9 +25,10 @@ public static class ThievingHopperPatch
 {
 	private static readonly bool Disabled = !RebalancedSpireConfig.ThievingHopperConfig;
 
-	private static int WeakPowerAmount => 2;
-	private static int SwipePowerAmount => 1;
-	private static int EscapeArtistPowerAmount => 6;
+	private const int WeakPowerAmount = 2;
+	private const int SwipePowerAmount = 1;
+	private const int EscapeArtistPowerAmount = 6;
+
 	private static int AttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 13);
 
 	private static async Task AfterAddedToRoom(ThievingHopper instance)

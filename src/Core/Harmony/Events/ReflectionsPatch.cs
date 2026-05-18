@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Events;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -18,7 +19,7 @@ public static class ReflectionsPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ReflectionsConfig;
 
-    private static int CloneCardsLimit => 13;
+    private const int CloneCardsLimit = 13;
 
     private static async Task TouchAMirror(Reflections instance)
     {

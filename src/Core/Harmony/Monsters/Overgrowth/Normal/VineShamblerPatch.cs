@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,9 +21,10 @@ public static class VineShamblerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.VineShamblerConfig;
 
+    private const int SwipeCount = 2;
+    private const int TangledPowerAmount = 1;
+
     private static int BlockAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 9, 8);
-    private static int TangledPowerAmount => 1;
-    private static int SwipeCount => 2;
 
     private static async Task GraspingVinesMove(VineShambler instance, IReadOnlyList<Creature> targets)
     {

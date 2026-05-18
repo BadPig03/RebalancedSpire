@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,10 +14,13 @@ public class MysteriousKnightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheLanternKeyConfig;
 
+    private const int StrengthPowerAmount = 3;
+    private const int PlatingPowerAmount = 3;
+
     private static async Task AfterAddedToRoom(MysteriousKnight instance)
     {
-        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 3, instance.Creature, null);
-        await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 3, instance.Creature, null);
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
+        await PowerCmd.Apply<PlatingPower>(new ThrowingPlayerChoiceContext(), instance.Creature, PlatingPowerAmount, instance.Creature, null);
     }
 
     [HarmonyPatch(typeof(MysteriousKnight), "AfterAddedToRoom")]

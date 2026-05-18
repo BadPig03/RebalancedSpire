@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,7 +17,7 @@ public static class EyeWithTeethPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.FogmogConfig;
 
-    private static int DazedAmount => 2;
+    private const int DazedAmount = 2;
 
     private static async Task DistractMove(EyeWithTeeth instance, IReadOnlyList<Creature> targets)
     {

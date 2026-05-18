@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Powers;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -14,7 +15,7 @@ public static class IllusionPowerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheObscuraConfig;
 
-    private static int StrengthPowerAmount => -5;
+    private const int StrengthPowerAmount = -5;
 
     private static async Task ReviveMove(IllusionPower instance)
     {

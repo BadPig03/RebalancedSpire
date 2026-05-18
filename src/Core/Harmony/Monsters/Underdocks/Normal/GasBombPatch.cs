@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Underdocks.Normal;
 
+using Configs;
 using Core.Powers;
 using Godot;
 using HarmonyLib;

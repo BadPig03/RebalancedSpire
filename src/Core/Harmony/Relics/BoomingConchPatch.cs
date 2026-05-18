@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
 using BaseLib.Utils;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
@@ -9,6 +10,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Rooms;
@@ -18,8 +20,6 @@ using MegaCrit.Sts2.Core.Rooms;
 public static class BoomingConchPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.BoomingConchConfig;
-
-    private static int MaxCards => 2;
     private static readonly SpireField<RelicModel, int> CardsPlayed = new(() => 0);
 
     [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
@@ -38,6 +38,28 @@ public static class BoomingConchPatch
         }
 
         __result = new LocString("relics", "REBALANCEDSPIRE-BOOMING_CONCH.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(RelicModel __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not BoomingConch)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new CardsVar(2)
+        }.AsReadOnly();
         return false;
     }
 
@@ -96,7 +118,7 @@ public static class BoomingConchPatch
 
         var cardsPlayed = CardsPlayed.Get(boomingConch) + 1;
         CardsPlayed.Set(boomingConch, cardsPlayed);
-        boomingConch.Status = cardsPlayed >= MaxCards ? RelicStatus.Disabled : RelicStatus.Active;
+        boomingConch.Status = cardsPlayed >= boomingConch.DynamicVars.Cards.IntValue ? RelicStatus.Disabled : RelicStatus.Active;
         boomingConch.InvokeDisplayAmountChanged();
         __result = Task.CompletedTask;
         return false;

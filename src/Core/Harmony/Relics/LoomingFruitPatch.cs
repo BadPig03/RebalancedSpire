@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
 using System.Reflection;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,7 +17,6 @@ using MegaCrit.Sts2.Core.Rewards;
 public static class LoomingFruitPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.LoomingFruitConfig;
-
     private static readonly List<RelicModel> _fruitRelics =
     [
         ModelDb.Relic<Strawberry>(),

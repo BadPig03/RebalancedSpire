@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Defect;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -24,7 +25,7 @@ public static class LeapPatch
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
         await CreatureCmd.GainBlock(instance.Owner.Creature, instance.DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<LeapPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["FocusPower"].IntValue, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<LeapPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["FocusPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
     [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]

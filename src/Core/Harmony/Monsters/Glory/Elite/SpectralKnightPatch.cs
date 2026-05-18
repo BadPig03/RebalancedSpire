@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Elite;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -19,13 +20,13 @@ public static class SpectralKnightPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KnightsConfig;
 
+    private const int HexPowerAmount = 1;
+    private const int IntangiblePowerAmount = 1;
+    private const int SoulFlameCount = 3;
 
     private static int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 12, 10);
-    private static int IntangiblePowerAmount => 1;
-    private static int HexPowerAmount => 1;
-    private static int SoulSlashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 8);
     private static int SoulFlameDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 3, 2);
-    private static int SoulFlameCount => 3;
+    private static int SoulSlashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 8);
 
     private static async Task HexMove(SpectralKnight instance, IReadOnlyList<Creature> targets)
     {

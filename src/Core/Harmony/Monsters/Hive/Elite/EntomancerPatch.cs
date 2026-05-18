@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Elite;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -15,6 +16,11 @@ public static class EntomancerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.EntomancerConfig;
 
+    private const int PersonalHivePowerAmountNone = 1;
+    private const int PersonalHivePowerAmount = 2;
+    private const int StrengthPowerAmount = 1;
+    private const int StrengthPowerAmountLots = 2;
+
     private static async Task SpitMove(Entomancer instance)
     {
         SfxCmd.Play(SrcHelpers.GetSfx(instance, "CastSfx")!);
@@ -22,16 +28,16 @@ public static class EntomancerPatch
         var personalHivePower = instance.Creature.Powers.OfType<PersonalHivePower>().FirstOrDefault();
         if (personalHivePower == null)
         {
-            await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
+            await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, PersonalHivePowerAmountNone, instance.Creature, null);
         }
         else if (personalHivePower.Amount < 3)
         {
-            await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
-            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
+            await PowerCmd.Apply<PersonalHivePower>(new ThrowingPlayerChoiceContext(), instance.Creature, PersonalHivePowerAmount, instance.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
         }
         else
         {
-            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 2, instance.Creature, null);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmountLots, instance.Creature, null);
         }
     }
 

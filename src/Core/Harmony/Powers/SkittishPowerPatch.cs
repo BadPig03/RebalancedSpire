@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Powers;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,7 +17,7 @@ public static class SkittishPowerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.PhantasmalGardenerConfig;
 
-    private static int StrengthPowerAmount => -1;
+    private const int StrengthPowerAmount = -1;
 
     private static async Task AfterAttack(SkittishPower instance)
     {

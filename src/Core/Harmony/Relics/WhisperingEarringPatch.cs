@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
 using BaseLib.Utils;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
@@ -21,9 +22,6 @@ using MegaCrit.Sts2.Core.Rooms;
 public static class WhisperingEarringPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.WhisperingEarringConfig;
-
-    private static int maxCardsToPlay => 13;
-
     private static readonly SpireField<WhisperingEarring, int> CurrentEnergyUsed = new(() => 0);
 
     private static async Task VakuuAutoPlay(WhisperingEarring instance, PlayerChoiceContext choiceContext, Player player)
@@ -33,7 +31,7 @@ public static class WhisperingEarringPatch
         using (CardSelectCmd.PushSelector(new VakuuCardSelector()))
         {
             int cardsPlayed;
-            for (cardsPlayed = 0; cardsPlayed < maxCardsToPlay; cardsPlayed++)
+            for (cardsPlayed = 0; cardsPlayed < instance.DynamicVars["TotalEnergy"].IntValue; cardsPlayed++)
             {
                 var combatState = player.Creature.CombatState;
                 if (combatState == null || CombatManager.Instance.IsOverOrEnding || CombatManager.Instance.IsPlayerReadyToEndTurn(player))
@@ -51,7 +49,7 @@ public static class WhisperingEarringPatch
                 await card.SpendResources();
                 await CardCmd.AutoPlay(choiceContext, card, target, skipXCapture: true);
             }
-            flag = cardsPlayed >= maxCardsToPlay;
+            flag = cardsPlayed >= instance.DynamicVars["TotalEnergy"].IntValue;
             if (cardsPlayed == 0)
             {
                 return;
@@ -162,7 +160,7 @@ public static class WhisperingEarringPatch
         current += amount;
         CurrentEnergyUsed.Set(whisperingEarring, current);
         whisperingEarring.InvokeDisplayAmountChanged();
-        if (current < maxCardsToPlay)
+        if (current < whisperingEarring.DynamicVars["TotalEnergy"].IntValue)
         {
             return true;
         }
@@ -207,7 +205,7 @@ public static class WhisperingEarringPatch
 
         __result = new List<DynamicVar>
         {
-            new EnergyVar("TotalEnergy", maxCardsToPlay),
+            new EnergyVar("TotalEnergy", 13),
             new EnergyVar(1)
         }.AsReadOnly();
         return false;

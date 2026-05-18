@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -19,7 +20,7 @@ public static class MytePatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.MyteConfig;
 
-    private static int ToxicAmount => 1;
+    private const int ToxicAmount = 1;
 
     private static async Task ToxicMove(Myte instance, IReadOnlyList<Creature> targets)
     {

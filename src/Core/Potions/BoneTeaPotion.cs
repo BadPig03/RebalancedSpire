@@ -22,7 +22,7 @@ public sealed class BoneTeaPotion : CustomPotionModel
 
     protected override Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
-        if (target != null)
+        if (target == null)
         {
             return Task.CompletedTask;
         }

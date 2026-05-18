@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
 using BaseLib.Utils;
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -19,7 +20,6 @@ public static class LavaRockPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.LavaRockConfig;
 
-    private static int EnemiesDefeatedRequired => 4;
     private static readonly SavedSpireField<LavaRock, int> EnemiesDefeated = new(() => 0, "REBALANCEDSPIRE-LAVA_ROCK");
     private static readonly SavedSpireField<LavaRock, int> TriggeredAmount = new(() => 0, "REBALANCEDSPIRE-LAVA_ROCK_TRIGGERED");
 
@@ -54,7 +54,7 @@ public static class LavaRockPatch
 
         __result = new List<DynamicVar>
         {
-            new("Enemies", EnemiesDefeatedRequired)
+            new("Enemies", 4)
         }.AsReadOnly();
         return false;
     }
@@ -145,7 +145,7 @@ public static class LavaRockPatch
         }
 
         var triggeredAmount = TriggeredAmount.Get(__instance);
-        if (player != __instance.Owner || room is not CombatRoom || EnemiesDefeated.Get(__instance) < EnemiesDefeatedRequired + triggeredAmount)
+        if (player != __instance.Owner || room is not CombatRoom || EnemiesDefeated.Get(__instance) < __instance.DynamicVars["Enemies"].IntValue + triggeredAmount)
         {
             return true;
         }

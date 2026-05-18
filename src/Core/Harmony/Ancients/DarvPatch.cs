@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Ancients;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Events;

@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Underdocks.Normal;
 
+using Configs;
 using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -21,6 +22,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 public static class PunchConstructPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.PunchOffConfig;
+
+    private const int ArtifactPowerAmount = 1;
 
     private static bool ShouldFight(PunchConstruct instance)
     {
@@ -64,7 +67,7 @@ public static class PunchConstructPatch
 
     private static async Task AfterAddedToRoom(PunchConstruct instance)
     {
-        await PowerCmd.Apply<ArtifactPower>(new ThrowingPlayerChoiceContext(), instance.Creature, 1, instance.Creature, null);
+        await PowerCmd.Apply<ArtifactPower>(new ThrowingPlayerChoiceContext(), instance.Creature, ArtifactPowerAmount, instance.Creature, null);
         if (instance.StartingHpReduction <= 0)
         {
             return;

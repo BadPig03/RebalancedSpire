@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Normal;
 
+using Configs;
 using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -23,9 +24,10 @@ public class FabricatorPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.FabricatorConfig;
 
-    private static int FabricatorPowerAmount => 1;
-    private static int MinionPowerAmount => 1;
-    public static float SpawnBotDamageRatio => 1 / 15f;
+    internal const float SpawnBotDamageRatio = 1 / 15f;
+    private const int FabricatorPowerAmount = 1;
+    private const int MinionPowerAmount = 1;
+
     private static int DisintegrateDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 18);
 
     private static async Task SpawnBot(Fabricator instance, IEnumerable<MonsterModel> options)

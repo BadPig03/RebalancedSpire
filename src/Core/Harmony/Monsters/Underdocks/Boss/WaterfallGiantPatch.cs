@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Underdocks.Boss;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -16,8 +17,8 @@ public static class WaterfallGiantPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.WaterfallGiantConfig;
 
-    private static int WeakPowerAmount => 1;
-    private static int SteamEruptionPowerAmount => 9;
+    private const int WeakPowerAmount = 1;
+    private const int SteamEruptionPowerAmount = 9;
 
     private static async Task StompMove(WaterfallGiant instance, IReadOnlyList<Creature> targets)
     {

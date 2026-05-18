@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Glory.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,7 +18,7 @@ public static class TheForgottenPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.TheLostAndForgottenConfig;
 
-    private static int MiasmaBlockAmount => 8;
+    private const int MiasmaBlockAmount = 8;
 
     private static async Task MiasmaMove(TheForgotten instance, IReadOnlyList<Creature> targets)
     {

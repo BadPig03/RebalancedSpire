@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Boss;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -19,8 +20,9 @@ public static class KnowledgeDemonPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.KnowledgeDemonConfig;
 
-    private static int HealAmount => 20;
     private static readonly int[] _disintegrationDamageValues = [4, 6, 8];
+
+    private const int HealAmount = 20;
 
     private static async Task PonderMove(KnowledgeDemon instance)
     {

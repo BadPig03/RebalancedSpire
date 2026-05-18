@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Hive.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,7 +14,7 @@ public static class ExoskeletonPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.ExoskeletonConfig;
 
-    private static int HardToKillPowerAmount => 13;
+    private const int HardToKillPowerAmount = 13;
 
     private static async Task AfterAddedToRoom(Exoskeleton instance)
     {

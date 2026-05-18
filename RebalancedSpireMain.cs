@@ -9,6 +9,7 @@ namespace RebalancedSpire;
 
 using System.Reflection;
 using Core;
+using Core.Configs;
 using Core.Harmony;
 using Godot.Bridge;
 
@@ -17,7 +18,7 @@ using Godot.Bridge;
 public partial class RebalancedSpireMain : Node
 {
     private const string ModId = "RebalancedSpire";
-    public const string Version = "v0.1.4-beta";
+    public const string Version = "v0.1.5-beta";
 
     private static Harmony? _mainHarmony;
 

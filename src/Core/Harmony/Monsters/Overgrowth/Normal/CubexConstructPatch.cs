@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Normal;
 
+using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,7 +14,7 @@ public static class CubexConstructPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.CubexConstructConfig;
 
-    private static int ExpelCount => 2;
+    private const int ExpelCount = 2;
 
     private static async Task RepeaterBlastMove(CubexConstruct instance)
     {
