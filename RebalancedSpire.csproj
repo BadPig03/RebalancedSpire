@@ -102,10 +102,6 @@
         <EmbeddedResource Remove="materials/**" />
         <Compile Remove="animations\**" />
         <EmbeddedResource Remove="animations\**" />
-        <Compile Remove="images\packed\card_portraits\token\**" />
-        <EmbeddedResource Remove="images\packed\card_portraits\token\**" />
-        <Compile Remove="images\packed\intents\**" />
-        <EmbeddedResource Remove="images\packed\intents\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -184,6 +180,8 @@
       <Content Include="images\powers\rebalancedspire-sic_em_plus_power.png.import" />
       <Content Include="images\relics\rebalancedspire-neows_lament.png" />
       <Content Include="images\relics\rebalancedspire-neows_lament.png.import" />
+      <Content Include="images\ui\main_menu\mod_changelogs_button.png" />
+      <Content Include="images\ui\main_menu\mod_changelogs_button.png.import" />
       <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss.png" />
       <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss.png.import" />
       <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss_outline.png" />
@@ -197,8 +195,12 @@
       <Content Include="scenes\creature_visuals\doormaker_boss.tscn" />
       <Content Include="scenes\encounters\doormaker_boss.tscn" />
       <Content Include="scenes\events\background_scenes\vakuu_fixed_art.tscn" />
+      <Content Include="scenes\screens\main_menu\mod_changelogs_button.tscn" />
+      <Content Include="scenes\screens\mod_changelogs_screen.tscn" />
       <Content Include="shaders\afflictions\devoured.gdshader" />
       <Content Include="shaders\afflictions\devoured.gdshader.uid" />
+      <Content Include="shaders\hsv.gdshader" />
+      <Content Include="shaders\hsv.gdshader.uid" />
       <Content Include="src\Core\Afflictions\Devoured.cs.uid" />
       <Content Include="src\Core\Afflictions\ToItsOriginOwner.cs.uid" />
       <Content Include="src\Core\Afflictions\Weighted.cs.uid" />
@@ -342,6 +344,8 @@
       <Content Include="src\Core\Harmony\Monsters\Underdocks\Normal\ToadpolePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Underdocks\Normal\TwoTailedRatPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Nodes\NDebugInfoLabelManagerPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Nodes\NMainMenuPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Nodes\NPatchNotesScreenPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Nodes\NRelicInventoryHolderPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Powers\HardToKillPowerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Powers\IllusionPowerPatch.cs.uid" />
@@ -376,6 +380,8 @@
       <Content Include="src\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerLeft.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerRight.cs.uid" />
+      <Content Include="src\Core\Nodes\Screens\MainMenu\NModChangelogsButton.cs.uid" />
+      <Content Include="src\Core\Nodes\Screens\MainMenu\NModChangelogsScreen.cs.uid" />
       <Content Include="src\Core\Potions\BoneTeaPotion.cs.uid" />
       <Content Include="src\Core\Potions\EmberTeaPotion.cs.uid" />
       <Content Include="src\Core\Potions\TeaOfDiscourtesyPotion.cs.uid" />
@@ -405,6 +411,13 @@
       <Content Include="src\Core\Relics\NeowsLament.cs.uid" />
       <Content Include="src\Core\Singletons\FiddleSingleton.cs.uid" />
       <Content Include="src\Core\SrcHelpers.cs.uid" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_05.md" />
+      <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_09.md" />
+      <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_13.md" />
+      <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_17.md" />
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">

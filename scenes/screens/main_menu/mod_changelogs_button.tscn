@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://ssxscba4xdhp"]
+
+[ext_resource type="Script" path="res://src/Core/Nodes/Screens/MainMenu/NModChangelogsButton.cs" id="1_k37bl"]
+[ext_resource type="Shader" path="res://shaders/hsv.gdshader" id="2_4jmr4"]
+[ext_resource type="Texture2D" path="res://images/ui/main_menu/mod_changelogs_button.png" id="3_phhqt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kiqd5"]
+shader = ExtResource("2_4jmr4")
+shader_parameter/h = 1.0
+shader_parameter/s = 1.0
+shader_parameter/v = 1.0
+
+[node name="ModChangelogsButton" type="Control"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -70.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = 70.0
+grow_horizontal = 0
+pivot_offset = Vector2(32, 32)
+script = ExtResource("1_k37bl")
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="Icon" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_kiqd5")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(32, 32)
+mouse_filter = 2
+texture = ExtResource("3_phhqt")
+expand_mode = 1
+stretch_mode = 5

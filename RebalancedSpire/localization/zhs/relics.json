@@ -8,7 +8,7 @@
   "REBALANCEDSPIRE-DUSTY_TOME.description": "拾起时，从[blue]{Cards}[/blue]张升级过的[gold]先古牌[/gold]中选择[blue]1[/blue]张加入你的[gold]牌组[/gold]。",
   "REBALANCEDSPIRE-DUSTY_TOME.eventDescription": "从[blue]{Cards}[/blue]张[gold]升级过的先古牌[/gold]中选择[blue]1[/blue]张加入你的[gold]牌组[/gold]。",
   "REBALANCEDSPIRE-FIDDLE.description": "在每个回合开始时，额外抽[blue]{Cards}[/blue]张牌。你的最大手牌数量减少[blue]{Cards}[/blue]张。",
-  "REBALANCEDSPIRE-FISHING_ROD.description": "每[blue]{Combats}[/blue]场普通战斗，随机[gold]升级[/gold]你[gold]牌组[/gold]中的一张牌。",
+  "REBALANCEDSPIRE-FISHING_ROD.description": "每[blue]{Combats}[/blue]场战斗，随机[gold]升级[/gold]你[gold]牌组[/gold]中的一张牌。",
   "REBALANCEDSPIRE-LARGE_CAPSULE.description": "拾起时，获得[blue]{Relics}[/blue]件随机[gold]罕见[/gold]遗物和[blue]{Relics}[/blue]件随机[gold]稀有[/gold]遗物，并将[blue]{Relics}[/blue]张[red]{Writhe}[/red]加入你的[gold]牌组[/gold]。",
   "REBALANCEDSPIRE-LARGE_CAPSULE.eventDescription": "获得[blue]{Relics}[/blue]件随机[gold]罕见[/gold]遗物和[blue]{Relics}[/blue]件随机[gold]稀有[/gold]遗物，并将[blue]{Relics}[/blue]张[red]{Writhe}[/red]加入你的[gold]牌组[/gold]。",
   "REBALANCEDSPIRE-LAVA_ROCK.description": "每击败[blue]{Enemies}[/blue]次敌人时，额外掉落一组[gold]罕见[/gold]卡牌奖励，同时需要击败敌人的总次数增加[blue]1[/blue]。",

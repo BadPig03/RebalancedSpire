@@ -8,7 +8,7 @@
   "REBALANCEDSPIRE-DUSTY_TOME.description": "Upon pickup, choose [blue]1[/blue] of [blue]{Cards}[/blue] upgraded [gold]Ancient Cards[/gold] to add to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-DUSTY_TOME.eventDescription": "Upon pickup, choose [blue]1[/blue] of [blue]{Cards}[/blue] upgraded [gold]Ancient Cards[/gold] to add to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-FIDDLE.description": "At the start of each turn, draw [blue]{Cards}[/blue] additional {Cards:plural:card|cards}. Your max [gold]Hand Size[/gold] is reduced by [blue]{Cards}[/blue].",
-  "REBALANCEDSPIRE-FISHING_ROD.description": "Every [blue]{Combats}[/blue] normal {Combats:plural:combat|combats}, [gold]Upgrade[/gold] a random card in your [gold]Deck[/gold].",
+  "REBALANCEDSPIRE-FISHING_ROD.description": "Every [blue]{Combats}[/blue] {Combats:plural:combat|combats}, [gold]Upgrade[/gold] a random card in your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-LARGE_CAPSULE.description": "Upon pickup, obtain [blue]{Relics}[/blue] random [gold]Uncommon[/gold] Relic and [blue]{Relics}[/blue] random [gold]Rare[/gold] Relic. Add a [gold]{Writhe}[/gold] to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-LARGE_CAPSULE.eventDescription": "Obtain [blue]{Relics}[/blue] random [gold]Uncommon[/gold] Relic and [blue]{Relics}[/blue] random [gold]Rare[/gold] Relic. Add a [gold]{Writhe}[/gold] to your [gold]Deck[/gold].",
   "REBALANCEDSPIRE-LAVA_ROCK.description": "For every [blue]{Enemies}[/blue] combats, enemies drop an additional [gold]Uncommon[/gold] card reward. And the total number of combats needed to victory increases by [blue]1[/blue].",

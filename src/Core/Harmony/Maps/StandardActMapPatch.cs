@@ -13,6 +13,7 @@ public static class StandardActMapPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.MapGenerationConfig;
     private static readonly PropertyInfo GridProperty = AccessTools.Property(typeof(StandardActMap), "Grid");
+    private static readonly FieldInfo NumOfUnknownsBackingField = AccessTools.Field(typeof(MapPointTypeCounts), "<NumOfUnknowns>k__BackingField");
     private static readonly int[][] _startColumnBuckets =
     [
         [0, 1],
@@ -27,24 +28,38 @@ public static class StandardActMapPatch
     private const int MaxConsecutiveMonsters = 4;
     private const int MaxMonsterBreakerPasses = 64;
 
-    public static void BreakLongMonsterRuns(ActMap map, Func<MapPoint, bool> isValidUnknownPlacement)
+    public static int BreakLongMonsterRuns(ActMap map, Func<MapPoint, bool> isValidUnknownPlacement)
     {
+        var addedUnknowns = 0;
         for (var pass = 0; pass < MaxMonsterBreakerPasses; pass++)
         {
             var run = FindFirstMonsterRunLongerThan(map.StartingMapPoint, [], MaxConsecutiveMonsters);
             if (run == null)
             {
-                return;
+                return addedUnknowns;
             }
 
             var breaker = ChooseUnknownBreaker(run, isValidUnknownPlacement);
             if (breaker == null)
             {
-                return;
+                return addedUnknowns;
             }
 
             breaker.PointType = MapPointType.Unknown;
+            addedUnknowns++;
         }
+
+        return addedUnknowns;
+    }
+
+    public static void AddUnknownsToPointTypeCounts(MapPointTypeCounts pointTypeCounts, int amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        NumOfUnknownsBackingField.SetValue(pointTypeCounts, pointTypeCounts.NumOfUnknowns + amount);
     }
 
     private static List<int> GenerateBucketedStartColumns(StandardActMap instance)
@@ -54,6 +69,16 @@ public static class StandardActMapPatch
         var columns = new List<int>(StandardActMap._iterations);
         columns.AddRange(bucketPlan.Select(bucketIndex => _startColumnBuckets[bucketIndex]).Select(bucket => bucket[instance._rng.NextInt(0, bucket.Length)]));
         return columns;
+    }
+
+    private static void AddUnknownsToPointTypeCounts(StandardActMap map, int amount)
+    {
+        if (amount <= 0)
+        {
+            return;
+        }
+
+        AddUnknownsToPointTypeCounts(map._pointTypeCounts, amount);
     }
 
     private static List<MapPoint>? FindFirstMonsterRunLongerThan(MapPoint point, List<MapPoint> currentRun, int maxConsecutiveMonsters)
@@ -69,6 +94,7 @@ public static class StandardActMapPatch
         {
             nextRun = [];
         }
+
         return nextRun.Count > maxConsecutiveMonsters ? nextRun : point.Children.OrderBy(child => child.coord.row).ThenBy(child => child.coord.col).Select(child => FindFirstMonsterRunLongerThan(child, nextRun, maxConsecutiveMonsters)).OfType<List<MapPoint>>().FirstOrDefault();
     }
 
@@ -125,6 +151,7 @@ public static class StandardActMapPatch
             return;
         }
 
-        BreakLongMonsterRuns(__instance, point => __instance.IsValidPointType(MapPointType.Unknown, point));
+        var addedUnknowns = BreakLongMonsterRuns(__instance, point => __instance.IsValidPointType(MapPointType.Unknown, point));
+        AddUnknownsToPointTypeCounts(__instance, addedUnknowns);
     }
 }

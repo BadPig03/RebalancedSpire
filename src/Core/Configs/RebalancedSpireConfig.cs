@@ -128,6 +128,8 @@ internal class RebalancedSpireConfig : SimpleModConfig
     [ConfigGroup(Neow)]
     public static bool BoomingConchConfig { get; set; } = true;
     [ConfigGroup(Neow)]
+    public static bool FishingRodConfig { get; set; } = true;
+    [ConfigGroup(Neow)]
     public static bool LargeCapsuleConfig { get; set; } = true;
     [ConfigGroup(Neow)]
     public static bool LavaRockConfig { get; set; } = true;
