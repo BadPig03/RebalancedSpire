@@ -18,6 +18,12 @@ public sealed class FabricatorPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-fabricator_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-fabricator_power.png";
+
+    public override bool ShouldPlayVfx => false;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new HpLossVar(0)
@@ -77,7 +83,7 @@ public sealed class FabricatorPower : CustomPowerModel
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target == null || target != Owner || dealer is not { IsPlayer: true })
+        if (target == null || target != Owner || !props.IsPoweredAttack())
         {
             return 1;
         }

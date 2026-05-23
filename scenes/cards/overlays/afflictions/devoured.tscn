@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b64fuke3615ax"]
 
-[ext_resource type="Shader" uid="uid://djypgl6l1rsg" path="res://RebalancedSpire/shaders/afflictions/devoured.gdshader" id="1_shader"]
+[ext_resource type="Shader" path="res://shaders/vfx/ui/card/afflictions/devoured.gdshader" id="1_shader"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_devoured"]
 shader = ExtResource("1_shader")

@@ -12,7 +12,7 @@ using Powers;
 
 public sealed class ToItsOriginOwner : AfflictionModel
 {
-    private static int ToItsOriginOwnerPowerAmount => 1;
+    private const int ToItsOriginOwnerPowerAmount = 1;
 
     public override bool HasExtraCardText => true;
 

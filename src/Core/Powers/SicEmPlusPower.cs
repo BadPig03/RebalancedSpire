@@ -16,6 +16,10 @@ public sealed class SicEmPlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-sic_em_plus_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-sic_em_plus_power.png";
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.Static(StaticHoverTip.SummonStatic)

@@ -4,6 +4,7 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
@@ -56,10 +57,10 @@ public static class SealOfGoldPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(AbstractModel), "AfterTurnEnd")]
+    [HarmonyPatch(typeof(AbstractModel), "AfterSideTurnEnd")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterTurnEnd(AbstractModel __instance, PlayerChoiceContext choiceContext, CombatSide side, ref Task __result)
+    private static bool PreFix_AfterSideTurnEnd(AbstractModel __instance, PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants, ref Task __result)
     {
         if (Disabled)
         {

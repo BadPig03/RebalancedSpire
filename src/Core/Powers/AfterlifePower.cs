@@ -16,6 +16,10 @@ public sealed class AfterlifePower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-afterlife_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-afterlife_power.png";
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new HealVar(Amount),

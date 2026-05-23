@@ -16,6 +16,12 @@ public sealed class ToItsOriginOwnerPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-to_its_origin_owner_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-to_its_origin_owner_power.png";
+
+    public override bool ShouldPlayVfx => false;
+
     protected override bool IsVisibleInternal => false;
 
     public override Task AfterApplied(Creature? applier, CardModel? cardSource)

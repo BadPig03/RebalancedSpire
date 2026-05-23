@@ -20,11 +20,15 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 public sealed class LongDistancePower : CustomPowerModel
 {
-    private static int MaxSandpitAmount => 11;
+    private const int MaxAmount = 11;
 
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
+
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-long_distance_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-long_distance_power.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
@@ -44,7 +48,7 @@ public sealed class LongDistancePower : CustomPowerModel
         return 1;
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Enemy)
         {
@@ -62,7 +66,7 @@ public sealed class LongDistancePower : CustomPowerModel
         }
 
         await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), this, 1, Applier, null);
-        if (Amount < MaxSandpitAmount)
+        if (Amount < MaxAmount)
         {
             return;
         }

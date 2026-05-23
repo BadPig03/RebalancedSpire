@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -18,6 +19,15 @@ public sealed class SynchronizePlusPower : CustomPowerModel
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-synchronize_plus_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-synchronize_plus_power.png";
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    [
+        HoverTipFactory.FromPower<FocusPower>()
+    ]).AsReadOnly();
 
     protected override object InitInternalData()
     {

@@ -1,0 +1,5 @@
+﻿{
+  "REBALANCEDSPIRE-POISONOUS.description": "这张牌额外造成[blue]{Damage}[/blue]点伤害，并给予[blue]{PoisonPower}[/blue]层[gold]中毒[/gold]。",
+  "REBALANCEDSPIRE-POISONOUS.extraCardText": "给予{TargetType:choose(AllEnemies):所有敌人|}[blue]{PoisonPower}[/blue]层[gold]中毒[/gold]。",
+  "REBALANCEDSPIRE-POISONOUS.title": "剧毒"
+}

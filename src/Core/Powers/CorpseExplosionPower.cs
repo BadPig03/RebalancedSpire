@@ -14,6 +14,10 @@ public sealed class CorpseExplosionPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-corpse_explosion_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-corpse_explosion_power.png";
+
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (wasRemovalPrevented || creature != Owner)

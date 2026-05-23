@@ -24,7 +24,7 @@ public static class PunchOffEventEncounterPatch
         }
 
         PunchConstruct punchConstruct = (PunchConstruct) ModelDb.Monster<PunchConstruct>().ToMutable();
-        punchConstruct.StartsWithStrongPunch = true;
+        punchConstruct.StartsWithFastPunch = true;
         punchConstruct.StartingHpReduction = 1;
         PunchConstruct punchConstruct2 = (PunchConstruct) ModelDb.Monster<PunchConstruct>().ToMutable();
         punchConstruct2.StartingHpReduction = 2;

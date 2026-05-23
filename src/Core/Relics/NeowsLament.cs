@@ -2,6 +2,7 @@
 
 using BaseLib.Abstracts;
 using BaseLib.Utils;
+using Configs;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -12,9 +13,11 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
 
 [Pool(typeof(SharedRelicPool))]
-public sealed class NeowsLament : CustomRelicModel
+public sealed class NeowsLament() : CustomRelicModel(!Disabled)
 {
-    private static int MaxUsableCount => 3;
+    private static readonly bool Disabled = !RebalancedSpireConfig.NeowsLamentConfig;
+
+    private const int MaxCount = 3;
 
     private int _timesUsed;
 
@@ -26,7 +29,7 @@ public sealed class NeowsLament : CustomRelicModel
         {
             AssertMutable();
             _timesUsed = value;
-            DynamicVars["Rooms"].BaseValue = MaxUsableCount - _timesUsed;
+            DynamicVars["Rooms"].BaseValue = MaxCount - _timesUsed;
             InvokeDisplayAmountChanged();
             CheckIfUsedUp();
         }
@@ -34,15 +37,15 @@ public sealed class NeowsLament : CustomRelicModel
 
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    public override bool IsUsedUp => TimesUsed >= MaxUsableCount;
+    public override bool IsUsedUp => TimesUsed >= MaxCount;
 
     public override bool ShowCounter => !IsUsedUp;
 
-    public override int DisplayAmount => MaxUsableCount - TimesUsed;
+    public override int DisplayAmount => MaxCount - TimesUsed;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
-        new DynamicVar("Rooms", MaxUsableCount)
+        new DynamicVar("Rooms", MaxCount)
     ]).AsReadOnly();
 
     public override async Task BeforeCombatStart()

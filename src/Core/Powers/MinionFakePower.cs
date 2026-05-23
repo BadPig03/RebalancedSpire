@@ -16,6 +16,10 @@ public sealed class MinionFakePower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-minion_fake_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-minion_fake_power.png";
+
     public override bool ShouldPlayVfx => false;
 
     public override bool ShouldPowerBeRemovedAfterOwnerDeath() => false;

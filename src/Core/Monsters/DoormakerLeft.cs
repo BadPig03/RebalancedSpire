@@ -16,14 +16,15 @@ using Powers;
 
 public sealed class DoormakerLeft : DoormakerBase
 {
-    private static int OmnidynamicsPowerAmount => 1;
-    private static int ScrutinyDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
-    private static int ScrutinyCount => 4;
+    private const int OmnidynamicsPowerAmount = 1;
+    private const int ScrutinyCount = 4;
+    private const int ScrutinyPlusPowerAmount = 1;
+
     private static int BeamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 18, 16);
+    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
+    private static int ScrutinyDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);
     private static int VulnerablePowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
     private static int WeakPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
-    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
-    private const int ScrutinyPlusPowerAmount = 1;
 
     public override bool ShouldShowInCompendium => false;
 
@@ -62,6 +63,16 @@ public sealed class DoormakerLeft : DoormakerBase
 
     private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
     {
+        if (OtherDoormaker.Creature is { IsAlive: true, IsStunned: true })
+        {
+            MoveState moveState = new MoveState("READY_TO_SUMMON", _ => Task.CompletedTask, new SummonIntent())
+            {
+                FollowUpState = DramaticOpenState
+            };
+            SetMoveImmediate(moveState);
+            return;
+        }
+
         if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();

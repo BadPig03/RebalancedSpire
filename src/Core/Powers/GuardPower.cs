@@ -16,6 +16,10 @@ public sealed class GuardPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-guard_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-guard_power.png";
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
         new StringVar("MasterName", ModelDb.Monster<KinPriest>().Title.GetFormattedText())
@@ -46,7 +50,7 @@ public sealed class GuardPower : CustomPowerModel
         return true;
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == CombatSide.Enemy)
         {

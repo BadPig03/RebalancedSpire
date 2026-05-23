@@ -27,6 +27,10 @@ public sealed class ConsumingShadowPlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-consuming_shadow_plus_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-consuming_shadow_plus_power.png";
+
     public override int DisplayAmount => DynamicVars["Percent"].IntValue;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>

@@ -185,7 +185,6 @@ public static class KinFollowerPatch
                 return;
             }
 
-            room.AddExtraReward(player, new PotionReward(player));
             room.AddExtraReward(player, new RelicReward(RelicRarity.Common, player));
         }
         var creatureNode = NCombatRoom.Instance?.GetCreatureNode(instance.Creature);

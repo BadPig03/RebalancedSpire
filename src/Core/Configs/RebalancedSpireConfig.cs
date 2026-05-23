@@ -134,6 +134,8 @@ internal class RebalancedSpireConfig : SimpleModConfig
     [ConfigGroup(Neow)]
     public static bool LavaRockConfig { get; set; } = true;
     [ConfigGroup(Neow)]
+    public static bool NeowsLamentConfig { get; set; } = true;
+    [ConfigGroup(Neow)]
     public static bool NeowsTalismanConfig { get; set; } = true;
     [ConfigGroup(Neow)]
     public static bool NutritiousOysterConfig { get; set; } = true;
@@ -360,11 +362,13 @@ internal class RebalancedSpireConfig : SimpleModConfig
     [ConfigGroup(Silent)]
     public static bool FlickFlackConfig { get; set; } = true;
     [ConfigGroup(Silent)]
-    public static bool FollowThroughConfig { get; set; } = true;
+    public static bool ScareConfig { get; set; } = true;
     [ConfigGroup(Silent)]
     public static bool UntouchableConfig { get; set; } = true;
     [ConfigGroup(Silent)]
     public static bool WellLaidPlansConfig { get; set; } = true;
+    [ConfigHideInUI]
+    public static bool SilentBalancedConfig { get; set; } = false;
 
     [ConfigSection(Regent)]
     [ConfigButton("ToggleRegentConfigButton")]
@@ -397,6 +401,8 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool AfterlifeConfig { get; set; } = true;
     [ConfigGroup(Necrobinder)]
     public static bool BansheesCryConfig { get; set; } = true;
+    [ConfigGroup(Necrobinder)]
+    public static bool DebilitateConfig { get; set; } = true;
     [ConfigGroup(Necrobinder)]
     public static bool DefyConfig { get; set; } = true;
     [ConfigGroup(Necrobinder)]
@@ -637,6 +643,8 @@ internal class RebalancedSpireConfig : SimpleModConfig
     public static bool QueenConfig { get; set; } = true;
     [ConfigGroup(Glory)]
     public static bool DoormakerConfig { get; set; } = true;
+    [ConfigGroup(Glory)]
+    public static bool AeonglassConfig { get; set; } = true;
 
     private void InvertAll(string name)
     {

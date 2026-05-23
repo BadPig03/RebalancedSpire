@@ -83,7 +83,7 @@ public static class RightHandHandPatch
 
         __result = new List<DynamicVar>
         {
-            new OstyDamageVar(11, ValueProp.Move),
+            new OstyDamageVar(9, ValueProp.Move),
             new EnergyVar("Required", 2),
             new EnergyVar("Energy", 1)
         }.AsReadOnly();
@@ -114,7 +114,7 @@ public static class RightHandHandPatch
             return true;
         }
 
-        __instance.DynamicVars.OstyDamage.UpgradeValueBy(3);
+        __instance.DynamicVars.OstyDamage.UpgradeValueBy(4);
         return false;
     }
 }

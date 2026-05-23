@@ -2,11 +2,11 @@
   "id": "RebalancedSpire",
   "name": "RebalancedSpire",
   "author": "ty, Oroboro",
-  "description": "Supports public beta v0.105.1.",
-  "version": "v0.1.6-beta",
-  "min_game_version": "0.105.1",
+  "description": "Supports public beta v0.106.1.",
+  "version": "v0.1.7-beta",
+  "min_game_version": "0.106.1",
   "has_pck": true,
   "has_dll": true,
-  "dependencies": [ { "id" : "BaseLib", "min_version": "v3.1.3" }],
+  "dependencies": [ { "id" : "BaseLib", "min_version": "v3.1.5" }],
   "affects_gameplay": true
 }

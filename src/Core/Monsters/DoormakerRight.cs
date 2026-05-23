@@ -14,13 +14,14 @@ using Powers;
 
 public sealed class DoormakerRight : DoormakerBase
 {
-    private static int HungerDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 24, 22);
-    private static int ChargeUpDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 9);
-    private static int ChargeUpCount => 2;
-    private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
-    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
-    private static int FullAttackCount => 4;
+    private const int ChargeUpCount = 2;
+    private const int FullAttackCount = 4;
     private const int HungerPowerAmount = 1;
+
+    private static int ChargeUpDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 9);
+    private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
+    private static int HungerDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 24, 22);
+    private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
 
     public override async Task AfterAddedToRoom()
     {
@@ -46,6 +47,16 @@ public sealed class DoormakerRight : DoormakerBase
 
     private async Task DramaticOpenMove(IReadOnlyList<Creature> targets)
     {
+        if (OtherDoormaker.Creature is { IsAlive: true, IsStunned: true })
+        {
+            MoveState moveState = new MoveState("READY_TO_SUMMON", _ => Task.CompletedTask, new SummonIntent())
+            {
+                FollowUpState = DramaticOpenState
+            };
+            SetMoveImmediate(moveState);
+            return;
+        }
+
         if (Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers)
         {
             await Open();

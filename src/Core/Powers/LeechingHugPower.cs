@@ -18,6 +18,10 @@ public sealed class LeechingHugPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-leeching_hug_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-leeching_hug_power.png";
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<StrengthPower>()
@@ -38,6 +42,7 @@ public sealed class LeechingHugPower : CustomPowerModel
             return;
         }
 
+        Flash();
         foreach (var creature in CombatState.Enemies.Where(c => c.Monster is SlimedBerserker))
         {
             await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Strength.BaseValue, cardPlay.Card.Owner.Creature, null);

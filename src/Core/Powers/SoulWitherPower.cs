@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 public sealed class SoulWitherPower : CustomPowerModel
 {
-    private static int MaxHitCount => 12;
+    private const int MaxHitCount = 12;
 
     private int _hitCount;
 
@@ -31,7 +31,13 @@ public sealed class SoulWitherPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-soul_wither_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-soul_wither_power.png";
+
     public override int DisplayAmount => HitCount;
+
+    public override bool ShouldPlayVfx => false;
 
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 

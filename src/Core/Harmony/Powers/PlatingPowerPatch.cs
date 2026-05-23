@@ -6,6 +6,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 
@@ -15,11 +16,11 @@ public static class PlatingPowerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.EternalArmorConfig;
 
-    private static async Task AfterTurnEnd(PlatingPower instance, PlayerChoiceContext choiceContext)
+    private static async Task AfterSideTurnStart(PlatingPower instance)
     {
         if (instance.Owner.Side == CombatSide.Enemy)
         {
-            await PowerCmd.ModifyAmount(choiceContext, instance, -instance.DynamicVars["Decrement"].BaseValue, null, null);
+            await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), instance, -instance.DynamicVars["Decrement"].BaseValue, null, null);
         }
         else if (!instance.Owner.HasPower<EternalArmorPower>())
         {
@@ -27,22 +28,22 @@ public static class PlatingPowerPatch
         }
     }
 
-    [HarmonyPatch(typeof(PlatingPower), "AfterTurnEnd")]
+    [HarmonyPatch(typeof(PlatingPower), "AfterSideTurnStart")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterTurnEnd(PlatingPower __instance, PlayerChoiceContext choiceContext, CombatSide side, ref Task __result)
+    private static bool PreFix_AfterSideTurnStart(PlatingPower __instance, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (side != CombatSide.Enemy)
+        if (!participants.Contains(__instance.Owner) || __instance.Owner.Player?.PlayerCombatState?.TurnNumber == 1 || (__instance.Owner.Side == CombatSide.Enemy && combatState.RoundNumber == 1))
         {
             return true;
         }
 
-        __result = AfterTurnEnd(__instance, choiceContext);
+        __result = AfterSideTurnStart(__instance);
         return false;
     }
 }

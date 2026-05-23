@@ -24,20 +24,6 @@ public static class SynchronizePatch
         await PowerCmd.Apply<SynchronizePlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["SynchronizePlusPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
-    [HarmonyPatch(typeof(Synchronize), "CanonicalKeywords", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalKeywords(Synchronize __instance, ref IEnumerable<CardKeyword> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<CardKeyword>().AsReadOnly();
-        return false;
-    }
-
     [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -73,6 +59,20 @@ public static class SynchronizePatch
         }
 
         __result = CardType.Power;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Synchronize), "CanonicalKeywords", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalKeywords(Synchronize __instance, ref IEnumerable<CardKeyword> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<CardKeyword>().AsReadOnly();
         return false;
     }
 

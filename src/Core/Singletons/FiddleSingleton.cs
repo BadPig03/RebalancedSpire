@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models.Relics;
 
 [UsedImplicitly]
-public sealed class FiddleSingleton() : CustomSingletonModel(true, false), IMaxHandSizeModifier
+public sealed class FiddleSingleton() : CustomSingletonModel(HookType.Combat), IMaxHandSizeModifier
 {
     public int ModifyMaxHandSize(Player player, int currentMaxHandSize)
     {

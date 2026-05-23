@@ -17,7 +17,7 @@ using Godot.Bridge;
 public partial class RebalancedSpireMain : Node
 {
     private const string ModId = "RebalancedSpire";
-    public const string Version = "v0.1.6-beta";
+    public const string Version = "v0.1.7-beta";
 
     private static Harmony? _mainHarmony;
 

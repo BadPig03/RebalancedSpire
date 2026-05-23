@@ -15,6 +15,10 @@ public sealed class HungerPower : CustomPowerModel
 
 	public override PowerStackType StackType => PowerStackType.Single;
 
+	public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-hunger_power.png";
+
+	public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-hunger_power.png";
+
 	protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromAffliction<Devoured>(Amount);
 
 	public override async Task AfterApplied(Creature? applier, CardModel? cardSource)

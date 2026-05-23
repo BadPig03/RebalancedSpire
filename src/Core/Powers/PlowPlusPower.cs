@@ -13,11 +13,17 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 public sealed class PlowPlusPower : CustomPowerModel
 {
-    private static int PlowedPowerAmount => 1;
+    private const int PlowedPowerAmount = 1;
 
     public override PowerType Type => PowerType.Debuff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-plow_plus_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-plow_plus_power.png";
+
+    public override bool ShouldPlayVfx => false;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [

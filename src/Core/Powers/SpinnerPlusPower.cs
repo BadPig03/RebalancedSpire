@@ -14,6 +14,10 @@ public sealed class SpinnerPlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-spinner_plus_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-spinner_plus_power.png";
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.Static(StaticHoverTip.Channeling),

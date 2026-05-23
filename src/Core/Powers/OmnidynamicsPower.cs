@@ -12,11 +12,7 @@ using Monsters;
 
 public sealed class OmnidynamicsPower : CustomPowerModel
 {
-    public override PowerType Type => PowerType.Buff;
-
-    public override PowerStackType StackType => PowerStackType.Single;
-
-    public enum Direction
+    private enum Direction
     {
         Right,
         Left
@@ -24,15 +20,25 @@ public sealed class OmnidynamicsPower : CustomPowerModel
 
     private Direction _facing;
 
-    public Direction Facing
+    private Direction Facing
     {
         get => _facing;
-        private set
+        set
         {
             AssertMutable();
             _facing = value;
         }
     }
+
+    public override PowerType Type => PowerType.Buff;
+
+    public override PowerStackType StackType => PowerStackType.Single;
+
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-omnidynamics_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-omnidynamics_power.png";
+
+    public override bool ShouldPlayVfx => false;
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {

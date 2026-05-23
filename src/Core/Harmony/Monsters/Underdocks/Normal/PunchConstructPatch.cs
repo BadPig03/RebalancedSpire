@@ -5,6 +5,7 @@ using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -24,6 +25,7 @@ public static class PunchConstructPatch
     private static readonly bool Disabled = !RebalancedSpireConfig.PunchOffConfig;
 
     private const int ArtifactPowerAmount = 1;
+    private const int WeakPowerAmount = 1;
 
     private static bool ShouldFight(PunchConstruct instance)
     {
@@ -34,7 +36,7 @@ public static class PunchConstructPatch
     {
         var body = NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.Body;
         var vfxContainer = NCombatRoom.Instance?.CombatVfxContainer;
-        if (instance.StartsWithStrongPunch && body != null)
+        if (instance.StartsWithFastPunch && body != null)
         {
             body.Scale *= new Vector2(-1f, 1f);
         }
@@ -53,7 +55,7 @@ public static class PunchConstructPatch
             vfxContainer?.AddChildSafely(NHitSparkVfx.Create(enemy, requireInteractable: false));
             await CreatureCmd.TriggerAnim(enemy, "Hit", 0f);
         }
-        if (!instance.StartsWithStrongPunch)
+        if (!instance.StartsWithFastPunch)
         {
             return;
         }
@@ -63,6 +65,12 @@ public static class PunchConstructPatch
         {
             body.Scale *= new Vector2(-1f, 1f);
         }
+    }
+
+    private static async Task FastPunchMove(PunchConstruct instance, IReadOnlyList<Creature> targets)
+    {
+        await DamageCmd.Attack(instance.FastPunchDamage).WithHitCount(instance.FastPunchRepeat).FromMonster(instance).WithAttackerAnim("DoubleAttack", 0.2f).OnlyPlayAnimOnce().WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/punch_construct/punch_construct_attack_double").WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
     private static async Task AfterAddedToRoom(PunchConstruct instance)
@@ -105,7 +113,7 @@ public static class PunchConstructPatch
         MoveState moveState = new MoveState("READY_MOVE", __instance.ReadyMove, new DefendIntent());
         MoveState moveState2 = new MoveState("STRONG_PUNCH_MOVE", __instance.StrongPunchMove, new SingleAttackIntent(__instance.StrongPunchDamage));
         MoveState moveState3 = new MoveState("FIGHT_WITH_ME", _ => FightWithMe(__instance), new UnknownIntent());
-        MoveState moveState4 = new MoveState("FAST_PUNCH_MOVE", __instance.FastPunchMove, new MultiAttackIntent(__instance.FastPunchDamage, __instance.FastPunchRepeat), new DebuffIntent());
+        MoveState moveState4 = new MoveState("FAST_PUNCH_MOVE", t => FastPunchMove(__instance, t), new MultiAttackIntent(__instance.FastPunchDamage, __instance.FastPunchRepeat), new DebuffIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("FIGHT_WITH_EACH_OTHER");
         branchState.AddState(moveState3, () => ShouldFight(__instance));
         branchState.AddState(moveState4, () => !ShouldFight(__instance));
@@ -118,7 +126,7 @@ public static class PunchConstructPatch
         list.Add(moveState3);
         list.Add(moveState4);
         list.Add(branchState);
-        __result = new MonsterMoveStateMachine(list, __instance.StartsWithStrongPunch ? moveState2 : moveState);
+        __result = new MonsterMoveStateMachine(list, __instance.StartsWithFastPunch ? moveState4 : moveState);
         return false;
     }
 }

@@ -1,0 +1,5 @@
+﻿{
+  "REBALANCEDSPIRE-POISONOUS.description": "This card deals [blue]{Damage}[/blue] additional damage and applies [blue]{PoisonPower}[/blue] [gold]Poison[/gold].",
+  "REBALANCEDSPIRE-POISONOUS.extraCardText": "Apply [blue]{PoisonPower}[/blue] [gold]Poison[/gold]{TargetType:choose(AllEnemies): to ALL enemies|}.",
+  "REBALANCEDSPIRE-POISONOUS.title": "Poisonous"
+}

@@ -11,11 +11,15 @@ using MegaCrit.Sts2.Core.Models;
 
 public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
 {
-    private static int ReduceHandSize => 4;
+    private const int ReduceHandSize = 4;
 
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
+
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-scrutiny_plus_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-scrutiny_plus_power.png";
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {

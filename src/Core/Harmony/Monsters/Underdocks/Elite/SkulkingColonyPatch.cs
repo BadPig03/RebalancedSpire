@@ -19,7 +19,6 @@ public static class SkulkingColonyPatch
 {
     private static readonly bool Disabled = !RebalancedSpireConfig.SkulkingColonyConfig;
 
-    private const int HardenedShellPowerAmount = 20;
     private const int PiercingStabsCount = 2;
 
     private static int PiercingStabsDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
@@ -46,25 +45,6 @@ public static class SkulkingColonyPatch
     private static async Task PiercingStabsMove(SkulkingColony instance)
     {
         await DamageCmd.Attack(PiercingStabsDamage).WithHitCount(PiercingStabsCount).OnlyPlayAnimOnce().FromMonster(instance).WithAttackerAnim("AttackDouble", 0.45f).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).WithHitFx("vfx/vfx_attack_slash").Execute(null);
-    }
-
-    private static async Task AfterAddedToRoom(SkulkingColony instance)
-    {
-        await PowerCmd.Apply<HardenedShellPower>(new ThrowingPlayerChoiceContext(), instance.Creature, HardenedShellPowerAmount, instance.Creature, null);
-    }
-
-    [HarmonyPatch(typeof(SkulkingColony), "AfterAddedToRoom")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool Prefix_AfterAddedToRoom(SkulkingColony __instance, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = AfterAddedToRoom(__instance);
-        return false;
     }
 
     [HarmonyPatch(typeof(SkulkingColony), "GenerateMoveStateMachine")]

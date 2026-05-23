@@ -14,11 +14,15 @@ using MegaCrit.Sts2.Core.TestSupport;
 
 public sealed class InfestedPlusPower : CustomPowerModel
 {
-    private static int MaxAmount => 4;
+    private const int MaxAmount = 4;
 
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-infested_plus_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-infested_plus_power.png";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [

@@ -16,7 +16,13 @@ public sealed class PingPongPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
+    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-ping_pong_power.png";
+
+    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-ping_pong_power.png";
+
     public override bool ShouldPowerBeRemovedAfterOwnerDeath() => false;
+
+    public override bool ShouldPlayVfx => false;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
