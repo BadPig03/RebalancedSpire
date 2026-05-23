@@ -17,17 +17,33 @@ public sealed class TaintedPlusPower : CustomPowerModel
 {
     private static readonly SpireField<Tainted, bool> AppliedExhaust = new(() => false);
 
+    private int _cardsPlayed = 3;
+
+    private int CardsPlayed
+    {
+        get => _cardsPlayed;
+        set
+        {
+            AssertMutable();
+            _cardsPlayed = value;
+            InvokeDisplayAmountChanged();
+        }
+    }
+
     public override PowerType Type => PowerType.Debuff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-tainted_plus_power.png";
 
     public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-tainted_plus_power.png";
 
+    public override int DisplayAmount => CardsPlayed;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
-        new StringVar("AfflictionTitle", ModelDb.Affliction<Tainted>().Title.GetFormattedText())
+        new StringVar("AfflictionTitle", ModelDb.Affliction<Tainted>().Title.GetFormattedText()),
+        new CardsVar(3)
     ]).AsReadOnly();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromAffliction<Tainted>();
@@ -35,11 +51,13 @@ public sealed class TaintedPlusPower : CustomPowerModel
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var player = cardPlay.Card.Owner;
-        if (player != Owner.Player || cardPlay.Card.Type is not (CardType.Attack or CardType.Skill))
+        if (player != Owner.Player || cardPlay.Card.Type is not (CardType.Attack or CardType.Skill) || CardsPlayed <= 0)
         {
             return;
         }
 
+        CardsPlayed--;
+        Flash();
         var cards = PileType.Hand.GetPile(player).Cards.Where(c => !c.Keywords.Contains(CardKeyword.Unplayable) && c.Type is CardType.Attack or CardType.Skill && c.Affliction == null);
         var selected = player.RunState.Rng.CombatCardSelection.NextItem(cards);
         if (selected == null)
@@ -47,7 +65,6 @@ public sealed class TaintedPlusPower : CustomPowerModel
             return;
         }
 
-        Flash();
         var tainted = await CardCmd.Afflict<Tainted>(selected, 1);
         if (tainted == null || selected.Keywords.Contains(CardKeyword.Exhaust))
         {
@@ -83,6 +100,8 @@ public sealed class TaintedPlusPower : CustomPowerModel
             return Task.CompletedTask;
         }
 
+        Flash();
+        CardsPlayed = DynamicVars.Cards.IntValue;
         foreach (var card in allCards)
         {
             var tainted = (Tainted?) card.Affliction;

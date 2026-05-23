@@ -87,7 +87,7 @@
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.5" PrivateAssets="All" />
+        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.4" PrivateAssets="All" />
         <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
         <AdditionalFiles Include="RebalancedSpire/localization/**/*.json"/>
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />

@@ -24,7 +24,7 @@ public static class NeowPatch
         SrcHelpers.RelicOption<LeafyPoultice>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<NeowsBones>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<PrecariousShears>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
-        SrcHelpers.RelicOption<ScrollBoxes>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        SrcHelpers.RelicOption<SilkenTress>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<SilverCrucible>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description")
     ];
 
@@ -47,7 +47,7 @@ public static class NeowPatch
             SrcHelpers.RelicOption<PhialHolster>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
             SrcHelpers.RelicOption<Pomander>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
             SrcHelpers.RelicOption<PreciseScissors>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
-            SrcHelpers.RelicOption<SilkenTress>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
+            SrcHelpers.RelicOption<ScrollBoxes>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
             SrcHelpers.RelicOption<SmallCapsule>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
             SrcHelpers.RelicOption<StoneHumidifier>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
             SrcHelpers.RelicOption<WingedBoots>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description")
