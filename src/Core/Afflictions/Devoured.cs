@@ -2,9 +2,11 @@ namespace RebalancedSpire.Core.Afflictions;
 
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class Devoured : AfflictionModel
+[RegisterAffliction]
+public sealed class Devoured : ModAfflictionTemplate
 {
 	private bool _appliedExhaust;
 
@@ -18,7 +20,7 @@ public sealed class Devoured : AfflictionModel
 		}
 	}
 
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+	protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
 	[
 		HoverTipFactory.FromKeyword(CardKeyword.Exhaust)
 	]).AsReadOnly();

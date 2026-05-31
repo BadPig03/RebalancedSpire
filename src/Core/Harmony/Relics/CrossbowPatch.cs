@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
@@ -15,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class CrossbowPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.CrossbowConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Crossbow;
 
     private static async Task AfterSideTurnStart(Crossbow instance)
     {
@@ -35,6 +36,25 @@ public static class CrossbowPatch
         await CardPileCmd.AddGeneratedCardsToCombat(chosenCards, PileType.Hand, instance.Owner);
     }
 
+    [HarmonyPatch(typeof(Crossbow), "AfterSideTurnStart")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterSideTurnStart(Crossbow __instance, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (side != __instance.Owner.Creature.Side || !participants.Contains(__instance.Owner.Creature))
+        {
+            return true;
+        }
+
+        __result = AfterSideTurnStart(__instance);
+        return false;
+    }
+
     [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -50,26 +70,7 @@ public static class CrossbowPatch
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-CROSSBOW.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Crossbow), "AfterSideTurnStart")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterSideTurnStart(Crossbow __instance, CombatSide side, ICombatState combatState, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (side != __instance.Owner.Creature.Side)
-        {
-            return true;
-        }
-
-        __result = AfterSideTurnStart(__instance);
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_CROSSBOW.description");
         return false;
     }
 }

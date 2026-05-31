@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class SwordOfJadePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SunkenStatueConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SunkenStatue;
 
     private static async Task AfterRoomEntered(SwordOfJade instance)
     {
@@ -25,22 +25,22 @@ public static class SwordOfJadePatch
         await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.Dexterity.BaseValue, null, null);
     }
 
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(SwordOfJade), "AfterRoomEntered")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    private static bool PreFix_AfterRoomEntered(SwordOfJade __instance, AbstractRoom room, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not SwordOfJade)
+        if (room is not CombatRoom)
         {
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-SWORD_OF_JADE.description");
+        __result = AfterRoomEntered(__instance);
         return false;
     }
 
@@ -62,6 +62,25 @@ public static class SwordOfJadePatch
         return false;
     }
 
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not SwordOfJade)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_SWORD_OF_JADE.description");
+        return false;
+    }
+
     [HarmonyPatch(typeof(SwordOfJade), "ExtraHoverTips", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -77,25 +96,6 @@ public static class SwordOfJadePatch
             HoverTipFactory.FromPower<StrengthPower>(),
             HoverTipFactory.FromPower<DexterityPower>()
         }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(SwordOfJade), "AfterRoomEntered")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterRoomEntered(SwordOfJade __instance, AbstractRoom room, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (room is not CombatRoom)
-        {
-            return true;
-        }
-
-        __result = AfterRoomEntered(__instance);
         return false;
     }
 }

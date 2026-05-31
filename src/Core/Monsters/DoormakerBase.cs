@@ -1,7 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Monsters;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils.NodeFactories;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Commands;
@@ -14,12 +12,12 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
-using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
 using Powers;
+using STS2RitsuLib.Scaffolding.Content;
 
-public abstract class DoormakerBase : CustomMonsterModel
+public abstract class DoormakerBase : ModMonsterTemplate
 {
     public const string ClosedState = "monsters/beta/door_maker_placeholder_1.png";
     public const string EyeState = "monsters/beta/door_maker_placeholder_2.png";
@@ -93,12 +91,9 @@ public abstract class DoormakerBase : CustomMonsterModel
         }
     }
 
-    public override string CustomVisualPath => "scenes/creature_visuals/doormaker_boss.tscn";
-
-    public override NCreatureVisuals CreateCustomVisuals()
-    {
-        return NodeFactory<NCreatureVisuals>.CreateFromScene("res://scenes/creature_visuals/doormaker_boss.tscn");
-    }
+    public override MonsterAssetProfile AssetProfile => new(
+        VisualsScenePath: "res://scenes/creature_visuals/rebalanced_spire_monster_doormaker_boss.tscn"
+    );
 
     public override async Task AfterAddedToRoom()
     {

@@ -9,7 +9,20 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public class GuardbotPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FabricatorConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fabricator;
+
+    [HarmonyPatch(typeof(Guardbot), "MaxInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMaxInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = 36;
+    }
 
     [HarmonyPatch(typeof(Guardbot), "MinInitialHp", MethodType.Getter)]
     [HarmonyPostfix]
@@ -24,16 +37,4 @@ public class GuardbotPatch
         __result = 36;
     }
 
-    [HarmonyPatch(typeof(Guardbot), "MaxInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMaxInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = 36;
-    }
 }

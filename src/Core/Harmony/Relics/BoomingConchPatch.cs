@@ -1,11 +1,11 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
-using BaseLib.Utils;
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -14,13 +14,120 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Rooms;
+using STS2RitsuLib.Utils;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
+// ReSharper disable DuplicatedSequentialIfBodies
 public static class BoomingConchPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.BoomingConchConfig;
-    private static readonly SpireField<RelicModel, int> CardsPlayed = new(() => 0);
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BoomingConch;
+    private static readonly AttachedState<RelicModel, int> CardsPlayed = new(() => 0);
+
+    [HarmonyPatch(typeof(AbstractModel), "AfterCardPlayed")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterCardPlayed(AbstractModel __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || !CombatManager.Instance.IsInProgress || cardPlay.Card.Owner != boomingConch.Owner)
+        {
+            return true;
+        }
+
+        var cardsPlayed = CardsPlayed[boomingConch] + 1;
+        CardsPlayed.Set(boomingConch, cardsPlayed);
+        boomingConch.Flash();
+        boomingConch.Status = cardsPlayed >= boomingConch.DynamicVars.Cards.IntValue ? RelicStatus.Disabled : RelicStatus.Active;
+        boomingConch.InvokeDisplayAmountChanged();
+        __result = Task.CompletedTask;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(AbstractModel), "AfterCombatEnd")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterCombatEnd(AbstractModel __instance, CombatRoom room, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not BoomingConch boomingConch)
+        {
+            return true;
+        }
+
+        CardsPlayed.Set(boomingConch, 0);
+        boomingConch.Status = RelicStatus.Normal;
+        boomingConch.InvokeDisplayAmountChanged();
+        __result = Task.CompletedTask;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(BoomingConch), "AfterSideTurnStart")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterSideTurnStart(BoomingConch __instance, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = Task.CompletedTask;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(AbstractModel), "BeforeCombatStart")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_BeforeCombatStart(AbstractModel __instance, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not BoomingConch boomingConch)
+        {
+            return true;
+        }
+
+        var currentRoom = boomingConch.Owner.Creature.CombatState?.RunState.CurrentRoom;
+        if (currentRoom is not CombatRoom || currentRoom.RoomType != RoomType.Elite)
+        {
+            return true;
+        }
+
+        CardsPlayed.Set(boomingConch, 0);
+        boomingConch.Status = RelicStatus.Active;
+        boomingConch.InvokeDisplayAmountChanged();
+        __result = Task.CompletedTask;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(BoomingConch), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(BoomingConch __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new CardsVar(3)
+        }.AsReadOnly();
+        return false;
+    }
 
     [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
@@ -37,29 +144,45 @@ public static class BoomingConchPatch
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-BOOMING_CONCH.description");
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_BOOMING_CONCH.description");
         return false;
     }
 
-    [HarmonyPatch(typeof(RelicModel), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPatch(typeof(RelicModel), "DisplayAmount", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(RelicModel __instance, ref IEnumerable<DynamicVar> __result)
+    private static bool PreFix_DisplayAmount(RelicModel __instance, ref int __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not BoomingConch)
+        if (__instance is not BoomingConch boomingConch)
         {
             return true;
         }
 
-        __result = new List<DynamicVar>
+        __result = CardsPlayed[boomingConch];
+        return false;
+    }
+
+    [HarmonyPatch(typeof(BoomingConch), "ModifyHandDraw")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_ModifyHandDraw(BoomingConch __instance, Player player, decimal count, ref decimal __result)
+    {
+        if (Disabled)
         {
-            new CardsVar(2)
-        }.AsReadOnly();
+            return true;
+        }
+
+        if (__instance.Owner != player)
+        {
+            return true;
+        }
+
+        __result = count;
         return false;
     }
 
@@ -79,48 +202,6 @@ public static class BoomingConchPatch
         }
 
         __result = boomingConch.Status == RelicStatus.Active;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "DisplayAmount", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_DisplayAmount(RelicModel __instance, ref int __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not BoomingConch boomingConch)
-        {
-            return true;
-        }
-
-        __result = CardsPlayed.Get(boomingConch);
-        return false;
-    }
-
-    [HarmonyPatch(typeof(AbstractModel), "AfterCardPlayed")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterCardPlayed(AbstractModel __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not BoomingConch { Status: RelicStatus.Active } boomingConch || !CombatManager.Instance.IsInProgress || cardPlay.Card.Owner != boomingConch.Owner)
-        {
-            return true;
-        }
-
-        var cardsPlayed = CardsPlayed.Get(boomingConch) + 1;
-        CardsPlayed.Set(boomingConch, cardsPlayed);
-        boomingConch.Status = cardsPlayed >= boomingConch.DynamicVars.Cards.IntValue ? RelicStatus.Disabled : RelicStatus.Active;
-        boomingConch.InvokeDisplayAmountChanged();
-        __result = Task.CompletedTask;
         return false;
     }
 
@@ -151,6 +232,7 @@ public static class BoomingConchPatch
     [UsedImplicitly]
     private static bool PreFix_TryModifyStarCost(AbstractModel __instance, CardModel card, decimal originalCost, out decimal modifiedCost, ref bool __result)
     {
+
         if (Disabled)
         {
             modifiedCost = originalCost;
@@ -165,90 +247,6 @@ public static class BoomingConchPatch
 
         modifiedCost = 0;
         __result = true;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(AbstractModel), "BeforeCombatStart")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_BeforeCombatStart(AbstractModel __instance, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not BoomingConch boomingConch)
-        {
-            return true;
-        }
-
-        var currentRoom = boomingConch.Owner.Creature.CombatState?.RunState.CurrentRoom;
-        if (currentRoom is not CombatRoom || currentRoom.RoomType != RoomType.Elite)
-        {
-            return true;
-        }
-
-        boomingConch.Status = RelicStatus.Active;
-        CardsPlayed.Set(boomingConch, 0);
-        boomingConch.InvokeDisplayAmountChanged();
-        __result = Task.CompletedTask;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(AbstractModel), "AfterCombatEnd")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterCombatEnd(AbstractModel __instance, CombatRoom room, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not BoomingConch boomingConch)
-        {
-            return true;
-        }
-
-        boomingConch.Status = RelicStatus.Normal;
-        CardsPlayed.Set(boomingConch, 0);
-        boomingConch.InvokeDisplayAmountChanged();
-        __result = Task.CompletedTask;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(BoomingConch), "AfterSideTurnStart")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterSideTurnStart(BoomingConch __instance, CombatSide side, ICombatState combatState, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = Task.CompletedTask;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(BoomingConch), "ModifyHandDraw")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    // ReSharper disable BuiltInTypeReferenceStyle
-    private static bool PreFix_ModifyHandDraw(BoomingConch __instance, Player player, Decimal count, ref Decimal __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance.Owner != player)
-        {
-            return true;
-        }
-
-        __result = count;
         return false;
     }
 }

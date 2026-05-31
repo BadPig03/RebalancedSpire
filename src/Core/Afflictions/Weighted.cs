@@ -1,5 +1,7 @@
 namespace RebalancedSpire.Core.Afflictions;
 
-using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class Weighted : AfflictionModel;
+[RegisterAffliction]
+public sealed class Weighted : ModAfflictionTemplate;

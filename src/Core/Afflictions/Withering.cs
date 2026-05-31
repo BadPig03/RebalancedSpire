@@ -7,8 +7,11 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class Withering : AfflictionModel
+[RegisterAffliction]
+public sealed class Withering : ModAfflictionTemplate
 {
     private const int SandsOfTimePowerAmount = 1;
     private const int InitUpgradeLevel = 2;

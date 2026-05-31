@@ -1,54 +1,42 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using Afflictions;
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class WitheringPresencePlusPower : CustomPowerModel
+[RegisterPower]
+public sealed class WitheringPresencePlusPower : ModPowerTemplate
 {
     private const int MaxEnergy = 12;
-    private const int WithersCount = 4;
     private const int WithersInitUpgradeLevel = 2;
-
-    private bool _added;
-
-    public bool Added
-    {
-        get => _added;
-        set
-        {
-            AssertMutable();
-            _added = value;
-        }
-    }
 
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-scrutiny_plus_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-scrutiny_plus_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_scrutiny_plus_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_scrutiny_plus_power.png"
+    );
 
     public override int DisplayAmount => DynamicVars.Energy.IntValue;
 
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
-[
+    [
         new EnergyVar(12),
         new DynamicVar("PerLevel", 3)
     ]).AsReadOnly();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips
     {
         get
         {
@@ -58,44 +46,9 @@ public sealed class WitheringPresencePlusPower : CustomPowerModel
             {
                 wither.FakeUpgrade();
             }
+
             list.Add(HoverTipFactory.FromCard(wither));
             return list;
-        }
-    }
-
-    public override async Task AfterCardGeneratedForCombat(CardModel card, Player? creator)
-    {
-        if (!Added)
-        {
-            return;
-        }
-
-        foreach (var player in CombatState.Players)
-        {
-            var count = player.PlayerCombatState?.AllCards.Count(c => c is Wither);
-            if (count is null or >= WithersCount)
-            {
-                continue;
-            }
-
-            var statusCards = new List<CardPileAddResult>();
-            for (var i = 0; i < WithersCount - count; i++)
-            {
-                var wither = CombatState.CreateCard<Wither>(player);
-                for (var j = 0; j < WithersInitUpgradeLevel; j++)
-                {
-                    wither.FakeUpgrade();
-                }
-                await CardCmd.Afflict<Withering>(wither, 1);
-                statusCards.Add(await CardPileCmd.AddGeneratedCardToCombat(wither, PileType.Discard, null, CardPilePosition.Random));
-            }
-            if (!LocalContext.IsMe(player))
-            {
-                continue;
-            }
-
-            CardCmd.PreviewCardPileAdd(statusCards);
-            await Cmd.Wait(1.2f);
         }
     }
 
@@ -114,13 +67,19 @@ public sealed class WitheringPresencePlusPower : CustomPowerModel
         }
 
         var player = card.Owner;
-        var cards = player.PlayerCombatState?.AllCards;
+        var cards = player.PlayerCombatState?.AllCards.ToList();
         if (cards == null)
         {
             return;
         }
 
-        Flash();
+        var count = 0;
+        while (DynamicVars.Energy.IntValue <= 0)
+        {
+            count++;
+            DynamicVars.Energy.BaseValue += MaxEnergy;
+        }
+
         var withers = new List<CardModel>();
         foreach (var allCard in cards)
         {
@@ -129,10 +88,14 @@ public sealed class WitheringPresencePlusPower : CustomPowerModel
                 continue;
             }
 
-            wither.FakeUpgrade();
+            for (var i = 0; i < count; i++)
+            {
+                wither.FakeUpgrade();
+            }
             withers.Add(wither);
         }
-        DynamicVars.Energy.BaseValue += MaxEnergy;
+
+        Flash();
         InvokeDisplayAmountChanged();
         if (!LocalContext.IsMe(player))
         {

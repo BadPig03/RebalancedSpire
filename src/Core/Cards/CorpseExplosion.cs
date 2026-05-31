@@ -1,7 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Cards;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils;
 using Configs;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -12,12 +10,14 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-[Pool(typeof(SilentCardPool))]
+[RegisterCard(typeof(SilentCardPool))]
 [UsedImplicitly]
-public sealed class CorpseExplosion() : CustomCardModel(2, CardType.Skill, CardRarity.Ancient, TargetType.AnyEnemy, !Disabled)
+public sealed class CorpseExplosion() : ModCardTemplate(2, CardType.Skill, CardRarity.Ancient, TargetType.AnyEnemy, !Disabled)
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DustyTomeConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DustyTome;
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
@@ -25,7 +25,7 @@ public sealed class CorpseExplosion() : CustomCardModel(2, CardType.Skill, CardR
         new PowerVar<CorpseExplosionPower>(1)
     ]).AsReadOnly();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<PoisonPower>()
     ]).AsReadOnly();

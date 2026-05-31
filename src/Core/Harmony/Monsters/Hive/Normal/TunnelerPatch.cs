@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 // ReSharper disable InconsistentNaming
 public static class TunnelerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TunnelerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Tunneler;
 
     private static async Task BiteMove(Tunneler instance)
     {

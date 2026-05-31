@@ -1,8 +1,8 @@
 ﻿{
-  "REBALANCEDSPIRE-BONE_TEA_POTION.description": "[gold]Upgrade[/gold] your ALL cards in [gold]Draw Pile[/gold].",
-  "REBALANCEDSPIRE-BONE_TEA_POTION.title": "Bone Tea",
-  "REBALANCEDSPIRE-EMBER_TEA_POTION.description": "Gain [blue]{StrengthPower}[/blue] [gold]Strength[/gold].",
-  "REBALANCEDSPIRE-EMBER_TEA_POTION.title": "Ember Tea",
-  "REBALANCEDSPIRE-TEA_OF_DISCOURTESY_POTION.description": "Shuffle [blue]{Cards}[/blue] [gold]{Dazed}[/gold] into your [gold]Discard Pile[/gold]. \nCan be thrown at the [gold]Merchant[/gold] for [gold]Upgrading[/gold] cards instead.",
-  "REBALANCEDSPIRE-TEA_OF_DISCOURTESY_POTION.title": "Tea Of Discourtesy"
+  "REBALANCED_SPIRE_POTION_BONE_TEA_POTION.description": "[gold]Upgrade[/gold] your ALL cards in [gold]Draw Pile[/gold].",
+  "REBALANCED_SPIRE_POTION_BONE_TEA_POTION.title": "Bone Tea",
+  "REBALANCED_SPIRE_POTION_EMBER_TEA_POTION.description": "Gain [blue]{StrengthPower}[/blue] [gold]Strength[/gold].",
+  "REBALANCED_SPIRE_POTION_EMBER_TEA_POTION.title": "Ember Tea",
+  "REBALANCED_SPIRE_POTION_TEA_OF_DISCOURTESY_POTION.description": "Shuffle [blue]{Cards}[/blue] [gold]{Dazed}[/gold] into your [gold]Discard Pile[/gold]. \nCan be thrown at the [gold]Merchant[/gold] for [gold]Upgrading[/gold] cards instead.",
+  "REBALANCED_SPIRE_POTION_TEA_OF_DISCOURTESY_POTION.title": "Tea Of Discourtesy"
 }

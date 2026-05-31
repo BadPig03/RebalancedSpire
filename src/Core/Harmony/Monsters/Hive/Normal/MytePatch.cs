@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 // ReSharper disable InconsistentNaming
 public static class MytePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.MyteConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Myte;
 
     private const int ToxicAmount = 1;
 

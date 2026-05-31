@@ -1,24 +1,27 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.Orbs;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class SpinnerPlusPower : CustomPowerModel
+[RegisterPower]
+public sealed class SpinnerPlusPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-spinner_plus_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_spinner_plus_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_spinner_plus_power.png"
+    );
 
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-spinner_plus_power.png";
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.Static(StaticHoverTip.Channeling),
         HoverTipFactory.FromOrb<GlassOrb>()

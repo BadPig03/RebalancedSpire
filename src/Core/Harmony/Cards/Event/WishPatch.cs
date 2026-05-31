@@ -3,63 +3,30 @@
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
-using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class WishPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SereTalonConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SereTalon;
 
-    private static async Task OnPlay(Wish instance, PlayerChoiceContext choiceContext)
-    {
-        var cards = PileType.Draw.GetPile(instance.Owner).Cards.ToList();
-        cards.AddRange(PileType.Discard.GetPile(instance.Owner).Cards);
-        var cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cards.OrderBy(c => c.Rarity).ThenBy(c => c.Id).ToList(), instance.Owner, new CardSelectorPrefs(instance.SelectionScreenPrompt, 1))).FirstOrDefault();
-        if (cardModel == null)
-        {
-            return;
-        }
-
-        await CardPileCmd.Add(cardModel, PileType.Hand);
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(Wish), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    private static bool PreFix_CanonicalKeywords(Wish __instance, ref IEnumerable<CardKeyword> __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not Wish)
+        __result = new List<CardKeyword>
         {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-WISH.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Wish), "OnPlay")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_OnPlay(Wish __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = OnPlay(__instance, choiceContext);
+            CardKeyword.Innate,
+            CardKeyword.Exhaust
+        }.AsReadOnly();
         return false;
     }
 }

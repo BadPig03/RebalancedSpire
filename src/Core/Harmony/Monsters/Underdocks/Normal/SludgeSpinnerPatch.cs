@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SludgeSpinnerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SludgeSpinnerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SludgeSpinner;
 
     private static int StrengthPowerAmount => 2;
     private static int SlamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);

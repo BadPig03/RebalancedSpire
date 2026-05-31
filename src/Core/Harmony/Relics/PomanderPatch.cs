@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class PomanderPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.PomanderConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Pomander;
 
     private static async Task AfterObtained(Pomander instance)
     {
@@ -27,6 +27,20 @@ public static class PomanderPatch
         {
             CardCmd.Upgrade(card);
         }
+    }
+
+    [HarmonyPatch(typeof(Pomander), "AfterObtained")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterObtained(Pomander __instance, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = AfterObtained(__instance);
+        return false;
     }
 
     [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
@@ -44,7 +58,7 @@ public static class PomanderPatch
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-POMANDER.description");
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_POMANDER.description");
         return false;
     }
 
@@ -63,21 +77,7 @@ public static class PomanderPatch
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-POMANDER.eventDescription");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Pomander), "AfterObtained")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterObtained(Pomander __instance, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = AfterObtained(__instance);
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_POMANDER.eventDescription");
         return false;
     }
 }

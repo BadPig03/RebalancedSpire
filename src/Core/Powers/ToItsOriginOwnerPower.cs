@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -9,16 +8,20 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class ToItsOriginOwnerPower : CustomPowerModel
+[RegisterPower]
+public sealed class ToItsOriginOwnerPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-to_its_origin_owner_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-to_its_origin_owner_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_to_its_origin_owner_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_to_its_origin_owner_power.png"
+    );
 
     public override bool ShouldPlayVfx => false;
 

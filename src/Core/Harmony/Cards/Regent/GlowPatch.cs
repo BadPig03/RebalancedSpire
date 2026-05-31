@@ -15,32 +15,13 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class GlowPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.GlowConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Glow;
 
     private static async Task OnPlay(Glow instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
         await PlayerCmd.GainStars(instance.DynamicVars.Stars.BaseValue, instance.Owner);
         await CardPileCmd.Draw(choiceContext, instance.DynamicVars.Cards.BaseValue, instance.Owner);
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Glow)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-GLOW.description");
-        return false;
     }
 
     [HarmonyPatch(typeof(Glow), "CanonicalVars", MethodType.Getter)]
@@ -58,6 +39,25 @@ public static class GlowPatch
             new StarsVar(1),
             new CardsVar(2)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Glow)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_GLOW.description");
         return false;
     }
 

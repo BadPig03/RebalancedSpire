@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class ForgottenRitualPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ForgottenRitualConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ForgottenRitual;
 
     private static async Task OnPlay(ForgottenRitual instance)
     {
@@ -29,25 +29,6 @@ public static class ForgottenRitualPatch
             await PlayerCmd.GainEnergy(instance.DynamicVars.Energy.IntValue, instance.Owner);
         }
         instance.EnergyCost.AddThisCombat(1);
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not ForgottenRitual)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-FORGOTTEN_RITUAL.description");
-        return false;
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
@@ -69,6 +50,39 @@ public static class ForgottenRitualPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(ForgottenRitual), "CanonicalKeywords", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalKeywords(ForgottenRitual __instance, ref IEnumerable<CardKeyword> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<CardKeyword>().AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not ForgottenRitual)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_FORGOTTEN_RITUAL.description");
+        return false;
+    }
+
     [HarmonyPatch(typeof(ForgottenRitual), "ExtraHoverTips", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -83,20 +97,6 @@ public static class ForgottenRitualPatch
         {
             __instance.EnergyHoverTip
         }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(ForgottenRitual), "CanonicalKeywords", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalKeywords(ForgottenRitual __instance, ref IEnumerable<CardKeyword> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<CardKeyword>().AsReadOnly();
         return false;
     }
 

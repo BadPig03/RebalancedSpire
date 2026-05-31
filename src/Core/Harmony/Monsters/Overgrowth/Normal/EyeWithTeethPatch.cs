@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class EyeWithTeethPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FogmogConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fogmog;
 
     private const int DazedAmount = 2;
 

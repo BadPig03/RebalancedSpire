@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class LivingFogPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.LivingFogConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LivingFog;
 
     private const int MaxGasBombs = 5;
     private const int PingPingPowerAmount = 1;
@@ -43,19 +43,6 @@ public static class LivingFogPatch
         await DamageCmd.Attack(instance.BloatDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.1f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/living_fog/living_fog_attack_blow").WithHitVfxNode(_ => NGaseousImpactVfx.Create(CombatSide.Player, instance.CombatState, new Color("#402f45"))).Execute(null);
     }
 
-    [HarmonyPatch(typeof(LivingFog), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void IncreaseMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result += 14;
-    }
-
     [HarmonyPatch(typeof(LivingFog), "GenerateMoveStateMachine")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -78,5 +65,18 @@ public static class LivingFogPatch
         list.Add(moveState3);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(LivingFog), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void IncreaseMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result += 14;
     }
 }

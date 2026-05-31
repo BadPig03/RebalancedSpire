@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class EntomancerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.EntomancerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Entomancer;
 
     private const int PersonalHivePowerAmountNone = 1;
     private const int PersonalHivePowerAmount = 2;

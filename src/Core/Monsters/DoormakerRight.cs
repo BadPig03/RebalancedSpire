@@ -11,7 +11,9 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
 
+[RegisterMonster]
 public sealed class DoormakerRight : DoormakerBase
 {
     private const int ChargeUpCount = 2;

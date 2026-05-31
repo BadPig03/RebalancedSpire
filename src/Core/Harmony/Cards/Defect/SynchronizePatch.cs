@@ -16,64 +16,12 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SynchronizePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SynchronizeConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Synchronize;
 
     private static async Task OnPlay(Synchronize instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<SynchronizePlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["SynchronizePlusPower"].BaseValue, instance.Owner.Creature, instance);
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Synchronize)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-SYNCHRONIZE.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Type", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Type(CardModel __instance, ref CardType __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Synchronize)
-        {
-            return true;
-        }
-
-        __result = CardType.Power;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Synchronize), "CanonicalKeywords", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalKeywords(Synchronize __instance, ref IEnumerable<CardKeyword> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<CardKeyword>().AsReadOnly();
-        return false;
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
@@ -95,22 +43,17 @@ public static class SynchronizePatch
         return false;
     }
 
-    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
+    [HarmonyPatch(typeof(Synchronize), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
+    private static bool PreFix_CanonicalKeywords(Synchronize __instance, ref IEnumerable<CardKeyword> __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not Synchronize)
-        {
-            return true;
-        }
-
-        __result = CardRarity.Rare;
+        __result = new List<CardKeyword>().AsReadOnly();
         return false;
     }
 
@@ -128,6 +71,25 @@ public static class SynchronizePatch
         {
             new PowerVar<SynchronizePlusPower>(1)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Synchronize)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_SYNCHRONIZE.description");
         return false;
     }
 
@@ -156,6 +118,44 @@ public static class SynchronizePatch
         }
 
         __instance.EnergyCost.UpgradeBy(-1);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Synchronize)
+        {
+            return true;
+        }
+
+        __result = CardRarity.Rare;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Type", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Type(CardModel __instance, ref CardType __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Synchronize)
+        {
+            return true;
+        }
+
+        __result = CardType.Power;
         return false;
     }
 }

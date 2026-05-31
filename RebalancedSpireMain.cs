@@ -1,4 +1,3 @@
-using BaseLib.Config;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
@@ -8,26 +7,31 @@ using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 namespace RebalancedSpire;
 
 using System.Reflection;
-using Core.Configs;
 using Core.Harmony;
-using Godot.Bridge;
+using Core.Registry;
+using STS2RitsuLib;
+using STS2RitsuLib.Interop;
 
-[ModInitializer(nameof(Initialize))]
-// ReSharper disable once UnusedMember.Global
+[ModInitializer("Initialize")]
 public partial class RebalancedSpireMain : Node
 {
-    private const string ModId = "RebalancedSpire";
-    public const string Version = "v0.1.7-beta";
+    internal const string ModId = "RebalancedSpire";
+    internal const string SettingsKey = "settings";
+    internal const string SettingsFileName = "settings.json";
 
-    private static Harmony? _mainHarmony;
+    public const string Version = "v0.2.0-beta";
 
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
 
-    public static void Initialize()
+    private static void Initialize()
     {
-        ModConfigRegistry.Register(ModId, new RebalancedSpireConfig());
-        _mainHarmony ??= new Harmony(ModId);
-        _mainHarmony.PatchAllForRebalancedSpire(Assembly.GetExecutingAssembly());
-        ScriptManagerBridge.LookupScriptsInAssembly(typeof(RebalancedSpireMain).Assembly);
+        var assembly = Assembly.GetExecutingAssembly();
+        new Harmony(ModId).PatchAllForRebalancedSpire(assembly);
+        ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        RebalancedSpireCardTransformationRegistry.Initialize();
+        RebalancedSpireNodesRegistry.Initialize();
+        RebalancedSpireRightClickRegistry.Initialize();
+        RebalancedSpireSettingsRegistry.Initialize();
+        RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
     }
 }

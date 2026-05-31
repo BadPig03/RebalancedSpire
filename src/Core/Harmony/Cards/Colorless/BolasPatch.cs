@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class BolasPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.BolasConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Bolas;
 
     private static async Task BeforeHandDraw(Bolas instance, Player player)
     {
@@ -37,22 +37,17 @@ public static class BolasPatch
         instance.DynamicVars.Damage.BaseValue += instance.DynamicVars["IncrementAmount"].BaseValue;
     }
 
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(Bolas), "BeforeHandDraw")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    private static bool PreFix_BeforeHandDraw(Bolas __instance, Player player, PlayerChoiceContext choiceContext, ICombatState combatState, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not Bolas)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-BOLAS.description");
+        __result = BeforeHandDraw(__instance, player);
         return false;
     }
 
@@ -74,17 +69,22 @@ public static class BolasPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(Bolas), "BeforeHandDraw")]
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_BeforeHandDraw(Bolas __instance, Player player, PlayerChoiceContext choiceContext, ICombatState combatState, ref Task __result)
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __result = BeforeHandDraw(__instance, player);
+        if (__instance is not Bolas)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_BOLAS.description");
         return false;
     }
 

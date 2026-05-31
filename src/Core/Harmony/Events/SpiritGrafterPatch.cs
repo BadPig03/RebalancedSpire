@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Models.Events;
 // ReSharper disable InconsistentNaming
 public static class SpiritGrafterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SpiritGrafterConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SpiritGrafter;
 
     private static async Task StrikeBack(SpiritGrafter instance)
     {
@@ -26,7 +26,7 @@ public static class SpiritGrafterPatch
 
         var cards = (await CardSelectCmd.FromDeckForRemoval(prefs: new CardSelectorPrefs(CardSelectorPrefs.RemoveSelectionPrompt, 1), player: instance.Owner, filter: c => c.Type == CardType.Attack)).ToList();
         await CardPileCmd.RemoveFromDeck(cards);
-        instance.SetEventFinished(instance.L10NLookup("REBALANCEDSPIRE-SPIRIT_GRAFTER.pages.STRIKE_BACK.description"));
+        instance.SetEventFinished(instance.L10NLookup("REBALANCED_SPIRE_EVENT_SPIRIT_GRAFTER.pages.STRIKE_BACK.description"));
     }
 
     [HarmonyPatch(typeof(SpiritGrafter), "GenerateInitialOptions")]
@@ -42,7 +42,7 @@ public static class SpiritGrafterPatch
         __result = new List<EventOption>
         {
             new(__instance, __instance.LetItIn, "SPIRIT_GRAFTER.pages.INITIAL.options.LET_IT_IN", HoverTipFactory.FromCardWithCardHoverTips<Metamorphosis>()),
-            __instance.Owner?.Deck.Cards.Any(c => c.Type == CardType.Attack) == true ? new EventOption(__instance, () => StrikeBack(__instance), "REBALANCEDSPIRE-SPIRIT_GRAFTER.pages.INITIAL.options.STRIKE_BACK") : new EventOption(__instance, null, "REBALANCEDSPIRE-SPIRIT_GRAFTER.pages.INITIAL.options.STRIKE_BACK_LOCKED"),
+            __instance.Owner?.Deck.Cards.Any(c => c.Type == CardType.Attack) == true ? new EventOption(__instance, () => StrikeBack(__instance), "REBALANCED_SPIRE_EVENT_SPIRIT_GRAFTER.pages.INITIAL.options.STRIKE_BACK") : new EventOption(__instance, null, "REBALANCED_SPIRE_EVENT_SPIRIT_GRAFTER.pages.INITIAL.options.STRIKE_BACK_LOCKED"),
             new EventOption(__instance, __instance.Rejection, "SPIRIT_GRAFTER.pages.INITIAL.options.REJECTION").ThatDoesDamage(__instance.DynamicVars["RejectionHpLoss"].BaseValue)
         }.AsReadOnly();
         return false;

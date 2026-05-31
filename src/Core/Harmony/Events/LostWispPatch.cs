@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class LostWispPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.LostWispConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LostWisp;
 
     private static async Task Claim(LostWisp instance)
     {
@@ -29,25 +29,6 @@ public static class LostWispPatch
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.Damage, null, null);
         await RelicCmd.Obtain<MegaCrit.Sts2.Core.Models.Relics.LostWisp>(instance.Owner);
         instance.SetEventFinished(instance.L10NLookup("LOST_WISP.pages.CLAIM.description"));
-    }
-
-    [HarmonyPatch(typeof(EventModel), "IsAllowed")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_IsAllowed(EventModel __instance, IRunState runState, ref bool __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not LostWisp)
-        {
-            return true;
-        }
-
-        __result = runState.Players.All(p => p.Creature.CurrentHp >= 10);
-        return false;
     }
 
     [HarmonyPatch(typeof(LostWisp), "CanonicalVars", MethodType.Getter)]
@@ -81,9 +62,28 @@ public static class LostWispPatch
 
         __result = new List<EventOption>
         {
-            new(__instance, () => Claim(__instance), "REBALANCEDSPIRE-LOST_WISP.pages.INITIAL.options.CLAIM", HoverTipFactory.FromRelic<MegaCrit.Sts2.Core.Models.Relics.LostWisp>()),
+            new(__instance, () => Claim(__instance), "REBALANCED_SPIRE_EVENT_LOST_WISP.pages.INITIAL.options.CLAIM", HoverTipFactory.FromRelic<MegaCrit.Sts2.Core.Models.Relics.LostWisp>()),
             new(__instance, __instance.Search, "LOST_WISP.pages.INITIAL.options.SEARCH")
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(EventModel), "IsAllowed")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_IsAllowed(EventModel __instance, IRunState runState, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not LostWisp)
+        {
+            return true;
+        }
+
+        __result = runState.Players.All(p => p.Creature.CurrentHp >= 10);
         return false;
     }
 }

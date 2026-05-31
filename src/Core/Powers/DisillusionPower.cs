@@ -1,26 +1,20 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Powers;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class DisillusionPower : CustomPowerModel
+[RegisterPower]
+public sealed class DisillusionPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Debuff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-disillusion_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-disillusion_power.png";
-
-    public override bool ShouldPlayVfx => false;
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_disillusion_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_disillusion_power.png"
+    );
 
     public override bool ShouldPowerBeRemovedAfterOwnerDeath() => false;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
-    [
-        new PowerVar<StrengthPower>(5)
-    ]).AsReadOnly();
 }

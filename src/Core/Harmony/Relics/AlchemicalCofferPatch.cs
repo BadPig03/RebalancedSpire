@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
-using BaseLib.Utils;
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -12,14 +11,15 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves;
+using STS2RitsuLib.Utils;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class AlchemicalCofferPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.AlchemicalCofferConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.AlchemicalCoffer;
 
-    private static readonly SavedSpireField<AlchemicalCoffer, ModelId?> LastPotionUsed = new(() => null, "REBALANCEDSPIRE-ALCHEMICAL_COFFER");
+    private static readonly SavedAttachedState<AlchemicalCoffer, ModelId?> LastPotionUsed = new("REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER", () => null);
 
     private static async Task AfterObtained(AlchemicalCoffer instance)
     {
@@ -37,9 +37,9 @@ public static class AlchemicalCofferPatch
         return Task.CompletedTask;
     }
 
-    private static async Task AfterCombatEnd(AlchemicalCoffer instance)
+    private static async Task AfterCombatVictory(AlchemicalCoffer instance)
     {
-        var potionId = LastPotionUsed.Get(instance);
+        var potionId = LastPotionUsed[instance];
         if (potionId == null)
         {
             return;
@@ -48,58 +48,22 @@ public static class AlchemicalCofferPatch
         await PotionCmd.TryToProcure(SaveUtil.PotionOrDeprecated(potionId).ToMutable(), instance.Owner);
     }
 
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(AbstractModel), "AfterCombatVictory")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    private static bool PreFix_AfterCombatVictory(AbstractModel __instance, CombatRoom room, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not AlchemicalCoffer)
+        if (__instance is not AlchemicalCoffer alchemicalCoffer)
         {
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-ALCHEMICAL_COFFER.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not AlchemicalCoffer)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-ALCHEMICAL_COFFER.eventDescription");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(AlchemicalCoffer), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(AlchemicalCoffer __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new("PotionSlots", 1)
-        }.AsReadOnly();
+        __result = AfterCombatVictory(alchemicalCoffer);
         return false;
     }
 
@@ -136,22 +100,58 @@ public static class AlchemicalCofferPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(AbstractModel), "AfterCombatEnd")]
+    [HarmonyPatch(typeof(AlchemicalCoffer), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterCombatEnd(AbstractModel __instance, CombatRoom room, ref Task __result)
+    private static bool PreFix_CanonicalVars(AlchemicalCoffer __instance, ref IEnumerable<DynamicVar> __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not AlchemicalCoffer alchemicalCoffer)
+        __result = new List<DynamicVar>
+        {
+            new("PotionSlots", 1)
+        }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
         {
             return true;
         }
 
-        __result = AfterCombatEnd(alchemicalCoffer);
+        if (__instance is not AlchemicalCoffer)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not AlchemicalCoffer)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER.eventDescription");
         return false;
     }
 }

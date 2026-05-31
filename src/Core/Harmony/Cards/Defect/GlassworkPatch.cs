@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class GlassworkPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.GlassworkConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Glasswork;
 
     private static async Task OnPlay(Glasswork instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -36,25 +36,6 @@ public static class GlassworkPatch
         }
     }
 
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Glasswork)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-GLASSWORK.description");
-        return false;
-    }
-
     [HarmonyPatch(typeof(Glasswork), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -70,6 +51,25 @@ public static class GlassworkPatch
             new BlockVar(5, ValueProp.Move),
             new("Value", 2)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Glasswork)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_GLASSWORK.description");
         return false;
     }
 

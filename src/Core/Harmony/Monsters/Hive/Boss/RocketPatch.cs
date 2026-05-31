@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class RocketPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.KaiserCrabConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.KaiserCrab;
 
     private const int StrengthPowerAmount = 2;
     private const int FrailPowerAmount = 2;
@@ -42,19 +42,6 @@ public static class RocketPatch
         await instance.Background.PlayRightSideHeavy(0.5f);
         await DamageCmd.Attack(instance.LaserDamage).FromMonster(instance).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, 10, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
-    }
-
-    [HarmonyPatch(typeof(Rocket), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 10;
     }
 
     [HarmonyPatch(typeof(Rocket), "GenerateMoveStateMachine")]
@@ -85,5 +72,18 @@ public static class RocketPatch
         list.Add(moveState5);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(Rocket), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result -= 10;
     }
 }

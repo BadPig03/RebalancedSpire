@@ -17,18 +17,20 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SkulkingColonyPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SkulkingColonyConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SkulkingColony;
 
     private const int PiercingStabsCount = 2;
 
+    private static int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 75, 70);
     private static int PiercingStabsDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 7, 6);
     private static int SmashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 9);
-    private static int ZoomBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 13, 10);
+    private static int ZoomBlock => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 13, 10);
     private static int ZoomDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 17, 16);
 
     private static async Task SmashMove(SkulkingColony instance)
     {
-        await DamageCmd.Attack(SmashDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.15f).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+
+        await DamageCmd.Attack(SmashDamage).FromMonster(instance).WithAttackerAnim("AttackBuff", 0.5f).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
     }
 
     private static async Task ZoomMove(SkulkingColony instance)
@@ -39,6 +41,7 @@ public static class SkulkingColonyPatch
 
     private static async Task InertiaMove(SkulkingColony instance)
     {
+        await CreatureCmd.TriggerAnim(instance.Creature, "AttackBuff", 0.5f);
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.InertiaStrengthGain, instance.Creature, null);
     }
 
@@ -72,5 +75,18 @@ public static class SkulkingColonyPatch
         list.Add(moveState4);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(SkulkingColony), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = MinInitialHp;
     }
 }

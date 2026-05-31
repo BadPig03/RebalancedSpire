@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class ExpectAFightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ExpectAFightConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ExpectAFight;
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]

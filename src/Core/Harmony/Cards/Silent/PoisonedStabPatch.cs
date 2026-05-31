@@ -1,7 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Silent;
 
 using Configs;
-using Enchantments;
+using Core.Enchantments;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class PoisonedStabPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SilentBalancedConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PoisonedStab;
 
     private static async Task OnPlay(PoisonedStab instance)
     {
@@ -27,10 +27,55 @@ public static class PoisonedStabPatch
             return;
         }
 
-        foreach (CardModel item in await Shiv.CreateInHand(instance.Owner, instance.DynamicVars.Cards.IntValue, combatState))
+        foreach (var shiv in await Shiv.CreateInHand(instance.Owner, instance.DynamicVars.Cards.IntValue, combatState))
         {
-            CardCmd.Enchant<Poisonous>(item, 1m);
+            CardCmd.Enchant<Poisonous>(shiv, 1);
+            if (!instance.IsUpgraded)
+            {
+                continue;
+            }
+
+            CardCmd.Upgrade(shiv);
         }
+    }
+
+    [HarmonyPatch(typeof(CardModel), "CanonicalKeywords", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalKeywords(CardModel __instance, ref IEnumerable<CardKeyword> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not PoisonedStab)
+        {
+            return true;
+        }
+
+        __result = new List<CardKeyword>
+        {
+            CardKeyword.Exhaust
+        }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(PoisonedStab), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(PoisonedStab __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new CardsVar(2)
+        }.AsReadOnly();
+        return false;
     }
 
     [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
@@ -48,8 +93,55 @@ public static class PoisonedStabPatch
             return true;
         }
 
-        __result = new LocString("cards", "REBALANCEDSPIRE-POISONED_STAB.description");
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_POISONED_STAB.description");
         return false;
+    }
+
+    [HarmonyPatch(typeof(PoisonedStab), "ExtraHoverTips", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_ExtraHoverTips(PoisonedStab __instance, ref IEnumerable<IHoverTip> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        var shiv = (Shiv) ModelDb.Card<Shiv>().MutableClone();
+        CardCmd.Enchant<Poisonous>(shiv, 1);
+        if (__instance.IsUpgraded)
+        {
+            CardCmd.Upgrade(shiv);
+        }
+        var list = new List<IHoverTip>
+        {
+            HoverTipFactory.FromCard(shiv)
+        };
+        list.AddRange(HoverTipFactory.FromEnchantment<Poisonous>());
+        __result = list.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(PoisonedStab), "OnPlay")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_OnPlay(PoisonedStab __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = OnPlay(__instance);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(PoisonedStab), "OnUpgrade")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_OnUpgrade(PoisonedStab __instance)
+    {
+        return Disabled;
     }
 
     [HarmonyPatch(typeof(CardModel), "TargetType", MethodType.Getter)]
@@ -90,89 +182,4 @@ public static class PoisonedStabPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(PoisonedStab), "ExtraHoverTips", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_ExtraHoverTips(PoisonedStab __instance, ref IEnumerable<IHoverTip> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        var list = new List<IHoverTip>
-        {
-            HoverTipFactory.FromCard<Shiv>()
-        };
-        list.AddRange(HoverTipFactory.FromEnchantment<Poisonous>());
-        __result = list.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "CanonicalKeywords", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalKeywords(CardModel __instance, ref IEnumerable<CardKeyword> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not PoisonedStab)
-        {
-            return true;
-        }
-
-        __result = new List<CardKeyword>
-        {
-            CardKeyword.Exhaust
-        }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(PoisonedStab), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(PoisonedStab __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new CardsVar(1)
-        }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(PoisonedStab), "OnPlay")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_OnPlay(PoisonedStab __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = OnPlay(__instance);
-        return false;
-    }
-
-    [HarmonyPatch(typeof(PoisonedStab), "OnUpgrade")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_OnUpgrade(PoisonedStab __instance)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __instance.RemoveKeyword(CardKeyword.Exhaust);
-        return false;
-    }
 }

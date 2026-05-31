@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class HardToKillPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ExoskeletonConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Exoskeleton;
 
     [HarmonyPatch(typeof(PowerModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
@@ -28,7 +28,7 @@ public static class HardToKillPowerPatch
             return true;
         }
 
-        __result = new LocString("powers", "REBALANCEDSPIRE-HARD_TO_KILL_POWER.description");
+        __result = new LocString("powers", "REBALANCED_SPIRE_POWER_HARD_TO_KILL_POWER.description");
         return false;
     }
 
@@ -47,7 +47,7 @@ public static class HardToKillPowerPatch
             return true;
         }
 
-        __result = "REBALANCEDSPIRE-HARD_TO_KILL_POWER.smartDescription";
+        __result = "REBALANCED_SPIRE_POWER_HARD_TO_KILL_POWER.smartDescription";
         return false;
     }
 }

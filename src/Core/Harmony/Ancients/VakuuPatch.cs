@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class VakuuPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VakuuChoicesConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.VakuuAncientChoices;
 
     [HarmonyPatch(typeof(EventModel), "BackgroundScenePath", MethodType.Getter)]
     [HarmonyPrefix]
@@ -25,7 +25,7 @@ public static class VakuuPatch
             return true;
         }
 
-        if (!RebalancedSpireConfig.VakuuFixedArtConfig)
+        if (!RebalancedSpireSettingsStore.Settings.VakuuFixedArt)
         {
             return true;
         }

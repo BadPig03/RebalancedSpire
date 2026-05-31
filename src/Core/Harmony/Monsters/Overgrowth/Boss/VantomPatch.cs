@@ -25,7 +25,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 // ReSharper disable InconsistentNaming
 public static class VantomPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VantomConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Vantom;
 
     private const int PainfulStabsPowerAmount = 1;
     private const int InitSlipperyPowerAmount = 3;

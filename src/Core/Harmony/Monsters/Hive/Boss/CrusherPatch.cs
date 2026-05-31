@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx.Backgrounds;
 // ReSharper disable InconsistentNaming
 public static class CrusherPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.KaiserCrabConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.KaiserCrab;
 
     private const int WeakPowerAmount = 2;
 
@@ -32,32 +32,6 @@ public static class CrusherPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_left_attack_scissor");
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_double", 0.5f);
         await DamageCmd.Attack(instance.BugStingDamage).WithHitCount(instance.BugStingTimes).FromMonster(instance).WithHitFx("vfx/vfx_attack_slash").Execute(null);
-    }
-
-    [HarmonyPatch(typeof(Crusher), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 10;
-    }
-
-    [HarmonyPatch(typeof(Crusher), "AdaptStrengthGain", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceAdaptStrengthGain(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = 2;
     }
 
     [HarmonyPatch(typeof(Crusher), "GenerateMoveStateMachine")]
@@ -88,5 +62,31 @@ public static class CrusherPatch
         list.Add(moveState5);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(Crusher), "AdaptStrengthGain", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceAdaptStrengthGain(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = 2;
+    }
+
+    [HarmonyPatch(typeof(Crusher), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result -= 10;
     }
 }

@@ -1,7 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Potions;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -18,9 +16,11 @@ using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rooms;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-[Pool(typeof(EventPotionPool))]
-public class TeaOfDiscourtesyPotion : CustomPotionModel
+[RegisterPotion(typeof(EventPotionPool))]
+public class TeaOfDiscourtesyPotion : ModPotionTemplate
 {
     public override PotionRarity Rarity => PotionRarity.Event;
 

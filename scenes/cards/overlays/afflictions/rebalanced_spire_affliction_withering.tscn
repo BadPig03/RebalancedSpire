@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxq55ed3vifmg"]
+
+[ext_resource type="PackedScene" path="res://scenes/vfx/ui/card/afflictions/withering/vfx_ui_card_affliction_withering.tscn" id="1_gfw87"]
+
+[node name="Withering" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="vfx_ui_card_withering" parent="." instance=ExtResource("1_gfw87")]
+layout_mode = 1

@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public class WellLaidPlansPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.WellLaidPlansConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WellLaidPlans;
 
     [HarmonyPatch(typeof(WellLaidPlans), "MultiplayerConstraint", MethodType.Getter)]
     [HarmonyPrefix]

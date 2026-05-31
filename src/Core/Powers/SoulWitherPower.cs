@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -8,21 +7,23 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class SoulWitherPower : CustomPowerModel
+[RegisterPower]
+public sealed class SoulWitherPower : ModPowerTemplate
 {
     private const int MaxHitCount = 12;
 
     private int _hitCount;
 
-    private int HitCount
+    public int HitCount
     {
         get => _hitCount;
         set
         {
             AssertMutable();
             _hitCount = value;
-            DynamicVars.CalculationBase.BaseValue = Math.Max(0, MaxHitCount - value);
             InvokeDisplayAmountChanged();
         }
     }
@@ -31,9 +32,10 @@ public sealed class SoulWitherPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-soul_wither_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-soul_wither_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_soul_wither_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_soul_wither_power.png"
+    );
 
     public override int DisplayAmount => HitCount;
 
@@ -43,8 +45,7 @@ public sealed class SoulWitherPower : CustomPowerModel
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
-        new StringVar("SoulNexus", ModelDb.Monster<SoulNexus>().Title.GetFormattedText()),
-        new CalculationBaseVar(MaxHitCount)
+        new StringVar("SoulNexus", ModelDb.Monster<SoulNexus>().Title.GetFormattedText())
     ]).AsReadOnly();
 
     public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
@@ -62,10 +63,5 @@ public sealed class SoulWitherPower : CustomPowerModel
     public bool IsLimitExceeded()
     {
         return HitCount >= MaxHitCount;
-    }
-
-    public void Reset()
-    {
-        HitCount = 0;
     }
 }

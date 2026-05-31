@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class WaterfallGiantPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.WaterfallGiantConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WaterfallGiant;
 
     private const int WeakPowerAmount = 1;
     private const int SteamEruptionPowerAmount = 9;

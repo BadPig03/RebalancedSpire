@@ -20,7 +20,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class ChomperPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ChomperConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Chomper;
 
     private const int ClampCount = 2;
     private const int DazedAmount = 2;

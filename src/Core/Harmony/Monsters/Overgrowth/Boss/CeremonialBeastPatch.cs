@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class CeremonialBeastPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.CeremonialBeastConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.CeremonialBeast;
 
     private const float FirstPlowAmount = 0.8f;
     private const float SecondPlowAmount = 0.4f;
@@ -33,19 +33,6 @@ public static class CeremonialBeastPatch
         await CreatureCmd.TriggerAnim(instance.Creature, "Attack", 0.6f);
         await Cmd.CustomScaledWait(0f, 0.4f);
         await PowerCmd.Apply<PlowPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, (int) (instance.MaxInitialHp * SecondPlowAmount), instance.Creature, null);
-    }
-
-    [HarmonyPatch(typeof(CeremonialBeast), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void IncreaseMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result += 38;
     }
 
     [HarmonyPatch(typeof(CeremonialBeast), "GenerateMoveStateMachine")]
@@ -87,5 +74,18 @@ public static class CeremonialBeastPatch
         list.Add(__instance.BeastCryState);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(CeremonialBeast), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void IncreaseMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result += 38;
     }
 }

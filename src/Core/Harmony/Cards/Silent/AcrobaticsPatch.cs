@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class AcrobaticsPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.AcrobaticsConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Acrobatics;
 
     [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
     [HarmonyPrefix]

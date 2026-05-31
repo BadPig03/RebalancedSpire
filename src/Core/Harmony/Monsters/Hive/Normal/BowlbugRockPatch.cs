@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class BowlbugRockPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.BowlbugsConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BowlbugRock;
 
     [HarmonyPatch(typeof(BowlbugRock), "HeadbuttDamage", MethodType.Getter)]
     [HarmonyPostfix]

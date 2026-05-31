@@ -23,7 +23,7 @@ using Byrdpip = MegaCrit.Sts2.Core.Models.Relics.Byrdpip;
 // ReSharper disable InconsistentNaming
 public static class ByrdonisPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ByrdonisConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Byrdonis;
 
     private const int FrailPowerAmount = 2;
     private const int TerritorialPowerAmount = 1;
@@ -42,7 +42,7 @@ public static class ByrdonisPatch
         await PowerCmd.Apply<TerritorialPower>(new ThrowingPlayerChoiceContext(), instance.Creature, TerritorialPowerAmount, instance.Creature, null);
         foreach (var player in instance.CombatState.Players)
         {
-            var allCards = player.PlayerCombatState?.AllCards;
+            var allCards = player.PlayerCombatState?.AllCards.ToList();
             if (allCards == null)
             {
                 continue;
@@ -93,30 +93,6 @@ public static class ByrdonisPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(Byrdonis), "GenerateMoveStateMachine")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_GenerateMoveStateMachine(Byrdonis __instance, ref MonsterMoveStateMachine __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        List<MonsterState> list = [];
-        MoveState moveState = new MoveState("ANGRY_MOVE", t => AngryMove(__instance, t), new DebuffIntent(), new BuffIntent());
-        MoveState moveState2 = new MoveState("PECK_MOVE", _ => PeckMove(__instance), new MultiAttackIntent(Byrdonis.PeckDamage, Byrdonis.PeckRepeat));
-        MoveState moveState3 = new MoveState("SWOOP_MOVE", _ => SwoopMove(__instance), new SingleAttackIntent(SwoopDamage));
-        moveState.FollowUpState = moveState2;
-        moveState2.FollowUpState = moveState3;
-        moveState3.FollowUpState = moveState2;
-        list.Add(moveState);
-        list.Add(moveState2);
-        list.Add(moveState3);
-        __result = new MonsterMoveStateMachine(list, moveState);
-        return false;
-    }
-
     [HarmonyPatch(typeof(Byrdonis), "GenerateAnimator")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -157,6 +133,30 @@ public static class ByrdonisPatch
         animator.AddAnyState("HitAngry", state7);
         animator.AddAnyState("NotAngry", state8);
         __result = animator;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Byrdonis), "GenerateMoveStateMachine")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_GenerateMoveStateMachine(Byrdonis __instance, ref MonsterMoveStateMachine __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        List<MonsterState> list = [];
+        MoveState moveState = new MoveState("ANGRY_MOVE", t => AngryMove(__instance, t), new DebuffIntent(), new BuffIntent());
+        MoveState moveState2 = new MoveState("PECK_MOVE", _ => PeckMove(__instance), new MultiAttackIntent(Byrdonis.PeckDamage, Byrdonis.PeckRepeat));
+        MoveState moveState3 = new MoveState("SWOOP_MOVE", _ => SwoopMove(__instance), new SingleAttackIntent(SwoopDamage));
+        moveState.FollowUpState = moveState2;
+        moveState2.FollowUpState = moveState3;
+        moveState3.FollowUpState = moveState2;
+        list.Add(moveState);
+        list.Add(moveState2);
+        list.Add(moveState3);
+        __result = new MonsterMoveStateMachine(list, moveState);
         return false;
     }
 }

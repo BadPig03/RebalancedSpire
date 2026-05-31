@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class HunterKillerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.HunterKillerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HunterKiller;
 
     private const int PunctureCount = 3;
     private const int WeakPowerAmount = 2;

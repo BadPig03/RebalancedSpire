@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SootPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.BiiigHugConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BiiigHug;
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]

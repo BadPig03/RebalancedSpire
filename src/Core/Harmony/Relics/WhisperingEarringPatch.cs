@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Relics;
 
-using BaseLib.Utils;
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -16,13 +15,14 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Rooms;
+using STS2RitsuLib.Utils;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class WhisperingEarringPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.WhisperingEarringConfig;
-    private static readonly SpireField<WhisperingEarring, int> CurrentEnergyUsed = new(() => 0);
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WhisperingEarring;
+    private static readonly AttachedState<WhisperingEarring, int> CurrentEnergyUsed = new(() => 0);
 
     private static async Task VakuuAutoPlay(WhisperingEarring instance, PlayerChoiceContext choiceContext, Player player)
     {
@@ -59,60 +59,22 @@ public static class WhisperingEarringPatch
         TalkCmd.Play(line, instance.Owner.Creature, VfxColor.Purple);
     }
 
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(WhisperingEarring), "AfterAutoPrePlayPhaseEnteredLate")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    private static bool PreFix_AfterAutoPrePlayPhaseEnteredLate(WhisperingEarring __instance, PlayerChoiceContext choiceContext, Player player, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not WhisperingEarring)
+        if (player != __instance.Owner)
         {
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-WHISPERING_EARRING.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "ShowCounter", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_ShowCounter(RelicModel __instance, ref bool __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not WhisperingEarring whisperingEarring)
-        {
-            return true;
-        }
-
-        __result = CurrentEnergyUsed.Get(whisperingEarring) >= 0;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "DisplayAmount", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_DisplayAmount(RelicModel __instance, ref int __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not WhisperingEarring whisperingEarring)
-        {
-            return true;
-        }
-
-        __result = CurrentEnergyUsed.Get(whisperingEarring);
+        __result = Task.CompletedTask;
         return false;
     }
 
@@ -133,42 +95,6 @@ public static class WhisperingEarringPatch
 
         whisperingEarring.Status = RelicStatus.Normal;
         __result = VakuuAutoPlay(whisperingEarring, choiceContext, whisperingEarring.Owner);
-        return false;
-    }
-
-    [HarmonyPatch(typeof(AbstractModel), "AfterEnergySpent")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterEnergySpent(AbstractModel __instance, CardModel card, int amount, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not WhisperingEarring whisperingEarring || card.Owner != whisperingEarring.Owner || amount <= 0)
-        {
-            return true;
-        }
-
-        var current = CurrentEnergyUsed.Get(whisperingEarring);
-        if (current < 0)
-        {
-            return true;
-        }
-
-        current += amount;
-        CurrentEnergyUsed.Set(whisperingEarring, current);
-        whisperingEarring.InvokeDisplayAmountChanged();
-        if (current < whisperingEarring.DynamicVars["TotalEnergy"].IntValue)
-        {
-            return true;
-        }
-
-        whisperingEarring.Status = RelicStatus.Active;
-        CurrentEnergyUsed.Set(whisperingEarring, -1);
-        whisperingEarring.InvokeDisplayAmountChanged();
-        __result = Task.CompletedTask;
         return false;
     }
 
@@ -193,6 +119,42 @@ public static class WhisperingEarringPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(AbstractModel), "AfterEnergySpent")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterEnergySpent(AbstractModel __instance, CardModel card, int amount, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not WhisperingEarring whisperingEarring || card.Owner != whisperingEarring.Owner || amount <= 0)
+        {
+            return true;
+        }
+
+        var current = CurrentEnergyUsed[whisperingEarring];
+        if (current < 0)
+        {
+            return true;
+        }
+
+        current += amount;
+        CurrentEnergyUsed.Set(whisperingEarring, current);
+        whisperingEarring.InvokeDisplayAmountChanged();
+        if (current < whisperingEarring.DynamicVars["TotalEnergy"].IntValue)
+        {
+            return true;
+        }
+
+        whisperingEarring.Status = RelicStatus.Active;
+        CurrentEnergyUsed.Set(whisperingEarring, -1);
+        whisperingEarring.InvokeDisplayAmountChanged();
+        __result = Task.CompletedTask;
+        return false;
+    }
+
     [HarmonyPatch(typeof(WhisperingEarring), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -211,22 +173,60 @@ public static class WhisperingEarringPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(WhisperingEarring), "AfterAutoPrePlayPhaseEnteredLate")]
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterAutoPrePlayPhaseEnteredLate(WhisperingEarring __instance, PlayerChoiceContext choiceContext, Player player, ref Task __result)
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (player != __instance.Owner)
+        if (__instance is not WhisperingEarring)
         {
             return true;
         }
 
-        __result = Task.CompletedTask;
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_WHISPERING_EARRING.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "DisplayAmount", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_DisplayAmount(RelicModel __instance, ref int __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not WhisperingEarring whisperingEarring)
+        {
+            return true;
+        }
+
+        __result = CurrentEnergyUsed[whisperingEarring];
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "ShowCounter", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_ShowCounter(RelicModel __instance, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not WhisperingEarring whisperingEarring)
+        {
+            return true;
+        }
+
+        __result = CurrentEnergyUsed[whisperingEarring] >= 0;
         return false;
     }
 }

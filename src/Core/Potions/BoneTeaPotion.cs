@@ -1,7 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Potions;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -10,9 +8,11 @@ using MegaCrit.Sts2.Core.Entities.Potions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-[Pool(typeof(EventPotionPool))]
-public sealed class BoneTeaPotion : CustomPotionModel
+[RegisterPotion(typeof(EventPotionPool))]
+public sealed class BoneTeaPotion : ModPotionTemplate
 {
     public override PotionRarity Rarity => PotionRarity.Event;
 

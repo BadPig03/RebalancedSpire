@@ -18,12 +18,30 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class EternalArmorPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.EternalArmorConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.EternalArmor;
 
     private static async Task OnPlay(EternalArmor instance, PlayerChoiceContext choiceContext)
     {
         await PowerCmd.Apply<PlatingPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["PlatingPower"].BaseValue, instance.Owner.Creature, instance);
         await PowerCmd.Apply<EternalArmorPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["EternalArmorPower"].BaseValue, instance.Owner.Creature, instance);
+    }
+
+    [HarmonyPatch(typeof(EternalArmor), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(EternalArmor __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new PowerVar<PlatingPower>(11),
+            new PowerVar<EternalArmorPower>(1)
+        }.AsReadOnly();
+        return false;
     }
 
     [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
@@ -41,7 +59,7 @@ public static class EternalArmorPatch
             return true;
         }
 
-        __result = new LocString("cards", "REBALANCEDSPIRE-ETERNAL_ARMOR.description");
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_ETERNAL_ARMOR.description");
         return false;
     }
 
@@ -60,24 +78,6 @@ public static class EternalArmorPatch
             HoverTipFactory.FromPower<PlatingPower>(),
             HoverTipFactory.FromPower<EternalArmorPower>(),
             HoverTipFactory.Static(StaticHoverTip.Block)
-        }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(EternalArmor), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(EternalArmor __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new PowerVar<PlatingPower>(11),
-            new PowerVar<EternalArmorPower>(1)
         }.AsReadOnly();
         return false;
     }

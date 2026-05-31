@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 // ReSharper disable InconsistentNaming
 public static class ReflectionsPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ReflectionsConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Reflections;
 
     private const int CloneCardsLimit = 13;
 
@@ -71,7 +71,7 @@ public static class ReflectionsPatch
         }
         await Cmd.CustomScaledWait(0.6f, 1.2f);
         await CardPileCmd.AddCurseToDeck<BadLuck>(instance.Owner);
-        instance.SetEventFinished(instance.L10NLookup("REBALANCEDSPIRE-REFLECTIONS.pages.STARE.description"));
+        instance.SetEventFinished(instance.L10NLookup("REBALANCED_SPIRE_EVENT_REFLECTIONS.pages.STARE.description"));
     }
 
     private static async Task Shatter(Reflections instance)
@@ -102,9 +102,9 @@ public static class ReflectionsPatch
 
         __result = new List<EventOption>
         {
-            new(__instance, () => TouchAMirror(__instance), "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.TOUCH_A_MIRROR"),
-            new(__instance, () => Stare(__instance), "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.STARE", HoverTipFactory.FromCardWithCardHoverTips<BadLuck>()),
-            new(__instance, () => Shatter(__instance), "REBALANCEDSPIRE-REFLECTIONS.pages.INITIAL.options.SHATTER")
+            new(__instance, () => TouchAMirror(__instance), "REBALANCED_SPIRE_EVENT_REFLECTIONS.pages.INITIAL.options.TOUCH_A_MIRROR"),
+            new(__instance, () => Stare(__instance), "REBALANCED_SPIRE_EVENT_REFLECTIONS.pages.INITIAL.options.STARE", HoverTipFactory.FromCardWithCardHoverTips<BadLuck>()),
+            new(__instance, () => Shatter(__instance), "REBALANCED_SPIRE_EVENT_REFLECTIONS.pages.INITIAL.options.SHATTER")
         }.AsReadOnly();
         return false;
     }

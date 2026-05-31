@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class OwlMagistratePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.OwlMagistrateConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.OwlMagistrate;
 
     [HarmonyPatch(typeof(OwlMagistrate), "ScrutinyDamage", MethodType.Getter)]
     [HarmonyPostfix]

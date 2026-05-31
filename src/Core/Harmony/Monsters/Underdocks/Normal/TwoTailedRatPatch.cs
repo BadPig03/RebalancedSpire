@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class TwoTailedRatPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TwoTailedRatConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TwoTailedRat;
 
     [HarmonyPatch(typeof(TwoTailedRat), "MaxInitialHp", MethodType.Getter)]
     [HarmonyPostfix]

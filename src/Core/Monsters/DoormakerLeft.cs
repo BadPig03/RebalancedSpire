@@ -13,7 +13,9 @@ using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
 
+[RegisterMonster]
 public sealed class DoormakerLeft : DoormakerBase
 {
     private const int OmnidynamicsPowerAmount = 1;

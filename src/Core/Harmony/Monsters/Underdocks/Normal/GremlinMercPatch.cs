@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class GremlinMercPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.GremlinMercConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.GremlinMerc;
 
     [HarmonyPatch(typeof(GremlinMerc), "DoubleSmashDamage", MethodType.Getter)]
     [HarmonyPostfix]

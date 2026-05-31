@@ -9,8 +9,11 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class ToItsOriginOwner : AfflictionModel
+[RegisterAffliction]
+public sealed class ToItsOriginOwner : ModAfflictionTemplate
 {
     private const int ToItsOriginOwnerPowerAmount = 1;
 
@@ -34,7 +37,7 @@ public sealed class ToItsOriginOwner : AfflictionModel
             return;
         }
 
-        var enemies = Card.CombatState?.Enemies;
+        var enemies = Card.CombatState?.Enemies.ToList();
         if (enemies == null)
         {
             return;
@@ -51,7 +54,7 @@ public sealed class ToItsOriginOwner : AfflictionModel
             return;
         }
 
-        var players = Card.CombatState?.Players;
+        var players = Card.CombatState?.Players.ToList();
         if (players == null)
         {
             return;
@@ -61,7 +64,7 @@ public sealed class ToItsOriginOwner : AfflictionModel
         {
             await PowerCmd.Apply<ToItsOriginOwnerPower>(choiceContext, player.Creature, ToItsOriginOwnerPowerAmount, player.Creature, null);
         }
-        await Cmd.Wait(0.5f);
+        await Cmd.Wait(0.6f);
         foreach (var enemy in byrdonis)
         {
             enemy.RemoveAllPowersInternalExcept();

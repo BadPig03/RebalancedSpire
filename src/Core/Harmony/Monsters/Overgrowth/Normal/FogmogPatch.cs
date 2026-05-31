@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class FogmogPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FogmogConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fogmog;
 
     [HarmonyPatch(typeof(Fogmog), "HeadbuttDamage", MethodType.Getter)]
     [HarmonyPostfix]

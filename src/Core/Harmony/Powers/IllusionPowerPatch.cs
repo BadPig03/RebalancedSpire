@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Powers;
 
 using Configs;
+using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -13,22 +14,27 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class IllusionPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TheObscuraConfig;
-
-    private const int StrengthPowerAmount = -5;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheObscura;
 
     private static async Task ReviveMove(IllusionPower instance)
     {
         await CreatureCmd.TriggerAnim(instance.Owner, "WakeUpTrigger", 0f);
         instance.GetInternalData<IllusionPower.Data>().isReviving = false;
         await CreatureCmd.Heal(instance.Owner, instance.Owner.MaxHp - instance.Owner.CurrentHp);
-        if (instance.Owner.Monster is not Parafright)
+        if (instance.Owner.Monster is not Parafright parafright)
         {
             return;
         }
 
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/obscura/obscura_hologram_heal");
-        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Owner, StrengthPowerAmount, instance.Owner, null);
+        var power = parafright.Creature.GetPower<DisillusionPower>();
+        if (power == null)
+        {
+            return;
+        }
+
+        power.Flash();
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Owner, -power.Amount, instance.Owner, null);
     }
 
     [HarmonyPatch(typeof(IllusionPower), "ReviveMove")]

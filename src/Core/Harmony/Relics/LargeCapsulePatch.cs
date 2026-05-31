@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.Rewards;
 // ReSharper disable InconsistentNaming
 public static class LargeCapsulePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.LargeCapsuleConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LargeCapsule;
 
     private static async Task AfterObtained(LargeCapsule instance)
     {
@@ -31,6 +31,37 @@ public static class LargeCapsulePatch
         await new RewardsSet(instance.Owner).WithCustomRewards(rewards).WithSkippingDisallowed().Offer();
         CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(instance.Owner.RunState.CreateCard(ModelDb.Card<Writhe>(), instance.Owner), PileType.Deck), 2f);
         await Cmd.Wait(0.75f);
+    }
+
+    [HarmonyPatch(typeof(LargeCapsule), "AfterObtained")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterObtained(LargeCapsule __instance, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = AfterObtained(__instance);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(LargeCapsule), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(LargeCapsule __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new StringVar("Writhe", ModelDb.Card<Writhe>().Title)
+        }.AsReadOnly();
+        return false;
     }
 
     [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
@@ -48,7 +79,7 @@ public static class LargeCapsulePatch
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-LARGE_CAPSULE.description");
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_LARGE_CAPSULE.description");
         return false;
     }
 
@@ -67,7 +98,7 @@ public static class LargeCapsulePatch
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-LARGE_CAPSULE.eventDescription");
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_LARGE_CAPSULE.eventDescription");
         return false;
     }
 
@@ -87,38 +118,6 @@ public static class LargeCapsulePatch
         }
 
         __result = HoverTipFactory.FromCardWithCardHoverTips<Writhe>();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(LargeCapsule), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(LargeCapsule __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new IntVar("Relics", 1),
-            new StringVar("Writhe", ModelDb.Card<Writhe>().Title)
-        }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(LargeCapsule), "AfterObtained")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterObtained(LargeCapsule __instance, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = AfterObtained(__instance);
         return false;
     }
 }

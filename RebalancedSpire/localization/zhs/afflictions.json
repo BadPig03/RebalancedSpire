@@ -1,13 +1,13 @@
 ﻿{
-  "WITHERING.description": "这张牌被[gold]消耗[/gold]时会回到你的[gold]弃牌堆[/gold]中。",
-  "WITHERING.extraCardText": "无法逃脱。",
-  "WITHERING.title": "无法逃脱",
-  "TO_ITS_ORIGIN_OWNER.description": "归还[gold]多尼斯异鸟蛋[/gold]，与[gold]多尼斯异鸟[/gold]交好。",
-  "TO_ITS_ORIGIN_OWNER.extraCardText": "获得胜利。",
-  "TO_ITS_ORIGIN_OWNER.title": "物归原主",
-  "DEVOURED.description": "为这张牌添加[gold]消耗[/gold]。",
-  "DEVOURED.title": "吞噬",
-  "WEIGHTED.description": "你的[gold]手牌上限[/gold]减少。",
-  "WEIGHTED.title": "沉重",
-  "TAINTED.description": "这张牌耗能变为[blue]0[/blue]且获得[gold]消耗[/gold]。卡牌会在回合结束时失去[gold]污染[/gold]。"
+  "REBALANCED_SPIRE_AFFLICTION_DEVOURED.description": "为这张牌添加[gold]消耗[/gold]。",
+  "REBALANCED_SPIRE_AFFLICTION_DEVOURED.title": "吞噬",
+  "REBALANCED_SPIRE_AFFLICTION_TAINTED.description": "这张牌耗能变为[blue]0[/blue]且获得[gold]消耗[/gold]。卡牌会在回合结束时失去[gold]污染[/gold]。",
+  "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.description": "归还[gold]多尼斯异鸟蛋[/gold]，与[gold]多尼斯异鸟[/gold]交好。",
+  "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.extraCardText": "获得胜利。",
+  "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.title": "物归原主",
+  "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.description": "你的[gold]手牌上限[/gold]减少。",
+  "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.title": "沉重",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.description": "这张牌被[gold]消耗[/gold]时会回到你的[gold]弃牌堆[/gold]中。",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.extraCardText": "无法逃脱。",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.title": "无法逃脱"
 }

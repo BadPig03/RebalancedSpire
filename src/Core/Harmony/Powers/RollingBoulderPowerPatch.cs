@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class RollingBoulderPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.RollingBoulderConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.RollingBoulder;
 
     [HarmonyPatch(typeof(RollingBoulderPower), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

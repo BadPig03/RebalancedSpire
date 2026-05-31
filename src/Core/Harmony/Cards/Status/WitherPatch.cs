@@ -15,45 +15,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class WitherPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.AeonglassConfig;
-
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Wither wither)
-        {
-            return true;
-        }
-
-        __result = wither.FakeUpgradeLevel == 0 && CombatManager.Instance.IsInProgress ? new LocString("cards", "REBALANCEDSPIRE-WITHER.extraDescription") : new LocString("cards", "REBALANCEDSPIRE-WITHER.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "ShouldGlowGoldInternal", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_ShouldGlowGoldInternal(CardModel __instance, ref bool __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Wither wither)
-        {
-            return true;
-        }
-
-        __result = wither.FakeUpgradeLevel == 0;
-        return false;
-    }
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Aeonglass;
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]
@@ -71,6 +33,20 @@ public static class WitherPatch
         }
 
         __result = 1;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Wither), "CanonicalKeywords", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalKeywords(Wither __instance, ref IEnumerable<CardKeyword> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<CardKeyword>().AsReadOnly();
         return false;
     }
 
@@ -92,17 +68,22 @@ public static class WitherPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(Wither), "CanonicalKeywords", MethodType.Getter)]
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_CanonicalKeywords(Wither __instance, ref IEnumerable<CardKeyword> __result)
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __result = new List<CardKeyword>().AsReadOnly();
+        if (__instance is not Wither wither)
+        {
+            return true;
+        }
+
+        __result = wither.FakeUpgradeLevel == 0 && CombatManager.Instance.IsInProgress ? new LocString("cards", "REBALANCED_SPIRE_CARD_WITHER.extraDescription") : new LocString("cards", "REBALANCED_SPIRE_CARD_WITHER.description");
         return false;
     }
 
@@ -118,6 +99,25 @@ public static class WitherPatch
 
         __instance.FakeUpgradeLevel++;
         __instance.DynamicVars.Damage.UpgradeValueBy(__instance.DynamicVars["PerLevel"].BaseValue);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "ShouldGlowGoldInternal", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_ShouldGlowGoldInternal(CardModel __instance, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Wither wither)
+        {
+            return true;
+        }
+
+        __result = wither.FakeUpgradeLevel == 0;
         return false;
     }
 }

@@ -18,57 +18,17 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SicEmPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SicEmConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SicEm;
 
     private static async Task OnPlay(SicEm instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Target == null)
+        if (cardPlay.Target == null || Osty.CheckMissingWithAnim(instance.Owner) || instance.Owner.Osty == null)
         {
             return;
         }
 
-        if (!Osty.CheckMissingWithAnim(instance.Owner) && instance.Owner.Osty != null)
-        {
-            await DamageCmd.Attack(instance.DynamicVars.OstyDamage.BaseValue).FromOsty(instance.Owner.Osty, instance).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3").Execute(choiceContext);
-        }
+        await DamageCmd.Attack(instance.DynamicVars.OstyDamage.BaseValue).FromOsty(instance.Owner.Osty, instance).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3").Execute(choiceContext);
         await PowerCmd.Apply<SicEmPlusPower>(choiceContext, cardPlay.Target, instance.DynamicVars["SicEmPlusPower"].BaseValue, instance.Owner.Creature, instance);
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not SicEm)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-SIC_EM.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(SicEm), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(SicEm __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new OstyDamageVar(5, ValueProp.Move),
-            new PowerVar<SicEmPlusPower>(2)
-        }.AsReadOnly();
-        return false;
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalKeywords", MethodType.Getter)]
@@ -90,6 +50,43 @@ public static class SicEmPatch
         {
             CardKeyword.Exhaust
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(SicEm), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(SicEm __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new OstyDamageVar(5, ValueProp.Move),
+            new PowerVar<SicEmPlusPower>(2)
+        }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not SicEm)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_SIC_EM.description");
         return false;
     }
 

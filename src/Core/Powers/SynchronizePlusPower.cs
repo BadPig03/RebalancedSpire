@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -8,8 +7,11 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class SynchronizePlusPower : CustomPowerModel
+[RegisterPower]
+public sealed class SynchronizePlusPower : ModPowerTemplate
 {
     private class Data
     {
@@ -20,11 +22,12 @@ public sealed class SynchronizePlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-synchronize_plus_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_synchronize_plus_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_synchronize_plus_power.png"
+    );
 
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-synchronize_plus_power.png";
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<FocusPower>()
     ]).AsReadOnly();

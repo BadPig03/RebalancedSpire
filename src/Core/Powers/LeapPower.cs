@@ -1,12 +1,21 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
+using STS2RitsuLib.Combat.Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class LeapPower : CustomTemporaryPowerModelWrapper<Leap, FocusPower>
+[RegisterPower]
+public sealed class LeapPower : ModTemporaryPowerTemplate
 {
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-leap_power.png";
+    public override AbstractModel OriginModel => ModelDb.Card<Leap>();
 
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-leap_power.png";
+    public override PowerModel InternallyAppliedPower => ModelDb.Power<FocusPower>();
+
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_leap_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_leap_power.png"
+    );
 }

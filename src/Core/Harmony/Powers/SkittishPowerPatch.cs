@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SkittishPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.PhantasmalGardenerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PhantasmalGardener;
 
     private const int StrengthPowerAmount = -1;
 
@@ -26,44 +26,6 @@ public static class SkittishPowerPatch
         await CreatureCmd.TriggerAnim(instance.Owner, "BlockStart", 0.3f);
         await CreatureCmd.GainBlock(instance.Owner, instance.Amount, ValueProp.Unpowered, null);
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Owner, StrengthPowerAmount, instance.Owner, null);
-    }
-
-    [HarmonyPatch(typeof(PowerModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(PowerModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not SkittishPower)
-        {
-            return true;
-        }
-
-        __result = new LocString("powers", "REBALANCEDSPIRE-SKITTISH_POWER.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(PowerModel), "SmartDescriptionLocKey", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_SmartDescriptionLocKey(PowerModel __instance, ref string __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not SkittishPower)
-        {
-            return true;
-        }
-
-        __result = "REBALANCEDSPIRE-SKITTISH_POWER.smartDescription";
-        return false;
     }
 
     [HarmonyPatch(typeof(SkittishPower), "AfterAttack")]
@@ -88,6 +50,44 @@ public static class SkittishPowerPatch
         }
 
         __result = AfterAttack(__instance);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(PowerModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(PowerModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not SkittishPower)
+        {
+            return true;
+        }
+
+        __result = new LocString("powers", "REBALANCED_SPIRE_POWER_SKITTISH_POWER.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(PowerModel), "SmartDescriptionLocKey", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_SmartDescriptionLocKey(PowerModel __instance, ref string __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not SkittishPower)
+        {
+            return true;
+        }
+
+        __result = "REBALANCED_SPIRE_POWER_SKITTISH_POWER.smartDescription";
         return false;
     }
 }

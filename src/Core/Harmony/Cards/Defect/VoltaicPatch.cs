@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class VoltaicPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VoltaicConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Voltaic;
 
     [HarmonyPatch(typeof(Voltaic), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]

@@ -9,12 +9,12 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class ZapbotPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FabricatorConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fabricator;
 
-    [HarmonyPatch(typeof(Zapbot), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPatch(typeof(Zapbot), "MaxInitialHp", MethodType.Getter)]
     [HarmonyPostfix]
     [UsedImplicitly]
-    private static void ReduceMinInitialHp(ref int __result)
+    private static void ReduceMaxInitialHp(ref int __result)
     {
         if (Disabled)
         {
@@ -24,10 +24,10 @@ public static class ZapbotPatch
         __result = 36;
     }
 
-    [HarmonyPatch(typeof(Zapbot), "MaxInitialHp", MethodType.Getter)]
+    [HarmonyPatch(typeof(Zapbot), "MinInitialHp", MethodType.Getter)]
     [HarmonyPostfix]
     [UsedImplicitly]
-    private static void ReduceMaxInitialHp(ref int __result)
+    private static void ReduceMinInitialHp(ref int __result)
     {
         if (Disabled)
         {

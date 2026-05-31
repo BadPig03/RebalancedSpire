@@ -1,5 +1,8 @@
 ﻿{
-  "REBALANCEDSPIRE-POISONOUS.description": "这张牌额外造成[blue]{Damage}[/blue]点伤害，并给予[blue]{PoisonPower}[/blue]层[gold]中毒[/gold]。",
-  "REBALANCEDSPIRE-POISONOUS.extraCardText": "给予{TargetType:choose(AllEnemies):所有敌人|}[blue]{PoisonPower}[/blue]层[gold]中毒[/gold]。",
-  "REBALANCEDSPIRE-POISONOUS.title": "剧毒"
+  "REBALANCED_SPIRE_ENCHANTMENT_POISONOUS.description": "这张牌给予[blue]{PoisonPower}[/blue]层[gold]中毒[/gold]。",
+  "REBALANCED_SPIRE_ENCHANTMENT_POISONOUS.extraCardText": "给予{TargetType:choose(AllEnemies):所有敌人|}[blue]{PoisonPower}[/blue]层[gold]中毒[/gold]。",
+  "REBALANCED_SPIRE_ENCHANTMENT_POISONOUS.title": "剧毒",
+  "REBALANCED_SPIRE_ENCHANTMENT_ENERGETIC.description": "造成的伤害减少[red]100%[/red]。你在每场战斗中第一次打出这张牌时，获得{Amount:energyIcons()}。",
+  "REBALANCED_SPIRE_ENCHANTMENT_ENERGETIC.extraCardText": "获得{Amount:energyIcons()}。",
+  "REBALANCED_SPIRE_ENCHANTMENT_ENERGETIC.title": "聚能"
 }

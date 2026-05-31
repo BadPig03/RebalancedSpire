@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class NoisebotPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FabricatorConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fabricator;
 
     private const int DazedAmount = 1;
 
@@ -46,32 +46,6 @@ public static class NoisebotPatch
         }
     }
 
-    [HarmonyPatch(typeof(Noisebot), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = 36;
-    }
-
-    [HarmonyPatch(typeof(Noisebot), "MaxInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMaxInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = 36;
-    }
-
     [HarmonyPatch(typeof(Noisebot), "GenerateMoveStateMachine")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -89,4 +63,31 @@ public static class NoisebotPatch
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
     }
+
+    [HarmonyPatch(typeof(Noisebot), "MaxInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMaxInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = 36;
+    }
+
+    [HarmonyPatch(typeof(Noisebot), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = 36;
+    }
+
 }

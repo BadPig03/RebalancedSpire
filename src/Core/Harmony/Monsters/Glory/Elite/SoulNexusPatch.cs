@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class SoulNexusPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SoulNexusConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SoulNexus;
 
     private const int MaelstromDamage = 2;
     private const int SoulStrikeDamage = 4;
@@ -56,7 +56,7 @@ public static class SoulNexusPatch
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.8f);
         foreach (var power in instance.Creature.GetPowerInstances<SoulWitherPower>())
         {
-            power.Reset();
+            power.HitCount = 0;
         }
         await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), targets, VulnerablePowerAmount, instance.Creature, null);
     }

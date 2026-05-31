@@ -20,7 +20,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 // ReSharper disable InconsistentNaming
 public static class MagiKnightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.KnightsConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Knights;
 
     private static int BombDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 45, 40);
 

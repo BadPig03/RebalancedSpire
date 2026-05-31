@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class FlickFlackPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FlickFlackConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.FlickFlack;
 
     [HarmonyPatch(typeof(FlickFlack), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class SlitheringStranglerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SlitheringStranglerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SlitheringStrangler;
 
     private const int ConstrictPowerAmount = 2;
 

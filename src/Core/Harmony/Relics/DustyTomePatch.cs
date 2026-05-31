@@ -5,6 +5,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -18,7 +19,7 @@ using MegaCrit.Sts2.Core.Runs;
 // ReSharper disable InconsistentNaming
 public static class DustyTomePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DustyTomeConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DustyTome;
 
     private static async Task AfterObtained(DustyTome instance)
     {
@@ -35,44 +36,6 @@ public static class DustyTomePatch
         }
 
         CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(chosenCard, PileType.Deck));
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not DustyTome)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-DUSTY_TOME.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not DustyTome)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-DUSTY_TOME.eventDescription");
-        return false;
     }
 
     [HarmonyPatch(typeof(DustyTome), "AfterObtained")]
@@ -106,6 +69,44 @@ public static class DustyTomePatch
         return false;
     }
 
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not DustyTome)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_DUSTY_TOME.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not DustyTome)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_DUSTY_TOME.eventDescription");
+        return false;
+    }
+
     [HarmonyPatch(typeof(DustyTome), "ExtraHoverTips", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -120,10 +121,10 @@ public static class DustyTomePatch
         return false;
     }
 
-    [HarmonyPatch(typeof(DustyTome), "AncientCard", MethodType.Setter)]
+    [HarmonyPatch(typeof(DustyTome), "SetupForPlayer")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AncientCard_Setter(DustyTome __instance)
+    private static bool PreFix_SetupForPlayer(DustyTome __instance, Player player)
     {
         return Disabled;
     }

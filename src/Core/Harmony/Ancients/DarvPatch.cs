@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class DarvPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DarvChoicesConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DarvAncientChoices;
 
     [HarmonyPatch(typeof(Darv), "GenerateInitialOptions")]
     [HarmonyPrefix]

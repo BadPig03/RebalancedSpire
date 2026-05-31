@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class SpectralKnightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.KnightsConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Knights;
 
     private const int HexPowerAmount = 1;
     private const int IntangiblePowerAmount = 1;
@@ -63,19 +63,6 @@ public static class SpectralKnightPatch
         await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, (int) Math.Sqrt(instance.Creature.MaxHp * MinInitialHp));
     }
 
-    [HarmonyPatch(typeof(SpectralKnight), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = MinInitialHp;
-    }
-
     [HarmonyPatch(typeof(MonsterModel), "AfterAddedToRoom")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -117,5 +104,18 @@ public static class SpectralKnightPatch
         list.Add(moveState3);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(SpectralKnight), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = MinInitialHp;
     }
 }

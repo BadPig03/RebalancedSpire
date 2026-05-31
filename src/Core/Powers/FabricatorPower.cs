@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using Harmony.Monsters.Glory.Normal;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -11,16 +10,20 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class FabricatorPower : CustomPowerModel
+[RegisterPower]
+public sealed class FabricatorPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-fabricator_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-fabricator_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_fabricator_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_fabricator_power.png"
+    );
 
     public override bool ShouldPlayVfx => false;
 

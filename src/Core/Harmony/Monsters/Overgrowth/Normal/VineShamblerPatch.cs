@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class VineShamblerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.VineShamblerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.VineShambler;
 
     private const int SwipeCount = 2;
     private const int TangledPowerAmount = 1;

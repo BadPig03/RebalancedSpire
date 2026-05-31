@@ -23,7 +23,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 // ReSharper disable InconsistentNaming
 public static class ThievingHopperPatch
 {
-	private static readonly bool Disabled = !RebalancedSpireConfig.ThievingHopperConfig;
+	private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ThievingHopper;
 
 	private const int WeakPowerAmount = 2;
 	private const int SwipePowerAmount = 1;

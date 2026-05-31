@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class DecimillipedeSegmentPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DecimillipedeConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Decimillipede;
 
     private const int BulkStrength = 1;
     private const int ReattachPowerAmount = 20;

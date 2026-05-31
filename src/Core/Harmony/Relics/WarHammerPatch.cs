@@ -11,42 +11,68 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Utils;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class WarHammerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.WarHammerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WarHammer;
 
-    private static Task UpgradeARandomCard(WarHammer instance)
+    private static readonly SavedAttachedState<WarHammer, int> EnemiesKilled = new("REBALANCED_SPIRE_RELIC_WAR_HAMMER", () => 0);
+
+    private static Task AfterCombatVictory(WarHammer instance)
     {
-        instance.Flash();
-        foreach (var card in PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).Take(instance.DynamicVars.Cards.IntValue))
+        var killed = EnemiesKilled[instance];
+        for (var i = 0; i < killed; i++)
         {
-            CardCmd.Upgrade(card);
+            foreach (var card in PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).Take(instance.DynamicVars.Cards.IntValue))
+            {
+                CardCmd.Upgrade(card);
+            }
         }
+        EnemiesKilled.Set(instance, 0);
+        instance.Flash();
+        instance.InvokeDisplayAmountChanged();
         return Task.CompletedTask;
     }
 
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(WarHammer), "AfterCombatVictory")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    private static bool PreFix_AfterCombatVictory(WarHammer __instance, CombatRoom room, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not WarHammer)
+        __result = AfterCombatVictory(__instance);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(AbstractModel), "AfterDamageGiven")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterDamageGiven(AbstractModel __instance, PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource, ref Task __result)
+    {
+        if (Disabled)
         {
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-WAR_HAMMER.description");
+        if (__instance is not WarHammer warHammer || !target.Powers.All(p => p.ShouldOwnerDeathTriggerFatal()) || !result.WasTargetKilled)
+        {
+            return true;
+        }
+
+        EnemiesKilled.Update(warHammer, i => i + 1);
+        warHammer.Flash();
+        warHammer.InvokeDisplayAmountChanged();
+        __result = Task.CompletedTask;
         return false;
     }
 
@@ -67,36 +93,61 @@ public static class WarHammerPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(AbstractModel), "AfterDeath")]
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterDeath(AbstractModel __instance, PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength, ref Task __result)
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not WarHammer warHammer || creature.HasPower<MinionPower>() || creature.IsPet || !creature.IsMonster || creature.CombatState?.Enemies.Any(c => c.IsAlive) == false)
+        if (__instance is not WarHammer)
         {
             return true;
         }
 
-        __result = UpgradeARandomCard(warHammer);
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_WAR_HAMMER.description");
         return false;
     }
 
-    [HarmonyPatch(typeof(WarHammer), "AfterCombatVictory")]
+    [HarmonyPatch(typeof(RelicModel), "DisplayAmount", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterCombatVictory(WarHammer __instance, CombatRoom room, ref Task __result)
+    private static bool PreFix_DisplayAmount(RelicModel __instance, ref int __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __result = UpgradeARandomCard(__instance);
+        if (__instance is not WarHammer warHammer)
+        {
+            return true;
+        }
+
+        __result = EnemiesKilled[warHammer];
         return false;
     }
+
+    [HarmonyPatch(typeof(RelicModel), "ShowCounter", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_ShowCounter(RelicModel __instance, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not WarHammer)
+        {
+            return true;
+        }
+
+        __result = true;
+        return false;
+    }
+
 }

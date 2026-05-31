@@ -31,7 +31,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class KinFollowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TheKinConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheKin;
 
     private const int BoomerangCount = 2;
     private const int GuardPowerAmount = 1;
@@ -199,6 +199,20 @@ public static class KinFollowerPatch
         NRunMusicController.Instance?.UpdateMusicParameter("the_kin_progress", 5f);
     }
 
+    [HarmonyPatch(typeof(KinFollower), "AfterAddedToRoom")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterAddedToRoom(KinFollower __instance, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = AfterAddedToRoom(__instance);
+        return false;
+    }
+
     [HarmonyPatch(typeof(AbstractModel), "AfterDeath")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -215,20 +229,6 @@ public static class KinFollowerPatch
         }
 
         __result = AfterDeath(kinFollower);
-        return false;
-    }
-
-    [HarmonyPatch(typeof(KinFollower), "AfterAddedToRoom")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterAddedToRoom(KinFollower __instance, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = AfterAddedToRoom(__instance);
         return false;
     }
 
@@ -284,20 +284,21 @@ public static class KinFollowerPatch
     }
 
     [HarmonyPatch(typeof(MonsterModel), "Title", MethodType.Getter)]
-    [HarmonyPostfix]
+    [HarmonyPrefix]
     [UsedImplicitly]
-    private static void PostFix_Title(MonsterModel __instance, ref LocString __result)
+    private static bool PreFix_Title(MonsterModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
-            return;
+            return false;
         }
 
         if (__instance is not KinFollower { StartsWithDance: true })
         {
-            return;
+            return true;
         }
 
         __result = MonsterModel.L10NMonsterLookup("KIN_FOLLOWER_FAKE.name");
+        return true;
     }
 }

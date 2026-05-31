@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class FollyPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.PreservedFogConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PreservedFog;
 
     [HarmonyPatch(typeof(Folly), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]
@@ -25,8 +25,8 @@ public static class FollyPatch
         __result = new List<CardKeyword>
         {
             CardKeyword.Unplayable,
-            CardKeyword.Eternal,
-            CardKeyword.Innate
+            CardKeyword.Innate,
+            CardKeyword.Eternal
         }.AsReadOnly();
         return false;
     }

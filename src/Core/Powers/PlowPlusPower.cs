@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -10,8 +9,11 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class PlowPlusPower : CustomPowerModel
+[RegisterPower]
+public sealed class PlowPlusPower : ModPowerTemplate
 {
     private const int PlowedPowerAmount = 1;
 
@@ -19,13 +21,14 @@ public sealed class PlowPlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-plow_plus_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-plow_plus_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_plow_plus_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_plow_plus_power.png"
+    );
 
     public override bool ShouldPlayVfx => false;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.Static(StaticHoverTip.Stun),
         HoverTipFactory.FromPower<StrengthPower>()

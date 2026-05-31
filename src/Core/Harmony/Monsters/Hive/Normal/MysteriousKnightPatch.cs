@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public class MysteriousKnightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TheLanternKeyConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheLanternKey;
 
     private const int StrengthPowerAmount = 3;
     private const int PlatingPowerAmount = 3;

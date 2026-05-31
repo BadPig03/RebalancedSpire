@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Orbs;
 // ReSharper disable InconsistentNaming
 public static class RefractPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.RefractConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Refract;
 
     private static async Task OnPlay(Refract instance, PlayerChoiceContext choiceContext)
     {
@@ -26,10 +26,10 @@ public static class RefractPatch
         }
     }
 
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
     {
         if (Disabled)
         {
@@ -41,26 +41,7 @@ public static class RefractPatch
             return true;
         }
 
-        __result = new LocString("cards", "REBALANCEDSPIRE-REFRACT.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Refract)
-        {
-            return true;
-        }
-
-        __result = CardRarity.Common;
+        __result = 1;
         return false;
     }
 
@@ -86,63 +67,6 @@ public static class RefractPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(CardModel), "Type", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Type(CardModel __instance, ref CardType __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Refract)
-        {
-            return true;
-        }
-
-        __result = CardType.Skill;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "TargetType", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_TargetType(CardModel __instance, ref TargetType __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Refract)
-        {
-            return true;
-        }
-
-        __result = TargetType.Self;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Refract)
-        {
-            return true;
-        }
-
-        __result = 1;
-        return false;
-    }
-
     [HarmonyPatch(typeof(Refract), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -157,6 +81,25 @@ public static class RefractPatch
         {
             new RepeatVar(2)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Refract)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_REFRACT.description");
         return false;
     }
 
@@ -185,6 +128,63 @@ public static class RefractPatch
         }
 
         __instance.RemoveKeyword(CardKeyword.Exhaust);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Refract)
+        {
+            return true;
+        }
+
+        __result = CardRarity.Common;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "TargetType", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_TargetType(CardModel __instance, ref TargetType __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Refract)
+        {
+            return true;
+        }
+
+        __result = TargetType.Self;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Type", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Type(CardModel __instance, ref CardType __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Refract)
+        {
+            return true;
+        }
+
+        __result = CardType.Skill;
         return false;
     }
 }

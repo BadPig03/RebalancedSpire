@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class ToastyMittensPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ToastyMittensConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ToastyMittens;
 
     private static async Task AfterPlayerTurnStart(ToastyMittens instance, PlayerChoiceContext choiceContext, Player player)
     {
@@ -29,44 +29,6 @@ public static class ToastyMittensPatch
             await CardCmd.Exhaust(choiceContext, card);
         }
         await PowerCmd.Apply<StrengthPower>(choiceContext, player.Creature, instance.DynamicVars.Strength.BaseValue, player.Creature, null);
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not ToastyMittens)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-TOASTY_MITTENS.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(ToastyMittens), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(ToastyMittens __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new PowerVar<StrengthPower>(1),
-            new CardsVar("ChooseCards", 1),
-            new CardsVar("AllCards", 5)
-        }.AsReadOnly();
-        return false;
     }
 
     [HarmonyPatch(typeof(AbstractModel), "AfterPlayerTurnStart")]
@@ -101,4 +63,43 @@ public static class ToastyMittensPatch
         __result = Task.CompletedTask;
         return false;
     }
+
+    [HarmonyPatch(typeof(ToastyMittens), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(ToastyMittens __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new PowerVar<StrengthPower>(1),
+            new CardsVar("ChooseCards", 1),
+            new CardsVar("AllCards", 5)
+        }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not ToastyMittens)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_TOASTY_MITTENS.description");
+        return false;
+    }
+
 }

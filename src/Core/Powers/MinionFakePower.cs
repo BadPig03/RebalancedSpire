@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -9,16 +8,20 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class MinionFakePower : CustomPowerModel
+[RegisterPower]
+public sealed class MinionFakePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-minion_fake_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-minion_fake_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_minion_fake_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_minion_fake_power.png"
+    );
 
     public override bool ShouldPlayVfx => false;
 

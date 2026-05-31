@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -9,16 +8,20 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class AfterlifePower : CustomPowerModel
+[RegisterPower]
+public sealed class AfterlifePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-afterlife_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-afterlife_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_afterlife_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_afterlife_power.png"
+    );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
@@ -26,7 +29,7 @@ public sealed class AfterlifePower : CustomPowerModel
         new SummonVar(Amount - 1)
     ]).AsReadOnly();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.Static(StaticHoverTip.SummonDynamic, DynamicVars.Summon)
     ]).AsReadOnly();

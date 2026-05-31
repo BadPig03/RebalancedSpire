@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class GasBombPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.LivingFogConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LivingFog;
 
     private static async Task ExplodeMove(GasBomb instance)
     {

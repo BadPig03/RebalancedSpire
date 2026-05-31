@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class PunchOffEventEncounterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.PunchOffConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PunchOff;
 
     [HarmonyPatch(typeof(PunchOffEventEncounter), "GenerateMonsters")]
     [HarmonyPrefix]

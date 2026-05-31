@@ -11,20 +11,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class FossilStalkerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FossilStalkerConfig;
-
-    [HarmonyPatch(typeof(FossilStalker), "TackleDamage", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceTackleDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 1;
-    }
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.FossilStalker;
 
     [HarmonyPatch(typeof(FossilStalker), "GenerateMoveStateMachine")]
     [HarmonyPrefix]
@@ -48,5 +35,18 @@ public static class FossilStalkerPatch
         list.Add(moveState3);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(FossilStalker), "TackleDamage", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceTackleDamage(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result -= 1;
     }
 }

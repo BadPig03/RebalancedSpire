@@ -23,7 +23,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class TestSubjectPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TestSubjectConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TestSubject;
 
     private const int AdaptablePowerAmount = 1;
     private const int BigPounceDamage = 45;
@@ -38,12 +38,14 @@ public static class TestSubjectPatch
     private static int LacerateDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
     private static int MultiClawDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 11, 10);
     private static int PounceDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
+    private static int SecondFormHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 222, 210);
     private static int SkullBashDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 14, 12);
     private static int StrengthPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2,1);
+    private static int ThirdFormHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 333, 320);
 
     private static async Task GrowlMove(TestSubject instance)
     {
-        await CreatureCmd.TriggerAnim(instance.Creature, "BurnTrigger", 1.25f);
+        await CreatureCmd.TriggerAnim(instance.Creature, "BiteTrigger", 0.25f);
         await PowerCmd.Apply<EnragePower>(new ThrowingPlayerChoiceContext(), instance.Creature, EnragePowerAmount, instance.Creature, null);
     }
 
@@ -125,34 +127,6 @@ public static class TestSubjectPatch
         instance.Creature.PowerRemoved += instance.AfterPowerRemoved;
     }
 
-    [HarmonyPatch(typeof(TestSubject), "SecondFormHp", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool Prefix_SecondFormHp(TestSubject __instance, ref int __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 222, 210);
-        return false;
-    }
-
-    [HarmonyPatch(typeof(TestSubject), "ThirdFormHp", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool Prefix_ThirdFormHp(TestSubject __instance, ref int __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 333, 320);
-        return false;
-    }
-
     [HarmonyPatch(typeof(TestSubject), "AfterAddedToRoom")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -213,6 +187,34 @@ public static class TestSubjectPatch
         list.Add(moveState8);
         list.Add(conditionalBranchState);
         __result = new MonsterMoveStateMachine(list, moveState);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(TestSubject), "SecondFormHp", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool Prefix_SecondFormHp(TestSubject __instance, ref int __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = SecondFormHp;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(TestSubject), "ThirdFormHp", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool Prefix_ThirdFormHp(TestSubject __instance, ref int __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = ThirdFormHp;
         return false;
     }
 }

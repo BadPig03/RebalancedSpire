@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class InfestedPrismPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.InfestedPrismConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.InfestedPrism;
 
     private const int TaintedPlusPowerAmount = 1;
     private const int WhirlwindRepeat = 3;
@@ -29,25 +29,11 @@ public static class InfestedPrismPatch
 
     private static async Task AfterAddedToRoom(InfestedPrism instance)
     {
-        var players = instance.CombatState.Players;
+        var players = instance.CombatState.Players.ToList();
         foreach (var player in players)
         {
             await PowerCmd.Apply<TaintedPlusPower>(new ThrowingPlayerChoiceContext(), player.Creature, TaintedPlusPowerAmount, instance.Creature, null);
         }
-    }
-
-    [HarmonyPatch(typeof(InfestedPrism), "AfterAddedToRoom")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterAddedToRoom(InfestedPrism __instance, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = AfterAddedToRoom(__instance);
-        return false;
     }
 
     private static async Task JabMove(InfestedPrism instance)
@@ -70,6 +56,20 @@ public static class InfestedPrismPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/infested_prisms/infested_prisms_buff");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.6f);
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, PulsatePowerAmount, instance.Creature, null);
+    }
+
+    [HarmonyPatch(typeof(InfestedPrism), "AfterAddedToRoom")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterAddedToRoom(InfestedPrism __instance, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = AfterAddedToRoom(__instance);
+        return false;
     }
 
     [HarmonyPatch(typeof(InfestedPrism), "GenerateMoveStateMachine")]

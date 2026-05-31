@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class RightHandHandPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.RightHandHandConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.RightHandHand;
 
     private static async Task AfterCardPlayedLate(RightHandHand instance, CardPlay cardPlay)
     {
@@ -30,25 +30,20 @@ public static class RightHandHandPatch
         {
             await CardPileCmd.Add(instance, PileType.Hand);
         }
-        instance.EnergyCost.AddThisCombat(-1);
+        instance.EnergyCost.AddThisCombat(-instance.DynamicVars["Energy"].IntValue);
     }
 
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(RightHandHand), "AfterCardPlayedLate")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    private static bool PreFix_AfterCardPlayedLate(RightHandHand __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not RightHandHand)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-RIGHT_HAND_HAND.description");
+        __result = AfterCardPlayedLate(__instance, cardPlay);
         return false;
     }
 
@@ -90,17 +85,22 @@ public static class RightHandHandPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(RightHandHand), "AfterCardPlayedLate")]
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterCardPlayedLate(RightHandHand __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __result = AfterCardPlayedLate(__instance, cardPlay);
+        if (__instance is not RightHandHand)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_RIGHT_HAND_HAND.description");
         return false;
     }
 

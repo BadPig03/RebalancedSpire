@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class ByrdonisEggPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ByrdonisConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Byrdonis;
 
     [HarmonyPatch(typeof(CardModel), "ShouldGlowGoldInternal", MethodType.Getter)]
     [HarmonyPrefix]

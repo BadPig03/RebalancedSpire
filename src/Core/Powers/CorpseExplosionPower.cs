@@ -1,22 +1,25 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class CorpseExplosionPower : CustomPowerModel
+[RegisterPower]
+public sealed class CorpseExplosionPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Debuff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-corpse_explosion_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-corpse_explosion_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_corpse_explosion_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_corpse_explosion_power.png"
+    );
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
@@ -25,7 +28,7 @@ public sealed class CorpseExplosionPower : CustomPowerModel
             return;
         }
 
-        var enemies = creature.CombatState?.HittableEnemies.ToList();
+        var enemies = Owner.CombatState?.HittableEnemies.ToList();
         if (enemies == null)
         {
             return;

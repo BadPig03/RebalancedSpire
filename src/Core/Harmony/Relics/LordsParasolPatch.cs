@@ -13,26 +13,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class LordsParasolPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.LordsParasolConfig;
-
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not LordsParasol)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-LORDS_PARASOL.description");
-        return false;
-    }
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LordsParasol;
 
     [HarmonyPatch(typeof(RelicModel), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
@@ -53,6 +34,25 @@ public static class LordsParasolPatch
         {
             new EnergyVar(1)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not LordsParasol)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_LORDS_PARASOL.description");
         return false;
     }
 

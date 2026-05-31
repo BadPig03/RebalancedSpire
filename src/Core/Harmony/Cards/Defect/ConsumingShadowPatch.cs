@@ -16,48 +16,12 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class ConsumingShadowPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ConsumingShadowConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ConsumingShadow;
 
     private static async Task OnPlay(ConsumingShadow instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<ConsumingShadowPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["ConsumingShadowPlusPower"].BaseValue, instance.Owner.Creature, instance);
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not ConsumingShadow)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-CONSUMING_SHADOW.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(ConsumingShadow), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(ConsumingShadow __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new PowerVar<ConsumingShadowPlusPower>(1)
-        }.AsReadOnly();
-        return false;
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
@@ -101,17 +65,39 @@ public static class ConsumingShadowPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(ConsumingShadow), "OnUpgrade")]
+    [HarmonyPatch(typeof(ConsumingShadow), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_OnUpgrade(ConsumingShadow __instance)
+    private static bool PreFix_CanonicalVars(ConsumingShadow __instance, ref IEnumerable<DynamicVar> __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __instance.RemoveKeyword(CardKeyword.Ethereal);
+        __result = new List<DynamicVar>
+        {
+            new PowerVar<ConsumingShadowPlusPower>(1)
+        }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not ConsumingShadow)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_CONSUMING_SHADOW.description");
         return false;
     }
 
@@ -126,6 +112,20 @@ public static class ConsumingShadowPatch
         }
 
         __result = OnPlay(__instance, choiceContext);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(ConsumingShadow), "OnUpgrade")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_OnUpgrade(ConsumingShadow __instance)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __instance.RemoveKeyword(CardKeyword.Ethereal);
         return false;
     }
 }

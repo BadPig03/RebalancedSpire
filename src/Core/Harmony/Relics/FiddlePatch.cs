@@ -12,7 +12,21 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class FiddlePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FiddleConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fiddle;
+
+    [HarmonyPatch(typeof(Fiddle), "AfterPreventingDraw")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterPreventingDraw(ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = Task.CompletedTask;
+        return false;
+    }
 
     [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
@@ -29,7 +43,7 @@ public static class FiddlePatch
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-FIDDLE.description");
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_FIDDLE.description");
         return false;
     }
 
@@ -49,20 +63,6 @@ public static class FiddlePatch
         }
 
         __result = true;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Fiddle), "AfterPreventingDraw")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_AfterPreventingDraw(ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = Task.CompletedTask;
         return false;
     }
 }

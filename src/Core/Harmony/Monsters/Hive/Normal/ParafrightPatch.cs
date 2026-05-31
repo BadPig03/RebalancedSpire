@@ -15,10 +15,10 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class ParafrightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TheObscuraConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheObscura;
 
     private const int IllusionPowerAmount = 1;
-    private const int DisillusionPowerAmount = 1;
+    private const int DisillusionPowerAmount = 5;
 
     private static async Task AfterAddedToRoom(Parafright instance)
     {

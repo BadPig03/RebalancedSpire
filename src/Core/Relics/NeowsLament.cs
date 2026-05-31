@@ -1,8 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Relics;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils;
-using Configs;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -11,12 +8,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.RelicPools;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-[Pool(typeof(SharedRelicPool))]
-public sealed class NeowsLament() : CustomRelicModel(!Disabled)
+[RegisterRelic(typeof(SharedRelicPool))]
+public sealed class NeowsLament : ModRelicTemplate
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.NeowsLamentConfig;
-
     private const int MaxCount = 3;
 
     private int _timesUsed;
@@ -29,9 +26,11 @@ public sealed class NeowsLament() : CustomRelicModel(!Disabled)
         {
             AssertMutable();
             _timesUsed = value;
-            DynamicVars["Rooms"].BaseValue = MaxCount - _timesUsed;
             InvokeDisplayAmountChanged();
-            CheckIfUsedUp();
+            if (IsUsedUp)
+            {
+                Status = RelicStatus.Disabled;
+            }
         }
     }
 
@@ -76,7 +75,6 @@ public sealed class NeowsLament() : CustomRelicModel(!Disabled)
             return Task.CompletedTask;
         }
 
-        Flash();
         TimesUsed++;
         return Task.CompletedTask;
     }
@@ -91,15 +89,5 @@ public sealed class NeowsLament() : CustomRelicModel(!Disabled)
         Flash();
         VfxCmd.PlayOnCreatureCenter(creature, "vfx/vfx_bite");
         await CreatureCmd.SetCurrentHp(creature, 1);
-    }
-
-    private void CheckIfUsedUp()
-    {
-        if (!IsUsedUp)
-        {
-            return;
-        }
-
-        Status = RelicStatus.Disabled;
     }
 }

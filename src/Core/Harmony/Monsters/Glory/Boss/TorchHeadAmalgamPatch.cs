@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class TorchHeadAmalgamPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.QueenConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Queen;
 
     [HarmonyPatch(typeof(TorchHeadAmalgam), "TackleDamage", MethodType.Getter)]
     [HarmonyPostfix]

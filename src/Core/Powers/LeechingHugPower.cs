@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -11,18 +10,22 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class LeechingHugPower : CustomPowerModel
+[RegisterPower]
+public sealed class LeechingHugPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-leeching_hug_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_leeching_hug_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_leeching_hug_power.png"
+    );
 
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-leeching_hug_power.png";
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<StrengthPower>()
     ]).AsReadOnly();
@@ -43,10 +46,11 @@ public sealed class LeechingHugPower : CustomPowerModel
         }
 
         Flash();
+        var scale = CombatState.Players.Count;
         foreach (var creature in CombatState.Enemies.Where(c => c.Monster is SlimedBerserker))
         {
             await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Strength.BaseValue, cardPlay.Card.Owner.Creature, null);
-            await CreatureCmd.Heal(creature, DynamicVars.Heal.BaseValue);
+            await CreatureCmd.Heal(creature, DynamicVars.Heal.BaseValue * scale);
         }
     }
 }

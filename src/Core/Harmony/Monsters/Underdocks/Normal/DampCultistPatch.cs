@@ -9,20 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class DampCultistPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DampCultistConfig;
-
-    [HarmonyPatch(typeof(DampCultist), "MaxInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMaxInitialHp(DampCultist __instance, ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = __instance.MinInitialHp;
-    }
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DampCultist;
 
     [HarmonyPatch(typeof(DampCultist), "IncantationAmount", MethodType.Getter)]
     [HarmonyPostfix]
@@ -35,5 +22,18 @@ public static class DampCultistPatch
         }
 
         __result -= 1;
+    }
+
+    [HarmonyPatch(typeof(DampCultist), "MaxInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMaxInitialHp(DampCultist __instance, ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = __instance.MinInitialHp;
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -11,8 +10,11 @@ using MegaCrit.Sts2.Core.Models.Encounters;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.TestSupport;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class InfestedPlusPower : CustomPowerModel
+[RegisterPower]
+public sealed class InfestedPlusPower : ModPowerTemplate
 {
     private const int MaxAmount = 4;
 
@@ -20,9 +22,10 @@ public sealed class InfestedPlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-infested_plus_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-infested_plus_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_infested_plus_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_infested_plus_power.png"
+    );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [

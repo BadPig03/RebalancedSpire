@@ -4,6 +4,7 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -16,7 +17,7 @@ using MegaCrit.Sts2.Core.Models.Events;
 // ReSharper disable InconsistentNaming
 public static class SpiralingWhirlpoolPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SpiralingWhirlpoolConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SpiralingWhirlpool;
 
     private static async Task ReachIn(SpiralingWhirlpool instance)
     {
@@ -25,10 +26,10 @@ public static class SpiralingWhirlpoolPatch
             return;
         }
 
-        RelicModel relic = RelicFactory.PullNextRelicFromFront(instance.Owner).ToMutable();
+        RelicModel relic = RelicFactory.PullNextRelicFromFront(instance.Owner, RelicRarity.Rare).ToMutable();
         await RelicCmd.Obtain(relic, instance.Owner);
         await CardPileCmd.AddCurseToDeck<Injury>(instance.Owner);
-        instance.SetEventFinished(instance.L10NLookup("REBALANCEDSPIRE-SPIRALING_WHIRLPOOL.pages.REACH_IN.description"));
+        instance.SetEventFinished(instance.L10NLookup("REBALANCED_SPIRE_EVENT_SPIRALING_WHIRLPOOL.pages.REACH_IN.description"));
     }
 
     [HarmonyPatch(typeof(SpiralingWhirlpool), "GenerateInitialOptions")]
@@ -45,7 +46,7 @@ public static class SpiralingWhirlpoolPatch
         {
             new (__instance, __instance.ObserveTheSpiral, "SPIRALING_WHIRLPOOL.pages.INITIAL.options.OBSERVE", HoverTipFactory.FromEnchantment<Spiral>()),
             new (__instance, __instance.Drink, "SPIRALING_WHIRLPOOL.pages.INITIAL.options.DRINK"),
-            new (__instance, () => ReachIn(__instance), "REBALANCEDSPIRE-SPIRALING_WHIRLPOOL.pages.INITIAL.options.REACH_IN", HoverTipFactory.FromCardWithCardHoverTips<Injury>())
+            new (__instance, () => ReachIn(__instance), "REBALANCED_SPIRE_EVENT_SPIRALING_WHIRLPOOL.pages.INITIAL.options.REACH_IN", HoverTipFactory.FromCardWithCardHoverTips<Injury>())
         }.AsReadOnly();
         return false;
     }

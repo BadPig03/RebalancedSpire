@@ -14,49 +14,30 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class NutritiousOysterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.NutritiousOysterConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.NutritiousOyster;
 
-    private static async Task AfterCombatVictory(NutritiousOyster nutritiousOyster)
+    private static async Task AfterCombatVictory(NutritiousOyster instance)
     {
-        nutritiousOyster.Flash();
-        await CreatureCmd.Heal(nutritiousOyster.Owner.Creature, nutritiousOyster.DynamicVars.Heal.BaseValue);
+        instance.Flash();
+        await CreatureCmd.Heal(instance.Owner.Creature, instance.DynamicVars.Heal.BaseValue);
     }
 
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(AbstractModel), "AfterCombatVictory")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    private static bool PreFix_AfterCombatVictory(AbstractModel __instance, CombatRoom room, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not NutritiousOyster)
+        if (__instance is not NutritiousOyster nutritiousOyster)
         {
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-NUTRITIOUS_OYSTER.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not NutritiousOyster)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-NUTRITIOUS_OYSTER.eventDescription");
+        __result = AfterCombatVictory(nutritiousOyster);
         return false;
     }
 
@@ -78,22 +59,41 @@ public static class NutritiousOysterPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(AbstractModel), "AfterCombatVictory")]
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterCombatVictory(AbstractModel __instance, CombatRoom room, ref Task __result)
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not NutritiousOyster nutritiousOyster || nutritiousOyster.Owner.Creature.IsDead)
+        if (__instance is not NutritiousOyster)
         {
             return true;
         }
 
-        __result = AfterCombatVictory(nutritiousOyster);
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_NUTRITIOUS_OYSTER.description");
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not NutritiousOyster)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_NUTRITIOUS_OYSTER.eventDescription");
         return false;
     }
 }

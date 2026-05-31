@@ -17,7 +17,7 @@ using Potions;
 // ReSharper disable InconsistentNaming
 public static class TeaMasterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TeaMasterConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TeaMaster;
 
     private static async Task BoneTea(TeaMaster instance)
     {
@@ -86,20 +86,6 @@ public static class TeaMasterPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(TeaMaster), "IsAllowed")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_IsAllowed(TeaMaster __instance, IRunState runState, ref bool __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = runState.CurrentActIndex < 2 && runState.Players.All(p => p is { Gold: >= 150, HasOpenPotionSlots: true });
-        return false;
-    }
-
     [HarmonyPatch(typeof(TeaMaster), "GenerateInitialOptions")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -112,10 +98,24 @@ public static class TeaMasterPatch
 
         __result = new List<EventOption>
         {
-            __instance.Owner?.Gold < __instance.DynamicVars["BoneTeaCost"].BaseValue ? new EventOption(__instance, null, "TEA_MASTER.pages.INITIAL.options.BONE_TEA_LOCKED") : new EventOption(__instance, () => BoneTea(__instance), "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.BONE_TEA", HoverTipFactory.FromPotion<BoneTeaPotion>()),
-            __instance.Owner?.Gold < __instance.DynamicVars["EmberTeaCost"].BaseValue ? new EventOption(__instance, null, "TEA_MASTER.pages.INITIAL.options.EMBER_TEA_LOCKED") : new EventOption(__instance, () => EmberTea(__instance), "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.EMBER_TEA", HoverTipFactory.FromPotion<EmberTeaPotion>()),
-            new(__instance, () => TeaOfDiscourtesy(__instance), "REBALANCEDSPIRE-TEA_MASTER.pages.INITIAL.options.TEA_OF_DISCOURTESY", HoverTipFactory.FromPotion<TeaOfDiscourtesyPotion>())
+            __instance.Owner?.Gold < __instance.DynamicVars["BoneTeaCost"].BaseValue ? new EventOption(__instance, null, "TEA_MASTER.pages.INITIAL.options.BONE_TEA_LOCKED") : new EventOption(__instance, () => BoneTea(__instance), "REBALANCED_SPIRE_EVENT_TEA_MASTER.pages.INITIAL.options.BONE_TEA", HoverTipFactory.FromPotion<BoneTeaPotion>()),
+            __instance.Owner?.Gold < __instance.DynamicVars["EmberTeaCost"].BaseValue ? new EventOption(__instance, null, "TEA_MASTER.pages.INITIAL.options.EMBER_TEA_LOCKED") : new EventOption(__instance, () => EmberTea(__instance), "REBALANCED_SPIRE_EVENT_TEA_MASTER.pages.INITIAL.options.EMBER_TEA", HoverTipFactory.FromPotion<EmberTeaPotion>()),
+            new(__instance, () => TeaOfDiscourtesy(__instance), "REBALANCED_SPIRE_EVENT_TEA_MASTER.pages.INITIAL.options.TEA_OF_DISCOURTESY", HoverTipFactory.FromPotion<TeaOfDiscourtesyPotion>())
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(TeaMaster), "IsAllowed")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_IsAllowed(TeaMaster __instance, IRunState runState, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = runState.CurrentActIndex < 2 && runState.Players.All(p => p is { Gold: >= 150, HasOpenPotionSlots: true });
         return false;
     }
 }

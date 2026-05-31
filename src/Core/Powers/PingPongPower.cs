@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -9,16 +8,20 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class PingPongPower : CustomPowerModel
+[RegisterPower]
+public sealed class PingPongPower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Debuff;
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-ping_pong_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-ping_pong_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_ping_pong_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_ping_pong_power.png"
+    );
 
     public override bool ShouldPowerBeRemovedAfterOwnerDeath() => false;
 

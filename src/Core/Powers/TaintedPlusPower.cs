@@ -1,7 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -12,10 +10,14 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Afflictions;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
+using STS2RitsuLib.Utils;
 
-public sealed class TaintedPlusPower : CustomPowerModel
+[RegisterPower]
+public sealed class TaintedPlusPower : ModPowerTemplate
 {
-    private static readonly SpireField<Tainted, bool> AppliedExhaust = new(() => false);
+    private static readonly AttachedState<Tainted, bool> AppliedExhaust = new(() => false);
 
     private int _cardsPlayed = 3;
 
@@ -34,11 +36,10 @@ public sealed class TaintedPlusPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-tainted_plus_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-tainted_plus_power.png";
-
-    public override int DisplayAmount => CardsPlayed;
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_tainted_plus_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_tainted_plus_power.png"
+    );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
@@ -46,7 +47,9 @@ public sealed class TaintedPlusPower : CustomPowerModel
         new CardsVar(3)
     ]).AsReadOnly();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromAffliction<Tainted>();
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => HoverTipFactory.FromAffliction<Tainted>();
+
+    public override int DisplayAmount => CardsPlayed;
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -94,7 +97,7 @@ public sealed class TaintedPlusPower : CustomPowerModel
             return Task.CompletedTask;
         }
 
-        var allCards = Owner.Player?.PlayerCombatState?.AllCards;
+        var allCards = Owner.Player?.PlayerCombatState?.AllCards.ToList();
         if (allCards == null)
         {
             return Task.CompletedTask;
@@ -110,7 +113,7 @@ public sealed class TaintedPlusPower : CustomPowerModel
                 continue;
             }
 
-            if (AppliedExhaust.Get(tainted))
+            if (AppliedExhaust.GetValueOrDefault(tainted))
             {
                 CardCmd.RemoveKeyword(card, CardKeyword.Exhaust);
             }

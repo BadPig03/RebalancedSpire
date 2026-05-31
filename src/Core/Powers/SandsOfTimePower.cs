@@ -1,15 +1,22 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class SandsOfTimePower : CustomPowerModel
+[RegisterPower]
+public sealed class SandsOfTimePower : ModPowerTemplate
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_sands_of_time_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_sands_of_time_power.png"
+    );
 
     public override bool ShouldTakeExtraTurn(Player player)
     {

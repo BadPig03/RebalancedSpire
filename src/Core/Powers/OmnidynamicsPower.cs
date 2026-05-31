@@ -1,6 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
-using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -9,8 +8,11 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using Monsters;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class OmnidynamicsPower : CustomPowerModel
+[RegisterPower]
+public sealed class OmnidynamicsPower : ModPowerTemplate
 {
     private enum Direction
     {
@@ -34,9 +36,10 @@ public sealed class OmnidynamicsPower : CustomPowerModel
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-omnidynamics_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-omnidynamics_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_omnidynamics_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_omnidynamics_power.png"
+    );
 
     public override bool ShouldPlayVfx => false;
 

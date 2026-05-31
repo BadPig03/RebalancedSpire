@@ -1,4 +1,4 @@
 ﻿{
-  "REBALANCEDSPIRE-DOORMAKER_BOSS.loss": "[gold]{encounter}[/gold] didn't take kindly to {character}'s disturbance.",
-  "REBALANCEDSPIRE-DOORMAKER_BOSS.title": "The Doormaker"
+  "REBALANCED_SPIRE_ENCOUNTER_DOORMAKER_BOSS.loss": "[gold]{encounter}[/gold] didn't take kindly to {character}'s disturbance.",
+  "REBALANCED_SPIRE_ENCOUNTER_DOORMAKER_BOSS.title": "The Doormaker"
 }

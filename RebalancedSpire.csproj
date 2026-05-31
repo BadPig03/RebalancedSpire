@@ -38,6 +38,7 @@
         <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
         <ModsPath>$(Sts2Path)/mods/</ModsPath>
         <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+        <RitsuLibDeployDir>$(Sts2Path)/mods/STS2-RitsuLib/</RitsuLibDeployDir>
     </PropertyGroup>
 
     <!-- Linux -->
@@ -83,18 +84,21 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false"/>
+        <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
     </ItemGroup>
     
     <ItemGroup>
-        <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.1.4" PrivateAssets="All" />
-        <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
-        <AdditionalFiles Include="RebalancedSpire/localization/**/*.json"/>
+        <PackageReference Include="STS2.ModAnalyzers.RitsuLib" Version="0.1.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <AdditionalFiles Include="RebalancedSpire/localization/**/*.json" />
         <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
         <PackageReference Include="Krafs.Publicizer" Version="2.3.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="STS2.RitsuLib" Version="0.3.8" />
     </ItemGroup>
     
     <ItemGroup>
@@ -112,132 +116,138 @@
     <ItemGroup>
       <Content Include="images\ancients\vakuu_fixed_placeholder.png" />
       <Content Include="images\ancients\vakuu_fixed_placeholder.png.import" />
-      <Content Include="images\enchantments\rebalancedspire-poisonous.png" />
-      <Content Include="images\enchantments\rebalancedspire-poisonous.png.import" />
-      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon.png" />
-      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon.png.import" />
-      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon_outline.png" />
-      <Content Include="images\map\placeholder\rebalancedspire-doormaker_boss_icon_outline.png.import" />
+      <Content Include="images\enchantments\rebalanced_spire_enchantment_energetic.png" />
+      <Content Include="images\enchantments\rebalanced_spire_enchantment_energetic.png.import" />
+      <Content Include="images\enchantments\rebalanced_spire_enchantment_poisonous.png" />
+      <Content Include="images\enchantments\rebalanced_spire_enchantment_poisonous.png.import" />
+      <Content Include="images\map\placeholder\rebalanced_spire_doormaker_boss_icon.png" />
+      <Content Include="images\map\placeholder\rebalanced_spire_doormaker_boss_icon.png.import" />
+      <Content Include="images\map\placeholder\rebalanced_spire_doormaker_boss_icon_outline.png" />
+      <Content Include="images\map\placeholder\rebalanced_spire_doormaker_boss_icon_outline.png.import" />
       <Content Include="images\monsters\beta\door_maker_placeholder_1.png" />
       <Content Include="images\monsters\beta\door_maker_placeholder_1.png.import" />
       <Content Include="images\monsters\beta\door_maker_placeholder_2.png" />
       <Content Include="images\monsters\beta\door_maker_placeholder_2.png.import" />
       <Content Include="images\monsters\beta\door_maker_placeholder_3.png" />
       <Content Include="images\monsters\beta\door_maker_placeholder_3.png.import" />
-      <Content Include="images\packed\card_portraits\ironclad\rebalancedspire-limit_break.png" />
-      <Content Include="images\packed\card_portraits\ironclad\rebalancedspire-limit_break.png.import" />
-      <Content Include="images\packed\card_portraits\silent\rebalancedspire-corpse_explosion.png" />
-      <Content Include="images\packed\card_portraits\silent\rebalancedspire-corpse_explosion.png.import" />
-      <Content Include="images\potions\rebalancedspire-ember_tea_potion.png" />
-      <Content Include="images\potions\rebalancedspire-ember_tea_potion.png.import" />
-      <Content Include="images\potions\rebalancedspire-bone_tea_potion.png" />
-      <Content Include="images\potions\rebalancedspire-bone_tea_potion.png.import" />
-      <Content Include="images\potions\rebalancedspire-tea_of_discourtesy_potion.png" />
-      <Content Include="images\potions\rebalancedspire-tea_of_discourtesy_potion.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-afterlife_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-afterlife_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-consuming_shadow_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-consuming_shadow_plus_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-corpse_explosion_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-corpse_explosion_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-disillusion_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-disillusion_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-eternal_armor_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-eternal_armor_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-fabricator_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-fabricator_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-guard_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-guard_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-hunger_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-hunger_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-infested_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-infested_plus_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-leap_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-leap_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-leeching_hug_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-leeching_hug_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-long_distance_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-long_distance_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-minion_fake_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-minion_fake_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-omnidynamics_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-omnidynamics_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-ping_pong_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-ping_pong_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-plow_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-plow_plus_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-sands_of_time_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-sands_of_time_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-scrutiny_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-scrutiny_plus_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-sic_em_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-sic_em_plus_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-soul_wither_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-soul_wither_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-spinner_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-spinner_plus_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-synchronize_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-synchronize_plus_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-to_its_origin_owner_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-to_its_origin_owner_power.png.import" />
-      <Content Include="images\powers\big\rebalancedspire-tainted_plus_power.png" />
-      <Content Include="images\powers\big\rebalancedspire-tainted_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-afterlife_power.png" />
-      <Content Include="images\powers\rebalancedspire-afterlife_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-eternal_armor_power.png" />
-      <Content Include="images\powers\rebalancedspire-eternal_armor_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-hunger_power.png" />
-      <Content Include="images\powers\rebalancedspire-hunger_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-consuming_shadow_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-consuming_shadow_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png" />
-      <Content Include="images\powers\rebalancedspire-corpse_explosion_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-disillusion_power.png" />
-      <Content Include="images\powers\rebalancedspire-disillusion_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-fabricator_power.png" />
-      <Content Include="images\powers\rebalancedspire-fabricator_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-guard_power.png" />
-      <Content Include="images\powers\rebalancedspire-guard_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-infested_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-infested_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-leap_power.png" />
-      <Content Include="images\powers\rebalancedspire-leap_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-leeching_hug_power.png" />
-      <Content Include="images\powers\rebalancedspire-leeching_hug_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-long_distance_power.png" />
-      <Content Include="images\powers\rebalancedspire-long_distance_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-minion_fake_power.png" />
-      <Content Include="images\powers\rebalancedspire-minion_fake_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-omnidynamics_power.png" />
-      <Content Include="images\powers\rebalancedspire-omnidynamics_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-ping_pong_power.png" />
-      <Content Include="images\powers\rebalancedspire-ping_pong_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-plow_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-plow_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-sands_of_time_power.png" />
-      <Content Include="images\powers\rebalancedspire-sands_of_time_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-scrutiny_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-soul_wither_power.png" />
-      <Content Include="images\powers\rebalancedspire-soul_wither_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-to_its_origin_owner_power.png" />
-      <Content Include="images\powers\rebalancedspire-to_its_origin_owner_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-synchronize_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-synchronize_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-spinner_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-spinner_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-sic_em_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-sic_em_plus_power.png.import" />
-      <Content Include="images\powers\rebalancedspire-tainted_plus_power.png" />
-      <Content Include="images\powers\rebalancedspire-tainted_plus_power.png.import" />
-      <Content Include="images\relics\rebalancedspire-neows_lament.png" />
-      <Content Include="images\relics\rebalancedspire-neows_lament.png.import" />
+      <Content Include="images\packed\card_portraits\ironclad\rebalanced_spire_card_limit_break.png" />
+      <Content Include="images\packed\card_portraits\ironclad\rebalanced_spire_card_limit_break.png.import" />
+      <Content Include="images\packed\card_portraits\silent\rebalanced_spire_card_corpse_explosion.png" />
+      <Content Include="images\packed\card_portraits\silent\rebalanced_spire_card_corpse_explosion.png.import" />
+      <Content Include="images\potions\rebalanced_spire_potion_ember_tea_potion.png" />
+      <Content Include="images\potions\rebalanced_spire_potion_ember_tea_potion.png.import" />
+      <Content Include="images\potions\rebalanced_spire_potion_bone_tea_potion.png" />
+      <Content Include="images\potions\rebalanced_spire_potion_bone_tea_potion.png.import" />
+      <Content Include="images\potions\rebalanced_spire_potion_tea_of_discourtesy_potion.png" />
+      <Content Include="images\potions\rebalanced_spire_potion_tea_of_discourtesy_potion.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_afterlife_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_afterlife_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_consuming_shadow_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_consuming_shadow_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_corpse_explosion_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_corpse_explosion_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_eternal_armor_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_eternal_armor_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_fabricator_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_fabricator_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_guard_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_guard_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_hunger_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_hunger_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_infested_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_infested_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_leap_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_leap_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_leeching_hug_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_leeching_hug_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_long_distance_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_long_distance_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_master_planner_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_master_planner_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_minion_fake_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_minion_fake_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_omnidynamics_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_omnidynamics_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_ping_pong_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_ping_pong_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_plow_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_plow_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_sands_of_time_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_sands_of_time_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_scrutiny_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_scrutiny_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_sic_em_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_sic_em_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_soul_wither_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_soul_wither_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_spinner_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_spinner_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_synchronize_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_synchronize_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_to_its_origin_owner_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_to_its_origin_owner_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_tainted_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_tainted_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_hunger_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_hunger_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_consuming_shadow_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_consuming_shadow_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_corpse_explosion_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_corpse_explosion_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_disillusion_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_disillusion_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_fabricator_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_fabricator_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_guard_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_guard_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_infested_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_infested_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_leap_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_leap_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_leeching_hug_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_leeching_hug_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_long_distance_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_long_distance_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_master_planner_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_master_planner_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_minion_fake_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_minion_fake_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_omnidynamics_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_omnidynamics_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_ping_pong_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_ping_pong_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_plow_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_plow_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_sands_of_time_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_sands_of_time_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_scrutiny_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_scrutiny_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_soul_wither_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_soul_wither_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_to_its_origin_owner_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_to_its_origin_owner_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_synchronize_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_synchronize_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_spinner_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_spinner_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_sic_em_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_sic_em_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_tainted_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_tainted_plus_power.png.import" />
+      <Content Include="images\relics\rebalanced_spire_relic_neows_lament.png" />
+      <Content Include="images\relics\rebalanced_spire_relic_neows_lament.png.import" />
       <Content Include="images\ui\main_menu\mod_changelogs_button.png" />
       <Content Include="images\ui\main_menu\mod_changelogs_button.png.import" />
-      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss.png" />
-      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss.png.import" />
-      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss_outline.png" />
-      <Content Include="images\ui\run_history\rebalancedspire-doormaker_boss_outline.png.import" />
+      <Content Include="images\ui\run_history\rebalanced_spire_doormaker_boss.png" />
+      <Content Include="images\ui\run_history\rebalanced_spire_doormaker_boss.png.import" />
+      <Content Include="images\ui\run_history\rebalanced_spire_doormaker_boss_outline.png" />
+      <Content Include="images\ui\run_history\rebalanced_spire_doormaker_boss_outline.png.import" />
       <Content Include="images\vfx\scry_voronoi_noise.png" />
       <Content Include="images\vfx\scry_voronoi_noise.png.import" />
       <Content Include="images\vfx\ui\card\ui_card_border_glow.png" />
@@ -251,11 +261,11 @@
         <Link>Publicizer\IgnoresAccessChecksToAttribute.cs.uid</Link>
       </Content>
       <Content Include="RebalancedSpireMain.cs.uid" />
-      <Content Include="scenes\cards\overlays\afflictions\devoured.tscn" />
-      <Content Include="scenes\cards\overlays\afflictions\weighted.tscn" />
-      <Content Include="scenes\cards\overlays\afflictions\withering.tscn" />
-      <Content Include="scenes\creature_visuals\doormaker_boss.tscn" />
-      <Content Include="scenes\encounters\doormaker_boss.tscn" />
+      <Content Include="scenes\cards\overlays\afflictions\rebalanced_spire_affliction_devoured.tscn" />
+      <Content Include="scenes\cards\overlays\afflictions\rebalanced_spire_affliction_weighted.tscn" />
+      <Content Include="scenes\cards\overlays\afflictions\rebalanced_spire_affliction_withering.tscn" />
+      <Content Include="scenes\creature_visuals\rebalanced_spire_monster_doormaker_boss.tscn" />
+      <Content Include="scenes\encounters\rebalanced_spire_encounter_doormaker_boss.tscn" />
       <Content Include="scenes\events\background_scenes\vakuu_fixed_art.tscn" />
       <Content Include="scenes\screens\main_menu\mod_changelogs_button.tscn" />
       <Content Include="scenes\screens\mod_changelogs_screen.tscn" />
@@ -272,12 +282,12 @@
       <Content Include="src\Core\Afflictions\Weighted.cs.uid" />
       <Content Include="src\Core\Cards\CorpseExplosion.cs.uid" />
       <Content Include="src\Core\Cards\LimitBreak.cs.uid" />
-      <Content Include="src\Core\Configs\ConfigGroupAttribute.cs.uid" />
-      <Content Include="src\Core\Configs\RebalancedSpireConfig.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireSettings.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireSettingsStore.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireSettingsUiBindings.cs.uid" />
+      <Content Include="src\Core\Enchantments\Energetic.cs.uid" />
       <Content Include="src\Core\Enchantments\Poisonous.cs.uid" />
       <Content Include="src\Core\Encounters\DoormakerBoss.cs.uid" />
-      <Content Include="src\Core\GameActions\NetUseSealOfGoldAction.cs.uid" />
-      <Content Include="src\Core\GameActions\UseSealOfGoldAction.cs.uid" />
       <Content Include="src\Core\Harmony\Affliction\TaintedPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Ancients\DarvPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Ancients\NeowPatch.cs.uid" />
@@ -313,15 +323,23 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SicEmPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GlowPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Regent\TheSealedThronePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\BouncingFlaskPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\FlickFlackPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\HandTrickPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\HiddenDaggersPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\MasterPlannerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\ScarePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\PoisonedStabPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\ShadowmeldPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\UpMySleevePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\WellLaidPlansPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Status\SootPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Status\WitherPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Commands\AttackCommandPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Enchantments\InkyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\PunchOffEventEncounterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\TheKinBossPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\LostWispPatch.cs.uid" />
@@ -335,8 +353,8 @@
       <Content Include="src\Core\Harmony\Ftues\NAscensionSingleplayerFtuePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Ftues\StartRunLobbyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\HarmonyExtensions.cs.uid" />
-      <Content Include="src\Core\Harmony\Maps\MapPathPruningPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Maps\StandardActMapPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Maps\LessContinuousMonstersPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Maps\UniformIntroGenerationPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Merchant\MerchantCardRemovalEntryPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Boss\AeonglassPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Boss\QueenPatch.cs.uid" />
@@ -392,7 +410,6 @@
       <Content Include="src\Core\Harmony\Monsters\Overgrowth\Normal\InkletPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Overgrowth\Normal\LeafSlimeSPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Overgrowth\Normal\NibbitPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Monsters\Overgrowth\Normal\ShrinkerBeetlePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Overgrowth\Normal\SlitheringStranglerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Overgrowth\Normal\SnappingJaxfruitPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Overgrowth\Normal\TwigSlimeMPatch.cs.uid" />
@@ -418,7 +435,6 @@
       <Content Include="src\Core\Harmony\Nodes\NDebugInfoLabelManagerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Nodes\NMainMenuPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Nodes\NPatchNotesScreenPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Nodes\NRelicInventoryHolderPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Powers\HardToKillPowerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Powers\IllusionPowerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Powers\PlatingPowerPatch.cs.uid" />
@@ -428,6 +444,7 @@
       <Content Include="src\Core\Harmony\Relics\AlchemicalCofferPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\BigMushroomPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\ChoicesParadoxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\CrossbowPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\DustyTomePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\FiddlePatch.cs.uid" />
@@ -452,6 +469,7 @@
       <Content Include="src\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerLeft.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerRight.cs.uid" />
+      <Content Include="src\Core\Nodes\DoormakerBaseVisuals.cs.uid" />
       <Content Include="src\Core\Nodes\Screens\MainMenu\NModChangelogsButton.cs.uid" />
       <Content Include="src\Core\Nodes\Screens\MainMenu\NModChangelogsScreen.cs.uid" />
       <Content Include="src\Core\Potions\BoneTeaPotion.cs.uid" />
@@ -469,6 +487,7 @@
       <Content Include="src\Core\Powers\LeapPower.cs.uid" />
       <Content Include="src\Core\Powers\LeechingHugPower.cs.uid" />
       <Content Include="src\Core\Powers\LongDistancePower.cs.uid" />
+      <Content Include="src\Core\Powers\MasterPlannerPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\MinionFakePower.cs.uid" />
       <Content Include="src\Core\Powers\OmnidynamicsPower.cs.uid" />
       <Content Include="src\Core\Powers\PingPongPower.cs.uid" />
@@ -483,6 +502,10 @@
       <Content Include="src\Core\Powers\TaintedPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
       <Content Include="src\Core\Powers\WitheringPresencePlusPower.cs.uid" />
+      <Content Include="src\Core\Registry\RebalancedSpireCardTransformationRegistry.cs.uid" />
+      <Content Include="src\Core\Registry\RebalancedSpireNodesRegistry.cs.uid" />
+      <Content Include="src\Core\Registry\RebalancedSpireRightClickRegistry.cs.uid" />
+      <Content Include="src\Core\Registry\RebalancedSpireSettingsRegistry.cs.uid" />
       <Content Include="src\Core\Relics\NeowsLament.cs.uid" />
       <Content Include="src\Core\Singletons\FiddleSingleton.cs.uid" />
       <Content Include="src\Core\SrcHelpers.cs.uid" />
@@ -501,33 +524,22 @@
     </ItemGroup>
 
     <Target Name="CheckDependencyPaths">
-        <Error
-                Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"
-                Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')"/>
-        <Error
-                Text=" Godot not found at path '$(GodotPath)'"
-                Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')"/>
+        <Error Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'" Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
+        <Error Text=" Godot not found at path '$(GodotPath)'" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')" />
     </Target>
 
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
-        <Message Text="Copying .dll and manifest to mods folder." Importance="high"/>
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Copy SourceFiles="RebalancedSpire.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/"/>
-        <Message Text="Copying BaseLib to mods folder." Importance="high"/>
-        <ItemGroup>
-            <BaseLibFiles Include="$(NuGetPackageRoot)/alchyr.sts2.baselib/**/lib/**/BaseLib.dll;$(NuGetPackageRoot)/alchyr.sts2.baselib/**/Content/BaseLib.pck;$(NuGetPackageRoot)/alchyr.sts2.baselib/**/Content/BaseLib.json;"/>
-        </ItemGroup>
-        <Copy SourceFiles="@(BaseLibFiles)" DestinationFolder="$(ModsPath)BaseLib/"/>
+        <Message Text="Copying .dll and manifest to mods folder." Importance="high" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+        <Copy SourceFiles="RebalancedSpire.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
     </Target>
 
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
-        <Message Text="Exporting Godot .pck to mods folder" Importance="high"/>
-        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-              EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
-              ContinueOnError="WarnAndContinue"/>
+        <Message Text="Exporting Godot .pck to mods folder" Importance="high" />
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" />
     </Target>
 
     <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
-        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high"/>
+        <Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high" />
     </Target>
 </Project>

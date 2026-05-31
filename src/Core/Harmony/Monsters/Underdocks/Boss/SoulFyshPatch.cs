@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class SoulFyshPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SoulFyshConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SoulFysh;
 
     private static async Task GazeMove(SoulFysh instance)
     {

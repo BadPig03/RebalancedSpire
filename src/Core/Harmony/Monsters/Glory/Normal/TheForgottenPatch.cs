@@ -16,9 +16,11 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class TheForgottenPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TheLostAndForgottenConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheLostAndForgotten;
 
     private const int MiasmaBlockAmount = 8;
+
+    private static int DreadDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 13);
 
     private static async Task MiasmaMove(TheForgotten instance, IReadOnlyList<Creature> targets)
     {
@@ -29,18 +31,6 @@ public static class TheForgottenPatch
         await PowerCmd.Apply<DexterityPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.DebilitatingSmogDexStealAmount, instance.Creature, null);
     }
 
-    [HarmonyPatch(typeof(TheForgotten), "DreadDamage", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceDreadDamage(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 13);
-    }
 
     [HarmonyPatch(typeof(TheForgotten), "MiasmaMove")]
     [HarmonyPrefix]
@@ -54,5 +44,18 @@ public static class TheForgottenPatch
 
         __result = MiasmaMove(__instance, targets);
         return false;
+    }
+
+    [HarmonyPatch(typeof(TheForgotten), "DreadDamage", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceDreadDamage(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = DreadDamage;
     }
 }

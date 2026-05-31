@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Nodes.Audio;
 // ReSharper disable InconsistentNaming
 public static class KnowledgeDemonPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.KnowledgeDemonConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.KnowledgeDemon;
 
     private static readonly int[] _disintegrationDamageValues = [4, 6, 8];
 

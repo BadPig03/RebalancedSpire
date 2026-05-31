@@ -24,7 +24,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class KinPriestPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TheKinConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheKin;
 
     private const int BeamCount = 3;
     private const int BeamDamage = 0;

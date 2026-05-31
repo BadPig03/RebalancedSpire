@@ -8,13 +8,12 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Afflictions;
-using MegaCrit.Sts2.Core.Models.Cards;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class TaintedPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.InfestedPrismConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.InfestedPrism;
 
     [HarmonyPatch(typeof(AfflictionModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
@@ -31,7 +30,7 @@ public static class TaintedPatch
             return true;
         }
 
-        __result = new LocString("afflictions", "TAINTED.description");
+        __result = new LocString("afflictions", "REBALANCED_SPIRE_AFFLICTION_TAINTED.description");
         return false;
     }
 

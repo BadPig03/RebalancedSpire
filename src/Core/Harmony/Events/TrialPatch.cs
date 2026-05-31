@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 // ReSharper disable InconsistentNaming
 public static class TrialPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TrialConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Trial;
 
     private static readonly MethodInfo? _setEventStateMethod = typeof(EventModel).GetMethod("SetEventState", BindingFlags.NonPublic | BindingFlags.Instance, null,[typeof(LocString), typeof(IEnumerable<EventOption>)], null);
 
@@ -78,7 +78,7 @@ public static class TrialPatch
 				eventOptions =
 				[
 					new EventOption(instance, instance.MerchantGuilty, "TRIAL.pages.MERCHANT.options.GUILTY", HoverTipFactory.FromCardWithCardHoverTips<Regret>()),
-					new EventOption(instance, () => MerchantInnocent(instance), "REBALANCEDSPIRE-TRIAL.pages.MERCHANT.options.INNOCENT")
+					new EventOption(instance, () => MerchantInnocent(instance), "REBALANCED_SPIRE_EVENT_TRIAL.pages.MERCHANT.options.INNOCENT")
 				];
 				break;
 			case 1:
@@ -96,7 +96,7 @@ public static class TrialPatch
 				eventOptions =
 				[
 					new EventOption(instance, instance.NondescriptGuilty, "TRIAL.pages.NONDESCRIPT.options.GUILTY", HoverTipFactory.FromCardWithCardHoverTips<Doubt>()),
-					new EventOption(instance, () => NondescriptInnocent(instance), "REBALANCEDSPIRE-TRIAL.pages.NONDESCRIPT.options.INNOCENT", HoverTipFactory.Static(StaticHoverTip.Transform))
+					new EventOption(instance, () => NondescriptInnocent(instance), "REBALANCED_SPIRE_EVENT_TRIAL.pages.NONDESCRIPT.options.INNOCENT", HoverTipFactory.Static(StaticHoverTip.Transform))
 				];
 				break;
 			default:

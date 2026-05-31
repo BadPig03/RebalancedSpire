@@ -42,10 +42,14 @@
   "SKULKING_COLONY.moves.SMASH.title": "Smash",
   "LIVING_FOG.moves.CHARGE_UP.title": "Charge Up",
   "DOOR.name": "Door",
-  "DOORMAKER.moves.DRAMATIC_OPEN": "Dramatic Open",
-  "DOORMAKER.moves.DRAMATIC_OPEN.speakLine": "I hunger...",
-  "DOORMAKER.moves.GRASP_MOVE.title": "Grasp",
-  "DOORMAKER.moves.HUNGER_MOVE.title": "Hunger",
-  "DOORMAKER.moves.SCRUTINY_MOVE.title": "Scrutiny",
-  "DOORMAKER.name": "Doormaker"
+  "DOORMAKER.name": "Doormaker",
+  "REBALANCED_SPIRE_MONSTER_DOORMAKER_LEFT.name": "Doormaker",
+  "REBALANCED_SPIRE_MONSTER_DOORMAKER_RIGHT.name": "Doormaker",
+  "REBALANCED_SPIRE_MONSTER_DOORMAKER.moves.DRAMATIC_OPEN": "Dramatic Open",
+  "REBALANCED_SPIRE_MONSTER_DOORMAKER.moves.GRASP_MOVE.title": "Grasp",
+  "REBALANCED_SPIRE_MONSTER_DOORMAKER.moves.HUNGER_MOVE.title": "Hunger",
+  "REBALANCED_SPIRE_MONSTER_DOORMAKER.moves.SCRUTINY_MOVE.title": "Scrutiny",
+  "DOORMAKER.moves.HUNGRY.speakLine": "I hunger...",
+  "DOORMAKER.moves.FULL_ATTACK.speakLine": "You die...",
+  "DOORMAKER.moves.SCRUTINY.speakLine": "I wonder..."
 }

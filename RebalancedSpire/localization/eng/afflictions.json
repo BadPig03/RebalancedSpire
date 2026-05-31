@@ -1,13 +1,13 @@
 ﻿{
-  "WITHERING.description": "This card returns to your [gold]Discard Pile[/gold] when [gold]Exhausted[/gold].",
-  "WITHERING.extraCardText": "No Escape.",
-  "WITHERING.title": "No Escape",
-  "TO_ITS_ORIGIN_OWNER.description": "Return the [gold]Byrdonis Egg[/gold] and befriend the [gold]Byrdonis[/gold].",
-  "TO_ITS_ORIGIN_OWNER.extraCardText": "Victory.",
-  "TO_ITS_ORIGIN_OWNER.title": "To Its Origin Owner",
-  "DEVOURED.description": "Add [gold]Exhaust[/gold] to this card.",
-  "DEVOURED.title": "Devoured",
-  "WEIGHTED.description": "Your [gold]Max Hand Size[/gold] is reduced.",
-  "WEIGHTED.title": "Weighted",
-  "TAINTED.description": "This card costs [blue]0[/blue] and gains [gold]Exhausted[/gold]. Cards are un-[gold]Tainted[/gold] at end of turn."
+  "REBALANCED_SPIRE_AFFLICTION_DEVOURED.description": "Add [gold]Exhaust[/gold] to this card.",
+  "REBALANCED_SPIRE_AFFLICTION_DEVOURED.title": "Devoured",
+  "REBALANCED_SPIRE_AFFLICTION_TAINTED.description": "This card costs [blue]0[/blue] and gains [gold]Exhausted[/gold]. Cards are un-[gold]Tainted[/gold] at end of turn.",
+  "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.description": "Return the [gold]Byrdonis Egg[/gold] and befriend the [gold]Byrdonis[/gold].",
+  "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.extraCardText": "Victory.",
+  "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.title": "To Its Origin Owner",
+  "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.description": "Your [gold]Max Hand Size[/gold] is reduced.",
+  "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.title": "Weighted",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.description": "This card returns to your [gold]Discard Pile[/gold] when [gold]Exhausted[/gold].",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.extraCardText": "No Escape.",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.title": "No Escape"
 }

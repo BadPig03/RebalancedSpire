@@ -1,7 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Cards;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils;
 using Configs;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -11,19 +9,21 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-[Pool(typeof(IroncladCardPool))]
+[RegisterCard(typeof(IroncladCardPool))]
 [UsedImplicitly]
-public sealed class LimitBreak() : CustomCardModel(1, CardType.Skill, CardRarity.Ancient, TargetType.Self, !Disabled)
+public sealed class LimitBreak() : ModCardTemplate(1, CardType.Skill, CardRarity.Ancient, TargetType.Self, !Disabled)
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DustyTomeConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DustyTome;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => new List<CardKeyword>(
     [
         CardKeyword.Exhaust
     ]).AsReadOnly();
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<StrengthPower>()
     ]).AsReadOnly();
@@ -37,7 +37,7 @@ public sealed class LimitBreak() : CustomCardModel(1, CardType.Skill, CardRarity
         }
 
         NPowerUpVfx.CreateNormal(Owner.Creature);
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, power.Amount, Owner.Creature, play.Card);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, power.Amount, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

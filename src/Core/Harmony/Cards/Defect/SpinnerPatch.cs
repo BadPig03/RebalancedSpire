@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SpinnerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SpinnerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Spinner;
 
     private static async Task OnPlay(Spinner instance, PlayerChoiceContext choiceContext)
     {
@@ -24,10 +24,10 @@ public static class SpinnerPatch
         await PowerCmd.Apply<SpinnerPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["SpinnerPlusPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
     {
         if (Disabled)
         {
@@ -39,7 +39,7 @@ public static class SpinnerPatch
             return true;
         }
 
-        __result = new LocString("cards", "REBALANCEDSPIRE-SPINNER.description");
+        __result = 2;
         return false;
     }
 
@@ -60,10 +60,10 @@ public static class SpinnerPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
@@ -75,7 +75,7 @@ public static class SpinnerPatch
             return true;
         }
 
-        __result = 2;
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_SPINNER.description");
         return false;
     }
 

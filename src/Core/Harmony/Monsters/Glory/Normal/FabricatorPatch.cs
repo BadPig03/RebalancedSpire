@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public class FabricatorPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FabricatorConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fabricator;
 
     internal const float SpawnBotDamageRatio = 1 / 15f;
     private const int FabricatorPowerAmount = 1;
@@ -65,35 +65,23 @@ public class FabricatorPatch
         return instance.Creature.CombatState?.Enemies.Count(c => c.IsAlive && c.HasPower<MinionPower>()) <= 2 && FabricatorPower.IsHpRemainingEnough(instance.Creature);
     }
 
-    [HarmonyPatch(typeof(Fabricator), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void IncreaseMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 240, 220);
-    }
-
     [HarmonyPatch(typeof(MonsterModel), "AfterAddedToRoom")]
-    [HarmonyPostfix]
+    [HarmonyPrefix]
     [UsedImplicitly]
-    private static void PostFix_AfterAddedToRoom(MonsterModel __instance, ref Task __result)
+    private static bool PreFix_AfterAddedToRoom(MonsterModel __instance, ref Task __result)
     {
         if (Disabled)
         {
-            return;
+            return true;
         }
 
         if (__instance is not Fabricator fabricator)
         {
-            return;
+            return true;
         }
 
         __result = AfterAddedToRoom(fabricator);
+        return false;
     }
 
     [HarmonyPatch(typeof(Fabricator), "GenerateMoveStateMachine")]
@@ -119,5 +107,18 @@ public class FabricatorPatch
         list.Add(branchState);
         __result = new MonsterMoveStateMachine(list, branchState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(Fabricator), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void IncreaseMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 240, 220);
     }
 }

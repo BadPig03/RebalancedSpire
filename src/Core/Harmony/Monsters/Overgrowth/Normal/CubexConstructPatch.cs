@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class CubexConstructPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.CubexConstructConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.CubexConstruct;
 
     private const int ExpelCount = 2;
 

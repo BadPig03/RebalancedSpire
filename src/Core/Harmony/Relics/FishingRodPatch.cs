@@ -14,9 +14,9 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class FishingRodPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FishingRodConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.FishingRod;
 
-    private static Task AfterCombatEnd(FishingRod instance, CombatRoom room)
+    private static Task AfterCombatVictory(FishingRod instance, CombatRoom room)
     {
         if (room.Encounter.RoomType is not (RoomType.Monster or RoomType.Elite or RoomType.Boss))
         {
@@ -38,20 +38,6 @@ public static class FishingRodPatch
         return Task.CompletedTask;
     }
 
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
-    {
-        if (__instance is not FishingRod)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-FISHING_ROD.description");
-        return false;
-    }
-
     [HarmonyPatch(typeof(FishingRod), "AfterCombatEnd")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -62,7 +48,40 @@ public static class FishingRodPatch
             return true;
         }
 
-        __result = AfterCombatEnd(__instance, room);
+        __result = Task.CompletedTask;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(AbstractModel), "AfterCombatVictory")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterCombatVictory(AbstractModel __instance, CombatRoom room, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not FishingRod fishingRod)
+        {
+            return true;
+        }
+
+        __result = AfterCombatVictory(fishingRod, room);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    {
+        if (__instance is not FishingRod)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_FISHING_ROD.description");
         return false;
     }
 }

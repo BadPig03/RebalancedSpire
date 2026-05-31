@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class AeonglassPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.AeonglassConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Aeonglass;
 
     private const int WithersInitUpgradeLevel = 2;
     private const int WithersMinCount = 2;
@@ -43,7 +43,6 @@ public static class AeonglassPatch
         {
             WitheringPresencePlusPower power = (WitheringPresencePlusPower) ModelDb.Power<WitheringPresencePlusPower>().ToMutable();
             power.Target = creature;
-            power.Added = false;
             await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, instance.Creature, WitheringPresencePowerAmount, instance.Creature, null);
         }
         await PowerCmd.Apply<ArtifactPower>(new ThrowingPlayerChoiceContext(), instance.Creature, ArtifactPowerAmount, instance.Creature, null);
@@ -51,7 +50,7 @@ public static class AeonglassPatch
 
     private static async Task WitheringMove(Aeonglass instance)
     {
-        var players = instance.Creature.CombatState?.Players;
+        var players = instance.Creature.CombatState?.Players.ToList();
         if (players == null)
         {
             return;
@@ -79,14 +78,6 @@ public static class AeonglassPatch
             CardCmd.PreviewCardPileAdd(statusCards);
             await Cmd.Wait(1.2f);
         }
-
-        var power = instance.Creature.GetPower<WitheringPresencePlusPower>();
-        if (power == null)
-        {
-            return;
-        }
-
-        power.Added = true;
     }
 
     private static async Task EbbMove(Aeonglass instance)

@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class FuzzyWurmCrawlerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.FuzzyWurmCrawlerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.FuzzyWurmCrawler;
 
     [HarmonyPatch(typeof(FuzzyWurmCrawler), "GenerateMoveStateMachine")]
     [HarmonyPrefix]

@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 // ReSharper disable InconsistentNaming
 public static class MorphicGrovePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.MorphicGroveConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.MorphicGrove;
 
     private static async Task Group(MorphicGrove instance)
     {
@@ -63,7 +63,7 @@ public static class MorphicGrovePatch
 
         __result = new List<EventOption>
         {
-            new(__instance, () => Group(__instance), "REBALANCEDSPIRE-MORPHIC_GROVE.pages.INITIAL.options.GROUP", HoverTipFactory.Static(StaticHoverTip.Transform)),
+            new(__instance, () => Group(__instance), "REBALANCED_SPIRE_EVENT_MORPHIC_GROVE.pages.INITIAL.options.GROUP", HoverTipFactory.Static(StaticHoverTip.Transform)),
             new(__instance, __instance.Loner, "MORPHIC_GROVE.pages.INITIAL.options.LONER")
         }.AsReadOnly();
         return false;

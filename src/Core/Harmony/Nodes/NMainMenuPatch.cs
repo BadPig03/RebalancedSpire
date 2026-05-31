@@ -1,34 +1,23 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Nodes;
 
-using BaseLib.Utils;
-using Core.Nodes.Screens.MainMenu;
 using Godot;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
+using STS2RitsuLib.Scaffolding.Godot.NodeAttachments;
 using NModChangelogsButton = Core.Nodes.Screens.MainMenu.NModChangelogsButton;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class NMainMenuPatch
 {
-    public static readonly AddedNode<NMainMenu, NModChangelogsButton> ButtonNode = new(_ => NModChangelogsButton.Create());
-    private static readonly AddedNode<NMainMenu, NModChangelogsScreen> ScreenNode = new(_ => NModChangelogsScreen.Create());
-
     [HarmonyPatch(typeof(NMainMenu), "_Ready")]
     [HarmonyPostfix]
     [UsedImplicitly]
     private static void PostFix_Ready(NMainMenu __instance)
     {
-        var screenNode = ScreenNode.Get(__instance);
-        screenNode?.SetVisible(false);
-        __instance.AddChild(screenNode);
-
-        var buttonNode = ButtonNode.Get(__instance);
-        buttonNode?.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ => screenNode?.Open()));
-        __instance.AddChild(buttonNode);
-
+        var id = ModNodeAttachmentRegistry.GetQualifiedNodeAttachmentId(RebalancedSpireMain.ModId, "ModChangelogsButton");
         var patchNotesNode = __instance._patchNotesButtonNode;
         patchNotesNode.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ => OnPatchNotesChanged()));
 
@@ -39,26 +28,31 @@ public static class NMainMenuPatch
 
         void OnPatchNotesChanged()
         {
-            if (!__instance.PatchNotesScreen.IsVisible())
+            if (!__instance.PatchNotesScreen.IsVisible() || !ModNodeAttachmentRegistry.TryGetAttachedById<NMainMenu, NModChangelogsButton>(__instance, id, out var buttonNode))
             {
                 return;
             }
 
-            buttonNode?.SetVisible(false);
-            buttonNode?.Disable();
+            buttonNode.SetVisible(false);
+            buttonNode.Disable();
         }
 
         void OnSubmenuStackChanged(NMainMenuSubmenuStack stack)
         {
+            if (!ModNodeAttachmentRegistry.TryGetAttachedById<NMainMenu, NModChangelogsButton>(__instance, id, out var buttonNode))
+            {
+                return;
+            }
+
             if (stack.SubmenusOpen)
             {
-                buttonNode?.SetVisible(false);
-                buttonNode?.Disable();
+                buttonNode.SetVisible(false);
+                buttonNode.Disable();
             }
             else
             {
-                buttonNode?.SetVisible(true);
-                buttonNode?.Enable();
+                buttonNode.SetVisible(true);
+                buttonNode.Enable();
             }
         }
     }

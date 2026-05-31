@@ -21,7 +21,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class PhrogParasitePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.PhrogParasiteConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PhrogParasite;
 
     private const float IncreasedSize = 0.3f;
     private const float InitSize = 0.3f;

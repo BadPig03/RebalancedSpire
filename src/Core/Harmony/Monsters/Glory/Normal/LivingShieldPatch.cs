@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class LivingShieldPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TurretOperatorConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TurretOperator;
 
     private const int RampartPowerAmount = 15;
     private const int StrengthPowerAmount = 2;

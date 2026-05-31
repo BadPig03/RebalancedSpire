@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SpurPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SpurConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Spur;
 
     private static async Task OnPlay(Spur instance, PlayerChoiceContext choiceContext)
     {
@@ -36,7 +36,38 @@ public static class SpurPatch
             return;
         }
 
-        await OstyCmd.Summon(choiceContext, instance.Owner, amount, instance);
+        await OstyCmd.Summon(choiceContext, instance.Owner, (int) (amount / 2), instance);
+    }
+
+    [HarmonyPatch(typeof(Spur), "CanonicalKeywords", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalKeywords(Spur __instance, ref IEnumerable<CardKeyword> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<CardKeyword>().AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Spur), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(Spur __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new HealVar(8)
+        }.AsReadOnly();
+        return false;
     }
 
     [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
@@ -54,26 +85,7 @@ public static class SpurPatch
             return true;
         }
 
-        __result = new LocString("cards", "REBALANCEDSPIRE-SPUR.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Spur)
-        {
-            return true;
-        }
-
-        __result = CardRarity.Common;
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_SPUR.description");
         return false;
     }
 
@@ -91,37 +103,6 @@ public static class SpurPatch
         {
             HoverTipFactory.Static(StaticHoverTip.SummonStatic)
         }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Spur), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(Spur __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new HealVar(7)
-        }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Spur), "CanonicalKeywords", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalKeywords(Spur __instance, ref IEnumerable<CardKeyword> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<CardKeyword>().AsReadOnly();
         return false;
     }
 
@@ -150,6 +131,25 @@ public static class SpurPatch
         }
 
         __instance.DynamicVars.Heal.UpgradeValueBy(2);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Spur)
+        {
+            return true;
+        }
+
+        __result = CardRarity.Common;
         return false;
     }
 }

@@ -1,8 +1,10 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Nodes;
 
+using Core.Nodes.Screens.MainMenu;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
+using STS2RitsuLib.Scaffolding.Godot.NodeAttachments;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
@@ -19,13 +21,13 @@ public static class NPatchNotesScreenPatch
             return;
         }
 
-        var button = NMainMenuPatch.ButtonNode.Get(mainMenu);
-        if (button == null)
+        var id = ModNodeAttachmentRegistry.GetQualifiedNodeAttachmentId(RebalancedSpireMain.ModId, "ModChangelogsButton");
+        if (!ModNodeAttachmentRegistry.TryGetAttachedById<NMainMenu, NModChangelogsButton>(mainMenu, id, out var buttonNode))
         {
             return;
         }
 
-        button.SetVisible(true);
-        button.Enable();
+        buttonNode.SetVisible(true);
+        buttonNode.Enable();
     }
 }

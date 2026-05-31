@@ -1,5 +1,8 @@
 ﻿{
-  "REBALANCEDSPIRE-POISONOUS.description": "This card deals [blue]{Damage}[/blue] additional damage and applies [blue]{PoisonPower}[/blue] [gold]Poison[/gold].",
-  "REBALANCEDSPIRE-POISONOUS.extraCardText": "Apply [blue]{PoisonPower}[/blue] [gold]Poison[/gold]{TargetType:choose(AllEnemies): to ALL enemies|}.",
-  "REBALANCEDSPIRE-POISONOUS.title": "Poisonous"
+  "REBALANCED_SPIRE_ENCHANTMENT_POISONOUS.description": "This card applies [blue]{PoisonPower}[/blue] [gold]Poison[/gold].",
+  "REBALANCED_SPIRE_ENCHANTMENT_POISONOUS.extraCardText": "Apply [blue]{PoisonPower}[/blue] [gold]Poison[/gold]{TargetType:choose(AllEnemies): to ALL enemies|}.",
+  "REBALANCED_SPIRE_ENCHANTMENT_POISONOUS.title": "Poisonous",
+  "REBALANCED_SPIRE_ENCHANTMENT_ENERGETIC.description": "Deal [red]100%[/red] less damage. The first time you play this card each combat, gain {Amount:energyIcons()}.",
+  "REBALANCED_SPIRE_ENCHANTMENT_ENERGETIC.extraCardText": "Gain {Amount:energyIcons()}.",
+  "REBALANCED_SPIRE_ENCHANTMENT_ENERGETIC.title": "Energetic"
 }

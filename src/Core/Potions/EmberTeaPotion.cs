@@ -1,7 +1,5 @@
 ﻿namespace RebalancedSpire.Core.Potions;
 
-using BaseLib.Abstracts;
-using BaseLib.Utils;
 using Godot;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -13,9 +11,11 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-[Pool(typeof(EventPotionPool))]
-public sealed class EmberTeaPotion : CustomPotionModel
+[RegisterPotion(typeof(EventPotionPool))]
+public sealed class EmberTeaPotion : ModPotionTemplate
 {
     public override PotionRarity Rarity => PotionRarity.Event;
 
@@ -28,7 +28,7 @@ public sealed class EmberTeaPotion : CustomPotionModel
         new PowerVar<StrengthPower>(5)
     ]).AsReadOnly();
 
-    public override IEnumerable<IHoverTip> ExtraHoverTips => new List<IHoverTip>(
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
     [
         HoverTipFactory.FromPower<StrengthPower>()
     ]).AsReadOnly();

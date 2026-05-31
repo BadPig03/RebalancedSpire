@@ -1,15 +1,17 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
 using Afflictions;
-using BaseLib.Abstracts;
-using BaseLib.Hooks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
+using IMaxHandSizeModifier = STS2RitsuLib.Combat.HandSize.IMaxHandSizeModifier;
 
-public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
+[RegisterPower]
+public sealed class ScrutinyPlusPower : ModPowerTemplate, IMaxHandSizeModifier
 {
     private const int ReduceHandSize = 4;
 
@@ -17,9 +19,10 @@ public sealed class ScrutinyPlusPower : CustomPowerModel, IMaxHandSizeModifier
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-scrutiny_plus_power.png";
-
-    public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-scrutiny_plus_power.png";
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: "res://images/powers/rebalanced_spire_power_scrutiny_plus_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_scrutiny_plus_power.png"
+    );
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
     {

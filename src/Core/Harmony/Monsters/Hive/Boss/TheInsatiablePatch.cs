@@ -18,10 +18,10 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class TheInsatiablePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.TheInsatiableConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheInsatiable;
 
     private const int SandpitPowerAmount = 4;
-    private const int LongDistancePowerAmount = 5;
+    private const int LongDistancePowerAmount = 1;
     private const int FranticEscapeAmount = 6;
 
     private static async Task LiquifyMove(TheInsatiable instance, IReadOnlyList<Creature> targets)

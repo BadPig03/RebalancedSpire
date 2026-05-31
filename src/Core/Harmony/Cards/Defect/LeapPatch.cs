@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class LeapPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.LeapConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Leap;
 
     private static async Task OnPlay(Leap instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -28,22 +28,21 @@ public static class LeapPatch
         await PowerCmd.Apply<LeapPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["FocusPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
-    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
+    [HarmonyPatch(typeof(Leap), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
+    private static bool PreFix_CanonicalVars(Leap __instance, ref IEnumerable<DynamicVar> __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not Leap)
+        __result = new List<DynamicVar>
         {
-            return true;
-        }
-
-        __result = CardRarity.Uncommon;
+            new BlockVar(9, ValueProp.Move),
+            new PowerVar<FocusPower>(1)
+        }.AsReadOnly();
         return false;
     }
 
@@ -62,7 +61,7 @@ public static class LeapPatch
             return true;
         }
 
-        __result = new LocString("cards", "REBALANCEDSPIRE-LEAP.description");
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_LEAP.description");
         return false;
     }
 
@@ -84,24 +83,6 @@ public static class LeapPatch
         __result = new List<IHoverTip>
         {
             HoverTipFactory.FromPower<FocusPower>()
-        }.AsReadOnly();
-        return false;
-    }
-
-    [HarmonyPatch(typeof(Leap), "CanonicalVars", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(Leap __instance, ref IEnumerable<DynamicVar> __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = new List<DynamicVar>
-        {
-            new BlockVar(9, ValueProp.Move),
-            new PowerVar<FocusPower>(1)
         }.AsReadOnly();
         return false;
     }
@@ -132,6 +113,25 @@ public static class LeapPatch
 
         __instance.DynamicVars.Block.UpgradeValueBy(2);
         __instance.DynamicVars["FocusPower"].UpgradeValueBy(1);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Leap)
+        {
+            return true;
+        }
+
+        __result = CardRarity.Uncommon;
         return false;
     }
 }

@@ -1,25 +1,28 @@
 namespace RebalancedSpire.Core.Powers;
 
 using Afflictions;
-using BaseLib.Abstracts;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Scaffolding.Content;
 
-public sealed class HungerPower : CustomPowerModel
+[RegisterPower]
+public sealed class HungerPower : ModPowerTemplate
 {
 	public override PowerType Type => PowerType.Buff;
 
 	public override PowerStackType StackType => PowerStackType.Single;
 
-	public override string CustomPackedIconPath => "res://images/powers/rebalancedspire-hunger_power.png";
+	public override PowerAssetProfile AssetProfile => new(
+		IconPath: "res://images/powers/rebalanced_spire_power_hunger_power.png",
+		BigIconPath: "res://images/powers/rebalanced_spire_power_hunger_power.png"
+	);
 
-	public override string CustomBigIconPath => "res://images/powers/big/rebalancedspire-hunger_power.png";
-
-	protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromAffliction<Devoured>(Amount);
+	protected override IEnumerable<IHoverTip> AdditionalHoverTips => HoverTipFactory.FromAffliction<Devoured>(Amount);
 
 	public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
 	{

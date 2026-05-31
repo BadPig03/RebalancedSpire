@@ -1,7 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Nodes.Screens.MainMenu;
 
 using System.Globalization;
-using BaseLib.Utils;
 using Godot;
 using MegaCrit.Sts2.addons.mega_text;
 using MegaCrit.Sts2.Core.Assets;
@@ -18,18 +17,20 @@ public partial class NModChangelogsScreen : Control, IScreenContext
     private const string ArrowTexturePath = "res://images/packed/common_ui/settings_tiny_left_arrow.png";
     private const string ShaderPath = "res://shaders/hsv.gdshader";
 
-    private static readonly AddedNode<NModChangelogsScreen, NBackButton> BackButtonNode = new(_ =>
+    private static NBackButton CreateBackButtonNode()
     {
         var button = PreloadManager.Cache.GetScene("res://scenes/ui/back_button.tscn").Instantiate<NBackButton>();
         button.Name = "BackButton";
         button.UniqueNameInOwner = true;
         button.LayoutMode = 1;
         return button;
-    });
-    private static readonly AddedNode<NModChangelogsScreen, NGoldArrowButton> PrevButtonNode = new(_ =>
+    }
+
+    private static NGoldArrowButton CreatePrevButtonNode()
     {
         var button = new NGoldArrowButton();
         button.Name = "PrevButton";
+        button.UniqueNameInOwner = true;
         button.CustomMinimumSize = new Vector2(128, 128);
         button.LayoutMode = 1;
         button.AnchorsPreset = 8;
@@ -68,11 +69,13 @@ public partial class NModChangelogsScreen : Control, IScreenContext
         texRect.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
         button.AddChild(texRect);
         return button;
-    });
-    private static readonly AddedNode<NModChangelogsScreen, NGoldArrowButton> NextButtonNode = new(_ =>
+    }
+
+    private static NGoldArrowButton CreateNextButtonNode()
     {
         var button = new NGoldArrowButton();
         button.Name = "NextButton";
+        button.UniqueNameInOwner = true;
         button.CustomMinimumSize = new Vector2(128, 128);
         button.LayoutMode = 1;
         button.AnchorsPreset = 8;
@@ -112,7 +115,7 @@ public partial class NModChangelogsScreen : Control, IScreenContext
         texRect.FlipH = true;
         button.AddChild(texRect);
         return button;
-    });
+    }
 
     public Control? DefaultFocusedControl => null;
 
@@ -142,14 +145,14 @@ public partial class NModChangelogsScreen : Control, IScreenContext
         _cachedScene = ResourceLoader.Load<PackedScene>("res://scenes/screens/patch_screen_contents.tscn");
         CreateNewUpdateEntry();
 
-        _prevButton = PrevButtonNode.Get(this);
+        _prevButton = CreatePrevButtonNode();
         _prevButton?.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ =>
         {
             PreviousChangelog();
         }));
         AddChild(_prevButton);
 
-        _nextButton = NextButtonNode.Get(this);
+        _nextButton = CreateNextButtonNode();
         _nextButton?.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ =>
         {
             NextChangelog();
@@ -157,14 +160,14 @@ public partial class NModChangelogsScreen : Control, IScreenContext
         _nextButton?.SetVisible(false);
         AddChild(_nextButton);
 
+        _backButton = CreateBackButtonNode();
+        _backButton?.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ => { Close(); }));
+        AddChild(_backButton);
+
         _changelogsButton = GetNode<NButton>("%ModChangelogsToggle");
         _changelogsButton.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ => { Close(); }));
         _changelogsButton.SetVisible(false);
         _changelogsButton.Disable();
-
-        _backButton = BackButtonNode.Get(this);
-        _backButton?.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ => { Close(); }));
-        AddChild(_backButton);
     }
 
     public void Open()

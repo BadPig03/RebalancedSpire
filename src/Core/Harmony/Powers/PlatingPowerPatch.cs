@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class PlatingPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.EternalArmorConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.EternalArmor;
 
     private static async Task AfterSideTurnStart(PlatingPower instance)
     {

@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class AfterlifePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.AfterlifeConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Afterlife;
 
     private static async Task OnPlay(Afterlife instance, PlayerChoiceContext choiceContext)
     {
@@ -24,60 +24,17 @@ public static class AfterlifePatch
         await PowerCmd.Apply<AfterlifePower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["AfterlifePower"].BaseValue, instance.Owner.Creature, instance);
     }
 
-    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(Afterlife), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
+    private static bool PreFix_CanonicalKeywords(Afterlife __instance, ref IEnumerable<CardKeyword> __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not Afterlife)
-        {
-            return true;
-        }
-
-        __result = new LocString("cards", "REBALANCEDSPIRE-AFTERLIFE.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Type", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Type(CardModel __instance, ref CardType __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Afterlife)
-        {
-            return true;
-        }
-
-        __result = CardType.Power;
-        return false;
-    }
-
-    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Afterlife)
-        {
-            return true;
-        }
-
-        __result = CardRarity.Uncommon;
+        __result = new List<CardKeyword>().AsReadOnly();
         return false;
     }
 
@@ -100,17 +57,22 @@ public static class AfterlifePatch
         return false;
     }
 
-    [HarmonyPatch(typeof(Afterlife), "CanonicalKeywords", MethodType.Getter)]
+    [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_CanonicalKeywords(Afterlife __instance, ref IEnumerable<CardKeyword> __result)
+    private static bool PreFix_Description(CardModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __result = new List<CardKeyword>().AsReadOnly();
+        if (__instance is not Afterlife)
+        {
+            return true;
+        }
+
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_AFTERLIFE.description");
         return false;
     }
 
@@ -143,4 +105,43 @@ public static class AfterlifePatch
         __instance.DynamicVars["AfterlifePower"].UpgradeValueBy(1);
         return false;
     }
+
+    [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Rarity(CardModel __instance, ref CardRarity __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Afterlife)
+        {
+            return true;
+        }
+
+        __result = CardRarity.Uncommon;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "Type", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Type(CardModel __instance, ref CardType __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Afterlife)
+        {
+            return true;
+        }
+
+        __result = CardType.Power;
+        return false;
+    }
+
 }

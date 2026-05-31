@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class ToadpolePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.ToadpoleConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Toadpole;
 
     [HarmonyPatch(typeof(Toadpole), "SpikeSpitDamage", MethodType.Getter)]
     [HarmonyPostfix]

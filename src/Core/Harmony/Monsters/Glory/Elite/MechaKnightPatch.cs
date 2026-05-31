@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public class MechaKnightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.MechaKnightConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.MechaKnight;
 
     private const int BurnAmount = 2;
 

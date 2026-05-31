@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Merchant;
 // ReSharper disable InconsistentNaming
 public static class MerchantCardRemovalEntryPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.MerchantConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LessPriceIncrease;
 
     [HarmonyPatch(typeof(MerchantCardRemovalEntry), "PriceIncrease", MethodType.Getter)]
     [HarmonyPrefix]

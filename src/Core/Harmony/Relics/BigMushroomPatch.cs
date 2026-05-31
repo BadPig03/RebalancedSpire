@@ -12,45 +12,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class BigMushroomPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.HungryForMushroomsConfig;
-
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not BigMushroom)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-BIG_MUSHROOM.description");
-        return false;
-    }
-
-    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not BigMushroom)
-        {
-            return true;
-        }
-
-        __result = new LocString("relics", "REBALANCEDSPIRE-BIG_MUSHROOM.eventDescription");
-        return false;
-    }
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HungryForMushrooms;
 
     [HarmonyPatch(typeof(BigMushroom), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

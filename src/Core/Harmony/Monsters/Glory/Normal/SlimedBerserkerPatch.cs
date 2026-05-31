@@ -20,7 +20,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class SlimedBerserkerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SlimedBerserkerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SlimedBerserker;
 
     private const int LeechingHugPowerAmount = 1;
     private const int PummelingCount = 4;
@@ -55,19 +55,6 @@ public static class SlimedBerserkerPatch
         await DamageCmd.Attack(PummelingDamage).WithHitCount(PummelingCount).OnlyPlayAnimOnce().FromMonster(instance).WithAttackerAnim("Attack", 0.2f).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).Execute(null);
     }
 
-    [HarmonyPatch(typeof(SlimedBerserker), "MinInitialHp", MethodType.Getter)]
-    [HarmonyPostfix]
-    [UsedImplicitly]
-    private static void ReduceMinInitialHp(ref int __result)
-    {
-        if (Disabled)
-        {
-            return;
-        }
-
-        __result -= 40;
-    }
-
     [HarmonyPatch(typeof(SlimedBerserker), "GenerateMoveStateMachine")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -93,5 +80,18 @@ public static class SlimedBerserkerPatch
         list.Add(moveState4);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(SlimedBerserker), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceMinInitialHp(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result -= 40;
     }
 }

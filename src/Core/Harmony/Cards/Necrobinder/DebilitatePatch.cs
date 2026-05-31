@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class DebilitatePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DebilitateConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Debilitate;
 
     [HarmonyPatch(typeof(Debilitate), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
@@ -26,9 +26,24 @@ public static class DebilitatePatch
 
         __result = new List<DynamicVar>
         {
-            new DamageVar(10, ValueProp.Move),
+            new DamageVar(7, ValueProp.Move),
             new PowerVar<DebilitatePower>(3)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Debilitate), "OnUpgrade")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_OnUpgrade(Debilitate __instance)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __instance.DynamicVars.Damage.UpgradeValueBy(3);
+        __instance.DynamicVars["DebilitatePower"].UpgradeValueBy(1);
         return false;
     }
 }

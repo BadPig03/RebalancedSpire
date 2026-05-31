@@ -9,12 +9,12 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class OvicopterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.OvicopterConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Ovicopter;
 
-    [HarmonyPatch(typeof(Ovicopter), "MinInitialHp", MethodType.Getter)]
+    [HarmonyPatch(typeof(Ovicopter), "MaxInitialHp", MethodType.Getter)]
     [HarmonyPostfix]
     [UsedImplicitly]
-    private static void IncreaseMinInitialHp(ref int __result)
+    private static void IncreaseMaxInitialHp(ref int __result)
     {
         if (Disabled)
         {
@@ -24,10 +24,10 @@ public static class OvicopterPatch
         __result += 20;
     }
 
-    [HarmonyPatch(typeof(Ovicopter), "MaxInitialHp", MethodType.Getter)]
+    [HarmonyPatch(typeof(Ovicopter), "MinInitialHp", MethodType.Getter)]
     [HarmonyPostfix]
     [UsedImplicitly]
-    private static void IncreaseMaxInitialHp(ref int __result)
+    private static void IncreaseMinInitialHp(ref int __result)
     {
         if (Disabled)
         {

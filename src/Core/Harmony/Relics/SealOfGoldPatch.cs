@@ -16,38 +16,39 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class SealOfGoldPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.SealOfGoldConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SealOfGold;
 
-    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
+    [HarmonyPatch(typeof(AbstractModel), "AfterCombatEnd")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
+    private static bool PreFix_AfterCombatEnd(AbstractModel __instance, CombatRoom room, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not SealOfGold)
+        if (__instance is not SealOfGold sealOfGold)
         {
             return true;
         }
 
-        __result = new LocString("relics", "REBALANCEDSPIRE-SEAL_OF_GOLD.description");
+        sealOfGold.Status = RelicStatus.Normal;
+        __result = Task.CompletedTask;
         return false;
     }
 
     [HarmonyPatch(typeof(SealOfGold), "AfterSideTurnStart")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterSideTurnStart(SealOfGold __instance, CombatSide side, ICombatState combatState, ref Task __result)
+    private static bool PreFix_AfterSideTurnStart(SealOfGold __instance, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (side != CombatSide.Player)
+        if (side != CombatSide.Player || !participants.Contains(__instance.Owner.Creature))
         {
             return true;
         }
@@ -67,7 +68,7 @@ public static class SealOfGoldPatch
             return true;
         }
 
-        if (__instance is not SealOfGold sealOfGold || side != CombatSide.Player)
+        if (__instance is not SealOfGold sealOfGold || side != CombatSide.Player || !participants.Contains(sealOfGold.Owner.Creature))
         {
             return true;
         }
@@ -77,23 +78,22 @@ public static class SealOfGoldPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(AbstractModel), "AfterCombatEnd")]
+    [HarmonyPatch(typeof(RelicModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterCombatEnd(AbstractModel __instance, CombatRoom room, ref Task __result)
+    private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not SealOfGold sealOfGold)
+        if (__instance is not SealOfGold)
         {
             return true;
         }
 
-        sealOfGold.Status = RelicStatus.Normal;
-        __result = Task.CompletedTask;
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_SEAL_OF_GOLD.description");
         return false;
     }
 }

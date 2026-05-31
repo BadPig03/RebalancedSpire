@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 // ReSharper disable InconsistentNaming
 public static class ToughEggPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.OvicopterConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Ovicopter;
 
     private static async Task AfterAddedToRoom(ToughEgg instance)
     {

@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 // ReSharper disable InconsistentNaming
 public static class AttackCommandPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireConfig.DoormakerConfig;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Doormaker;
 
     [HarmonyPatch(typeof(AttackCommand), "TargetingRandomOpponents")]
     [HarmonyPrefix]
