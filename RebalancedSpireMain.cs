@@ -19,7 +19,7 @@ public partial class RebalancedSpireMain : Node
     internal const string SettingsKey = "settings";
     internal const string SettingsFileName = "settings.json";
 
-    public const string Version = "v0.2.0-beta";
+    public const string Version = "v0.2.1-beta";
 
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
 
@@ -28,10 +28,11 @@ public partial class RebalancedSpireMain : Node
         var assembly = Assembly.GetExecutingAssembly();
         new Harmony(ModId).PatchAllForRebalancedSpire(assembly);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+        RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
+
         RebalancedSpireCardTransformationRegistry.Initialize();
         RebalancedSpireNodesRegistry.Initialize();
         RebalancedSpireRightClickRegistry.Initialize();
         RebalancedSpireSettingsRegistry.Initialize();
-        RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
     }
 }

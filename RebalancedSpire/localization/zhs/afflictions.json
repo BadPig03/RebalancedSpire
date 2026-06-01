@@ -7,7 +7,7 @@
   "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.title": "物归原主",
   "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.description": "你的[gold]手牌上限[/gold]减少。",
   "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.title": "沉重",
-  "REBALANCED_SPIRE_AFFLICTION_WITHERING.description": "这张牌被[gold]消耗[/gold]时会回到你的[gold]弃牌堆[/gold]中。",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.description": "这张牌被[gold]消耗[/gold]或[gold]变化[/gold]时会回到你的[gold]弃牌堆[/gold]中。",
   "REBALANCED_SPIRE_AFFLICTION_WITHERING.extraCardText": "无法逃脱。",
   "REBALANCED_SPIRE_AFFLICTION_WITHERING.title": "无法逃脱"
 }

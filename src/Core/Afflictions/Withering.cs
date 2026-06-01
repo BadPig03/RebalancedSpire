@@ -37,6 +37,7 @@ public sealed class Withering : ModAfflictionTemplate
             {
                 wither.FakeUpgrade();
             }
+            wither.EnergyCost.AddThisCombat(1);
             await PowerCmd.Apply<SandsOfTimePower>(new ThrowingPlayerChoiceContext(), wither.Owner.Creature, SandsOfTimePowerAmount, wither.Owner.Creature, null);
         }
         else

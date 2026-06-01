@@ -45,18 +45,27 @@ public sealed class SoulWitherPower : ModPowerTemplate
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [
+        new DynamicVar("MaxCount", MaxHitCount),
         new StringVar("SoulNexus", ModelDb.Monster<SoulNexus>().Title.GetFormattedText())
     ]).AsReadOnly();
 
     public override Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
-        if (dealer != Owner || !target.IsPlayer || !props.IsPoweredAttack() || result.UnblockedDamage <= 0)
+        if (dealer != Owner || !props.IsPoweredAttack() || result.UnblockedDamage <= 0)
         {
             return Task.CompletedTask;
         }
 
-        Flash();
-        HitCount += 1;
+        foreach (var power in Owner.GetPowerInstances<SoulWitherPower>())
+        {
+            if ((target.Player ?? target.PetOwner) != power.Target?.Player)
+            {
+                continue;
+            }
+
+            Flash();
+            HitCount += 1;
+        }
         return Task.CompletedTask;
     }
 

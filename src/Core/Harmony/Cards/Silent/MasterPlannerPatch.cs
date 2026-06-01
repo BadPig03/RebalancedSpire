@@ -21,7 +21,7 @@ public static class MasterPlannerPatch
     private static async Task OnPlay(MasterPlanner instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<MasterPlannerPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["MasterPlannerPlusPower"].BaseValue, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<MasterPlannerPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars.Cards.BaseValue, instance.Owner.Creature, instance);
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalVars", MethodType.Getter)]
@@ -41,8 +41,7 @@ public static class MasterPlannerPatch
 
         __result = new List<DynamicVar>
         {
-            new CardsVar(1),
-            new PowerVar<MasterPlannerPlusPower>(1)
+            new CardsVar(1)
         }.AsReadOnly();
         return false;
     }

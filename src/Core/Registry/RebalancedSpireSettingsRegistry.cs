@@ -1,7 +1,9 @@
 ﻿namespace RebalancedSpire.Core.Registry;
 
 using Configs;
+using Encounters;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Models.Acts;
 using STS2RitsuLib;
 using STS2RitsuLib.Settings;
 
@@ -17,6 +19,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             .WithTitle(L("others_settings.page.title"))
             .WithDescription(L("others_settings.page.description"))
             .WithSortOrder(10000)
+            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
             .AddSection("map_generation", s => s
                 .WithTitle(L("map_generation.section.label"))
                 .AddToggle("uniform_intro_generation", L("map_generation.section.uniform_intro_generation.title"), ui.UniformIntroGeneration, L("map_generation.section.uniform_intro_generation.description"))
@@ -32,6 +35,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             .WithTitle(L("cards_settings.page.title"))
             .WithDescription(L("cards_settings.page.description"))
             .WithSortOrder(0)
+            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
             .AddSection("the_ironclad", s => s
                 .WithTitle(L("the_ironclad.section.label"))
                 .AddToggle("blood_wall", L("the_ironclad.section.blood_wall.title"), ui.BloodWall, L("the_ironclad.section.blood_wall.description"))
@@ -91,6 +95,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             .WithTitle(L("relics_settings.page.title"))
             .WithDescription(L("relics_settings.page.description"))
             .WithSortOrder(1)
+            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
             .AddSection("neow", s => s
                 .WithTitle(L("neow.section.label"))
                 .AddToggle("booming_conch", L("neow.section.booming_conch.title"), ui.BoomingConch, L("neow.section.booming_conch.description"))
@@ -144,6 +149,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             .WithTitle(L("events_settings.page.title"))
             .WithDescription(L("events_settings.page.description"))
             .WithSortOrder(2)
+            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
             .AddSection("overgrowth", s => s
                 .WithTitle(L("overgrowth.section.label"))
                 .AddToggle("morphic_grove", L("overgrowth.section.morphic_grove.title"), ui.MorphicGrove, L("overgrowth.section.morphic_grove.description"))
@@ -176,6 +182,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             .WithTitle(L("enemies_settings.page.title"))
             .WithDescription(L("enemies_settings.page.description"))
             .WithSortOrder(3)
+            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
             .AddSection("overgrowth", s => s
                 .WithTitle(L("overgrowth.section.label"))
                 .AddToggle("cubex_construct", L("overgrowth.section.cubex_construct.title"), ui.CubexConstruct, L("overgrowth.section.cubex_construct.description"))

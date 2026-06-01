@@ -26,5 +26,5 @@
   "REBALANCED_SPIRE_CARD_UNTOUCHABLE.description": "获得{Block:diff()}点[gold]格挡[/gold]两次。",
   "REBALANCED_SPIRE_CARD_UP_MY_SLEEVE.description": "将{Cards:diff()}张[gold]小刀[/gold]加入你的[gold]手牌[/gold]。",
   "REBALANCED_SPIRE_CARD_WITHER.description": "将这张牌的伤害降低{PerLevel}。\n在你的回合结束时，如果这张牌在你的[gold]手牌[/gold]中，你受到{Damage:diff()}点伤害。",
-  "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "在本回合结束后，额外获得一回合。"
+  "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "在本回合结束后，额外获得一回合。\n这张牌的耗能加1。"
 }

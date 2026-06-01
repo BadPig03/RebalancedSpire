@@ -7,7 +7,7 @@
   "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.title": "To Its Origin Owner",
   "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.description": "Your [gold]Max Hand Size[/gold] is reduced.",
   "REBALANCED_SPIRE_AFFLICTION_WEIGHTED.title": "Weighted",
-  "REBALANCED_SPIRE_AFFLICTION_WITHERING.description": "This card returns to your [gold]Discard Pile[/gold] when [gold]Exhausted[/gold].",
+  "REBALANCED_SPIRE_AFFLICTION_WITHERING.description": "This card returns to your [gold]Discard Pile[/gold] when [gold]Exhausted[/gold] or [gold]Transformed[/gold].",
   "REBALANCED_SPIRE_AFFLICTION_WITHERING.extraCardText": "No Escape.",
   "REBALANCED_SPIRE_AFFLICTION_WITHERING.title": "No Escape"
 }

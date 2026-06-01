@@ -21,6 +21,6 @@ public static class GremlinMercPatch
             return;
         }
 
-        __result -= 2;
+        __result -= 1;
     }
 }

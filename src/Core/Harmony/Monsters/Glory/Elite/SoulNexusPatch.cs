@@ -24,7 +24,7 @@ public static class SoulNexusPatch
     private const int MaelstromDamage = 2;
     private const int SoulStrikeDamage = 4;
     private const int SoulWitherAmount = 1;
-    private const int VulnerablePowerAmount = 1;
+    private const int VulnerablePowerAmount = 99;
 
     private static int DrainLifeDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 20, 19);
     private static int MaelstromRepeat => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 15, 12);
@@ -54,9 +54,9 @@ public static class SoulNexusPatch
     {
         SfxCmd.Play(SrcHelpers.GetSfx(instance, "CastSfx")!, 0.8f);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.8f);
-        foreach (var power in instance.Creature.GetPowerInstances<SoulWitherPower>())
+        foreach (var power in instance.Creature.GetPowerInstances<SoulWitherPower>().ToList())
         {
-            power.HitCount = 0;
+            await PowerCmd.Remove(power);
         }
         await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), targets, VulnerablePowerAmount, instance.Creature, null);
     }
@@ -68,10 +68,10 @@ public static class SoulNexusPatch
 
     private static async Task AfterAddedToRoom(SoulNexus instance)
     {
-        foreach (var creature in instance.CombatState.PlayerCreatures)
+        foreach (var player in instance.CombatState.Players.ToList())
         {
             SoulWitherPower soulWitherPower = (SoulWitherPower) ModelDb.Power<SoulWitherPower>().ToMutable();
-            soulWitherPower.Target = creature;
+            soulWitherPower.Target = player.Creature;
             await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), soulWitherPower, instance.Creature, SoulWitherAmount, instance.Creature, null);
         }
     }

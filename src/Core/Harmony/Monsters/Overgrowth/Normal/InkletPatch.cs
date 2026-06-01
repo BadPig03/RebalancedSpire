@@ -20,7 +20,7 @@ public class InkletPatch
     private const int WhirlwindCount = 3;
 
     private static int WhirlwindDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 2, 1);
-    private static int PiercingGazeDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 9, 8);
+    private static int PiercingGazeDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 9);
 
     private static async Task WhirlwindMove(Inklet instance)
     {

@@ -26,5 +26,5 @@
   "REBALANCED_SPIRE_CARD_UNTOUCHABLE.description": "Gain {Block:diff()} [gold]Block[/gold] twice.",
   "REBALANCED_SPIRE_CARD_UP_MY_SLEEVE.description": "Add {Cards:diff()} [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_WITHER.description": "Decrease this card's damage by {PerLevel}.\nAt the end of your turn, if this is in your [gold]Hand[/gold], take {Damage:diff()} damage.",
-  "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "Take an extra turn after your turn."
+  "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "Take an extra turn after your turn.\nIncrease this card's cost by 1."
 }

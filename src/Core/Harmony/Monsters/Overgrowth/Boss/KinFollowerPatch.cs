@@ -284,21 +284,20 @@ public static class KinFollowerPatch
     }
 
     [HarmonyPatch(typeof(MonsterModel), "Title", MethodType.Getter)]
-    [HarmonyPrefix]
+    [HarmonyPostfix]
     [UsedImplicitly]
-    private static bool PreFix_Title(MonsterModel __instance, ref LocString __result)
+    private static void PostFix_Title(MonsterModel __instance, ref LocString __result)
     {
         if (Disabled)
         {
-            return false;
+            return;
         }
 
         if (__instance is not KinFollower { StartsWithDance: true })
         {
-            return true;
+            return;
         }
 
         __result = MonsterModel.L10NMonsterLookup("KIN_FOLLOWER_FAKE.name");
-        return true;
     }
 }

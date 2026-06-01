@@ -1,6 +1,7 @@
 namespace RebalancedSpire.Core.Encounters;
 
 using Afflictions;
+using Configs;
 using Godot;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -16,6 +17,8 @@ using STS2RitsuLib.Scaffolding.Content;
 [UsedImplicitly]
 public sealed class DoormakerBoss : ModEncounterTemplate
 {
+	private static readonly bool Enabled = RebalancedSpireSettingsStore.Settings.Doormaker;
+
 	public override RoomType RoomType => RoomType.Boss;
 
 	public override MegaSkeletonDataResource? BossNodeSpineResource => null;
@@ -36,6 +39,11 @@ public sealed class DoormakerBoss : ModEncounterTemplate
 
 	public override bool FullyCenterPlayers => true;
 
+	public override bool IsValidForAct(ActModel act)
+	{
+		return act is Glory && Enabled;
+	}
+
 	public override IEnumerable<MonsterModel> AllPossibleMonsters => new List<MonsterModel>(
 	[
 		ModelDb.Monster<DoormakerLeft>(),
@@ -44,7 +52,7 @@ public sealed class DoormakerBoss : ModEncounterTemplate
 
 	public override IEnumerable<string> ExtraAssetPaths => new List<string>(
 	[
-		"res://scenes/creature_visuals/doormaker_boss.tscn",
+		"res://scenes/creature_visuals/rebalanced_spire_monster_doormaker_boss.tscn",
 		"res://images/" + DoormakerBase.ClosedState,
 		"res://images/" + DoormakerBase.EyeState,
 		"res://images/" + DoormakerBase.MouthState,
