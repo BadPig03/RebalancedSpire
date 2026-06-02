@@ -252,9 +252,8 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("mecha_knight", L("glory.section.mecha_knight.title"), ui.MechaKnight, L("glory.section.mecha_knight.description"))
                 .AddToggle("soul_nexus", L("glory.section.soul_nexus.title"), ui.SoulNexus, L("glory.section.soul_nexus.description"))
                 .AddToggle("test_subject", L("glory.section.test_subject.title"), ui.TestSubject, L("glory.section.test_subject.description"))
-                .AddToggle("queen", L("glory.section.queen.title"), ui.Queen, L("glory.section.queen.description"))
-                .AddToggle("doormaker", L("glory.section.doormaker.title"), ui.Doormaker, L("glory.section.doormaker.description"))
                 .AddToggle("aeonglass", L("glory.section.aeonglass.title"), ui.Aeonglass, L("glory.section.aeonglass.description"))
+                .AddToggle("doormaker", L("glory.section.doormaker.title"), ui.Doormaker, L("glory.section.doormaker.description"))
             ), "enemies"
         );
     }

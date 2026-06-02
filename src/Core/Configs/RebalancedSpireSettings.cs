@@ -447,12 +447,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("test_subject")]
     public bool TestSubject { get; set; } = true;
 
-    [JsonPropertyName("queen")]
-    public bool Queen { get; set; } = true;
+    [JsonPropertyName("aeonglass")]
+    public bool Aeonglass { get; set; } = true;
 
     [JsonPropertyName("doormaker")]
     public bool Doormaker { get; set; } = true;
-
-    [JsonPropertyName("aeonglass")]
-    public bool Aeonglass { get; set; } = true;
 }

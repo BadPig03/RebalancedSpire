@@ -32,7 +32,8 @@ public sealed class HungerPower : ModPowerTemplate
 			return;
 		}
 
-		foreach (var card in players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Type is CardType.Attack or CardType.Skill).ToList()).OfType<List<CardModel>>().SelectMany(l => l))
+		var cards = players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Type != CardType.Power)).OfType<List<CardModel>>().SelectMany(l => l).ToList();
+		foreach (var card in cards)
 		{
 			await Afflict(card);
 		}
@@ -56,16 +57,21 @@ public sealed class HungerPower : ModPowerTemplate
 			return Task.CompletedTask;
 		}
 
-		foreach (var card in players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Affliction is Devoured).ToList()).OfType<List<CardModel>>().SelectMany(l => l))
+		var cards = players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Affliction is Devoured)).OfType<List<CardModel>>().SelectMany(l => l).ToList();
+		foreach (var card in cards)
 		{
-			if (((Devoured?)card.Affliction)?.AppliedExhaust == true)
+			var devoured = (Devoured?) card.Affliction;
+			if (devoured == null)
+			{
+				continue;
+			}
+
+			if (devoured.AppliedExhaust)
 			{
 				CardCmd.RemoveKeyword(card, CardKeyword.Exhaust);
 			}
-
 			CardCmd.ClearAffliction(card);
 		}
-
 		return Task.CompletedTask;
 	}
 

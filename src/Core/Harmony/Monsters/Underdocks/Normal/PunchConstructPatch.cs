@@ -42,15 +42,16 @@ public static class PunchConstructPatch
         }
         await CreatureCmd.TriggerAnim(instance.Creature, "Attack", 0f);
         await Cmd.Wait(0.1f);
-        var enemies = instance.Creature.CombatState?.Enemies;
+        var enemies = instance.Creature.CombatState?.Enemies.Where(c => c != instance.Creature).ToList();
         if (enemies == null)
         {
             return;
         }
 
-        foreach (var enemy in enemies.Where(c => c != instance.Creature).ToList())
+        var damageVar = new DamageVar(instance.FastPunchDamage, DamageProps.monsterMove);
+        foreach (var enemy in enemies)
         {
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemy, new DamageVar(instance.FastPunchDamage, DamageProps.monsterMove), instance.Creature);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), enemy, damageVar, instance.Creature);
             VfxCmd.PlayOnCreatureCenter(enemy, "vfx/vfx_attack_blunt");
             vfxContainer?.AddChildSafely(NHitSparkVfx.Create(enemy, requireInteractable: false));
             await CreatureCmd.TriggerAnim(enemy, "Hit", 0f);

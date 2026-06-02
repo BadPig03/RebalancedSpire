@@ -19,11 +19,13 @@ public static class PomanderPatch
 
     private static async Task AfterObtained(Pomander instance)
     {
-        foreach (var card in (await CardSelectCmd.FromDeckForUpgrade(prefs: new CardSelectorPrefs(CardSelectorPrefs.UpgradeSelectionPrompt, instance.DynamicVars.Cards.IntValue), player: instance.Owner)).ToList())
+        var cards = (await CardSelectCmd.FromDeckForUpgrade(prefs: new CardSelectorPrefs(CardSelectorPrefs.UpgradeSelectionPrompt, instance.DynamicVars.Cards.IntValue), player: instance.Owner)).ToList();
+        foreach (var card in cards)
         {
             CardCmd.Upgrade(card);
         }
-        foreach (var card in PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.RunState.Rng.Niche).Take(instance.DynamicVars.Cards.IntValue))
+        var randomCards = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.RunState.Rng.Niche).Take(instance.DynamicVars.Cards.IntValue);
+        foreach (var card in randomCards)
         {
             CardCmd.Upgrade(card);
         }

@@ -54,7 +54,8 @@ public static class SoulNexusPatch
     {
         SfxCmd.Play(SrcHelpers.GetSfx(instance, "CastSfx")!, 0.8f);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.8f);
-        foreach (var power in instance.Creature.GetPowerInstances<SoulWitherPower>().ToList())
+		var powers = instance.Creature.GetPowerInstances<SoulWitherPower>().ToList();
+        foreach (var power in powers)
         {
             await PowerCmd.Remove(power);
         }
@@ -68,7 +69,8 @@ public static class SoulNexusPatch
 
     private static async Task AfterAddedToRoom(SoulNexus instance)
     {
-        foreach (var player in instance.CombatState.Players.ToList())
+		var players = instance.CombatState.Players.ToList();
+        foreach (var player in players)
         {
             SoulWitherPower soulWitherPower = (SoulWitherPower) ModelDb.Power<SoulWitherPower>().ToMutable();
             soulWitherPower.Target = player.Creature;

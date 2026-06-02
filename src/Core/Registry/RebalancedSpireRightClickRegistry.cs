@@ -5,7 +5,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.Models.Relics;
-using STS2RitsuLib;
+using STS2RitsuLib.Interactions.RightClick;
 
 internal sealed class RebalancedSpireRightClickRegistry
 {
@@ -13,9 +13,9 @@ internal sealed class RebalancedSpireRightClickRegistry
 
     internal static void Initialize()
     {
-        RitsuLibFramework.RegisterRightClick<SealOfGold>(RebalancedSpireMain.ModId, "REBALANCED_SPIRE_RELIC_SEAL_OF_GOLD", c => Enabled && CombatManager.Instance.IsInProgress && c.Model is SealOfGold { Status: RelicStatus.Active } sealOfGold && c.Player == sealOfGold.Owner,  async e =>
+        ModRightClickRegistry.Register<SealOfGold>(RebalancedSpireMain.ModId, "REBALANCED_SPIRE_RELIC_SEAL_OF_GOLD", c => Enabled && CombatManager.Instance.IsInProgress && c.Model is SealOfGold { Status: RelicStatus.Active } sealOfGold && c.Player == sealOfGold.Owner, async e =>
         {
-            if (e.Model is not SealOfGold { Status: RelicStatus.Active } sealOfGold || e.Player != sealOfGold.Owner)
+            if (e.Model is not SealOfGold { Status: RelicStatus.Active } sealOfGold)
             {
                 return;
             }

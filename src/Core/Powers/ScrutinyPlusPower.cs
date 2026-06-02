@@ -32,9 +32,10 @@ public sealed class ScrutinyPlusPower : ModPowerTemplate, IMaxHandSizeModifier
             return;
         }
 
-        foreach (var cardModel in players.Select(player => player.PlayerCombatState?.AllCards).OfType<IEnumerable<CardModel>>().SelectMany(list => list))
+        var cards = players.Select(p => p.PlayerCombatState?.AllCards).OfType<List<CardModel>>().SelectMany(l => l).ToList();
+        foreach (var card in cards)
         {
-            await Afflict(cardModel);
+            await Afflict(card);
         }
     }
 
@@ -60,7 +61,7 @@ public sealed class ScrutinyPlusPower : ModPowerTemplate, IMaxHandSizeModifier
             return Task.CompletedTask;
         }
 
-        foreach (Player player in oldOwner.CombatState.Players)
+        foreach (var player in oldOwner.CombatState.Players)
         {
             var list = player.PlayerCombatState?.AllCards.Where(c => c.Affliction is Weighted).ToList();
             if (list == null)
@@ -68,9 +69,9 @@ public sealed class ScrutinyPlusPower : ModPowerTemplate, IMaxHandSizeModifier
                 continue;
             }
 
-            foreach (var cardModel in list)
+            foreach (var card in list)
             {
-                CardCmd.ClearAffliction(cardModel);
+                CardCmd.ClearAffliction(card);
             }
         }
         return Task.CompletedTask;

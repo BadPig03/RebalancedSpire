@@ -153,9 +153,8 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> MechaKnight { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SoulNexus { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TestSubject { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> Queen { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> Doormaker { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Aeonglass { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Doormaker { get; private init; } = null!;
 
     public static RebalancedSpireSettingsUiBindings Create()
     {
@@ -310,9 +309,8 @@ internal sealed class RebalancedSpireSettingsUiBindings
             MechaKnight = B(s => s.MechaKnight, (s, v) => s.MechaKnight = v, () => defaults.MechaKnight),
             SoulNexus = B(s => s.SoulNexus, (s, v) => s.SoulNexus = v, () => defaults.SoulNexus),
             TestSubject = B(s => s.TestSubject, (s, v) => s.TestSubject = v, () => defaults.TestSubject),
-            Queen = B(s => s.Queen, (s, v) => s.Queen = v, () => defaults.Queen),
-            Doormaker = B(s => s.Doormaker, (s, v) => s.Doormaker = v, () => defaults.Doormaker),
             Aeonglass = B(s => s.Aeonglass, (s, v) => s.Aeonglass = v, () => defaults.Aeonglass),
+            Doormaker = B(s => s.Doormaker, (s, v) => s.Doormaker = v, () => defaults.Doormaker)
         };
     }
 

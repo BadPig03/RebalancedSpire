@@ -99,7 +99,9 @@ public sealed class OmnidynamicsPower : ModPowerTemplate
             creatures[num] = creature;
             num++;
         }
-        foreach (var body in creatures.Select(c => NCombatRoom.Instance?.GetCreatureNode(c)?.Body))
+
+        var bodies = creatures.Select(c => NCombatRoom.Instance?.GetCreatureNode(c)?.Body).ToList();
+        foreach (var body in bodies)
         {
             await FlipScale(body);
         }

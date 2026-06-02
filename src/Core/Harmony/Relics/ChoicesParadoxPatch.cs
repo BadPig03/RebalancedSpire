@@ -39,7 +39,9 @@ public static class ChoicesParadoxPatch
             CardCmd.ApplyKeyword(card, CardKeyword.Retain);
             CardCmd.Upgrade(card);
         }
-        foreach (var card in await CardSelectCmd.FromSimpleGrid(choiceContext, cards, player, new CardSelectorPrefs(RelicModel.L10NLookup("CHOICES_PARADOX.selectionScreenPrompt"), 1)))
+
+        var selected = (await CardSelectCmd.FromSimpleGrid(choiceContext, cards, player, new CardSelectorPrefs(RelicModel.L10NLookup("CHOICES_PARADOX.selectionScreenPrompt"), 1))).ToList();
+        foreach (var card in selected)
         {
             await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
         }

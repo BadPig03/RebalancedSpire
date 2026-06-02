@@ -41,7 +41,7 @@ public static class MagiKnightPatch
         if (TestMode.IsOff)
         {
             Vector2? vector = null;
-            foreach (Creature target in targets)
+            foreach (var target in targets)
             {
                 var creatureNode = NCombatRoom.Instance?.GetCreatureNode(target);
                 if (creatureNode != null && (!vector.HasValue || vector.Value.X > creatureNode.GlobalPosition.X))

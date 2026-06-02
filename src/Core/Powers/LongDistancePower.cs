@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,7 +12,6 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
@@ -40,21 +38,6 @@ public sealed class LongDistancePower : ModPowerTemplate
         new StringVar("TheInsatiable", ModelDb.Monster<TheInsatiable>().Title.GetFormattedText())
     ]).AsReadOnly();
 
-    private static int GetSandpitAmount(Player? player)
-    {
-        var enemies = player?.Creature.CombatState?.Enemies.Where(c => c.Monster is TheInsatiable).ToList();
-        if (enemies == null)
-        {
-            return 3;
-        }
-
-        foreach (var sandpitPower in enemies.Select(insatiable => insatiable.GetPowerInstances<SandpitPower>().ToList()).SelectMany(sandpits => sandpits.Where(s => s.Target == player?.Creature)))
-        {
-            return sandpitPower.Amount;
-        }
-        return 3;
-    }
-
     private static decimal CalculatePlayerMultiplier(int amount)
     {
         return Math.Max(0.2m, 1.3m - 0.1m * amount - 0.1m * Math.Max(0, amount - 5) + 0.2m * Math.Max(0, amount - 8));
@@ -69,19 +52,34 @@ public sealed class LongDistancePower : ModPowerTemplate
     {
         if (target == Owner && target.Player != null && props.IsPoweredAttack())
         {
-            return CalculatePlayerMultiplier(GetSandpitAmount(Owner.Player));
+            return CalculatePlayerMultiplier(Amount);
         }
         if ((dealer == Owner || dealer?.PetOwner == Owner.Player) && target?.Monster is TheInsatiable)
         {
-            return CalculateEnemyMultiplier(GetSandpitAmount(Owner.Player));
+            return CalculateEnemyMultiplier(Amount);
+        }
+        return 1;
+    }
+
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        if (!participants.Contains(Owner))
+        {
+            return;
         }
 
-        return 1;
+        await PowerCmd.TickDownDuration(this);
     }
 
     public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card is not FranticEscape || GetSandpitAmount(Owner.Player) < MaxAmount)
+        if (cardPlay.Card.Owner.Creature != Owner || cardPlay.Card is not FranticEscape)
+        {
+            return;
+        }
+
+        await PowerCmd.ModifyAmount(context, this, 1, Applier, null);
+        if (Amount < MaxAmount)
         {
             return;
         }
@@ -105,7 +103,8 @@ public sealed class LongDistancePower : ModPowerTemplate
         }
 
         await Cmd.Wait(1f);
-        foreach (var enemy in CombatState.Enemies.Where(c => c.Monster is TheInsatiable).ToList())
+        var enemies = CombatState.Enemies.Where(c => c.Monster is TheInsatiable).ToList();
+        foreach (var enemy in enemies)
         {
             enemy.RemoveAllPowersInternalExcept();
             CombatManager.Instance.RemoveCreature(enemy);

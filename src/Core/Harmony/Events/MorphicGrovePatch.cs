@@ -26,9 +26,10 @@ public static class MorphicGrovePatch
         }
 
         await PlayerCmd.LoseGold(instance.DynamicVars["GroupCost"].BaseValue, instance.Owner, GoldLossType.Stolen);
-        foreach (var cardModel in (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 2), player: instance.Owner)).ToList())
+        var cards = (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 2), player: instance.Owner)).ToList();
+        foreach (var card in cards)
         {
-            await CardCmd.TransformToRandom(cardModel, instance.Owner.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
+            await CardCmd.TransformToRandom(card, instance.Owner.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
         }
         instance.SetEventFinished(instance.L10NLookup("MORPHIC_GROVE.pages.GROUP.description"));
     }

@@ -62,9 +62,11 @@ public class TeaOfDiscourtesyPotion : ModPotionTemplate
                 NGame.Instance?.ScreenRumble(ShakeStrength.Medium, ShakeDuration.Short, RumbleStyle.Rumble);
             }
         }
-        foreach (var cardModel in PileType.Deck.GetPile(Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(Owner.RunState.Rng.Niche).Take(1))
+		
+		var cards = PileType.Deck.GetPile(Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(Owner.RunState.Rng.Niche).Take(1).ToList();
+        foreach (var card in cards)
         {
-            CardCmd.Upgrade(cardModel);
+            CardCmd.Upgrade(card);
         }
     }
 }

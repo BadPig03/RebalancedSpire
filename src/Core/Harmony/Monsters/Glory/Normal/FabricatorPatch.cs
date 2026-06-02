@@ -7,7 +7,6 @@ using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -39,9 +38,9 @@ public class FabricatorPatch
             return;
         }
 
-        Creature bot = await CreatureCmd.Add(spawnBot.ToMutable(), instance.CombatState, CombatSide.Enemy, instance.CombatState.Encounter?.GetNextSlot(instance.CombatState));
+        var bot = await CreatureCmd.Add(spawnBot.ToMutable(), instance.CombatState, CombatSide.Enemy, instance.CombatState.Encounter?.GetNextSlot(instance.CombatState));
         await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), bot, MinionPowerAmount, instance.Creature, null);
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, new DamageVar(FabricatorPower.GetSpawnBotDamage(instance.Creature), DamageProps.nonCardHpLoss), instance.Creature, null);
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, new DamageVar(FabricatorPower.GetSpawnBotDamage(instance.Creature), DamageProps.nonCardHpLoss | ValueProp.SkipHurtAnim), instance.Creature, null);
     }
 
     private static async Task FabricateMove(Fabricator instance)
@@ -53,6 +52,14 @@ public class FabricatorPatch
     private static async Task DisintegrateMove(Fabricator instance)
     {
         await DamageCmd.Attack(DisintegrateDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.6f).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+    }
+
+    private static async Task EscapeMove(Fabricator instance)
+    {
+        await Cmd.CustomScaledWait(0.75f, 1.25f);
+        await CreatureCmd.TriggerAnim(instance.Creature, "Dead", 0f);
+        await Cmd.Wait(1.25f);
+        await CreatureCmd.Escape(instance.Creature);
     }
 
     private static async Task AfterAddedToRoom(Fabricator instance)
@@ -97,13 +104,16 @@ public class FabricatorPatch
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("FABRICATE_MOVE", _ => FabricateMove(__instance), new SummonIntent());
         MoveState moveState2 = new MoveState("DISINTEGRATE_MOVE", _ => DisintegrateMove(__instance), new SingleAttackIntent(DisintegrateDamage));
+        MoveState moveState3 = new MoveState("ESCAPE_MOVE", _ => EscapeMove(__instance), new EscapeIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("fabricateBranch");
         branchState.AddState(moveState, () => CanFabricate(__instance));
         branchState.AddState(moveState2, () => !CanFabricate(__instance));
         moveState.FollowUpState = branchState;
         moveState2.FollowUpState = branchState;
+        moveState3.FollowUpState = moveState3;
         list.Add(moveState);
         list.Add(moveState2);
+        list.Add(moveState3);
         list.Add(branchState);
         __result = new MonsterMoveStateMachine(list, branchState);
         return false;

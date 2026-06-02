@@ -27,7 +27,8 @@ public static class PoisonedStabPatch
             return;
         }
 
-        foreach (var shiv in await Shiv.CreateInHand(instance.Owner, instance.DynamicVars.Cards.IntValue, combatState))
+        var shivs = (await Shiv.CreateInHand(instance.Owner, instance.DynamicVars.Cards.IntValue, combatState)).ToList();
+        foreach (var shiv in shivs)
         {
             CardCmd.Enchant<Poisonous>(shiv, 1);
             if (!instance.IsUpgraded)

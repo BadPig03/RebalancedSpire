@@ -177,7 +177,8 @@ public static class KinFollowerPatch
         }
 
         await Cmd.Wait(0.5f);
-        foreach (var player in instance.CombatState.Players)
+		var players = instance.CombatState.Players.ToList();
+        foreach (var player in players)
         {
             var room = (CombatRoom?) player.RunState.CurrentRoom;
             if (room == null)

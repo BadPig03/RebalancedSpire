@@ -47,10 +47,11 @@ public sealed class LeechingHugPower : ModPowerTemplate
 
         Flash();
         var scale = CombatState.Players.Count;
-        foreach (var creature in CombatState.Enemies.Where(c => c.Monster is SlimedBerserker))
+        var enemies = CombatState.Enemies.Where(c => c.Monster is SlimedBerserker).ToList();
+        foreach (var enemy in enemies)
         {
-            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Strength.BaseValue, cardPlay.Card.Owner.Creature, null);
-            await CreatureCmd.Heal(creature, DynamicVars.Heal.BaseValue * scale);
+            await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), enemy, DynamicVars.Strength.BaseValue, cardPlay.Card.Owner.Creature, null);
+            await CreatureCmd.Heal(enemy, DynamicVars.Heal.BaseValue * scale);
         }
     }
 }

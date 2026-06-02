@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.3.10" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.3" />
     </ItemGroup>
     
     <ItemGroup>
@@ -357,9 +357,7 @@
       <Content Include="src\Core\Harmony\Maps\UniformIntroGenerationPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Merchant\MerchantCardRemovalEntryPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Boss\AeonglassPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Monsters\Glory\Boss\QueenPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Boss\TestSubjectPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Monsters\Glory\Boss\TorchHeadAmalgamPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\MagiKnightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\MechaKnightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\SoulNexusPatch.cs.uid" />

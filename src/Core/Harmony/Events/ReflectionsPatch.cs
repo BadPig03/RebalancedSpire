@@ -64,7 +64,8 @@ public static class ReflectionsPatch
             return;
         }
 
-        foreach (var copiedCard in (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_COPY"), 0, CloneCardsLimit))).Select(c => instance.Owner.RunState.CloneCard(c)).ToList())
+        var cards = (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_COPY"), 0, CloneCardsLimit))).Select(c => instance.Owner.RunState.CloneCard(c)).ToList();
+        foreach (var copiedCard in cards)
         {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(copiedCard, PileType.Deck), 1.2f, CardPreviewStyle.MessyLayout);
             await Cmd.CustomScaledWait(0.1f, 0.2f);
@@ -81,7 +82,8 @@ public static class ReflectionsPatch
             return;
         }
 
-        foreach (var copiedCard in instance.Owner.Deck.Cards.Select(c => instance.Owner.RunState.CloneCard(c)).ToList())
+        var cards = instance.Owner.Deck.Cards.Select(c => instance.Owner.RunState.CloneCard(c)).ToList();
+        foreach (var copiedCard in cards)
         {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(copiedCard, PileType.Deck), 1.2f, CardPreviewStyle.MessyLayout);
             await Cmd.CustomScaledWait(0.1f, 0.2f);

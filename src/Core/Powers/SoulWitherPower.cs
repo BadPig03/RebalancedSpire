@@ -56,7 +56,8 @@ public sealed class SoulWitherPower : ModPowerTemplate
             return Task.CompletedTask;
         }
 
-        foreach (var power in Owner.GetPowerInstances<SoulWitherPower>())
+		var instances = Owner.GetPowerInstances<SoulWitherPower>().ToList();
+        foreach (var power in instances)
         {
             if ((target.Player ?? target.PetOwner) != power.Target?.Player)
             {

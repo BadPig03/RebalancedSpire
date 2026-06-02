@@ -24,7 +24,8 @@ public static class ToastyMittensPatch
     private static async Task AfterPlayerTurnStart(ToastyMittens instance, PlayerChoiceContext choiceContext, Player player)
     {
         instance.Flash();
-        foreach (var card in await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(player).Cards.TakeLast(instance.DynamicVars["AllCards"].IntValue).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars["ChooseCards"].IntValue)))
+        var cards = (await CardSelectCmd.FromSimpleGrid(choiceContext, PileType.Draw.GetPile(player).Cards.TakeLast(instance.DynamicVars["AllCards"].IntValue).ToList(), player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, instance.DynamicVars["ChooseCards"].IntValue))).ToList();
+        foreach (var card in cards)
         {
             await CardCmd.Exhaust(choiceContext, card);
         }

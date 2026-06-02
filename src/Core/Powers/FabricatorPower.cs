@@ -40,7 +40,7 @@ public sealed class FabricatorPower : ModPowerTemplate
 
     public override Task AfterCurrentHpChanged(Creature creature, decimal delta)
     {
-        if (creature != Owner)
+        if (creature != Owner || Owner.Monster is not Fabricator fabricator)
         {
             return Task.CompletedTask;
         }
@@ -51,25 +51,19 @@ public sealed class FabricatorPower : ModPowerTemplate
             return Task.CompletedTask;
         }
 
-        var state = (MoveState?) creature.Monster?.MoveStateMachine?.States["DISINTEGRATE_MOVE"];
+        var state = (MoveState?) fabricator.MoveStateMachine?.States["ESCAPE_MOVE"];
         if (state == null)
         {
             return Task.CompletedTask;
         }
 
-        creature.Monster?.SetMoveImmediate(state);
+        fabricator.SetMoveImmediate(state);
         return Task.CompletedTask;
     }
 
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
-        if (wasRemovalPrevented || !creature.HasPower<MinionPower>() || !IsHpRemainingEnough(Owner))
-        {
-            return Task.CompletedTask;
-        }
-
-        var fabricator = (Fabricator?) Owner.Monster;
-        if (fabricator is not { CanFabricate: true } || !fabricator.IntendsToAttack)
+        if (wasRemovalPrevented || !creature.HasPower<MinionPower>() || !IsHpRemainingEnough(Owner) || Owner.Monster is not Fabricator { CanFabricate: true, IntendsToAttack: true } fabricator)
         {
             return Task.CompletedTask;
         }
@@ -101,6 +95,6 @@ public sealed class FabricatorPower : ModPowerTemplate
 
     public static bool IsHpRemainingEnough(Creature creature)
     {
-        return creature.CurrentHp > 4 * GetSpawnBotDamage(creature);
+        return creature.CurrentHp > 2 * GetSpawnBotDamage(creature);
     }
 }

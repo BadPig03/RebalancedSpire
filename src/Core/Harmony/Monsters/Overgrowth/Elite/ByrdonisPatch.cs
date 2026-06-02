@@ -40,7 +40,8 @@ public static class ByrdonisPatch
     {
         await CreatureCmd.TriggerAnim(instance.Creature, "AngryPermanently", 0.8f);
         await PowerCmd.Apply<TerritorialPower>(new ThrowingPlayerChoiceContext(), instance.Creature, TerritorialPowerAmount, instance.Creature, null);
-        foreach (var player in instance.CombatState.Players)
+		var players = instance.CombatState.Players.ToList();
+        foreach (var player in players)
         {
             var allCards = player.PlayerCombatState?.AllCards.ToList();
             if (allCards == null)
@@ -73,7 +74,8 @@ public static class ByrdonisPatch
 
     private static async Task AfterAddedToRoom(Byrdonis instance)
     {
-        foreach (var player in instance.CombatState.Players.Where(p => p.GetRelic<Byrdpip>() != null))
+		var players = instance.CombatState.Players.Where(p => p.GetRelic<Byrdpip>() != null).ToList();
+        foreach (var player in players)
         {
             await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), instance.Creature, WeakAmount, player.Creature, null);
         }

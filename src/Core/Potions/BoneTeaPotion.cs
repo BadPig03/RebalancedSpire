@@ -28,7 +28,8 @@ public sealed class BoneTeaPotion : ModPotionTemplate
         }
 
         NCombatRoom.Instance?.PlaySplashVfx(Owner.Creature, new Color("cd683d"));
-        foreach (var card in PileType.Draw.GetPile(Owner).Cards.Where(c => c.IsUpgradable))
+		var cards = PileType.Draw.GetPile(Owner).Cards.Where(c => c.IsUpgradable).ToList();
+        foreach (var card in cards)
         {
             CardCmd.Upgrade(card);
         }

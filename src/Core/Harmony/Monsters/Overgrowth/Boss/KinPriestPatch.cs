@@ -52,7 +52,8 @@ public static class KinPriestPatch
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_priest/the_kin_priest_rally");
         await CreatureCmd.TriggerAnim(instance.Creature, "Rally", 1f);
-        foreach (var enemy in instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest))
+        var enemies = instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest).ToList();
+        foreach (var enemy in enemies)
         {
             await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), enemy, StrengthPowerAmount, instance.Creature, null);
         }
@@ -62,7 +63,8 @@ public static class KinPriestPatch
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_priest/the_kin_priest_rally");
         await CreatureCmd.TriggerAnim(instance.Creature, "Rally", 1f);
-        foreach (var enemy in instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest))
+        var enemies = instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest).ToList();
+        foreach (var enemy in enemies)
         {
             await CreatureCmd.GainBlock(enemy, new BlockVar(BlockAmount, ValueProp.Move), null);
         }
@@ -91,7 +93,8 @@ public static class KinPriestPatch
             return;
         }
 
-        foreach (var enemy in instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest))
+        var enemies = instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest).ToList();
+        foreach (var enemy in enemies)
         {
             await CreatureCmd.Heal(enemy, (decimal) (HealAmount * count));
         }
@@ -109,9 +112,10 @@ public static class KinPriestPatch
 
     private static async Task AfterDeath(KinPriest instance, Creature creature)
     {
+        var enemies = instance.CombatState.Enemies.ToList();
         if (creature == instance.Creature)
         {
-            foreach (var enemy in instance.CombatState.Enemies)
+            foreach (var enemy in enemies)
             {
                 if (enemy.Monster is not KinFollower { StartsWithDance: false } follower)
                 {
@@ -131,7 +135,7 @@ public static class KinPriestPatch
         }
         else if (creature.Monster is KinFollower)
         {
-            foreach (var enemy in instance.CombatState.Enemies)
+            foreach (var enemy in enemies)
             {
                 if (enemy.Monster is not KinPriest priest)
                 {

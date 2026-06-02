@@ -28,7 +28,8 @@ public sealed class DoormakerRight : DoormakerBase
     public override async Task AfterAddedToRoom()
     {
         await base.AfterAddedToRoom();
-        foreach (var creature in CombatState.Enemies)
+		var enemies = CombatState.Enemies.ToList();
+        foreach (var creature in enemies)
         {
             if (creature.Monster is not DoormakerLeft doormaker)
             {

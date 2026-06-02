@@ -62,9 +62,9 @@ public sealed class NeowsLament : ModRelicTemplate
 
         Flash();
         VfxCmd.PlayOnCreatureCenters(enemies, "vfx/vfx_bite");
-        foreach (var creature in enemies)
+        foreach (var enemy in enemies)
         {
-            await CreatureCmd.SetCurrentHp(creature, 1);
+            await CreatureCmd.SetCurrentHp(enemy, 1);
         }
     }
 

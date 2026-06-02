@@ -49,7 +49,8 @@ public static class UniformIntroGenerationPatch
             return true;
         }
 
-        foreach (var point in GenerateBucketedStartColumns(__instance).Select(s => __instance.GetOrCreatePoint(s, 1)))
+		var points = GenerateBucketedStartColumns(__instance).Select(s => __instance.GetOrCreatePoint(s, 1));
+        foreach (var point in points)
         {
             __instance.startMapPoints.Add(point);
             __instance.PathGenerate(point);

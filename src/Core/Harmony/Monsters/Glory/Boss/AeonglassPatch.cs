@@ -33,7 +33,7 @@ public static class AeonglassPatch
     private static async Task AfterAddedToRoom(Aeonglass instance)
     {
         NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
-        var players = instance.Creature.CombatState?.PlayerCreatures;
+        var players = instance.Creature.CombatState?.PlayerCreatures.ToList();
         if (players == null)
         {
             return;

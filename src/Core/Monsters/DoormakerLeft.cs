@@ -39,7 +39,8 @@ public sealed class DoormakerLeft : DoormakerBase
         }
 
         await base.AfterAddedToRoom();
-        foreach (var creature in CombatState.Enemies)
+		var enemies = CombatState.Enemies.ToList();
+        foreach (var creature in enemies)
         {
             if (creature.Monster is not DoormakerRight doormaker)
             {
@@ -50,7 +51,8 @@ public sealed class DoormakerLeft : DoormakerBase
             break;
         }
 
-        foreach (var player in CombatState.Players)
+		var players = CombatState.Players.ToList();
+        foreach (var player in players)
         {
             await PowerCmd.Apply<OmnidynamicsPower>(new ThrowingPlayerChoiceContext(), player.Creature, OmnidynamicsPowerAmount, Creature, null);
         }

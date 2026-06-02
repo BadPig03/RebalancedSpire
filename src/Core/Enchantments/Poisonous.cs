@@ -36,11 +36,7 @@ public sealed class Poisonous : ModEnchantmentTemplate
         }
         else
         {
-            var enemies = Card.CombatState?.HittableEnemies;
-            if (enemies != null)
-            {
-                targets.AddRange(enemies);
-            }
+            targets.AddRange(Card.CombatState?.HittableEnemies ?? []);
         }
         await PowerCmd.Apply<PoisonPower>(choiceContext, targets, DynamicVars.Poison.BaseValue, Card.Owner.Creature, Card);
     }

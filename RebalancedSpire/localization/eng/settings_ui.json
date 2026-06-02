@@ -326,10 +326,8 @@
   "glory.section.soul_nexus.description": "When enabled, modifies [gold]Soul Nexus[/gold].",
   "glory.section.test_subject.title": "Test Subject",
   "glory.section.test_subject.description": "When enabled, modifies [gold]Test Subject[/gold].",
-  "glory.section.queen.title": "Queen Encounter",
-  "glory.section.queen.description": "When enabled, modifies [gold]Queen[/gold] and [gold]Torch Head Amalgam[/gold] in the Queen encounter.",
-  "glory.section.doormaker.title": "Doormaker",
-  "glory.section.doormaker.description": "When enabled, allows [gold]Doormaker[/gold] to appear.",
   "glory.section.aeonglass.title": "Aeonglass",
-  "glory.section.aeonglass.description": "When enabled, modifies [gold]Aeonglass[/gold]."
+  "glory.section.aeonglass.description": "When enabled, modifies [gold]Aeonglass[/gold].",
+  "glory.section.doormaker.title": "Doormaker",
+  "glory.section.doormaker.description": "When enabled, allows [gold]Doormaker[/gold] to appear."
 }

@@ -43,7 +43,7 @@ public sealed class ToItsOriginOwnerPower : ModPowerTemplate
     public override async Task AfterCombatEnd(CombatRoom room)
     {
         var eggList = Owner.Player?.PlayerCombatState?.AllCards.Where(c => c is ByrdonisEgg).ToList();
-        if (eggList == null || eggList.Count == 0)
+        if (eggList == null)
         {
             return;
         }

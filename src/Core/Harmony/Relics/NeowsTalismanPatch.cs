@@ -27,7 +27,8 @@ public static class NeowsTalismanPatch
         {
             CardCmd.Upgrade(card);
         }
-        foreach (var card in PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.RunState.Rng.Niche).Take(1))
+		var randomCards = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.RunState.Rng.Niche).Take(1).ToList();
+        foreach (var card in randomCards)
         {
             CardCmd.Upgrade(card);
         }

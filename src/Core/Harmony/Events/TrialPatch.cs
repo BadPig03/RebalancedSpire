@@ -33,8 +33,8 @@ public static class TrialPatch
 		    return;
 	    }
 
-	    var list = (await CardSelectCmd.FromDeckForUpgrade(prefs: new CardSelectorPrefs(CardSelectorPrefs.UpgradeSelectionPrompt, 1), player: instance.Owner)).ToList();
-	    foreach (var card in list)
+	    var cards = (await CardSelectCmd.FromDeckForUpgrade(prefs: new CardSelectorPrefs(CardSelectorPrefs.UpgradeSelectionPrompt, 1), player: instance.Owner)).ToList();
+	    foreach (var card in cards)
 	    {
 		    CardCmd.Upgrade(card);
 	    }
@@ -48,8 +48,8 @@ public static class TrialPatch
 		    return;
 	    }
 
-	    var list = (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), player: instance.Owner)).ToList();
-	    foreach (var card in list)
+	    var cards = (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), player: instance.Owner)).ToList();
+	    foreach (var card in cards)
 	    {
 		    await CardCmd.TransformToRandom(card, instance.Owner.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
 	    }

@@ -53,7 +53,7 @@ public static class OrobasPatch
     private static List<EventOption> SeaGlasses(Orobas instance)
     {
         List<EventOption> list = [];
-        foreach (CharacterModel allCharacter in ModelDb.AllCharacters)
+        foreach (var allCharacter in ModelDb.AllCharacters)
         {
             SeaGlass seaGlass = (SeaGlass) ModelDb.Relic<SeaGlass>().ToMutable();
             seaGlass.CharacterId = allCharacter.Id;

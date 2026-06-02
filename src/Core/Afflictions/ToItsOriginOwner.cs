@@ -44,7 +44,8 @@ public sealed class ToItsOriginOwner : ModAfflictionTemplate
         }
 
         List<Creature> byrdonis = [];
-        foreach (var enemy in enemies.Where(c => c.Monster is Byrdonis))
+        var byrdonisEnemies = enemies.Where(c => c.Monster is Byrdonis).ToList();
+        foreach (var enemy in byrdonisEnemies)
         {
             await CreatureCmd.TriggerAnim(enemy, "NotAngry", 1f);
             byrdonis.Add(enemy);

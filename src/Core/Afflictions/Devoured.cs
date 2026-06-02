@@ -20,6 +20,11 @@ public sealed class Devoured : ModAfflictionTemplate
 		}
 	}
 
+	public override bool CanAfflictCardType(CardType cardType)
+	{
+		return cardType != CardType.Power;
+	}
+
 	protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(
 	[
 		HoverTipFactory.FromKeyword(CardKeyword.Exhaust)

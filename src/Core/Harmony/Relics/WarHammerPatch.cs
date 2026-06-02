@@ -29,7 +29,8 @@ public static class WarHammerPatch
         var killed = EnemiesKilled[instance];
         for (var i = 0; i < killed; i++)
         {
-            foreach (var card in PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).Take(instance.DynamicVars.Cards.IntValue))
+            var cards = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).Take(instance.DynamicVars.Cards.IntValue).ToList();
+            foreach (var card in cards)
             {
                 CardCmd.Upgrade(card);
             }
