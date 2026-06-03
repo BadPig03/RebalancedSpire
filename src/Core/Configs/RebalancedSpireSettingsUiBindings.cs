@@ -18,6 +18,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> FlickFlack { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HandTrick { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HiddenDaggers { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> InfiniteBlades { get; private init; } = null!;
     public IModSettingsValueBinding<bool> MasterPlanner { get; private init; } = null!;
     public IModSettingsValueBinding<bool> PoisonedStab { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Scare { get; private init; } = null!;
@@ -35,6 +36,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> RightHandHand { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SicEm { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Spur { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Wisp { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ConsumingShadow { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Coolant { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Defragment { get; private init; } = null!;
@@ -175,6 +177,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             FlickFlack = B(s => s.FlickFlack, (s, v) => s.FlickFlack = v, () => defaults.FlickFlack),
             HandTrick = B(s => s.HandTrick, (s, v) => s.HandTrick = v, () => defaults.HandTrick),
             HiddenDaggers = B(s => s.HiddenDaggers, (s, v) => s.HiddenDaggers = v, () => defaults.HiddenDaggers),
+            InfiniteBlades = B(s => s.InfiniteBlades, (s, v) => s.InfiniteBlades = v, () => defaults.InfiniteBlades),
             MasterPlanner = B(s => s.MasterPlanner, (s, v) => s.MasterPlanner = v, () => defaults.MasterPlanner),
             PoisonedStab = B(s => s.PoisonedStab, (s, v) => s.PoisonedStab = v, () => defaults.PoisonedStab),
             Scare = B(s => s.Scare, (s, v) => s.Scare = v, () => defaults.Scare),
@@ -192,6 +195,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             RightHandHand = B(s => s.RightHandHand, (s, v) => s.RightHandHand = v, () => defaults.RightHandHand),
             SicEm = B(s => s.SicEm, (s, v) => s.SicEm = v, () => defaults.SicEm),
             Spur = B(s => s.Spur, (s, v) => s.Spur = v, () => defaults.Spur),
+            Wisp = B(s => s.Wisp, (s, v) => s.Wisp = v, () => defaults.Wisp),
             ConsumingShadow = B(s => s.ConsumingShadow, (s, v) => s.ConsumingShadow = v, () => defaults.ConsumingShadow),
             Coolant = B(s => s.Coolant, (s, v) => s.Coolant = v, () => defaults.Coolant),
             Defragment = B(s => s.Defragment, (s, v) => s.Defragment = v, () => defaults.Defragment),

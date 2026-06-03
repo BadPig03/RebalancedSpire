@@ -14,14 +14,23 @@ using MegaCrit.Sts2.Core.Models.Cards;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
-public static class MasterPlannerPatch
+public static class InfiniteBladesPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.MasterPlanner;
+    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.InfiniteBlades;
 
-    private static async Task OnPlay(MasterPlanner instance, PlayerChoiceContext choiceContext)
+    private const int InfiniteBladesPlusPowerAmount = 1;
+
+    private static async Task OnPlay(InfiniteBlades instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<MasterPlannerPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars.Cards.BaseValue, instance.Owner.Creature, instance);
+        var power = await PowerCmd.Apply<InfiniteBladesPlusPower>(choiceContext, instance.Owner.Creature, InfiniteBladesPlusPowerAmount, instance.Owner.Creature, instance);
+        if (power == null)
+        {
+            return;
+        }
+
+        power.DynamicVars.Cards.BaseValue += instance.DynamicVars.Cards.BaseValue;
+        power.InvokeDisplayAmountChanged();
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalVars", MethodType.Getter)]
@@ -34,7 +43,7 @@ public static class MasterPlannerPatch
             return true;
         }
 
-        if (__instance is not MasterPlanner)
+        if (__instance is not InfiniteBlades)
         {
             return true;
         }
@@ -56,19 +65,19 @@ public static class MasterPlannerPatch
             return true;
         }
 
-        if (__instance is not MasterPlanner)
+        if (__instance is not InfiniteBlades)
         {
             return true;
         }
 
-        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_MASTER_PLANNER.description");
+        __result = new LocString("cards", "REBALANCED_SPIRE_CARD_INFINITE_BLADES.description");
         return false;
     }
 
-    [HarmonyPatch(typeof(MasterPlanner), "OnPlay")]
+    [HarmonyPatch(typeof(InfiniteBlades), "OnPlay")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_OnPlay(MasterPlanner __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
+    private static bool PreFix_OnPlay(InfiniteBlades __instance, PlayerChoiceContext choiceContext, CardPlay cardPlay, ref Task __result)
     {
         if (Disabled)
         {
@@ -79,17 +88,18 @@ public static class MasterPlannerPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(MasterPlanner), "OnUpgrade")]
+    [HarmonyPatch(typeof(InfiniteBlades), "OnUpgrade")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_OnUpgrade(MasterPlanner __instance)
+    private static bool PreFix_OnUpgrade(InfiniteBlades __instance)
     {
         if (Disabled)
         {
             return true;
         }
 
-        __instance.EnergyCost.UpgradeBy(-1);
+        __instance.AddKeyword(CardKeyword.Innate);
+        __instance.DynamicVars.Cards.UpgradeValueBy(1);
         return false;
     }
 }

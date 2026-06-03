@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.3" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.6" />
     </ItemGroup>
     
     <ItemGroup>
@@ -158,6 +158,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_hunger_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_infested_plus_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_infested_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_infinite_blades_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_infinite_blades_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_leap_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_leap_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_leeching_hug_power.png" />
@@ -208,6 +210,8 @@
       <Content Include="images\powers\rebalanced_spire_power_guard_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_infested_plus_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_infested_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_infinite_blades_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_infinite_blades_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_leap_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_leap_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_leeching_hug_power.png" />
@@ -322,6 +326,7 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\RightHandHandPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SicEmPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Necrobinder\WispPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GlowPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\TheSealedThronePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
@@ -329,6 +334,7 @@
       <Content Include="src\Core\Harmony\Cards\Silent\FlickFlackPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HandTrickPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HiddenDaggersPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\InfiniteBladesPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\MasterPlannerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\ScarePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\PoisonedStabPatch.cs.uid" />
@@ -482,6 +488,7 @@
       <Content Include="src\Core\Powers\GuardPower.cs.uid" />
       <Content Include="src\Core\Powers\HungerPower.cs.uid" />
       <Content Include="src\Core\Powers\InfestedPlusPower.cs.uid" />
+      <Content Include="src\Core\Powers\InfiniteBladesPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\LeapPower.cs.uid" />
       <Content Include="src\Core\Powers\LeechingHugPower.cs.uid" />
       <Content Include="src\Core\Powers\LongDistancePower.cs.uid" />

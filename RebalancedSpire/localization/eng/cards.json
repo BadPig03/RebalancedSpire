@@ -11,6 +11,7 @@
   "REBALANCED_SPIRE_CARD_GLOW.description": "Gain {Stars:starIcons()}.\nDraw {Cards:diff()} {Cards:plural:card|cards}.",
   "REBALANCED_SPIRE_CARD_HAND_TRICK.description": "Gain {Block:diff()} [gold]Block[/gold].\nAdd [gold]Sly[/gold] to a card in your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_HIDDEN_DAGGERS.description": "Discard {Cards:diff()} {Cards:plural:card|cards}.\nAdd {Cards:diff()} [purple]Energetic[/purple] [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
+  "REBALANCED_SPIRE_CARD_INFINITE_BLADES.description": "At the start of your turn, add 1 [gold]Shiv[/gold] into your [gold]Hand[/gold].\n{Cards:diff()} [gold]{Cards:plural:Shiv|Shivs}[/gold] do not count toward your [gold]Hand Size[/gold].",
   "REBALANCED_SPIRE_CARD_MASTER_PLANNER.description": "Whenever you discard a [gold]Sly[/gold] card, draw {Cards:diff()} {Cards:plural:card|cards}.",
   "REBALANCED_SPIRE_CARD_LEAP.description": "Gain {Block:diff()} [gold]Block[/gold].\nGain {FocusPower:diff()} [gold]Focus[/gold] this turn.",
   "REBALANCED_SPIRE_CARD_LIMIT_BREAK.description": "Double your [gold]Strength[/gold].",
@@ -25,6 +26,7 @@
   "REBALANCED_SPIRE_CARD_SYNCHRONIZE.description": "Record newly [gold]Channeled[/gold] orb.\nThe first time you record a new type of Orb, gain {SynchronizePlusPower:diff()} [gold]Focus[/gold].",
   "REBALANCED_SPIRE_CARD_UNTOUCHABLE.description": "Gain {Block:diff()} [gold]Block[/gold] twice.",
   "REBALANCED_SPIRE_CARD_UP_MY_SLEEVE.description": "Add {Cards:diff()} [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
+  "REBALANCED_SPIRE_CARD_WISP.description": "Gain {Energy:energyIcons()}. \nTransform a random [gold]Soul[/gold] in your [gold]Draw Pile[/gold] into [gold]{IfUpgraded:show:Wisp+|Wisp}[/gold].",
   "REBALANCED_SPIRE_CARD_WITHER.description": "Decrease this card's damage by {PerLevel}.\nAt the end of your turn, if this is in your [gold]Hand[/gold], take {Damage:diff()} damage.",
   "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "Take an extra turn after your turn.\nIncrease this card's cost by 1."
 }

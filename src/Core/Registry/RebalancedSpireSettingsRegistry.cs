@@ -50,6 +50,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("flick_flack", L("the_silent.section.flick_flack.title"), ui.FlickFlack, L("the_silent.section.flick_flack.description"))
                 .AddToggle("hand_trick", L("the_silent.section.hand_trick.title"), ui.HandTrick, L("the_silent.section.hand_trick.description"))
                 .AddToggle("hidden_daggers", L("the_silent.section.hidden_daggers.title"), ui.HiddenDaggers, L("the_silent.section.hidden_daggers.description"))
+                .AddToggle("infinite_blades", L("the_silent.section.infinite_blades.title"), ui.InfiniteBlades, L("the_silent.section.infinite_blades.description"))
                 .AddToggle("master_planner", L("the_silent.section.master_planner.title"), ui.MasterPlanner, L("the_silent.section.master_planner.description"))
                 .AddToggle("poisoned_stab", L("the_silent.section.poisoned_stab.title"), ui.PoisonedStab, L("the_silent.section.poisoned_stab.description"))
                 .AddToggle("scare", L("the_silent.section.scare.title"), ui.Scare, L("the_silent.section.scare.description"))
@@ -71,6 +72,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("right_hand_hand", L("the_necrobinder.section.right_hand_hand.title"), ui.RightHandHand, L("the_necrobinder.section.right_hand_hand.description"))
                 .AddToggle("sic_em", L("the_necrobinder.section.sic_em.title"), ui.SicEm, L("the_necrobinder.section.sic_em.description"))
                 .AddToggle("spur", L("the_necrobinder.section.spur.title"), ui.Spur, L("the_necrobinder.section.spur.description"))
+                .AddToggle("wisp", L("the_necrobinder.section.wisp.title"), ui.Wisp, L("the_necrobinder.section.wisp.description"))
             ).AddSection("the_defect", s => s
                 .WithTitle(L("the_defect.section.label"))
                 .AddToggle("consuming_shadow", L("the_defect.section.consuming_shadow.title"), ui.ConsumingShadow, L("the_defect.section.consuming_shadow.description"))

@@ -4,7 +4,9 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -16,6 +18,16 @@ using MegaCrit.Sts2.Core.ValueProps;
 public static class WitherPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Aeonglass;
+
+    private static async Task OnTurnEndInHand(Wither instance, PlayerChoiceContext choiceContext)
+    {
+        if (instance.FakeUpgradeLevel == 0)
+        {
+            return;
+        }
+
+        await CreatureCmd.Damage(choiceContext, instance.Owner.Creature, instance.DynamicVars.Damage, instance);
+    }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]
@@ -99,6 +111,34 @@ public static class WitherPatch
 
         __instance.FakeUpgradeLevel++;
         __instance.DynamicVars.Damage.UpgradeValueBy(__instance.DynamicVars["PerLevel"].BaseValue);
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Wither), "HasTurnEndInHandEffect", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_HasTurnEndInHandEffect(Wither __instance, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = __instance.FakeUpgradeLevel != 0;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Wither), "OnTurnEndInHand")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_OnTurnEndInHand(Wither __instance, PlayerChoiceContext choiceContext, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = OnTurnEndInHand(__instance, choiceContext);
         return false;
     }
 

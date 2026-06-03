@@ -23,7 +23,7 @@ public static class RunHistorySaveManagerPatch
     private static void PostFix_SaveHistory(RunHistorySaveManager __instance, RunHistory history)
     {
         history.SchemaVersion = __instance._migrationManager.GetLatestVersion<RunHistory>();
-        var content = JsonSerializationUtility.ToJson(history) + JsonSerializer.Serialize(new RebalancedSpireSettings(), Options);
+        var content = JsonSerializationUtility.ToJson(history) + "\n" + RebalancedSpireMain.Version + "\n" + JsonSerializer.Serialize(new RebalancedSpireSettings(), Options);
         var path = Path.Combine(Path.GetDirectoryName(__instance.HistoryPath)!, "rebalanced_spire_history", $"{history.StartTime}_rebalancedspire.run");
         __instance._saveStore.WriteFile(path, content);
         RebalancedSpireMain.Logger.Info($"Saved modded run history: {history.StartTime}_rebalancedspire.run");

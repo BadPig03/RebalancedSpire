@@ -32,7 +32,7 @@ public sealed class HungerPower : ModPowerTemplate
 			return;
 		}
 
-		var cards = players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Type != CardType.Power)).OfType<List<CardModel>>().SelectMany(l => l).ToList();
+		var cards = players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Type != CardType.Power).ToList()).OfType<List<CardModel>>().SelectMany(l => l).ToList();
 		foreach (var card in cards)
 		{
 			await Afflict(card);
@@ -57,7 +57,7 @@ public sealed class HungerPower : ModPowerTemplate
 			return Task.CompletedTask;
 		}
 
-		var cards = players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Affliction is Devoured)).OfType<List<CardModel>>().SelectMany(l => l).ToList();
+		var cards = players.Select(p => p.PlayerCombatState?.AllCards.Where(c => c.Affliction is Devoured).ToList()).OfType<List<CardModel>>().SelectMany(l => l).ToList();
 		foreach (var card in cards)
 		{
 			var devoured = (Devoured?) card.Affliction;

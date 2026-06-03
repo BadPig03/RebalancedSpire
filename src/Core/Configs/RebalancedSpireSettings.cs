@@ -11,10 +11,6 @@ public sealed class RebalancedSpireSettings
     [UsedImplicitly]
     public int SchemaVersion { get; set; } = CurrentSchemaVersion;
 
-    [JsonPropertyName("mod_version")]
-    [UsedImplicitly]
-    public string ModVersion { get; set; } = RebalancedSpireMain.Version;
-
     [JsonPropertyName("uniform_intro_generation")]
     public bool UniformIntroGeneration { get; set; } = true;
 
@@ -53,6 +49,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("hidden_daggers")]
     public bool HiddenDaggers { get; set; } = true;
+
+    [JsonPropertyName("infinite_blades")]
+    public bool InfiniteBlades { get; set; } = true;
 
     [JsonPropertyName("master_planner")]
     public bool MasterPlanner { get; set; } = true;
@@ -104,6 +103,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("spur")]
     public bool Spur { get; set; } = true;
+
+    [JsonPropertyName("wisp")]
+    public bool Wisp { get; set; } = true;
 
     [JsonPropertyName("consuming_shadow")]
     public bool ConsumingShadow { get; set; } = true;

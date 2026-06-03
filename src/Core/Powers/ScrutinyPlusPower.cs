@@ -32,7 +32,7 @@ public sealed class ScrutinyPlusPower : ModPowerTemplate, IMaxHandSizeModifier
             return;
         }
 
-        var cards = players.Select(p => p.PlayerCombatState?.AllCards).OfType<List<CardModel>>().SelectMany(l => l).ToList();
+        var cards = players.Select(p => p.PlayerCombatState?.AllCards.ToList()).OfType<List<CardModel>>().SelectMany(l => l).ToList();
         foreach (var card in cards)
         {
             await Afflict(card);
@@ -56,23 +56,16 @@ public sealed class ScrutinyPlusPower : ModPowerTemplate, IMaxHandSizeModifier
 
     public override Task AfterRemoved(Creature oldOwner)
     {
-        if (oldOwner.CombatState == null)
+        var players = oldOwner.CombatState?.Players.ToList();
+        if (players == null)
         {
             return Task.CompletedTask;
         }
 
-        foreach (var player in oldOwner.CombatState.Players)
+        var cards = players.Select(p => p.PlayerCombatState?.AllCards.Where(c => c.Affliction is Weighted).ToList()).OfType<List<CardModel>>().SelectMany(l => l).ToList();
+        foreach (var card in cards)
         {
-            var list = player.PlayerCombatState?.AllCards.Where(c => c.Affliction is Weighted).ToList();
-            if (list == null)
-            {
-                continue;
-            }
-
-            foreach (var card in list)
-            {
-                CardCmd.ClearAffliction(card);
-            }
+            CardCmd.ClearAffliction(card);
         }
         return Task.CompletedTask;
     }
