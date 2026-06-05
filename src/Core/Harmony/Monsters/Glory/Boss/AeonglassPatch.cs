@@ -24,11 +24,12 @@ public static class AeonglassPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Aeonglass;
 
-    private const int WithersInitUpgradeLevel = 2;
-    private const int WithersMinCount = 2;
-    private const int WithersMaxCount = 4;
-    private const int WitheringPresencePowerAmount = 12;
     private const int ArtifactPowerAmount = 3;
+    private const int IncreasingIntensityBlock = 33;
+    private const int WitheringPresencePowerAmount = 12;
+    private const int WithersInitUpgradeLevel = 2;
+    private const int WithersMaxCount = 4;
+    private const int WithersMinCount = 2;
 
     private static async Task AfterAddedToRoom(Aeonglass instance)
     {
@@ -88,7 +89,7 @@ public static class AeonglassPatch
     private static async Task IncreasingIntensityMove(Aeonglass instance)
     {
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.IncreasingIntensityTotalStrength, instance.Creature, null);
-        await CreatureCmd.GainBlock(instance.Creature, instance.IncreasingIntensityBlock, ValueProp.Move, null);
+        await CreatureCmd.GainBlock(instance.Creature, IncreasingIntensityBlock, ValueProp.Move, null);
     }
 
     [HarmonyPatch(typeof(Aeonglass), "AfterAddedToRoom")]

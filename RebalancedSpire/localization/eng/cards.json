@@ -9,6 +9,7 @@
   "REBALANCED_SPIRE_CARD_FORGOTTEN_RITUAL.description": "If you [gold]Exhausted[/gold] a card this turn, gain {Energy:energyIcons()}.\nIncrease this card's cost by 1.",
   "REBALANCED_SPIRE_CARD_GLASSWORK.description": "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Channel[/gold] 1 [gold]Glass[/gold].\nIncrease the damage of your [gold]Glass[/gold] Orbs by {IfUpgraded:show:3|2}.",
   "REBALANCED_SPIRE_CARD_GLOW.description": "Gain {Stars:starIcons()}.\nDraw {Cards:diff()} {Cards:plural:card|cards}.",
+  "REBALANCED_SPIRE_CARD_GRAVE_WARDEN.description": "Gain {Block:diff()} [gold]Block[/gold].\nAdd a [gold]{IfUpgraded:show:Soul+|Soul}[/gold] into your [gold]Draw Pile[/gold].",
   "REBALANCED_SPIRE_CARD_HAND_TRICK.description": "Gain {Block:diff()} [gold]Block[/gold].\nAdd [gold]Sly[/gold] to a card in your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_HIDDEN_DAGGERS.description": "Discard {Cards:diff()} {Cards:plural:card|cards}.\nAdd {Cards:diff()} [purple]Energetic[/purple] [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_INFINITE_BLADES.description": "At the start of your turn, add 1 [gold]Shiv[/gold] into your [gold]Hand[/gold].\n{Cards:diff()} [gold]{Cards:plural:Shiv|Shivs}[/gold] do not count toward your [gold]Hand Size[/gold].",
@@ -20,6 +21,7 @@
   "REBALANCED_SPIRE_CARD_REFRACT.description": "[gold]Channel[/gold] {Repeat:diff()} [gold]Glass[/gold].",
   "REBALANCED_SPIRE_CARD_RIGHT_HAND_HAND.description": "[gold]Osty[/gold] deals {OstyDamage:diff()} damage.\nWhenever you play a card costing {Required:energyIcons()} or more, put this into your [gold]Hand[/gold] and reduce its cost by {Energy:energyIcons()}.",
   "REBALANCED_SPIRE_CARD_SCARE.description": "Apply {WeakPower:diff()} [gold]Weak[/gold] and [gold]Vulnerable[/gold] to ALL enemies.",
+  "REBALANCED_SPIRE_CARD_SEANCE.description": "Transform a card in your [gold]Draw Pile[/gold] into [gold]{IfUpgraded:show:Soul+|Soul}[/gold].",
   "REBALANCED_SPIRE_CARD_SIC_EM.description": "[gold]Osty[/gold] deals {OstyDamage:diff()} damage.\nWhenever [gold]Osty[/gold] hits this enemy, [gold]Summon[/gold] {SicEmPlusPower:diff()}.",
   "REBALANCED_SPIRE_CARD_SPINNER.description": "At the start of your turn, [gold]Channel[/gold] {IfUpgraded:show:2|1} [gold]Glass[/gold], and trigger the passive ability of all [gold]Glass[/gold] Orbs.",
   "REBALANCED_SPIRE_CARD_SPUR.description": "[gold]Osty[/gold] heals {Heal:diff()} HP.\nFor every [blue]2[/blue] excess HP healed, [gold]Summon 1[/gold] more.",
@@ -28,5 +30,6 @@
   "REBALANCED_SPIRE_CARD_UP_MY_SLEEVE.description": "Add {Cards:diff()} [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_WISP.description": "Gain {Energy:energyIcons()}. \nTransform a random [gold]Soul[/gold] in your [gold]Draw Pile[/gold] into [gold]{IfUpgraded:show:Wisp+|Wisp}[/gold].",
   "REBALANCED_SPIRE_CARD_WITHER.description": "Decrease this card's damage by {PerLevel}.\nAt the end of your turn, if this is in your [gold]Hand[/gold], take {Damage:diff()} damage.",
-  "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "Take an extra turn after your turn.\nIncrease this card's cost by 1."
+  "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "Take an extra turn after your turn.\nIncrease this card's cost by 1.",
+  "REBALANCED_SPIRE_CARD_WITHER.extraDescription2": "At the end of your turn, if this is in your [gold]Hand[/gold], take {Fixed} damage."
 }

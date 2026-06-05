@@ -16,7 +16,7 @@ internal sealed class RebalancedSpireCardTransformationRegistry
         registry.Register<Wither, CardModel>("REBALANCED_SPIRE_CARD_WITHER", async (w, c) =>
         {
             var combatState = c.CombatState;
-            if (combatState == null)
+            if (combatState == null || c.Affliction is not Withering)
             {
                 return;
             }

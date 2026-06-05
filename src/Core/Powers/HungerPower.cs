@@ -1,10 +1,12 @@
 namespace RebalancedSpire.Core.Powers;
 
 using Afflictions;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -13,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 [RegisterPower]
 public sealed class HungerPower : ModPowerTemplate
 {
-	public override PowerType Type => PowerType.Buff;
+	public override PowerType Type => PowerType.Debuff;
 
 	public override PowerStackType StackType => PowerStackType.Single;
 
@@ -24,15 +26,24 @@ public sealed class HungerPower : ModPowerTemplate
 
 	protected override IEnumerable<IHoverTip> AdditionalHoverTips => HoverTipFactory.FromAffliction<Devoured>(Amount);
 
+	public override bool TryModifyKeywordsInCombat(CardModel card, ISet<CardKeyword> keywords)
+	{
+		if (card.Owner != Owner.Player || card.Affliction is not Devoured)
+		{
+			return false;
+		}
+
+		return keywords.Add(CardKeyword.Exhaust);
+	}
+
 	public override async Task AfterApplied(Creature? applier, CardModel? cardSource)
 	{
-		var players = Owner.CombatState?.Players.ToList();
-		if (players == null)
+		var cards = Owner.Player?.PlayerCombatState?.AllCards.Where(c => c.Type != CardType.Power).ToList();
+		if (cards == null)
 		{
 			return;
 		}
 
-		var cards = players.Select(player => player.PlayerCombatState?.AllCards.Where(c => c.Type != CardType.Power).ToList()).OfType<List<CardModel>>().SelectMany(l => l).ToList();
 		foreach (var card in cards)
 		{
 			await Afflict(card);
@@ -41,7 +52,7 @@ public sealed class HungerPower : ModPowerTemplate
 
 	public override async Task AfterCardEnteredCombat(CardModel card)
 	{
-		if (card.Affliction != null)
+		if (card.Owner != Owner.Player)
 		{
 			return;
 		}
@@ -49,30 +60,39 @@ public sealed class HungerPower : ModPowerTemplate
 		await Afflict(card);
 	}
 
+	public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+	{
+		if (wasRemovalPrevented || creature != Applier)
+		{
+			return;
+		}
+
+		await PowerCmd.Remove(this);
+	}
+
 	public override Task AfterRemoved(Creature oldOwner)
 	{
-		var players = oldOwner.CombatState?.Players.ToList();
-		if (players == null)
+		var cards = Owner.Player?.PlayerCombatState?.AllCards.Where(c => c.Type != CardType.Power && c.Affliction is Devoured).ToList();
+		if (cards == null)
 		{
 			return Task.CompletedTask;
 		}
 
-		var cards = players.Select(p => p.PlayerCombatState?.AllCards.Where(c => c.Affliction is Devoured).ToList()).OfType<List<CardModel>>().SelectMany(l => l).ToList();
 		foreach (var card in cards)
 		{
-			var devoured = (Devoured?) card.Affliction;
-			if (devoured == null)
-			{
-				continue;
-			}
-
-			if (devoured.AppliedExhaust)
-			{
-				CardCmd.RemoveKeyword(card, CardKeyword.Exhaust);
-			}
 			CardCmd.ClearAffliction(card);
 		}
 		return Task.CompletedTask;
+	}
+
+	public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+	{
+		if (!participants.Contains(Owner) || side != CombatSide.Player)
+		{
+			return;
+		}
+
+		await PowerCmd.Decrement(this);
 	}
 
 	private async Task Afflict(CardModel card)
@@ -82,13 +102,6 @@ public sealed class HungerPower : ModPowerTemplate
 			return;
 		}
 
-		var devoured = await CardCmd.Afflict<Devoured>(card, Amount);
-		if (devoured == null || card.Keywords.Contains(CardKeyword.Exhaust))
-		{
-			return;
-		}
-
-		CardCmd.ApplyKeyword(card, CardKeyword.Exhaust);
-		devoured.AppliedExhaust = true;
+		await CardCmd.Afflict<Devoured>(card, Amount);
 	}
 }

@@ -92,11 +92,17 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("defy")]
     public bool Defy { get; set; } = true;
 
+    [JsonPropertyName("grave_warden")]
+    public bool GraveWarden { get; set; } = true;
+
     [JsonPropertyName("pull_aggro")]
     public bool PullAggro { get; set; } = true;
 
     [JsonPropertyName("right_hand_hand")]
     public bool RightHandHand { get; set; } = true;
+
+    [JsonPropertyName("seance")]
+    public bool Seance { get; set; } = true;
 
     [JsonPropertyName("sic_em")]
     public bool SicEm { get; set; } = true;

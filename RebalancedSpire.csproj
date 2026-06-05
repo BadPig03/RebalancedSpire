@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.6" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.9" />
     </ItemGroup>
     
     <ItemGroup>
@@ -178,8 +178,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_plow_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_sands_of_time_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_sands_of_time_power.png.import" />
-      <Content Include="images\powers\big\rebalanced_spire_power_scrutiny_plus_power.png" />
-      <Content Include="images\powers\big\rebalanced_spire_power_scrutiny_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_scrutiny_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_scrutiny_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_sic_em_plus_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_sic_em_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_soul_wither_power.png" />
@@ -230,8 +230,8 @@
       <Content Include="images\powers\rebalanced_spire_power_plow_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_sands_of_time_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_sands_of_time_power.png.import" />
-      <Content Include="images\powers\rebalanced_spire_power_scrutiny_plus_power.png" />
-      <Content Include="images\powers\rebalanced_spire_power_scrutiny_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_scrutiny_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_scrutiny_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_soul_wither_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_soul_wither_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_to_its_origin_owner_power.png" />
@@ -322,8 +322,10 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\BansheesCryPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\DebilitatePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\DefyPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Necrobinder\GraveWardenPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\PullAggroPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\RightHandHandPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Necrobinder\SeancePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SicEmPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\WispPatch.cs.uid" />
@@ -499,7 +501,7 @@
       <Content Include="src\Core\Powers\PlowedPower.cs.uid" />
       <Content Include="src\Core\Powers\PlowPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\SandsOfTimePower.cs.uid" />
-      <Content Include="src\Core\Powers\ScrutinyPlusPower.cs.uid" />
+      <Content Include="src\Core\Powers\ScrutinyPower.cs.uid" />
       <Content Include="src\Core\Powers\SicEmPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\SoulWitherPower.cs.uid" />
       <Content Include="src\Core\Powers\SpinnerPlusPower.cs.uid" />

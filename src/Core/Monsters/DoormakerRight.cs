@@ -76,7 +76,7 @@ public sealed class DoormakerRight : DoormakerBase
             await Open();
         }
         await DamageCmd.Attack(HungerDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<HungerPower>(new ThrowingPlayerChoiceContext(), Creature, HungerPowerAmount, Creature, null);
+        await PowerCmd.Apply<HungerPower>(new ThrowingPlayerChoiceContext(), targets, HungerPowerAmount, Creature, null);
     }
 
     private async Task ChargeUpMove(IReadOnlyList<Creature> targets)
@@ -89,7 +89,6 @@ public sealed class DoormakerRight : DoormakerBase
         TalkCmd.Play(L10NMonsterLookup("DOORMAKER.moves.FULL_ATTACK.speakLine"), Creature, VfxColor.Purple);
         await Cmd.CustomScaledWait(0.2f, 0.6f);
         await DamageCmd.Attack(ChargeUpDamage).WithHitCount(ChargeUpCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Remove<HungerPower>(Creature);
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, StrengthPowerAmount, Creature, null);
     }
 

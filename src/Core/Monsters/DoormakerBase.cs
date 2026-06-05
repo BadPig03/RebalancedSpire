@@ -132,7 +132,7 @@ public abstract class DoormakerBase : ModMonsterTemplate
         }
 
         await PowerCmd.Remove<HungerPower>(Creature);
-        await PowerCmd.Remove<ScrutinyPlusPower>(Creature);
+        await PowerCmd.Remove<ScrutinyPower>(Creature);
         var doomPower = creature.GetPower<DoomPower>();
         if (doomPower != null && doomPower.IsOwnerDoomed())
         {

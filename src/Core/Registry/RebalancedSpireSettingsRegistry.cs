@@ -1,9 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Registry;
 
 using Configs;
-using Encounters;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models.Acts;
 using STS2RitsuLib;
 using STS2RitsuLib.Settings;
 
@@ -68,8 +66,10 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("banshees_cry", L("the_necrobinder.section.banshees_cry.title"), ui.BansheesCry, L("the_necrobinder.section.banshees_cry.description"))
                 .AddToggle("debilitate", L("the_necrobinder.section.debilitate.title"), ui.Debilitate, L("the_necrobinder.section.debilitate.description"))
                 .AddToggle("defy", L("the_necrobinder.section.defy.title"), ui.Defy, L("the_necrobinder.section.defy.description"))
+                .AddToggle("grave_warden", L("the_necrobinder.section.grave_warden.title"), ui.GraveWarden, L("the_necrobinder.section.grave_warden.description"))
                 .AddToggle("pull_aggro", L("the_necrobinder.section.pull_aggro.title"), ui.PullAggro, L("the_necrobinder.section.pull_aggro.description"))
                 .AddToggle("right_hand_hand", L("the_necrobinder.section.right_hand_hand.title"), ui.RightHandHand, L("the_necrobinder.section.right_hand_hand.description"))
+                .AddToggle("seance", L("the_necrobinder.section.seance.title"), ui.Seance, L("the_necrobinder.section.seance.description"))
                 .AddToggle("sic_em", L("the_necrobinder.section.sic_em.title"), ui.SicEm, L("the_necrobinder.section.sic_em.description"))
                 .AddToggle("spur", L("the_necrobinder.section.spur.title"), ui.Spur, L("the_necrobinder.section.spur.description"))
                 .AddToggle("wisp", L("the_necrobinder.section.wisp.title"), ui.Wisp, L("the_necrobinder.section.wisp.description"))

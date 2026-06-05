@@ -1,5 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Status;
 
+using Afflictions;
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -21,6 +22,12 @@ public static class WitherPatch
 
     private static async Task OnTurnEndInHand(Wither instance, PlayerChoiceContext choiceContext)
     {
+        if (instance.Affliction is not Withering)
+        {
+            await CreatureCmd.Damage(choiceContext, instance.Owner.Creature, new DamageVar(instance.DynamicVars["Fixed"].BaseValue, ValueProp.Unpowered | ValueProp.Move), instance);
+            return;
+        }
+
         if (instance.FakeUpgradeLevel == 0)
         {
             return;
@@ -75,6 +82,7 @@ public static class WitherPatch
         __result = new List<DynamicVar>
         {
             new DamageVar(0, ValueProp.Unpowered | ValueProp.Move),
+            new ("Fixed", 6),
             new ("PerLevel", 3)
         }.AsReadOnly();
         return false;
@@ -95,7 +103,15 @@ public static class WitherPatch
             return true;
         }
 
-        __result = wither.FakeUpgradeLevel == 0 && CombatManager.Instance.IsInProgress ? new LocString("cards", "REBALANCED_SPIRE_CARD_WITHER.extraDescription") : new LocString("cards", "REBALANCED_SPIRE_CARD_WITHER.description");
+        LocString result;
+        if (wither.Affliction is Withering)
+        {
+            result = wither.FakeUpgradeLevel == 0 && CombatManager.Instance.IsInProgress ? new LocString("cards", "REBALANCED_SPIRE_CARD_WITHER.extraDescription") : new LocString("cards", "REBALANCED_SPIRE_CARD_WITHER.description");
+        }
+        else {
+            result = new LocString("cards", "REBALANCED_SPIRE_CARD_WITHER.extraDescription2");
+        }
+        __result = result;
         return false;
     }
 
@@ -124,7 +140,16 @@ public static class WitherPatch
             return true;
         }
 
-        __result = __instance.FakeUpgradeLevel != 0;
+        bool result;
+        if (__instance.Affliction is Withering)
+        {
+            result = __instance.FakeUpgradeLevel != 0;
+        }
+        else
+        {
+            result = true;
+        }
+        __result = result;
         return false;
     }
 
@@ -157,7 +182,31 @@ public static class WitherPatch
             return true;
         }
 
-        __result = wither.FakeUpgradeLevel == 0;
+        __result = wither is { Affliction: Withering, FakeUpgradeLevel: 0 };
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Wither), "Title", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_Title(Wither __instance, ref string __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        string result;
+        var title = __instance.TitleLocString.GetFormattedText();
+        if (__instance.Affliction is not Withering || __instance.FakeUpgradeLevel == 0)
+        {
+            result = title;
+        }
+        else
+        {
+            result = $"{title}+{__instance.FakeUpgradeLevel}";
+        }
+        __result = result;
         return false;
     }
 }

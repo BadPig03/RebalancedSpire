@@ -20,7 +20,7 @@ public sealed class DoormakerLeft : DoormakerBase
 {
     private const int OmnidynamicsPowerAmount = 1;
     private const int ScrutinyCount = 4;
-    private const int ScrutinyPlusPowerAmount = 1;
+    private const int ScrutinyPlusPowerAmount = 4;
 
     private static int BeamDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 18, 16);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 30, 28);
@@ -93,7 +93,7 @@ public sealed class DoormakerLeft : DoormakerBase
             await Open();
         }
         await DamageCmd.Attack(ScrutinyDamage).WithHitCount(ScrutinyCount).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
-        await PowerCmd.Apply<ScrutinyPlusPower>(new ThrowingPlayerChoiceContext(), Creature, ScrutinyPlusPowerAmount, Creature, null);
+        await PowerCmd.Apply<ScrutinyPower>(new ThrowingPlayerChoiceContext(), targets, ScrutinyPlusPowerAmount, Creature, null);
     }
 
     private async Task BeamMove(IReadOnlyList<Creature> targets)
@@ -115,7 +115,6 @@ public sealed class DoormakerLeft : DoormakerBase
         {
             await Open();
         }
-        await PowerCmd.Remove<ScrutinyPlusPower>(Creature);
         await DamageCmd.Attack(FullAttackDamage).FromMonster(this).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await ReadyToSummon();
     }

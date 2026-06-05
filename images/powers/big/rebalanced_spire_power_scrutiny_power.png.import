@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e38k03qe5arx"
-path="res://.godot/imported/rebalanced_spire_power_scrutiny_plus_power.png-50f06380a952fca12ca2136be7704ead.ctex"
+uid="uid://c2ciy7vkx0q52"
+path="res://.godot/imported/rebalanced_spire_power_scrutiny_power.png-f0de3d1f68f814b790e7901eb6bb6ba0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/powers/rebalanced_spire_power_scrutiny_plus_power.png"
-dest_files=["res://.godot/imported/rebalanced_spire_power_scrutiny_plus_power.png-50f06380a952fca12ca2136be7704ead.ctex"]
+source_file="res://images/powers/big/rebalanced_spire_power_scrutiny_power.png"
+dest_files=["res://.godot/imported/rebalanced_spire_power_scrutiny_power.png-f0de3d1f68f814b790e7901eb6bb6ba0.ctex"]
 
 [params]
 

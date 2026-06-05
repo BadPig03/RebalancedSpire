@@ -32,8 +32,10 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> BansheesCry { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Debilitate { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Defy { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> GraveWarden { get; private init; } = null!;
     public IModSettingsValueBinding<bool> PullAggro { get; private init; } = null!;
     public IModSettingsValueBinding<bool> RightHandHand { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Seance { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SicEm { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Spur { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Wisp { get; private init; } = null!;
@@ -191,8 +193,10 @@ internal sealed class RebalancedSpireSettingsUiBindings
             BansheesCry = B(s => s.BansheesCry, (s, v) => s.BansheesCry = v, () => defaults.BansheesCry),
             Debilitate = B(s => s.Debilitate, (s, v) => s.Debilitate = v, () => defaults.Debilitate),
             Defy = B(s => s.Defy, (s, v) => s.Defy = v, () => defaults.Defy),
+            GraveWarden = B(s => s.GraveWarden, (s, v) => s.GraveWarden = v, () => defaults.GraveWarden),
             PullAggro = B(s => s.PullAggro, (s, v) => s.PullAggro = v, () => defaults.PullAggro),
             RightHandHand = B(s => s.RightHandHand, (s, v) => s.RightHandHand = v, () => defaults.RightHandHand),
+            Seance = B(s => s.Seance, (s, v) => s.Seance = v, () => defaults.Seance),
             SicEm = B(s => s.SicEm, (s, v) => s.SicEm = v, () => defaults.SicEm),
             Spur = B(s => s.Spur, (s, v) => s.Spur = v, () => defaults.Spur),
             Wisp = B(s => s.Wisp, (s, v) => s.Wisp = v, () => defaults.Wisp),
