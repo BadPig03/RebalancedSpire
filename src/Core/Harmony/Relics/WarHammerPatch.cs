@@ -3,6 +3,7 @@
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -65,7 +66,7 @@ public static class WarHammerPatch
             return true;
         }
 
-        if (__instance is not WarHammer warHammer || !target.Powers.All(p => p.ShouldOwnerDeathTriggerFatal()) || !result.WasTargetKilled)
+        if (__instance is not WarHammer warHammer || target.Side != CombatSide.Enemy || !target.Powers.All(p => p.ShouldOwnerDeathTriggerFatal()) || !result.WasTargetKilled)
         {
             return true;
         }

@@ -1,6 +1,7 @@
 ﻿{
   "REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER.description": "拾起时，获得[blue]{PotionSlots}[/blue]个空的药水栏位，并开始记录你最后使用过的药水。在战斗结束时，额外获得该药水。",
   "REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER.eventDescription": "获得[blue]{PotionSlots}[/blue]个空的药水栏位，并开始记录你最后使用过的药水。在战斗结束时，额外获得该药水。",
+  "REBALANCED_SPIRE_RELIC_BIG_MUSHROOM.eventDescription": "在每场战斗开始时，[red]少抽[/red][blue]{Cards}[/blue]张牌。最大生命值提升[green]{MaxHp}[/green]。",
   "REBALANCED_SPIRE_RELIC_BOOMING_CONCH.description": "在与[gold]精英[/gold]敌人战斗时，前[blue]{Cards}[/blue]张牌可以被免费打出。",
   "REBALANCED_SPIRE_RELIC_CHOICES_PARADOX.description": "在每场战斗开始时，从[blue]{Cards}[/blue]张[gold]升级过[/gold]的随机牌中选择[blue]1[/blue]张放入你的[gold]手牌[/gold]。被选中的牌获得[gold]保留[/gold]。",
   "REBALANCED_SPIRE_RELIC_CROSSBOW.description": "在你的回合开始时，将一张随机[gold]攻击牌[/gold]加入你的[gold]手牌[/gold]。这张牌在战斗中可以免费打出，但打出时会被[gold]消耗[/gold]。",

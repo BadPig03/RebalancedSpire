@@ -85,6 +85,11 @@ public sealed class ScrutinyPower : ModPowerTemplate, IMaxHandSizeModifier
 
     public int ModifyMaxHandSize(Player player, int currentMaxHandSize)
     {
+        if (player != Owner.Player)
+        {
+            return currentMaxHandSize;
+        }
+
         return currentMaxHandSize - Amount;
     }
 

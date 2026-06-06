@@ -14,7 +14,6 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Rooms;
-using Powers;
 using STS2RitsuLib.Scaffolding.Content;
 
 public abstract class DoormakerBase : ModMonsterTemplate
@@ -114,38 +113,37 @@ public abstract class DoormakerBase : ModMonsterTemplate
         return doormakerBase.OtherDoormaker.Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers || doormakerBase.OtherDoormaker.Creature.IsDead;
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (wasRemovalPrevented || creature.Monster is not DoormakerBase doormakerBase)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         if (!CombatState.Enemies.Any(c => c is { Monster: DoormakerBase, IsAlive: true })) {
             NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 5f);
-            return;
+            return Task.CompletedTask;
         }
 
         if (creature != Creature)
         {
-            return;
+            return Task.CompletedTask;
         }
 
-        await PowerCmd.Remove<HungerPower>(Creature);
-        await PowerCmd.Remove<ScrutinyPower>(Creature);
         var doomPower = creature.GetPower<DoomPower>();
         if (doomPower != null && doomPower.IsOwnerDoomed())
         {
-            return;
+            return Task.CompletedTask;
         }
 
         var state = (MoveState?) doormakerBase.OtherDoormaker.MoveStateMachine?.States["DRAMATIC_OPEN_MOVE"];
         if (state == null)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         doormakerBase.OtherDoormaker.SetMoveImmediate(state);
+        return Task.CompletedTask;
     }
 
     protected virtual async Task Open()

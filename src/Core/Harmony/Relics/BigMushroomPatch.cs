@@ -31,4 +31,23 @@ public static class BigMushroomPatch
         }.AsReadOnly();
         return false;
     }
+
+    [HarmonyPatch(typeof(RelicModel), "EventDescription", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_EventDescription(RelicModel __instance, ref LocString __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not BigMushroom)
+        {
+            return true;
+        }
+
+        __result = new LocString("relics", "REBALANCED_SPIRE_RELIC_BIG_MUSHROOM.eventDescription");
+        return false;
+    }
 }

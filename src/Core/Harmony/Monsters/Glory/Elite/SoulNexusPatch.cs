@@ -53,7 +53,7 @@ public static class SoulNexusPatch
     private static async Task SoulMarkMove(SoulNexus instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play(SrcHelpers.GetSfx(instance, "CastSfx")!, 0.8f);
-        await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.8f);
+        await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 1f);
 		var powers = instance.Creature.GetPowerInstances<SoulWitherPower>().ToList();
         foreach (var power in powers)
         {
