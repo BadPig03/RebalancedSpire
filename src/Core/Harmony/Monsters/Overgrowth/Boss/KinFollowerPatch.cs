@@ -161,11 +161,11 @@ public static class KinFollowerPatch
         TalkCmd.Play(MonsterModel.L10NMonsterLookup("KIN_FOLLOWER_FAKE.randomLine" + instance.RunRng.Shuffle.NextInt(1, 6)), instance.Creature, VfxColor.Purple, VfxDuration.Standard);
     }
 
-    private static async Task PowerDanceFakeMove(KinFollower instance)
+    private static async Task PowerDanceFakeMove(KinFollower instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_buff");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.9f);
-        await CreatureCmd.Heal(instance.Creature, HealAmount);
+        await CreatureCmd.Heal(instance.Creature, HealAmount * targets.Count);
     }
 
     private static async Task EscapeMove(KinFollower instance)
@@ -253,7 +253,7 @@ public static class KinFollowerPatch
         MoveState moveState_ = new MoveState("QUICK_SLASH_FAKE_MOVE", _ => QuickSlashFakeMove(__instance), new SingleAttackIntent(0));
         MoveState moveState_2 = new MoveState("BOOMERANG_FAKE_MOVE", t => BoomerangFakeMove(__instance, t), new MultiAttackIntent(0, BoomerangCount));
         MoveState moveState_3 = new MoveState("GUARD_FAKE_MOVE", _ => GuardFakeMove(__instance), new DefendIntent());
-        MoveState moveState_4 = new MoveState("POWER_DANCE_FAKE_MOVE", _ => PowerDanceFakeMove(__instance), new BuffIntent());
+        MoveState moveState_4 = new MoveState("POWER_DANCE_FAKE_MOVE", t => PowerDanceFakeMove(__instance, t), new BuffIntent());
         MoveState moveState7 = new MoveState("ESCAPE_MOVE", _ => EscapeMove(__instance), new EscapeIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;

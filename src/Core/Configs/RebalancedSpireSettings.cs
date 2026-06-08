@@ -98,6 +98,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("pull_aggro")]
     public bool PullAggro { get; set; } = true;
 
+    [JsonPropertyName("reaper_form")]
+    public bool ReaperForm { get; set; } = true;
+
     [JsonPropertyName("right_hand_hand")]
     public bool RightHandHand { get; set; } = true;
 

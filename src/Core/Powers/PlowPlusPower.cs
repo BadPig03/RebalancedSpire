@@ -38,15 +38,15 @@ public sealed class PlowPlusPower : ModPowerTemplate
 
     public override async Task AfterDamageReceived(PlayerChoiceContext choiceContext, Creature target, DamageResult result, ValueProp props, Creature? dealer, CardModel? cardSource)
     {
-        if (target != Owner || result.UnblockedDamage <= 0 || target.CurrentHp > Amount || Owner.Monster is not CeremonialBeast monster)
+        if (target != Owner || result.UnblockedDamage <= 0 || target.CurrentHp > Amount || Owner.Monster is not CeremonialBeast beast)
         {
             return;
         }
 
         Flash();
         await PowerCmd.Remove<StrengthPower>(Owner);
-        await monster.SetStunned();
-        await CreatureCmd.Stun(Owner, monster.StunnedMove, target.HasPower<PlowedPower>() ? "BEAST_CRY_MOVE" : "SECOND_STAMP_MOVE");
+        await beast.SetStunned();
+        await CreatureCmd.Stun(Owner, beast.StunnedMove, target.HasPower<PlowedPower>() ? "BEAST_CRY_MOVE" : "SECOND_STAMP_MOVE");
         await PowerCmd.Remove(this);
         await PowerCmd.Apply<PlowedPower>(choiceContext, Owner, PlowedPowerAmount, Owner, null);
     }

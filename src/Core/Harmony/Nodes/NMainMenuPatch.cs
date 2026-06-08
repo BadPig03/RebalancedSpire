@@ -22,8 +22,8 @@ public static class NMainMenuPatch
         patchNotesNode.Connect(NClickableControl.SignalName.Released, Callable.From<NButton>(_ => OnPatchNotesChanged()));
 
         var submenuNode = __instance.SubmenuStack;
-        submenuNode.Connect(NSubmenuStack.SignalName.StackModified, Callable.From(() => OnSubmenuStackChanged(submenuNode)));
-        OnSubmenuStackChanged(submenuNode);
+        submenuNode.Connect(NSubmenuStack.SignalName.StackModified, Callable.From(() => OnSubmenuStackChanged(submenuNode, __instance)));
+        OnSubmenuStackChanged(submenuNode, __instance);
         return;
 
         void OnPatchNotesChanged()
@@ -37,14 +37,14 @@ public static class NMainMenuPatch
             buttonNode.Disable();
         }
 
-        void OnSubmenuStackChanged(NMainMenuSubmenuStack stack)
+        void OnSubmenuStackChanged(NMainMenuSubmenuStack stack, NMainMenu mainMenu)
         {
             if (!ModNodeAttachmentRegistry.TryGetAttachedById<NMainMenu, NModChangelogsButton>(__instance, id, out var buttonNode))
             {
                 return;
             }
 
-            if (stack.SubmenusOpen)
+            if (stack.SubmenusOpen || !mainMenu.GetNode<Control>("RitsuLibMainMenuModSettings").IsVisible())
             {
                 buttonNode.SetVisible(false);
                 buttonNode.Disable();

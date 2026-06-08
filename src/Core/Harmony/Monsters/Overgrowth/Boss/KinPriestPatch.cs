@@ -83,20 +83,15 @@ public static class KinPriestPatch
         await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
-    private static async Task HealUpMove(KinPriest instance)
+    private static async Task HealUpMove(KinPriest instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_priest/the_kin_priest_rally");
         await CreatureCmd.TriggerAnim(instance.Creature, "Rally", 1f);
-        var count = instance.Creature.CombatState?.Players.Count;
-        if (count == null)
-        {
-            return;
-        }
-
         var enemies = instance.CombatState.Enemies.Where(c => c.Monster is not KinPriest).ToList();
+        var healAmount = HealAmount * targets.Count;
         foreach (var enemy in enemies)
         {
-            await CreatureCmd.Heal(enemy, (decimal) (HealAmount * count));
+            await CreatureCmd.Heal(enemy, healAmount);
         }
     }
 
@@ -189,7 +184,7 @@ public static class KinPriestPatch
         MoveState moveState2 = new MoveState("POWER_UP_MOVE", _ => PowerUpMove(__instance), new BuffIntent());
         MoveState moveState3 = new MoveState("SHIELD_UP_MOVE", _ => ShieldUpMove(__instance), new DefendIntent());
         MoveState moveState4 = new MoveState("BREAK_UP_MOVE", t => BreakUpMove(__instance, t), new MultiAttackIntent(BreakUpDamage, BreakUpCount), new DebuffIntent());
-        MoveState moveState5 = new MoveState("HEAL_UP_MOVE", _ => HealUpMove(__instance), new HealIntent());
+        MoveState moveState5 = new MoveState("HEAL_UP_MOVE", t => HealUpMove(__instance, t), new HealIntent());
         MoveState moveState6 = new MoveState("BEAM_MOVE", _ => BeamMove(__instance), new MultiAttackIntent(BeamDamage, BeamCount));
         MoveState moveState7 = new MoveState("RITUAL_MOVE", __instance.RitualMove, new BuffIntent());
         moveState.FollowUpState = moveState2;

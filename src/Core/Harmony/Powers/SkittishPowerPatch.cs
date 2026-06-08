@@ -31,7 +31,7 @@ public static class SkittishPowerPatch
     [HarmonyPatch(typeof(SkittishPower), "AfterAttack")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool Prefix_AfterAttack(SkittishPower __instance, AttackCommand command, ref Task __result)
+    private static bool PreFix_AfterAttack(SkittishPower __instance, AttackCommand command, ref Task __result)
     {
         if (Disabled)
         {

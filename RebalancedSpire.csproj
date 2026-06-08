@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.10" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.13" />
     </ItemGroup>
     
     <ItemGroup>
@@ -148,6 +148,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_corpse_explosion_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_drum_of_battle_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_drum_of_battle_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_eternal_armor_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_eternal_armor_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_fabricator_power.png" />
@@ -176,6 +178,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_ping_pong_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_plow_plus_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_plow_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_reaper_form_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_reaper_form_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_sands_of_time_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_sands_of_time_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_scrutiny_power.png" />
@@ -194,6 +198,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_tainted_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_drum_of_battle_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_drum_of_battle_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_hunger_power.png" />
@@ -228,6 +234,8 @@
       <Content Include="images\powers\rebalanced_spire_power_ping_pong_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_plow_plus_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_plow_plus_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_reaper_form_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_reaper_form_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_sands_of_time_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_sands_of_time_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_scrutiny_power.png" />
@@ -324,6 +332,7 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\DefyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\GraveWardenPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\PullAggroPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Necrobinder\ReaperFormPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\RightHandHandPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SeancePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SicEmPatch.cs.uid" />
@@ -471,6 +480,7 @@
       <Content Include="src\Core\Harmony\Relics\ToastyMittensPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\RitsuLib\MainMenuModSettingsButtonPatchPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Saves\RunHistorySaveManagerPatch.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerLeft.cs.uid" />
@@ -485,6 +495,7 @@
       <Content Include="src\Core\Powers\ConsumingShadowPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\CorpseExplosionPower.cs.uid" />
       <Content Include="src\Core\Powers\DisillusionPower.cs.uid" />
+      <Content Include="src\Core\Powers\DrumOfBattlePower.cs.uid" />
       <Content Include="src\Core\Powers\EternalArmorPower.cs.uid" />
       <Content Include="src\Core\Powers\FabricatorPower.cs.uid" />
       <Content Include="src\Core\Powers\GuardPower.cs.uid" />
@@ -500,6 +511,7 @@
       <Content Include="src\Core\Powers\PingPongPower.cs.uid" />
       <Content Include="src\Core\Powers\PlowedPower.cs.uid" />
       <Content Include="src\Core\Powers\PlowPlusPower.cs.uid" />
+      <Content Include="src\Core\Powers\ReaperFormPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\SandsOfTimePower.cs.uid" />
       <Content Include="src\Core\Powers\ScrutinyPower.cs.uid" />
       <Content Include="src\Core\Powers\SicEmPlusPower.cs.uid" />

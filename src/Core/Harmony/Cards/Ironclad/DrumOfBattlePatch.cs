@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Cards.Ironclad;
 
 using Configs;
+using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
@@ -21,7 +22,7 @@ public static class DrumOfBattlePatch
 
     private static async Task OnPlay(DrumOfBattle instance, PlayerChoiceContext choiceContext)
     {
-        await PowerCmd.Apply<VigorPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["VigorPower"].BaseValue, instance.Owner.Creature, instance);
+        await PowerCmd.Apply<DrumOfBattlePower>(choiceContext, instance.Owner.Creature, instance.DynamicVars.Strength.BaseValue, instance.Owner.Creature, instance);
     }
 
     [HarmonyPatch(typeof(DrumOfBattle), "AfterCardExhausted")]
@@ -92,7 +93,7 @@ public static class DrumOfBattlePatch
 
         __result = new List<DynamicVar>
         {
-            new PowerVar<VigorPower>(8)
+            new PowerVar<StrengthPower>(4)
         }.AsReadOnly();
         return false;
     }
@@ -126,7 +127,10 @@ public static class DrumOfBattlePatch
             return true;
         }
 
-        __result = new List<IHoverTip>().AsReadOnly();
+        __result = new List<IHoverTip>
+        {
+            HoverTipFactory.FromPower<StrengthPower>(__instance.DynamicVars.Strength.IntValue)
+        }.AsReadOnly();
         return false;
     }
 
@@ -154,7 +158,7 @@ public static class DrumOfBattlePatch
             return true;
         }
 
-        __instance.DynamicVars["VigorPower"].UpgradeValueBy(4);
+        __instance.DynamicVars.Strength.UpgradeValueBy(2);
         return false;
     }
 }

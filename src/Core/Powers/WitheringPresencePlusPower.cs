@@ -22,8 +22,8 @@ public sealed class WitheringPresencePlusPower : ModPowerTemplate
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override PowerAssetProfile AssetProfile => new(
-        IconPath: "res://images/powers/rebalanced_spire_power_scrutiny_plus_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_scrutiny_plus_power.png"
+        IconPath: "res://images/powers/rebalanced_spire_power_scrutiny_power.png",
+        BigIconPath: "res://images/powers/rebalanced_spire_power_scrutiny_power.png"
     );
 
     public override int DisplayAmount => DynamicVars.Energy.IntValue;

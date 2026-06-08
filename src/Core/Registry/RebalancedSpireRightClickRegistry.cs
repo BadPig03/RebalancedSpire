@@ -15,7 +15,7 @@ internal sealed class RebalancedSpireRightClickRegistry
     {
         ModRightClickRegistry.Register<SealOfGold>(RebalancedSpireMain.ModId, "REBALANCED_SPIRE_RELIC_SEAL_OF_GOLD", async e =>
         {
-            if (e.Model is not SealOfGold { Status: RelicStatus.Active } sealOfGold)
+            if (Disabled || !CombatManager.Instance.IsInProgress || e.Model is not SealOfGold { Status: RelicStatus.Active } sealOfGold)
             {
                 return;
             }
@@ -30,6 +30,6 @@ internal sealed class RebalancedSpireRightClickRegistry
             sealOfGold.Status = RelicStatus.Normal;
             await PlayerCmd.GainEnergy(sealOfGold.DynamicVars.Energy.BaseValue, sealOfGold.Owner);
             await PlayerCmd.LoseGold(gold, sealOfGold.Owner);
-        }, 0, c => c.Model is SealOfGold { Status: RelicStatus.Active } sealOfGold && c.Player == sealOfGold.Owner, _ => !Disabled && CombatManager.Instance.IsInProgress);
+        }, 0, c => c.Model is SealOfGold { Status: RelicStatus.Active } sealOfGold && c.Player == sealOfGold.Owner);
     }
 }
