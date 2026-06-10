@@ -5,13 +5,12 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using STS2RitsuLib.Scaffolding.Godot.NodeAttachments;
-using STS2RitsuLib.Settings.Patches;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class MainMenuModSettingsButtonPatchPatch
 {
-    [HarmonyPatch(typeof(MainMenuModSettingsButtonPatch), "IsMainMenuShortcutSurfaceVisible")]
+    [HarmonyPatch("STS2RitsuLib.Settings.Patches.MainMenuModSettingsButtonPatch", "IsMainMenuShortcutSurfaceVisible")]
     [HarmonyPostfix]
     [UsedImplicitly]
     private static void PostFix_IsMainMenuShortcutSurfaceVisible(NMainMenu mainMenu, ref bool __result)

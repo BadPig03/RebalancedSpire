@@ -23,9 +23,6 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("blood_wall")]
     public bool BloodWall { get; set; } = true;
 
-    [JsonPropertyName("drum_of_battle")]
-    public bool DrumOfBattle { get; set; } = true;
-
     [JsonPropertyName("expect_a_fight")]
     public bool ExpectAFight { get; set; } = true;
 
@@ -74,8 +71,14 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("well_laid_plans")]
     public bool WellLaidPlans { get; set; } = true;
 
+    [JsonPropertyName("foregone_conclusion")]
+    public bool ForegoneConclusion { get; set; } = true;
+
     [JsonPropertyName("glow")]
     public bool Glow { get; set; } = true;
+
+    [JsonPropertyName("heirloom_hammer")]
+    public bool HeirloomHammer { get; set; } = true;
 
     [JsonPropertyName("the_sealed_throne")]
     public bool TheSealedThrone { get; set; } = true;

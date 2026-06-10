@@ -28,7 +28,7 @@ public static class ReflectionsPatch
             return;
         }
 
-        var cardModel = (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_DOWNGRADE"), 1), c => c.IsUpgraded)).FirstOrDefault();
+        var cardModel = (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE_TO_DOWNGRADE"), 1), c => c.IsUpgraded)).FirstOrDefault();
         if (cardModel != null)
         {
             CardCmd.Downgrade(cardModel);
@@ -64,7 +64,7 @@ public static class ReflectionsPatch
             return;
         }
 
-        var cards = (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE-TO_COPY"), 0, CloneCardsLimit))).Select(c => instance.Owner.RunState.CloneCard(c)).ToList();
+        var cards = (await CardSelectCmd.FromDeckGeneric(instance.Owner, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE_TO_COPY"), 0, CloneCardsLimit))).Select(c => instance.Owner.RunState.CloneCard(c)).ToList();
         foreach (var copiedCard in cards)
         {
             CardCmd.PreviewCardPileAdd(await CardPileCmd.Add(copiedCard, PileType.Deck), 1.2f, CardPreviewStyle.MessyLayout);

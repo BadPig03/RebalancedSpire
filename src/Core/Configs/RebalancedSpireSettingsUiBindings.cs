@@ -9,7 +9,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> LessPriceIncrease { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BloodWall { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> DrumOfBattle { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ExpectAFight { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ForgottenRitual { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Acrobatics { get; private init; } = null!;
@@ -26,7 +25,9 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Untouchable { get; private init; } = null!;
     public IModSettingsValueBinding<bool> UpMySleeve { get; private init; } = null!;
     public IModSettingsValueBinding<bool> WellLaidPlans { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> ForegoneConclusion { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Glow { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> HeirloomHammer { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TheSealedThrone { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Afterlife { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BansheesCry { get; private init; } = null!;
@@ -170,7 +171,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
             LessPriceIncrease = B(s => s.LessPriceIncrease, (s, v) => s.LessPriceIncrease = v, () => defaults.LessPriceIncrease),
 
             BloodWall = B(s => s.BloodWall, (s, v) => s.BloodWall = v, () => defaults.BloodWall),
-            DrumOfBattle = B(s => s.DrumOfBattle, (s, v) => s.DrumOfBattle = v, () => defaults.DrumOfBattle),
             ExpectAFight = B(s => s.ExpectAFight, (s, v) => s.ExpectAFight = v, () => defaults.ExpectAFight),
             ForgottenRitual = B(s => s.ForgottenRitual, (s, v) => s.ForgottenRitual = v, () => defaults.ForgottenRitual),
             Acrobatics = B(s => s.Acrobatics, (s, v) => s.Acrobatics = v, () => defaults.Acrobatics),
@@ -187,7 +187,9 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Untouchable = B(s => s.Untouchable, (s, v) => s.Untouchable = v, () => defaults.Untouchable),
             UpMySleeve = B(s => s.UpMySleeve, (s, v) => s.UpMySleeve = v, () => defaults.UpMySleeve),
             WellLaidPlans = B(s => s.WellLaidPlans, (s, v) => s.WellLaidPlans = v, () => defaults.WellLaidPlans),
+            ForegoneConclusion = B(s => s.ForegoneConclusion, (s, v) => s.ForegoneConclusion = v, () => defaults.ForegoneConclusion),
             Glow = B(s => s.Glow, (s, v) => s.Glow = v, () => defaults.Glow),
+            HeirloomHammer = B(s => s.HeirloomHammer, (s, v) => s.HeirloomHammer = v, () => defaults.HeirloomHammer),
             TheSealedThrone = B(s => s.TheSealedThrone, (s, v) => s.TheSealedThrone = v, () => defaults.TheSealedThrone),
             Afterlife = B(s => s.Afterlife, (s, v) => s.Afterlife = v, () => defaults.Afterlife),
             BansheesCry = B(s => s.BansheesCry, (s, v) => s.BansheesCry = v, () => defaults.BansheesCry),

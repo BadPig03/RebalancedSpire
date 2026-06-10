@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chn21y68rp7px"
-path="res://.godot/imported/rebalanced_spire_power_drum_of_battle_power.png-8361c1a12782fd3e3aeb989284f76225.ctex"
+uid="uid://cs7ua0mo8cvgu"
+path="res://.godot/imported/rebalanced_spire_power_foregone_conclusion_plus_power.png-31fce974a0ff3b7bfebf7a92bcfe792d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/powers/rebalanced_spire_power_drum_of_battle_power.png"
-dest_files=["res://.godot/imported/rebalanced_spire_power_drum_of_battle_power.png-8361c1a12782fd3e3aeb989284f76225.ctex"]
+source_file="res://images/powers/big/rebalanced_spire_power_foregone_conclusion_plus_power.png"
+dest_files=["res://.godot/imported/rebalanced_spire_power_foregone_conclusion_plus_power.png-31fce974a0ff3b7bfebf7a92bcfe792d.ctex"]
 
 [params]
 

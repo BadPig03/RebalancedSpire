@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.13" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.16" />
     </ItemGroup>
     
     <ItemGroup>
@@ -148,12 +148,12 @@
       <Content Include="images\powers\big\rebalanced_spire_power_corpse_explosion_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png.import" />
-      <Content Include="images\powers\big\rebalanced_spire_power_drum_of_battle_power.png" />
-      <Content Include="images\powers\big\rebalanced_spire_power_drum_of_battle_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_eternal_armor_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_eternal_armor_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_fabricator_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_fabricator_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_foregone_conclusion_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_foregone_conclusion_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_guard_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_guard_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_hunger_power.png" />
@@ -198,10 +198,10 @@
       <Content Include="images\powers\big\rebalanced_spire_power_tainted_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png.import" />
-      <Content Include="images\powers\rebalanced_spire_power_drum_of_battle_power.png" />
-      <Content Include="images\powers\rebalanced_spire_power_drum_of_battle_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_foregone_conclusion_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_foregone_conclusion_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_hunger_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_hunger_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_consuming_shadow_plus_power.png" />
@@ -323,7 +323,6 @@
       <Content Include="src\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\BloodWallPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Cards\Ironclad\DrumOfBattlePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ExpectAFightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ForgottenRitualPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\AfterlifePatch.cs.uid" />
@@ -338,7 +337,9 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SicEmPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\WispPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Regent\ForegoneConclusionPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GlowPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Regent\HeirloomHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\TheSealedThronePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BouncingFlaskPatch.cs.uid" />
@@ -495,9 +496,9 @@
       <Content Include="src\Core\Powers\ConsumingShadowPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\CorpseExplosionPower.cs.uid" />
       <Content Include="src\Core\Powers\DisillusionPower.cs.uid" />
-      <Content Include="src\Core\Powers\DrumOfBattlePower.cs.uid" />
       <Content Include="src\Core\Powers\EternalArmorPower.cs.uid" />
       <Content Include="src\Core\Powers\FabricatorPower.cs.uid" />
+      <Content Include="src\Core\Powers\ForegoneConclusionPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\GuardPower.cs.uid" />
       <Content Include="src\Core\Powers\HungerPower.cs.uid" />
       <Content Include="src\Core\Powers\InfestedPlusPower.cs.uid" />

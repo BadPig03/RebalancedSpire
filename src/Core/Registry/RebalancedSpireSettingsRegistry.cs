@@ -37,7 +37,6 @@ internal sealed class RebalancedSpireSettingsRegistry
             .AddSection("the_ironclad", s => s
                 .WithTitle(L("the_ironclad.section.label"))
                 .AddToggle("blood_wall", L("the_ironclad.section.blood_wall.title"), ui.BloodWall, L("the_ironclad.section.blood_wall.description"))
-                .AddToggle("drum_of_battle", L("the_ironclad.section.drum_of_battle.title"), ui.DrumOfBattle, L("the_ironclad.section.drum_of_battle.description"))
                 .AddToggle("expect_a_fight", L("the_ironclad.section.expect_a_fight.title"), ui.ExpectAFight, L("the_ironclad.section.expect_a_fight.description"))
                 .AddToggle("forgotten_ritual", L("the_ironclad.section.forgotten_ritual.title"), ui.ForgottenRitual, L("the_ironclad.section.forgotten_ritual.description"))
             ).AddSection("the_silent", s => s
@@ -58,7 +57,9 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("well_laid_plans", L("the_silent.section.well_laid_plans.title"), ui.WellLaidPlans, L("the_silent.section.well_laid_plans.description"))
             ).AddSection("the_regent", s => s
                 .WithTitle(L("the_regent.section.label"))
+                .AddToggle("foregone_conclusion", L("the_regent.section.foregone_conclusion.title"), ui.ForegoneConclusion, L("the_regent.section.foregone_conclusion.description"))
                 .AddToggle("glow", L("the_regent.section.glow.title"), ui.Glow, L("the_regent.section.glow.description"))
+                .AddToggle("heirloom_hammer", L("the_regent.section.heirloom_hammer.title"), ui.HeirloomHammer, L("the_regent.section.heirloom_hammer.description"))
                 .AddToggle("the_sealed_throne", L("the_regent.section.the_sealed_throne.title"), ui.TheSealedThrone, L("the_regent.section.the_sealed_throne.description"))
             ).AddSection("the_necrobinder", s => s
                 .WithTitle(L("the_necrobinder.section.label"))

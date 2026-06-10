@@ -78,6 +78,36 @@ public static class WarHammerPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(AbstractModel), "AfterDiedToDoom")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterDiedToDoom(AbstractModel __instance, PlayerChoiceContext choiceContext, IReadOnlyList<Creature> creatures, ref Task __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not WarHammer warHammer)
+        {
+            return true;
+        }
+
+        foreach (var creature in creatures)
+        {
+            if (creature.Side != CombatSide.Enemy || !creature.Powers.All(p => p.ShouldOwnerDeathTriggerFatal()))
+            {
+                continue;
+            }
+
+            EnemiesKilled.Update(warHammer, i => i + 1);
+        }
+        warHammer.Flash();
+        warHammer.InvokeDisplayAmountChanged();
+        __result = Task.CompletedTask;
+        return false;
+    }
+
     [HarmonyPatch(typeof(WarHammer), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]

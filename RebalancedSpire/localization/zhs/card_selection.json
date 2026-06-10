@@ -1,5 +1,5 @@
 ﻿{
-  "REBALANCEDSPIRE-TO_DOWNGRADE": "选择[blue]{Amount}[/blue]张牌来[gold]降级[/gold]。",
-  "REBALANCEDSPIRE-TO_COPY": "选择至多[blue]13[/blue]张牌来[gold]复制[/gold]。",
-  "REBALANCEDSPIRE-ATTACK_TO_PLAY": "选择[blue]{Amount}[/blue]张攻击牌来[gold]打出[/gold]。"
+  "REBALANCEDSPIRE_TO_DOWNGRADE": "选择[blue]{Amount}[/blue]张牌来[gold]降级[/gold]。",
+  "REBALANCEDSPIRE_TO_COPY": "选择至多[blue]13[/blue]张牌来[gold]复制[/gold]。",
+  "REBALANCEDSPIRE_TO_PUT_ON_TOP": "选择[blue]{Amount}[/blue]张牌放在你的抽牌堆顶部。"
 }

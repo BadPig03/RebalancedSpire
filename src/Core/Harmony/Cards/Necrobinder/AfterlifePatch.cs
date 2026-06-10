@@ -143,5 +143,4 @@ public static class AfterlifePatch
         __result = CardType.Power;
         return false;
     }
-
 }

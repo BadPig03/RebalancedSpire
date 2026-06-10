@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -23,13 +24,19 @@ public static class DustyTomePatch
 
     private static async Task AfterObtained(DustyTome instance)
     {
-        var otherCardPools = ModelDb.AllCharacterCardPools.Where(cardPoolModel => cardPoolModel != instance.Owner.Character.CardPool).ToList();
-        var otherOptions = instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.RunState.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).ToList().StableShuffle(instance.Owner.RunState.Rng.Shuffle).Take(1).Concat(new CardCreationOptions(otherCardPools, CardCreationSource.Other, CardRarityOddsType.Uniform, c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).GetPossibleCards(instance.Owner).ToList().StableShuffle(instance.Owner.RunState.Rng.Shuffle).Take(2)).Select(c => instance.Owner.RunState.CreateCard(c, instance.Owner)).ToList();
-        foreach (var card in otherOptions)
+        var cards = new List<CardModel>();
+        var options = new List<CardModel>
+        {
+            instance.Owner.Character.CardPool.GetUnlockedCards(instance.Owner.RunState.UnlockState, instance.Owner.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).First()
+        };
+        var otherCardPools = ModelDb.AllCharacterCardPools.Where(c => c != instance.Owner.Character.CardPool).ToList();
+        options.AddRange(new CardCreationOptions(otherCardPools, CardCreationSource.Other, CardRarityOddsType.Uniform, c => c.Rarity == CardRarity.Ancient && !ArchaicTooth.TranscendenceCards.Contains(c)).GetPossibleCards(instance.Owner).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).Take(2));
+        foreach (var card in options.Select(c => instance.Owner.RunState.CreateCard(c, instance.Owner)).ToList())
         {
             CardCmd.Upgrade(card);
+            cards.Add(card);
         }
-        var chosenCard = await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), otherOptions, instance.Owner, canSkip: false);
+        var chosenCard = await CardSelectCmd.FromChooseACardScreen(new BlockingPlayerChoiceContext(), cards, instance.Owner, canSkip: false);
         if (chosenCard == null)
         {
             return;
@@ -126,6 +133,12 @@ public static class DustyTomePatch
     [UsedImplicitly]
     private static bool PreFix_SetupForPlayer(DustyTome __instance, Player player)
     {
-        return Disabled;
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __instance.AncientCard = ModelDb.Card<DeprecatedCard>().Id;
+        return false;
     }
 }
