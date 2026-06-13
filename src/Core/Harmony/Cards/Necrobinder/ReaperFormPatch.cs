@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
+using MegaCrit.Sts2.Core.Models.Powers;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
@@ -21,7 +22,14 @@ public class ReaperFormPatch
     private static async Task OnPlay(ReaperForm instance, PlayerChoiceContext choiceContext)
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "PowerUp", instance.Owner.Character.PowerUpAnimDelay);
-        await PowerCmd.Apply<ReaperFormPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["ReaperFormPlusPower"].BaseValue, instance.Owner.Creature, instance);
+        if (instance.IsUpgraded)
+        {
+            await PowerCmd.Apply<ReaperFormPlusPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["ReaperFormPower"].BaseValue, instance.Owner.Creature, instance);
+        }
+        else
+        {
+            await PowerCmd.Apply<ReaperFormPower>(choiceContext, instance.Owner.Creature, instance.DynamicVars["ReaperFormPower"].BaseValue, instance.Owner.Creature, instance);
+        }
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalVars", MethodType.Getter)]
@@ -41,7 +49,7 @@ public class ReaperFormPatch
 
         __result = new List<DynamicVar>
         {
-            new PowerVar<ReaperFormPlusPower>(1)
+            new PowerVar<ReaperFormPower>(1)
         }.AsReadOnly();
         return false;
     }
@@ -77,5 +85,13 @@ public class ReaperFormPatch
 
         __result = OnPlay(__instance, choiceContext);
         return false;
+    }
+
+    [HarmonyPatch(typeof(ReaperForm), "OnUpgrade")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_OnUpgrade(ReaperForm __instance)
+    {
+        return Disabled;
     }
 }

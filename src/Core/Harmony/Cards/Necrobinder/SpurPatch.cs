@@ -65,7 +65,7 @@ public static class SpurPatch
 
         __result = new List<DynamicVar>
         {
-            new HealVar(8)
+            new HealVar(9)
         }.AsReadOnly();
         return false;
     }
@@ -130,7 +130,7 @@ public static class SpurPatch
             return true;
         }
 
-        __instance.DynamicVars.Heal.UpgradeValueBy(2);
+        __instance.AddKeyword(CardKeyword.Retain);
         return false;
     }
 

@@ -32,29 +32,12 @@ public sealed class ToItsOriginOwner : ModAfflictionTemplate
 
     public override async Task OnPlay(PlayerChoiceContext choiceContext, Creature? target)
     {
-        if (Card is not ByrdonisEgg || target != null)
+        if (Card is not ByrdonisEgg || target?.Monster is not Byrdonis)
         {
             return;
         }
 
-        var enemies = Card.CombatState?.Enemies.ToList();
-        if (enemies == null)
-        {
-            return;
-        }
-
-        List<Creature> byrdonis = [];
-        var byrdonisEnemies = enemies.Where(c => c.Monster is Byrdonis).ToList();
-        foreach (var enemy in byrdonisEnemies)
-        {
-            await CreatureCmd.TriggerAnim(enemy, "NotAngry", 1f);
-            byrdonis.Add(enemy);
-        }
-        if (byrdonis.Count == 0)
-        {
-            return;
-        }
-
+        await CreatureCmd.TriggerAnim(target, "NotAngry", 1f);
         var players = Card.CombatState?.Players.ToList();
         if (players == null)
         {
@@ -65,12 +48,9 @@ public sealed class ToItsOriginOwner : ModAfflictionTemplate
         {
             await PowerCmd.Apply<ToItsOriginOwnerPower>(choiceContext, player.Creature, ToItsOriginOwnerPowerAmount, player.Creature, null);
         }
-        await Cmd.Wait(0.6f);
-        foreach (var enemy in byrdonis)
-        {
-            enemy.RemoveAllPowersInternalExcept();
-            CombatManager.Instance.RemoveCreature(enemy);
-            CombatState.RemoveCreature(enemy);
-        }
+        await Cmd.Wait(0.3f);
+        target.RemoveAllPowersInternalExcept();
+        CombatManager.Instance.RemoveCreature(target);
+        CombatState.RemoveCreature(target);
     }
 }

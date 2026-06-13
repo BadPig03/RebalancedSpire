@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.16" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.20" />
     </ItemGroup>
     
     <ItemGroup>
@@ -319,7 +319,6 @@
       <Content Include="src\Core\Harmony\Cards\Defect\SpinnerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\SynchronizePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\VoltaicPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Cards\Event\ByrdonisEggPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\BloodWallPatch.cs.uid" />
@@ -337,7 +336,9 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SicEmPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\WispPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Quest\ByrdonisEggPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\ForegoneConclusionPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Regent\GenesisPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GlowPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\HeirloomHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\TheSealedThronePatch.cs.uid" />
@@ -359,6 +360,7 @@
       <Content Include="src\Core\Harmony\Commands\AttackCommandPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Enchantments\InkyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\PunchOffEventEncounterPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Encounters\RubyRaidersNormalPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\TheKinBossPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\LostWispPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\MorphicGrovePatch.cs.uid" />

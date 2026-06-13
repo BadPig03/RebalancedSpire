@@ -58,6 +58,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             ).AddSection("the_regent", s => s
                 .WithTitle(L("the_regent.section.label"))
                 .AddToggle("foregone_conclusion", L("the_regent.section.foregone_conclusion.title"), ui.ForegoneConclusion, L("the_regent.section.foregone_conclusion.description"))
+                .AddToggle("genesis", L("the_regent.section.genesis.title"), ui.Genesis, L("the_regent.section.genesis.description"))
                 .AddToggle("glow", L("the_regent.section.glow.title"), ui.Glow, L("the_regent.section.glow.description"))
                 .AddToggle("heirloom_hammer", L("the_regent.section.heirloom_hammer.title"), ui.HeirloomHammer, L("the_regent.section.heirloom_hammer.description"))
                 .AddToggle("the_sealed_throne", L("the_regent.section.the_sealed_throne.title"), ui.TheSealedThrone, L("the_regent.section.the_sealed_throne.description"))
@@ -195,6 +196,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("inklet", L("overgrowth.section.inklet.title"), ui.Inklet, L("overgrowth.section.inklet.description"))
                 .AddToggle("leaf_slime_s", L("overgrowth.section.leaf_slime_s.title"), ui.LeafSlimeS, L("overgrowth.section.leaf_slime_s.description"))
                 .AddToggle("nibbit", L("overgrowth.section.nibbit.title"), ui.Nibbit, L("overgrowth.section.nibbit.description"))
+                .AddToggle("ruby_raiders", L("overgrowth.section.ruby_raiders.title"), ui.RubyRaiders, L("overgrowth.section.ruby_raiders.description"))
                 .AddToggle("slithering_strangler", L("overgrowth.section.slithering_strangler.title"), ui.SlitheringStrangler, L("overgrowth.section.slithering_strangler.description"))
                 .AddToggle("snapping_jaxfruit", L("overgrowth.section.snapping_jaxfruit.title"), ui.SnappingJaxfruit, L("overgrowth.section.snapping_jaxfruit.description"))
                 .AddToggle("twig_slime_m", L("overgrowth.section.twig_slime_m.title"), ui.TwigSlimeM, L("overgrowth.section.twig_slime_m.description"))

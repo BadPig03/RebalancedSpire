@@ -84,7 +84,7 @@ public static class ForegoneConclusionPatch
             return true;
         }
 
-        __instance.AddKeyword(CardKeyword.Innate);
+        __instance.EnergyCost.UpgradeBy(-1);
         return false;
     }
 

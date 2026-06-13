@@ -26,6 +26,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> UpMySleeve { get; private init; } = null!;
     public IModSettingsValueBinding<bool> WellLaidPlans { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ForegoneConclusion { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Genesis { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Glow { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HeirloomHammer { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TheSealedThrone { get; private init; } = null!;
@@ -104,6 +105,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Inklet { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LeafSlimeS { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Nibbit { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> RubyRaiders { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SlitheringStrangler { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SnappingJaxfruit { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TwigSlimeM { get; private init; } = null!;
@@ -188,6 +190,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             UpMySleeve = B(s => s.UpMySleeve, (s, v) => s.UpMySleeve = v, () => defaults.UpMySleeve),
             WellLaidPlans = B(s => s.WellLaidPlans, (s, v) => s.WellLaidPlans = v, () => defaults.WellLaidPlans),
             ForegoneConclusion = B(s => s.ForegoneConclusion, (s, v) => s.ForegoneConclusion = v, () => defaults.ForegoneConclusion),
+            Genesis = B(s => s.Genesis, (s, v) => s.Genesis = v, () => defaults.Genesis),
             Glow = B(s => s.Glow, (s, v) => s.Glow = v, () => defaults.Glow),
             HeirloomHammer = B(s => s.HeirloomHammer, (s, v) => s.HeirloomHammer = v, () => defaults.HeirloomHammer),
             TheSealedThrone = B(s => s.TheSealedThrone, (s, v) => s.TheSealedThrone = v, () => defaults.TheSealedThrone),
@@ -265,6 +268,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Inklet = B(s => s.Inklet, (s, v) => s.Inklet = v, () => defaults.Inklet),
             LeafSlimeS = B(s => s.LeafSlimeS, (s, v) => s.LeafSlimeS = v, () => defaults.LeafSlimeS),
             Nibbit = B(s => s.Nibbit, (s, v) => s.Nibbit = v, () => defaults.Nibbit),
+            RubyRaiders = B(s => s.RubyRaiders, (s, v) => s.RubyRaiders = v, () => defaults.RubyRaiders),
             SlitheringStrangler = B(s => s.SlitheringStrangler, (s, v) => s.SlitheringStrangler = v, () => defaults.SlitheringStrangler),
             SnappingJaxfruit = B(s => s.SnappingJaxfruit, (s, v) => s.SnappingJaxfruit = v, () => defaults.SnappingJaxfruit),
             TwigSlimeM = B(s => s.TwigSlimeM, (s, v) => s.TwigSlimeM = v, () => defaults.TwigSlimeM),

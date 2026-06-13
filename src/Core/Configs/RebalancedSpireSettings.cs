@@ -74,6 +74,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("foregone_conclusion")]
     public bool ForegoneConclusion { get; set; } = true;
 
+    [JsonPropertyName("genesis")]
+    public bool Genesis { get; set; } = true;
+
     [JsonPropertyName("glow")]
     public bool Glow { get; set; } = true;
 
@@ -298,6 +301,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("nibbit")]
     public bool Nibbit { get; set; } = true;
+
+    [JsonPropertyName("ruby_raiders")]
+    public bool RubyRaiders { get; set; } = true;
 
     [JsonPropertyName("slithering_strangler")]
     public bool SlitheringStrangler { get; set; } = true;

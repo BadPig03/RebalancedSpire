@@ -41,23 +41,14 @@ public static class ByrdonisPatch
         await CreatureCmd.TriggerAnim(instance.Creature, "AngryPermanently", 0.8f);
         await PowerCmd.Apply<TerritorialPower>(new ThrowingPlayerChoiceContext(), instance.Creature, TerritorialPowerAmount, instance.Creature, null);
 		var players = instance.CombatState.Players.ToList();
-        foreach (var player in players)
+        foreach (var cardModel in players.Select(player => player.PlayerCombatState?.AllCards.ToList()).OfType<List<CardModel>>().SelectMany(allCards => allCards))
         {
-            var allCards = player.PlayerCombatState?.AllCards.ToList();
-            if (allCards == null)
+            if (cardModel is not ByrdonisEgg)
             {
                 continue;
             }
 
-            foreach (var cardModel in allCards)
-            {
-                if (cardModel is not ByrdonisEgg)
-                {
-                    continue;
-                }
-
-                await CardCmd.AfflictAndPreview<ToItsOriginOwner>(new List<CardModel> { cardModel }, 1);
-            }
+            await CardCmd.AfflictAndPreview<ToItsOriginOwner>(new List<CardModel> { cardModel }, 1);
         }
         await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, FrailPowerAmount, instance.Creature, null);
     }

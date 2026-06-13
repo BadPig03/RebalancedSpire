@@ -1,9 +1,10 @@
-﻿namespace RebalancedSpire.Core.Harmony.Cards.Event;
+﻿namespace RebalancedSpire.Core.Harmony.Cards.Quest;
 
 using Afflictions;
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 
@@ -23,12 +24,31 @@ public static class ByrdonisEggPatch
             return true;
         }
 
-        if (__instance is not ByrdonisEgg byrdonisEgg)
+        if (__instance is not ByrdonisEgg { Affliction: ToItsOriginOwner })
         {
             return true;
         }
 
-        __result = byrdonisEgg.Affliction is ToItsOriginOwner;
+        __result = true;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "TargetType", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_TargetType(CardModel __instance, ref TargetType __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not ByrdonisEgg { Affliction: ToItsOriginOwner })
+        {
+            return true;
+        }
+
+        __result = TargetType.AnyEnemy;
         return false;
     }
 }
