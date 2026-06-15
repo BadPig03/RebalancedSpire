@@ -61,6 +61,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("genesis", L("the_regent.section.genesis.title"), ui.Genesis, L("the_regent.section.genesis.description"))
                 .AddToggle("glow", L("the_regent.section.glow.title"), ui.Glow, L("the_regent.section.glow.description"))
                 .AddToggle("heirloom_hammer", L("the_regent.section.heirloom_hammer.title"), ui.HeirloomHammer, L("the_regent.section.heirloom_hammer.description"))
+                .AddToggle("neutron_aegis", L("the_regent.section.neutron_aegis.title"), ui.NeutronAegis, L("the_regent.section.neutron_aegis.description"))
                 .AddToggle("the_sealed_throne", L("the_regent.section.the_sealed_throne.title"), ui.TheSealedThrone, L("the_regent.section.the_sealed_throne.description"))
             ).AddSection("the_necrobinder", s => s
                 .WithTitle(L("the_necrobinder.section.label"))

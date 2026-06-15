@@ -19,6 +19,7 @@ public sealed class DoormakerRight : DoormakerBase
     private const int ChargeUpCount = 2;
     private const int FullAttackCount = 4;
     private const int HungerPowerAmount = 1;
+    private const int FrailPowerAmount = 2;
 
     private static int ChargeUpDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 10, 9);
     private static int FullAttackDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 4, 3);
@@ -104,6 +105,7 @@ public sealed class DoormakerRight : DoormakerBase
 
     private async Task CloseMove(IReadOnlyList<Creature> targets)
     {
+        await PowerCmd.Apply<FrailPower>(new ThrowingPlayerChoiceContext(), targets, FrailPowerAmount, Creature, null);
         await Close();
     }
 
@@ -114,7 +116,7 @@ public sealed class DoormakerRight : DoormakerBase
         MoveState moveState2 = new MoveState("HUNGER_MOVE", HungerMove, new SingleAttackIntent(HungerDamage), new CardDebuffIntent());
         MoveState moveState3 = new MoveState("CHARGE_UP_MOVE", ChargeUpMove, new MultiAttackIntent(ChargeUpDamage, ChargeUpCount), new BuffIntent());
         MoveState moveState4 = new MoveState("FULL_ATTACK_MOVE", FullAttackMove, new MultiAttackIntent(FullAttackDamage, FullAttackCount));
-        MoveState moveState5 = new MoveState("CLOSE_MOVE", CloseMove, new EscapeIntent());
+        MoveState moveState5 = new MoveState("CLOSE_MOVE", CloseMove, new EscapeIntent(), new DebuffIntent());
         MoveState moveState6 = new MoveState("SLEEP_MOVE", _ => Task.CompletedTask, new SleepIntent());
         ConditionalBranchState branchState = new ConditionalBranchState("DOORMAKER_RIGHT");
         branchState.AddState(moveState2, () => !OtherDoormaker.Creature.IsAlive);

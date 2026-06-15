@@ -18,7 +18,7 @@ public static class ParafrightPatch
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheObscura;
 
     private const int IllusionPowerAmount = 1;
-    private const int DisillusionPowerAmount = 5;
+    private const int DisillusionPowerAmount = 4;
 
     private static async Task AfterAddedToRoom(Parafright instance)
     {

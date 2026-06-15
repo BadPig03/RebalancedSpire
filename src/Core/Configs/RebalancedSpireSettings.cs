@@ -83,6 +83,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("heirloom_hammer")]
     public bool HeirloomHammer { get; set; } = true;
 
+    [JsonPropertyName("neutron_aegis")]
+    public bool NeutronAegis { get; set; } = true;
+
     [JsonPropertyName("the_sealed_throne")]
     public bool TheSealedThrone { get; set; } = true;
 

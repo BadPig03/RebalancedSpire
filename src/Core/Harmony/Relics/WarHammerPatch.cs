@@ -23,11 +23,11 @@ public static class WarHammerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WarHammer;
 
-    private static readonly SavedAttachedState<WarHammer, int> EnemiesKilled = new("REBALANCED_SPIRE_RELIC_WAR_HAMMER", () => 0);
+    private static readonly SavedAttachedState<WarHammer, int> EnemiesKilled = new("REBALANCED_SPIRE_RELIC_WAR_HAMMER", _ => 0);
 
     private static Task AfterCombatVictory(WarHammer instance)
     {
-        var killed = EnemiesKilled[instance];
+        var killed = EnemiesKilled.GetValueOrDefault(instance, 0);
         for (var i = 0; i < killed; i++)
         {
             var cards = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.PlayerRng.Rewards).Take(instance.DynamicVars.Cards.IntValue).ToList();
@@ -159,7 +159,7 @@ public static class WarHammerPatch
             return true;
         }
 
-        __result = EnemiesKilled[warHammer];
+        __result = EnemiesKilled.GetValueOrDefault(warHammer, 0);
         return false;
     }
 

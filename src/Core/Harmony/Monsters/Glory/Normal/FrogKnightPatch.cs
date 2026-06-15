@@ -23,6 +23,6 @@ public static class FrogKnightPatch
             return;
         }
 
-        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 12, 10);
+        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 15, 13);
     }
 }

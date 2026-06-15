@@ -3,12 +3,12 @@
   "name": "RebalancedSpire",
   "author": "ty, Oroboro",
   "description": "Supports public beta v0.107.0.",
-  "version": "v0.2.7-beta",
+  "version": "v0.2.8-beta",
   "min_game_version": "0.107.0",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
-    { "id": "STS2-RitsuLib", "min_version": "0.4.20" }
+    { "id": "STS2-RitsuLib", "min_version": "0.4.22" }
   ],
   "affects_gameplay": true
 }

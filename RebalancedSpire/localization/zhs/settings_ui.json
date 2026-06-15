@@ -58,6 +58,8 @@
   "the_regent.section.glow.description": "启用后：\n旧：技能 - 普通 - 耗能1 - 获得1 (2)辉星。抽1张牌。下回合抽1张牌。\n新：技能 - 普通 - 耗能1 - 获得1 (2)辉星。抽2张牌。",
   "the_regent.section.heirloom_hammer.title": "传承之锤",
   "the_regent.section.heirloom_hammer.description": "启用后：\n旧：攻击 - 稀有 - 耗能2 - 造成20 (25)点伤害。选择你[gold]手牌[/gold]中的一张无色牌。将这张牌的一张复制品放入你的[gold]手牌[/gold]。\n新：技能 - 稀有 - 耗能1 - [gold]铸造[/gold]5。选择你[gold]手牌[/gold]中的一张无色牌。将这张牌的一张(升级过的)复制品放入你的[gold]手牌[/gold]。",
+  "the_regent.section.neutron_aegis.title": "中子护盾",
+  "the_regent.section.neutron_aegis.description": "启用后：\n旧：能力 - 稀有 - 耗能1 - 耗星5 - 获得8 (11)层[gold]覆甲[/gold]。\n新：能力 - 稀有 - 耗能0 - 耗星X - 获得X点[gold]格挡[/gold]和X层[gold]覆甲[/gold]。如果X的最终数值为5 (4)或以上，则将X的数值翻倍。",
   "the_regent.section.the_sealed_throne.title": "封印王座",
   "the_regent.section.the_sealed_throne.description": "启用后：\n旧：能力 - 先古 - 耗能1 (0) - 耗星3 - 你每打出一张牌，获得1点辉星。\n新：能力 - 先古 - 耗能1 - 耗星3 - 你每打出一张牌，获得1点辉星。（升级后获得[gold]固有[/gold]）",
   "the_necrobinder.section.label": "亡灵契约师",

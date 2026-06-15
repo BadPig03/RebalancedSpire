@@ -19,7 +19,7 @@ public static class AlchemicalCofferPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.AlchemicalCoffer;
 
-    private static readonly SavedAttachedState<AlchemicalCoffer, ModelId?> LastPotionUsed = new("REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER", () => null);
+    private static readonly SavedAttachedState<AlchemicalCoffer, ModelId?> LastPotionUsed = new("REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER", _ => null);
 
     private static async Task AfterObtained(AlchemicalCoffer instance)
     {
@@ -39,7 +39,7 @@ public static class AlchemicalCofferPatch
 
     private static async Task AfterCombatVictory(AlchemicalCoffer instance)
     {
-        var potionId = LastPotionUsed[instance];
+        var potionId = LastPotionUsed.GetValueOrDefault(instance, null);
         if (potionId == null)
         {
             return;

@@ -19,8 +19,8 @@ using STS2RitsuLib.Utils;
 public static class LavaRockPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LavaRock;
-    private static readonly SavedAttachedState<LavaRock, int> EnemiesDefeated = new("REBALANCED_SPIRE_RELIC_LAVA_ROCK", () => 0);
-    private static readonly SavedAttachedState<LavaRock, int> TriggeredAmount = new("REBALANCED_SPIRE_RELIC_LAVA_ROCK_TRIGGERED", () => 0);
+    private static readonly SavedAttachedState<LavaRock, int> EnemiesDefeated = new("REBALANCED_SPIRE_RELIC_LAVA_ROCK", _ => 0);
+    private static readonly SavedAttachedState<LavaRock, int> TriggeredAmount = new("REBALANCED_SPIRE_RELIC_LAVA_ROCK_TRIGGERED", _ => 0);
 
     [HarmonyPatch(typeof(AbstractModel), "AfterCombatVictory")]
     [HarmonyPrefix]
@@ -37,7 +37,7 @@ public static class LavaRockPatch
             return true;
         }
 
-        var enemiesDefeated = EnemiesDefeated[lavaRock] + 1;
+        var enemiesDefeated = EnemiesDefeated.GetValueOrDefault(lavaRock, 0) + 1;
         EnemiesDefeated.Set(lavaRock, enemiesDefeated);
         lavaRock.Flash();
         lavaRock.InvokeDisplayAmountChanged();
@@ -116,7 +116,7 @@ public static class LavaRockPatch
             return true;
         }
 
-        __result = EnemiesDefeated[lavaRock];
+        __result = EnemiesDefeated.GetValueOrDefault(lavaRock, 0);
         return false;
     }
 
@@ -149,8 +149,8 @@ public static class LavaRockPatch
             return true;
         }
 
-        var amount = TriggeredAmount[__instance];
-        if (EnemiesDefeated[__instance] < __instance.DynamicVars["Enemies"].IntValue + amount)
+        var amount = TriggeredAmount.GetValueOrDefault(__instance, 0);
+        if (EnemiesDefeated.GetValueOrDefault(__instance, 0) < __instance.DynamicVars["Enemies"].IntValue + amount)
         {
             return true;
         }

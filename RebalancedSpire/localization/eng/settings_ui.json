@@ -58,6 +58,8 @@
   "the_regent.section.glow.description": "When enabled:\nOld: Skill - Common - Cost 1 - Gain 1 (2) Star(s). Draw 1 card. Next turn, draw 1 card.\nNew: Skill - Common - Cost 1 - Gain 1 (2) Star(s). Draw 2 cards.",
   "the_regent.section.heirloom_hammer.title": "Heirloom Hammer",
   "the_regent.section.heirloom_hammer.description": "When enabled:\nOld: Attack - Rare - Cost 2 - Deal 20 (25) damage. Choose a Colorless card in your [gold]Hand[/gold]. Add a copy of that card into your [gold]Hand[/gold].\nNew: Skill - Rare - Cost 1 - [gold]Forge[/gold] 5. Choose a Colorless card in your [gold]Hand[/gold]. Add a (upgraded) copy of that card into your [gold]Hand[/gold].",
+  "the_regent.section.neutron_aegis.title": "Neutron Aegis",
+  "the_regent.section.neutron_aegis.description": "When enabled:\nOld: Power - Rare - Cost 1 - Star Cost 5 - Gain 8 (11) [gold]Plating[/gold].\nNew: Power - Rare - Cost 0 - Star Cost X - Gain X [gold] Block [/gold] and [gold]Plating[/gold]. Double X if it's 5 (4) or more.",
   "the_regent.section.the_sealed_throne.title": "The Sealed Throne",
   "the_regent.section.the_sealed_throne.description": "When enabled:\nOld: Power - Ancient - Cost 1 (0) - Star Cost 3 - Whenever you play a card, gain 1 Star.\nNew: Power - Ancient - Cost 1 - Star Cost 3 - Whenever you play a card, gain 1 Star. (Upgrade grants [gold]Innate[/gold].)",
   "the_necrobinder.section.label": "The Necrobinder",

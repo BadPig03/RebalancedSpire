@@ -29,6 +29,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Genesis { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Glow { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HeirloomHammer { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> NeutronAegis { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TheSealedThrone { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Afterlife { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BansheesCry { get; private init; } = null!;
@@ -193,6 +194,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Genesis = B(s => s.Genesis, (s, v) => s.Genesis = v, () => defaults.Genesis),
             Glow = B(s => s.Glow, (s, v) => s.Glow = v, () => defaults.Glow),
             HeirloomHammer = B(s => s.HeirloomHammer, (s, v) => s.HeirloomHammer = v, () => defaults.HeirloomHammer),
+            NeutronAegis = B(s => s.NeutronAegis, (s, v) => s.NeutronAegis = v, () => defaults.NeutronAegis),
             TheSealedThrone = B(s => s.TheSealedThrone, (s, v) => s.TheSealedThrone = v, () => defaults.TheSealedThrone),
             Afterlife = B(s => s.Afterlife, (s, v) => s.Afterlife = v, () => defaults.Afterlife),
             BansheesCry = B(s => s.BansheesCry, (s, v) => s.BansheesCry = v, () => defaults.BansheesCry),
