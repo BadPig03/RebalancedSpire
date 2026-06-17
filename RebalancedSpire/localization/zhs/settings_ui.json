@@ -10,6 +10,9 @@
   "merchant.section.label": "商店",
   "merchant.section.less_price_increase.title": "更少的价格提升",
   "merchant.section.less_price_increase.description": "启用后，在进阶6及以上，商店的移除卡牌服务的涨幅从50降低至25。",
+  "random_number_generator.section.label": "随机数生成器",
+  "random_number_generator.section.better_child_seed_generation.title": "更好的子种子生成",
+  "random_number_generator.section.better_child_seed_generation.description": "启用后，减少不同随机数生成器之间的可预测相关性。",
 
   "cards_settings.page.title": "卡牌",
   "cards_settings.page.description": "包括角色相关的卡牌与无色牌。",

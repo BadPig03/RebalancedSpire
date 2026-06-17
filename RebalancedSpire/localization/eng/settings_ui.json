@@ -10,6 +10,9 @@
   "merchant.section.label": "The Merchant",
   "merchant.section.less_price_increase.title": "Reduced Price Increase",
   "merchant.section.less_price_increase.description": "When enabled, at Ascension 6 and above, the price increase for the merchant's card removal service is reduced from 50 to 25.",
+  "random_number_generator.section.label": "Random Number Generator",
+  "random_number_generator.section.better_child_seed_generation.title": "Better Child Seed Generation",
+  "random_number_generator.section.better_child_seed_generation.description": "When enabled, reduces predictable correlations between different random number generators.",
 
   "cards_settings.page.title": "Cards",
   "cards_settings.page.description": "Includes character-specific cards and colorless cards.",

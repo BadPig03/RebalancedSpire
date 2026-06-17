@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.22" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.24" />
     </ItemGroup>
     
     <ItemGroup>
@@ -485,6 +485,8 @@
       <Content Include="src\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="src\Core\Harmony\RitsuLib\MainMenuModSettingsButtonPatchPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Runs\PlayerRngSetPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Runs\RunRngSetPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Saves\RunHistorySaveManagerPatch.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerLeft.cs.uid" />

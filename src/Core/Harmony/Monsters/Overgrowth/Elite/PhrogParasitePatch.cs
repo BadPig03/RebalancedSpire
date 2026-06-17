@@ -24,9 +24,7 @@ public static class PhrogParasitePatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PhrogParasite;
 
-    private const float IncreasedSize = 0.3f;
-    private const float InitSize = 0.3f;
-    private const float MaxHpRatio = 0.2f;
+    private const int MaxAmount = 4;
     private const int InfestedPlusPowerAmount = 1;
     private const int InitInfectedAmount = 2;
     private const int WeakPowerAmount = 2;
@@ -36,10 +34,11 @@ public static class PhrogParasitePatch
     private static async Task ProliferationMove(PhrogParasite instance, IReadOnlyList<Creature> targets)
     {
         SfxCmd.Play(SrcHelpers.GetSfx(instance, "CastSfx")!);
-        NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.ScaleTo(InitSize + GetInfestedAmount(instance) * IncreasedSize, 0.75f);
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.75f);
-        await CreatureCmd.GainMaxHp(instance.Creature, (int) (instance.Creature.MaxHp * MaxHpRatio));
-        await PowerCmd.Apply<InfestedPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, InfestedPlusPowerAmount, instance.Creature, null);
+        if (GetInfestedAmount(instance) < MaxAmount)
+        {
+            await PowerCmd.Apply<InfestedPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, InfestedPlusPowerAmount, instance.Creature, null);
+        }
         await PowerCmd.Apply<WeakPower>(new BlockingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
     }
 
@@ -65,7 +64,6 @@ public static class PhrogParasitePatch
 
     private static async Task AfterAddedToRoom(PhrogParasite instance)
     {
-        NCombatRoom.Instance?.GetCreatureNode(instance.Creature)?.ScaleTo(InitSize + GetInfestedAmount(instance) * IncreasedSize, 0);
         await PowerCmd.Apply<InfestedPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, InitInfectedAmount, instance.Creature, null);
     }
 
@@ -111,7 +109,7 @@ public static class PhrogParasitePatch
         MoveState moveState5 = new MoveState("PROLIFERATION_2_MOVE", t => ProliferationMove(__instance, t), new BuffIntent(), new DebuffIntent());
         MoveState moveState6 = new MoveState("INFECT_2_MOVE", t => InfectMove(__instance, t), new StatusIntent(4));
         MoveState moveState7 = new MoveState("LASH_3_MOVE", _ => LashMove(__instance), new MultiAttackIntent(LashDamage, 4));
-        MoveState moveState8 = new MoveState("PROLIFERATION_3_MOVE", t => ProliferationMove(__instance, t), new BuffIntent(), new DebuffIntent());
+        MoveState moveState8 = new MoveState("PROLIFERATION_3_MOVE", t => ProliferationMove(__instance, t), new DebuffIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;
         moveState3.FollowUpState = moveState4;

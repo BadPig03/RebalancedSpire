@@ -14,22 +14,6 @@ internal sealed class RebalancedSpireSettingsRegistry
 
         RitsuLibFramework.RegisterModSettings(RebalancedSpireMain.ModId, p => p
             .WithModDisplayName(L("mod.title", "Rebalanced Spire"))
-            .WithTitle(L("others_settings.page.title"))
-            .WithDescription(L("others_settings.page.description"))
-            .WithSortOrder(10000)
-            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
-            .AddSection("map_generation", s => s
-                .WithTitle(L("map_generation.section.label"))
-                .AddToggle("uniform_intro_generation", L("map_generation.section.uniform_intro_generation.title"), ui.UniformIntroGeneration, L("map_generation.section.uniform_intro_generation.description"))
-                .AddToggle("less_continuous_monsters", L("map_generation.section.less_continuous_monsters.title"), ui.LessContinuousMonsters, L("map_generation.section.less_continuous_monsters.description"))
-            ).AddSection("merchant", s => s
-                .WithTitle(L("merchant.section.label"))
-                .AddToggle("less_price_increase", L("merchant.section.less_price_increase.title"), ui.LessPriceIncrease, L("merchant.section.less_price_increase.description"))
-            ), "others"
-        );
-
-        RitsuLibFramework.RegisterModSettings(RebalancedSpireMain.ModId, p => p
-            .WithModDisplayName(L("mod.title", "Rebalanced Spire"))
             .WithTitle(L("cards_settings.page.title"))
             .WithDescription(L("cards_settings.page.description"))
             .WithSortOrder(0)
@@ -261,6 +245,25 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("aeonglass", L("glory.section.aeonglass.title"), ui.Aeonglass, L("glory.section.aeonglass.description"))
                 .AddToggle("doormaker", L("glory.section.doormaker.title"), ui.Doormaker, L("glory.section.doormaker.description"))
             ), "enemies"
+        );
+
+        RitsuLibFramework.RegisterModSettings(RebalancedSpireMain.ModId, p => p
+            .WithModDisplayName(L("mod.title", "Rebalanced Spire"))
+            .WithTitle(L("others_settings.page.title"))
+            .WithDescription(L("others_settings.page.description"))
+            .WithSortOrder(10000)
+            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
+            .AddSection("map_generation", s => s
+                .WithTitle(L("map_generation.section.label"))
+                .AddToggle("uniform_intro_generation", L("map_generation.section.uniform_intro_generation.title"), ui.UniformIntroGeneration, L("map_generation.section.uniform_intro_generation.description"))
+                .AddToggle("less_continuous_monsters", L("map_generation.section.less_continuous_monsters.title"), ui.LessContinuousMonsters, L("map_generation.section.less_continuous_monsters.description"))
+            ).AddSection("merchant", s => s
+                .WithTitle(L("merchant.section.label"))
+                .AddToggle("less_price_increase", L("merchant.section.less_price_increase.title"), ui.LessPriceIncrease, L("merchant.section.less_price_increase.description"))
+            ).AddSection("random_number_generator", s => s
+                .WithTitle(L("random_number_generator.section.label"))
+                .AddToggle("better_child_seed_generation", L("random_number_generator.section.better_child_seed_generation.title"), ui.BetterChildSeedGeneration, L("random_number_generator.section.better_child_seed_generation.description"))
+            ), "others"
         );
     }
 

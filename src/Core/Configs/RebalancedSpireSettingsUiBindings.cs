@@ -7,6 +7,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> UniformIntroGeneration { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LessContinuousMonsters { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LessPriceIncrease { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> BetterChildSeedGeneration { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BloodWall { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ExpectAFight { get; private init; } = null!;
@@ -172,6 +173,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             UniformIntroGeneration = B(s => s.UniformIntroGeneration, (s, v) => s.UniformIntroGeneration = v, () => defaults.UniformIntroGeneration),
             LessContinuousMonsters = B(s => s.LessContinuousMonsters, (s, v) => s.LessContinuousMonsters = v, () => defaults.LessContinuousMonsters),
             LessPriceIncrease = B(s => s.LessPriceIncrease, (s, v) => s.LessPriceIncrease = v, () => defaults.LessPriceIncrease),
+            BetterChildSeedGeneration = B(s => s.BetterChildSeedGeneration, (s, v) => s.BetterChildSeedGeneration = v, () => defaults.BetterChildSeedGeneration),
 
             BloodWall = B(s => s.BloodWall, (s, v) => s.BloodWall = v, () => defaults.BloodWall),
             ExpectAFight = B(s => s.ExpectAFight, (s, v) => s.ExpectAFight = v, () => defaults.ExpectAFight),
