@@ -537,6 +537,9 @@
     <ItemGroup>
       <Resource Include="RebalancedSpire\localization\eng\changelogs\2026_05_05.md" />
       <Resource Include="RebalancedSpire\localization\eng\changelogs\2026_05_09.md" />
+      <Resource Include="RebalancedSpire\localization\eng\changelogs\2026_05_13.md" />
+      <Resource Include="RebalancedSpire\localization\eng\changelogs\2026_05_17.md" />
+      <Resource Include="RebalancedSpire\localization\eng\changelogs\2026_05_23.md" />
       <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_05.md" />
       <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_09.md" />
       <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_13.md" />
