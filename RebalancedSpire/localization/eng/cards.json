@@ -1,7 +1,7 @@
 ﻿{
   "REBALANCED_SPIRE_CARD_AFTERLIFE.description": "At the start of your turn, [gold]Osty[/gold] heals {Heal:diff()} HP.\nIf [gold]Osty[/gold] is dead, [gold]Summon[/gold] {Summon:diff()}.",
   "REBALANCED_SPIRE_CARD_BOLAS.description": "Deal {Damage:diff()} damage.\nAt the start of your next turn, return this to your [gold]Hand[/gold], and increase its attack damage by {IncrementAmount:diff()}.",
-  "REBALANCED_SPIRE_CARD_CONSUMING_SHADOW.description": "Record the last [gold]Dark[/gold] you [gold]Evoked[/gold]. Newly channeled [gold]Dark[/gold] Orbs inherit [blue]50%[/blue] of its damage.",
+  "REBALANCED_SPIRE_CARD_CONSUMING_SHADOW.description": "Record the damage of the last [gold]Dark[/gold] you [gold]Evoked[/gold]. Newly channeled [gold]Dark[/gold] Orbs inherit half of its damage.",
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.description": "Apply {PoisonPower:diff()} [gold]Poison[/gold]. \nWhen the enemy dies, deal damage equal to its Max HP to ALL enemies.",
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.title": "Corpse Explosion",
   "REBALANCED_SPIRE_CARD_ETERNAL_ARMOR.description": "Gain {PlatingPower:diff()} [gold]Plating[/gold].",

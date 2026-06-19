@@ -1,7 +1,7 @@
 ﻿{
   "REBALANCED_SPIRE_CARD_AFTERLIFE.description": "在回合开始时，[gold]奥斯提[/gold]回复{Heal:diff()}点生命。\n如果[gold]奥斯提[/gold]未存活，则[gold]召唤[/gold]{Summon:diff()}。",
   "REBALANCED_SPIRE_CARD_BOLAS.description": "造成{Damage:diff()}点伤害。\n在你的下个回合开始时，将此卡返回你的[gold]手牌[/gold]，并增加其攻击伤害{IncrementAmount:diff()}点。",
-  "REBALANCED_SPIRE_CARD_CONSUMING_SHADOW.description": "记录你最后[gold]激发[/gold]的[gold]黑暗[/gold]充能球。新生成的[gold]黑暗[/gold]充能球会继承其50%的伤害。",
+  "REBALANCED_SPIRE_CARD_CONSUMING_SHADOW.description": "记录你最后[gold]激发[/gold]的[gold]黑暗[/gold]充能球的伤害。新生成的[gold]黑暗[/gold]充能球会继承其一半的伤害。",
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.description": "给予{PoisonPower:diff()}层[gold]中毒[/gold]。\n当这名敌人死亡时，对所有敌人造成等于其最大生命值的伤害。",
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.title": "尸爆术",
   "REBALANCED_SPIRE_CARD_ETERNAL_ARMOR.description": "获得{PlatingPower:diff()}层[gold]覆甲[/gold]。\n[gold]覆甲[/gold]的层数不再减少。",
@@ -28,7 +28,7 @@
   "REBALANCED_SPIRE_CARD_SIC_EM.description": "[gold]奥斯提[/gold]造成{OstyDamage:diff()}点伤害。\n每当[gold]奥斯提[/gold]攻击这名敌人时，[gold]召唤[/gold]{SicEmPlusPower:diff()}。",
   "REBALANCED_SPIRE_CARD_SPINNER.description": "在你的回合开始时，[gold]生成[/gold]{IfUpgraded:show:2|1}个[gold]玻璃[/gold]充能球，并触发所有[gold]玻璃[/gold]充能球的被动。",
   "REBALANCED_SPIRE_CARD_SPUR.description": "[gold]奥斯提[/gold]回复{Heal:diff()}点生命。\n回复的生命值每溢出2点，就额外[gold]召唤1[/gold]。",
-  "REBALANCED_SPIRE_CARD_SYNCHRONIZE.description": "记录你[gold]生成[/gold]的新充能球。\n首次记录一种新的充能球时，获得{SynchronizePlusPower:diff()}点[gold]集中[/gold]。",
+  "REBALANCED_SPIRE_CARD_SYNCHRONIZE.description": "记录你[gold]生成[/gold]的充能球类型。每当记录一种新的充能球类型时，获得{SynchronizePlusPower:diff()}点[gold]集中[/gold]。",
   "REBALANCED_SPIRE_CARD_UNTOUCHABLE.description": "获得{Block:diff()}点[gold]格挡[/gold]两次。",
   "REBALANCED_SPIRE_CARD_UP_MY_SLEEVE.description": "将{Cards:diff()}张[gold]小刀[/gold]加入你的[gold]手牌[/gold]。",
   "REBALANCED_SPIRE_CARD_WISP.description": "获得{Energy:energyIcons()}。\n将你[gold]抽牌堆[/gold]中的随机一张[gold]灵魂[/gold]变化为[gold]{IfUpgraded:show:鬼火+|鬼火}[/gold]。",

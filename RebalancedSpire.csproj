@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.24" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.25" />
     </ItemGroup>
     
     <ItemGroup>
@@ -485,8 +485,6 @@
       <Content Include="src\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="src\Core\Harmony\RitsuLib\MainMenuModSettingsButtonPatchPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Runs\PlayerRngSetPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Runs\RunRngSetPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Saves\RunHistorySaveManagerPatch.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerLeft.cs.uid" />
@@ -537,6 +535,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Resource Include="RebalancedSpire\localization\eng\changelogs\2026_05_05.md" />
+      <Resource Include="RebalancedSpire\localization\eng\changelogs\2026_05_09.md" />
       <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_05.md" />
       <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_09.md" />
       <Resource Include="RebalancedSpire\localization\zhs\changelogs\2026_05_13.md" />
