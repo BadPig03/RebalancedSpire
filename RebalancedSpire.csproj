@@ -485,8 +485,6 @@
       <Content Include="src\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="src\Core\Harmony\RitsuLib\MainMenuModSettingsButtonPatchPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Runs\PlayerRngSetPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Runs\RunRngSetPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Saves\RunHistorySaveManagerPatch.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerLeft.cs.uid" />

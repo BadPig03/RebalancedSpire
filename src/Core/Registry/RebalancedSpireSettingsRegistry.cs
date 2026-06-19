@@ -260,9 +260,6 @@ internal sealed class RebalancedSpireSettingsRegistry
             ).AddSection("merchant", s => s
                 .WithTitle(L("merchant.section.label"))
                 .AddToggle("less_price_increase", L("merchant.section.less_price_increase.title"), ui.LessPriceIncrease, L("merchant.section.less_price_increase.description"))
-            ).AddSection("random_number_generator", s => s
-                .WithTitle(L("random_number_generator.section.label"))
-                .AddToggle("better_child_seed_generation", L("random_number_generator.section.better_child_seed_generation.title"), ui.BetterChildSeedGeneration, L("random_number_generator.section.better_child_seed_generation.description"))
             ), "others"
         );
     }

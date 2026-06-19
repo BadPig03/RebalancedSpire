@@ -20,9 +20,6 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("less_price_increase")]
     public bool LessPriceIncrease { get; set; } = true;
 
-    [JsonPropertyName("better_child_seed_generation")]
-    public bool BetterChildSeedGeneration { get; set; } = true;
-
     [JsonPropertyName("blood_wall")]
     public bool BloodWall { get; set; } = true;
 
