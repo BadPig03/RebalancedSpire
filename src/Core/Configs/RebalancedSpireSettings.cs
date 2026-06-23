@@ -29,6 +29,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("forgotten_ritual")]
     public bool ForgottenRitual { get; set; } = true;
 
+    [JsonPropertyName("tank")]
+    public bool Tank { get; set; } = true;
+
     [JsonPropertyName("acrobatics")]
     public bool Acrobatics { get; set; } = true;
 

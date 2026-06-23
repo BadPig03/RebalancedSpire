@@ -11,6 +11,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> BloodWall { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ExpectAFight { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ForgottenRitual { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Tank { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Acrobatics { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BladeOfInk { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BouncingFlask { get; private init; } = null!;
@@ -176,6 +177,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             BloodWall = B(s => s.BloodWall, (s, v) => s.BloodWall = v, () => defaults.BloodWall),
             ExpectAFight = B(s => s.ExpectAFight, (s, v) => s.ExpectAFight = v, () => defaults.ExpectAFight),
             ForgottenRitual = B(s => s.ForgottenRitual, (s, v) => s.ForgottenRitual = v, () => defaults.ForgottenRitual),
+            Tank = B(s => s.Tank, (s, v) => s.Tank = v, () => defaults.Tank),
             Acrobatics = B(s => s.Acrobatics, (s, v) => s.Acrobatics = v, () => defaults.Acrobatics),
             BladeOfInk = B(s => s.BladeOfInk, (s, v) => s.BladeOfInk = v, () => defaults.BladeOfInk),
             BouncingFlask = B(s => s.BouncingFlask, (s, v) => s.BouncingFlask = v, () => defaults.BouncingFlask),

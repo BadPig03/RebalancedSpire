@@ -11,7 +11,6 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
@@ -19,15 +18,13 @@ public static class NeutronAegisPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.NeutronAegis;
 
-    private static async Task OnPlay(NeutronAegis instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    private static async Task OnPlay(NeutronAegis instance, PlayerChoiceContext choiceContext)
     {
         var num = instance.ResolveStarXValue();
         if (num >= instance.DynamicVars.Stars.IntValue)
         {
             num *= 2;
         }
-
-        await CreatureCmd.GainBlock(instance.Owner.Creature, new BlockVar(num, BlockProps.card), cardPlay);
         await PowerCmd.Apply<PlatingPower>(choiceContext, instance.Owner.Creature, num, instance.Owner.Creature, instance);
     }
 
@@ -115,7 +112,7 @@ public static class NeutronAegisPatch
             return true;
         }
 
-        __result = OnPlay(__instance, choiceContext, cardPlay);
+        __result = OnPlay(__instance, choiceContext);
         return false;
     }
 

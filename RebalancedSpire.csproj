@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.25" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.35" />
     </ItemGroup>
     
     <ItemGroup>
@@ -192,6 +192,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_spinner_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_synchronize_plus_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_synchronize_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_tank_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_tank_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_to_its_origin_owner_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_to_its_origin_owner_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_tainted_plus_power.png" />
@@ -242,6 +244,8 @@
       <Content Include="images\powers\rebalanced_spire_power_scrutiny_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_soul_wither_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_soul_wither_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_tank_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_tank_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_to_its_origin_owner_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_to_its_origin_owner_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_synchronize_plus_power.png" />
@@ -324,6 +328,7 @@
       <Content Include="src\Core\Harmony\Cards\Ironclad\BloodWallPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ExpectAFightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ForgottenRitualPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Ironclad\TankPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\AfterlifePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\BansheesCryPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\DebilitatePatch.cs.uid" />
@@ -344,6 +349,7 @@
       <Content Include="src\Core\Harmony\Cards\Regent\NeutronAegisPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\TheSealedThronePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\BladeOfInkPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BouncingFlaskPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\FlickFlackPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HandTrickPatch.cs.uid" />
@@ -523,6 +529,7 @@
       <Content Include="src\Core\Powers\SpinnerPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\SynchronizePlusPower.cs.uid" />
       <Content Include="src\Core\Powers\TaintedPlusPower.cs.uid" />
+      <Content Include="src\Core\Powers\TankPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
       <Content Include="src\Core\Powers\WitheringPresencePlusPower.cs.uid" />
       <Content Include="src\Core\Registry\RebalancedSpireCardTransformationRegistry.cs.uid" />

@@ -88,10 +88,14 @@
   "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.description": "The first [blue]3[/blue] times each turn you play an Attack or Skill,, a random Attack or Skill in your [gold]Hand[/gold] becomes afflicted with [gold]Tainted[/gold].",
   "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.smartDescription": "The first [blue]{Cards}[/blue] times each turn you play an Attack or Skill,, a random Attack or Skill in your [gold]Hand[/gold] becomes afflicted with [gold]{AfflictionTitle}[/gold].",
   "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.title": "Tainted+",
+  "REBALANCED_SPIRE_POWER_TANK_PLUS_POWER.description": "At the end of your turn, other players gain [blue]1[/blue] [gold]Block[/gold].",
+  "REBALANCED_SPIRE_POWER_TANK_PLUS_POWER.remoteDescription": "At the end of [gold]{ApplierName}[/gold]'s turn, you gain [blue]{Amount}[/blue] [gold]Block[/gold].",
+  "REBALANCED_SPIRE_POWER_TANK_PLUS_POWER.smartDescription": "At the end of your turn, other players gain [blue]{Amount}[/blue] [gold]Block[/gold].",
+  "REBALANCED_SPIRE_POWER_TANK_PLUS_POWER.title": "Tank+",
   "REBALANCED_SPIRE_POWER_TO_ITS_ORIGIN_OWNER_POWER.description": "",
   "REBALANCED_SPIRE_POWER_TO_ITS_ORIGIN_OWNER_POWER.smartDescription": "",
   "REBALANCED_SPIRE_POWER_TO_ITS_ORIGIN_OWNER_POWER.title": "To Its Origin Owner",
   "REBALANCED_SPIRE_POWER_WITHERING_PRESENCE_PLUS_POWER.description": "Every [blue]12[/blue] Energy you spend on playing non-Status cards, ALL your [gold]Wither[/gold] deal [blue]3[/blue] more damage.",
-  "REBALANCED_SPIRE_POWER_WITHERING_PRESENCE_PLUS_POWER.smartDescription": "Every [blue]12[/blue] Energy you spend on playing non-Status cards, ALL your[gold]Wither[/gold] deal [blue]{PerLevel}[/blue] more damage.",
+  "REBALANCED_SPIRE_POWER_WITHERING_PRESENCE_PLUS_POWER.smartDescription": "Every [blue]{Amount}[/blue] Energy you spend on playing non-Status cards, ALL your[gold]Wither[/gold] deal [blue]{PerLevel}[/blue] more damage.",
   "REBALANCED_SPIRE_POWER_WITHERING_PRESENCE_PLUS_POWER.title": "Withering Presence+"
 }
