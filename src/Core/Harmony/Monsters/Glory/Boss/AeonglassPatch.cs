@@ -34,18 +34,6 @@ public static class AeonglassPatch
     private static async Task AfterAddedToRoom(Aeonglass instance)
     {
         NRunMusicController.Instance?.UpdateMusicParameter("queen_progress", 1f);
-        var players = instance.Creature.CombatState?.PlayerCreatures.ToList();
-        if (players == null)
-        {
-            return;
-        }
-
-        foreach (var creature in players)
-        {
-            WitheringPresencePlusPower power = (WitheringPresencePlusPower) ModelDb.Power<WitheringPresencePlusPower>().ToMutable();
-            power.Target = creature;
-            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, instance.Creature, WitheringPresencePowerAmount, instance.Creature, null);
-        }
         await PowerCmd.Apply<ArtifactPower>(new ThrowingPlayerChoiceContext(), instance.Creature, ArtifactPowerAmount, instance.Creature, null);
     }
 
@@ -59,6 +47,10 @@ public static class AeonglassPatch
 
         foreach (var player in players)
         {
+            WitheringPresencePlusPower power = (WitheringPresencePlusPower) ModelDb.Power<WitheringPresencePlusPower>().ToMutable();
+            power.Target = player.Creature;
+            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, instance.Creature, WitheringPresencePowerAmount, instance.Creature, null);
+
             var statusCards = new List<CardPileAddResult>();
             for (var i = 0; i < WithersMaxCount; i++)
             {
@@ -117,7 +109,7 @@ public static class AeonglassPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("WITHERING_MOVE", _ => WitheringMove(__instance), new StatusIntent(WithersMaxCount));
+        MoveState moveState = new MoveState("WITHERING_MOVE", _ => WitheringMove(__instance), new StatusIntent(WithersMaxCount), new BuffIntent());
         MoveState moveState2 = new MoveState("EBB_MOVE", _ => EbbMove(__instance), new SingleAttackIntent(__instance.EbbDamage));
         MoveState moveState3 = new MoveState("EYE_LASERS_MOVE", __instance.EyeLasersMove, new MultiAttackIntent(__instance.EyeLasersDamage, __instance.EyeLasersRepeat));
         MoveState moveState4 = new MoveState("INCREASING_INTENSITY_MOVE", _ => IncreasingIntensityMove(__instance), new BuffIntent(), new DefendIntent());

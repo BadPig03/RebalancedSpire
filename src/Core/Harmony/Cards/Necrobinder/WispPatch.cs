@@ -28,17 +28,7 @@ public static class WispPatch
             return;
         }
 
-        var wisp = instance.CombatState?.CreateCard<Wisp>(instance.Owner);
-        if (wisp == null)
-        {
-            return;
-        }
-
-        if (instance.IsUpgraded)
-        {
-            CardCmd.Upgrade(wisp);
-        }
-        await CardCmd.Transform(soul, wisp);
+        await CardCmd.Transform(soul, instance.CreateClone());
     }
 
     [HarmonyPatch(typeof(Wisp), "CanonicalVars", MethodType.Getter)]

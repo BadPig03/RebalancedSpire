@@ -23,6 +23,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("blood_wall", L("the_ironclad.section.blood_wall.title"), ui.BloodWall, L("the_ironclad.section.blood_wall.description"))
                 .AddToggle("expect_a_fight", L("the_ironclad.section.expect_a_fight.title"), ui.ExpectAFight, L("the_ironclad.section.expect_a_fight.description"))
                 .AddToggle("forgotten_ritual", L("the_ironclad.section.forgotten_ritual.title"), ui.ForgottenRitual, L("the_ironclad.section.forgotten_ritual.description"))
+                .AddToggle("tank", L("the_ironclad.section.tank.title"), ui.Tank, L("the_ironclad.section.tank.description"))
             ).AddSection("the_silent", s => s
                 .WithTitle(L("the_silent.section.label"))
                 .AddToggle("acrobatics", L("the_silent.section.acrobatics.title"), ui.Acrobatics, L("the_silent.section.acrobatics.description"))
