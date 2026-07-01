@@ -19,7 +19,7 @@ public partial class RebalancedSpireMain : Node
     internal const string SettingsKey = "settings";
     internal const string SettingsFileName = "settings.json";
 
-    public const string Version = "v0.3.1-beta";
+    public const string Version = "v0.3.2-beta";
 
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
 
@@ -32,7 +32,6 @@ public partial class RebalancedSpireMain : Node
 
         RebalancedSpireCardTransformationRegistry.Initialize();
         RebalancedSpireNodesRegistry.Initialize();
-        RebalancedSpireRightClickRegistry.Initialize();
         RebalancedSpireSettingsRegistry.Initialize();
     }
 }

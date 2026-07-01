@@ -25,7 +25,6 @@
   "REBALANCED_SPIRE_RELIC_NUTRITIOUS_OYSTER.eventDescription": "Raise your Max HP by [blue]{MaxHp}[/blue]. At the end of combat, heal [green]{Heal}[/green] HP.",
   "REBALANCED_SPIRE_RELIC_POMANDER.description": "Upon pickup, [gold]Upgrade[/gold] a card and a random card.",
   "REBALANCED_SPIRE_RELIC_POMANDER.eventDescription": "[gold]Upgrade[/gold] a card and a random card.",
-  "REBALANCED_SPIRE_RELIC_SEAL_OF_GOLD.description": "On the first [gold]right-click[/gold] on this relic each turn, spend [blue]{Gold}[/blue] [gold]Gold[/gold] to gain {Energy:energyIcons()}.",
   "REBALANCED_SPIRE_RELIC_SERE_TALON.description": "Upon pickup, add [blue]{CurseCards}[/blue] [red]{Guilty}[/red] and [blue]{WishCards}[/blue] [purple]{Wish}[/purple] to your [gold]Deck[/gold].",
   "REBALANCED_SPIRE_RELIC_SERE_TALON.eventDescription": "Add [blue]{CurseCards}[/blue] [red]{Guilty}[/red] and [blue]{WishCards}[/blue] [purple]{Wish}[/purple] to your [gold]Deck[/gold].",
   "REBALANCED_SPIRE_RELIC_SWORD_OF_JADE.description": "Start each combat with [blue]{StrengthPower}[/blue] [gold]Strength[/gold] and [blue]{DexterityPower}[/blue] [gold]Dexterity[/gold].",

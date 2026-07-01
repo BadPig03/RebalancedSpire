@@ -148,8 +148,6 @@
   "tezcatara.section.label": "特兹卡塔拉",
   "tezcatara.section.biiig_hug.title": "大～抱抱",
   "tezcatara.section.biiig_hug.description": "启用后：拾起时，从你的[gold]牌组[/gold]中移除[blue]4[/blue]张牌。每当你的[gold]抽牌堆[/gold]打乱洗牌时，将一张[gold]煤灰[/gold]加入你的[gold]抽牌堆[/gold]。\n[gold]煤灰[/gold]：\n - 旧：状态 - [gold]不能被打出[/gold]。\n - 新：状态 - 耗能1 - [gold]消耗[/gold]。",
-  "tezcatara.section.seal_of_gold.title": "黄金印",
-  "tezcatara.section.seal_of_gold.description": "启用后：\n旧：先古 - 在你的回合开始时，花费[blue]5[/blue][gold]金币[/gold]来获得[blue]1[/blue]点能量。\n新：先古 - 每回合第一次[gold]右键点击[/gold]该遗物时，花费[blue]5[/blue][gold]金币[/gold]来获得[blue]1[/blue]点能量。",
   "tezcatara.section.toasty_mittens.title": "烘焙手套",
   "tezcatara.section.toasty_mittens.description": "启用后：\n旧：先古 - 在你的回合开始时，[gold]消耗[/gold]你[gold]抽牌堆[/gold]顶部的牌并获得[blue]1[/blue]点[gold]力量[/gold]。\n新：先古 - 在你的回合开始时，从[gold]抽牌堆[/gold]底的[blue]5[/blue]张牌中选择[blue]1[/blue]张牌[gold]消耗[/gold]，并获得[blue]1[/blue]点[gold]力量[/gold]。",
   "darv.section.label": "达弗",

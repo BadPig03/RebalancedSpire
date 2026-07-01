@@ -148,8 +148,6 @@
   "tezcatara.section.label": "Tezcatara",
   "tezcatara.section.biiig_hug.title": "Biiig Hug",
   "tezcatara.section.biiig_hug.description": "When enabled: Upon pickup, remove [blue]4[/blue] cards from your [gold]Deck[/gold]. Whenever you shuffle your [gold]Draw Pile[/gold], add a [gold]Soot[/gold] to your [gold]Draw Pile[/gold].\n[gold]Soot[/gold]:\n - Old: Status - [gold]Unplayable[/gold].\n - New: Status - Cost 1 - [gold]Exhaust[/gold].",
-  "tezcatara.section.seal_of_gold.title": "Seal of Gold",
-  "tezcatara.section.seal_of_gold.description": "When enabled:\nOld: Ancient - At the start of your turn, spend [blue]5[/blue] [gold]Gold[/gold] to gain [blue]1[/blue] Energy.\nNew: Ancient - On the first right-click each turn, spend [blue]5[/blue] [gold]Gold[/gold] to gain [blue]1[/blue] Energy.",
   "tezcatara.section.toasty_mittens.title": "Toasty Mittens",
   "tezcatara.section.toasty_mittens.description": "When enabled:\nOld: Ancient - At the start of your turn, [gold]Exhaust[/gold] the top card of your [gold]Draw Pile[/gold] and gain [blue]1[/blue] [gold]Strength[/gold].\nNew: Ancient - At the start of your turn, choose [blue]1[/blue] of the bottom [blue]5[/blue] cards of your [gold]Draw Pile[/gold] to [gold]Exhaust[/gold], and gain [blue]1[/blue] [gold]Strength[/gold].",
   "darv.section.label": "Darv",

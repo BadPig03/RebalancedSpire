@@ -203,9 +203,6 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("biiig_hug")]
     public bool BiiigHug { get; set; } = true;
 
-    [JsonPropertyName("seal_of_gold")]
-    public bool SealOfGold { get; set; } = true;
-
     [JsonPropertyName("toasty_mittens")]
     public bool ToastyMittens { get; set; } = true;
 

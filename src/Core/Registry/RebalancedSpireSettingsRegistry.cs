@@ -107,7 +107,6 @@ internal sealed class RebalancedSpireSettingsRegistry
             ).AddSection("tezcatara", s => s
                 .WithTitle(L("tezcatara.section.label"))
                 .AddToggle("biiig_hug", L("tezcatara.section.biiig_hug.title"), ui.BiiigHug, L("tezcatara.section.biiig_hug.description"))
-                .AddToggle("seal_of_gold", L("tezcatara.section.seal_of_gold.title"), ui.SealOfGold, L("tezcatara.section.seal_of_gold.description"))
                 .AddToggle("toasty_mittens", L("tezcatara.section.toasty_mittens.title"), ui.ToastyMittens, L("tezcatara.section.toasty_mittens.description"))
             ).AddSection("darv", s => s
                 .WithTitle(L("darv.section.label"))

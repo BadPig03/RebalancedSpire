@@ -69,7 +69,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> OrobasAncientChoices { get; private init; } = null!;
     public IModSettingsValueBinding<bool> PaelsHorn { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BiiigHug { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> SealOfGold { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ToastyMittens { get; private init; } = null!;
     public IModSettingsValueBinding<bool> DustyTome { get; private init; } = null!;
     public IModSettingsValueBinding<bool> DarvAncientChoices { get; private init; } = null!;
@@ -235,7 +234,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
             OrobasAncientChoices = B(s => s.OrobasAncientChoices, (s, v) => s.OrobasAncientChoices = v, () => defaults.OrobasAncientChoices),
             PaelsHorn = B(s => s.PaelsHorn, (s, v) => s.PaelsHorn = v, () => defaults.PaelsHorn),
             BiiigHug = B(s => s.BiiigHug, (s, v) => s.BiiigHug = v, () => defaults.BiiigHug),
-            SealOfGold = B(s => s.SealOfGold, (s, v) => s.SealOfGold = v, () => defaults.SealOfGold),
             ToastyMittens = B(s => s.ToastyMittens, (s, v) => s.ToastyMittens = v, () => defaults.ToastyMittens),
             DustyTome = B(s => s.DustyTome, (s, v) => s.DustyTome = v, () => defaults.DustyTome),
             DarvAncientChoices = B(s => s.DarvAncientChoices, (s, v) => s.DarvAncientChoices = v, () => defaults.DarvAncientChoices),

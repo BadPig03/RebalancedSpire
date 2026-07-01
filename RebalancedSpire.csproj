@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.35" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.45" />
     </ItemGroup>
     
     <ItemGroup>
@@ -483,7 +483,6 @@
       <Content Include="src\Core\Harmony\Relics\NutritiousOysterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\PomanderPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Relics\SealOfGoldPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SwordOfJadePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SwordOfStonePatch.cs.uid" />
@@ -534,7 +533,6 @@
       <Content Include="src\Core\Powers\WitheringPresencePlusPower.cs.uid" />
       <Content Include="src\Core\Registry\RebalancedSpireCardTransformationRegistry.cs.uid" />
       <Content Include="src\Core\Registry\RebalancedSpireNodesRegistry.cs.uid" />
-      <Content Include="src\Core\Registry\RebalancedSpireRightClickRegistry.cs.uid" />
       <Content Include="src\Core\Registry\RebalancedSpireSettingsRegistry.cs.uid" />
       <Content Include="src\Core\Relics\NeowsLament.cs.uid" />
       <Content Include="src\Core\Singletons\FiddleSingleton.cs.uid" />
