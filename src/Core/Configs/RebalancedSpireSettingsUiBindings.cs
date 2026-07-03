@@ -9,6 +9,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> LessPriceIncrease { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BloodWall { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Colossus { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ExpectAFight { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ForgottenRitual { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Tank { get; private init; } = null!;
@@ -46,9 +47,11 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> ConsumingShadow { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Coolant { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Defragment { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Fuel { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Glasswork { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Leap { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Refract { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Shatter { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Spinner { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Synchronize { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Voltaic { get; private init; } = null!;
@@ -174,6 +177,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             LessPriceIncrease = B(s => s.LessPriceIncrease, (s, v) => s.LessPriceIncrease = v, () => defaults.LessPriceIncrease),
 
             BloodWall = B(s => s.BloodWall, (s, v) => s.BloodWall = v, () => defaults.BloodWall),
+            Colossus = B(s => s.Colossus, (s, v) => s.Colossus = v, () => defaults.Colossus),
             ExpectAFight = B(s => s.ExpectAFight, (s, v) => s.ExpectAFight = v, () => defaults.ExpectAFight),
             ForgottenRitual = B(s => s.ForgottenRitual, (s, v) => s.ForgottenRitual = v, () => defaults.ForgottenRitual),
             Tank = B(s => s.Tank, (s, v) => s.Tank = v, () => defaults.Tank),
@@ -211,9 +215,11 @@ internal sealed class RebalancedSpireSettingsUiBindings
             ConsumingShadow = B(s => s.ConsumingShadow, (s, v) => s.ConsumingShadow = v, () => defaults.ConsumingShadow),
             Coolant = B(s => s.Coolant, (s, v) => s.Coolant = v, () => defaults.Coolant),
             Defragment = B(s => s.Defragment, (s, v) => s.Defragment = v, () => defaults.Defragment),
+            Fuel = B(s => s.Fuel, (s, v) => s.Fuel = v, () => defaults.Fuel),
             Glasswork = B(s => s.Glasswork, (s, v) => s.Glasswork = v, () => defaults.Glasswork),
             Leap = B(s => s.Leap, (s, v) => s.Leap = v, () => defaults.Leap),
             Refract = B(s => s.Refract, (s, v) => s.Refract = v, () => defaults.Refract),
+            Shatter = B(s => s.Shatter, (s, v) => s.Shatter = v, () => defaults.Shatter),
             Spinner = B(s => s.Spinner, (s, v) => s.Spinner = v, () => defaults.Spinner),
             Synchronize = B(s => s.Synchronize, (s, v) => s.Synchronize = v, () => defaults.Synchronize),
             Voltaic = B(s => s.Voltaic, (s, v) => s.Voltaic = v, () => defaults.Voltaic),

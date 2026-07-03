@@ -37,7 +37,7 @@ public sealed class CorpseExplosionPower : ModPowerTemplate
         var damageVar = new DamageVar(creature.MaxHp * Amount, DamageProps.cardUnpowered);
         foreach (var enemy in enemies)
         {
-            await CreatureCmd.Damage(choiceContext, enemy, damageVar, Applier, null);
+            await CreatureCmd.Damage(choiceContext, enemy, damageVar, Owner);
         }
     }
 }

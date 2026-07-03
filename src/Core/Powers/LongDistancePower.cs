@@ -48,7 +48,7 @@ public sealed class LongDistancePower : ModPowerTemplate
         return Math.Max(0.2m, 1.4m - 0.1m * amount - 0.1m * Math.Max(0, amount - 6) + 0.2m * Math.Max(0, amount - 9));
     }
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (target == Owner && target.Player != null && props.IsPoweredAttack())
         {

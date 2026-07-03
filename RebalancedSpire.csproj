@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.45" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.50" />
     </ItemGroup>
     
     <ItemGroup>
@@ -320,12 +320,14 @@
       <Content Include="src\Core\Harmony\Cards\Defect\GlassworkPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\LeapPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\RefractPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Defect\ShatterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\SpinnerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\SynchronizePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\VoltaicPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\BloodWallPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Ironclad\ColossusPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ExpectAFightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ForgottenRitualPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\TankPatch.cs.uid" />
@@ -364,6 +366,7 @@
       <Content Include="src\Core\Harmony\Cards\Silent\WellLaidPlansPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Status\SootPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Status\WitherPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Token\FuelPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Commands\AttackCommandPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Enchantments\InkyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\PunchOffEventEncounterPatch.cs.uid" />

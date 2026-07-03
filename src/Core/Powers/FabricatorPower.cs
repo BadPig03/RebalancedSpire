@@ -1,6 +1,7 @@
 ﻿namespace RebalancedSpire.Core.Powers;
 
 using Harmony.Monsters.Glory.Normal;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -78,7 +79,7 @@ public sealed class FabricatorPower : ModPowerTemplate
         return Task.CompletedTask;
     }
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (target == null || target != Owner || !props.IsPoweredAttack())
         {

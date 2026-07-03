@@ -40,7 +40,7 @@ public class FabricatorPatch
 
         var bot = await CreatureCmd.Add(spawnBot.ToMutable(), instance.CombatState, CombatSide.Enemy, instance.CombatState.Encounter?.GetNextSlot(instance.CombatState));
         await PowerCmd.Apply<MinionPower>(new ThrowingPlayerChoiceContext(), bot, MinionPowerAmount, instance.Creature, null);
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, new DamageVar(FabricatorPower.GetSpawnBotDamage(instance.Creature), DamageProps.nonCardHpLoss | ValueProp.SkipHurtAnim), instance.Creature, null);
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, new DamageVar(FabricatorPower.GetSpawnBotDamage(instance.Creature), DamageProps.nonCardHpLoss | ValueProp.SkipHurtAnim), instance.Creature);
     }
 
     private static async Task FabricateMove(Fabricator instance)

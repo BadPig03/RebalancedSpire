@@ -24,7 +24,7 @@ public static class WitherPatch
     {
         if (instance.Affliction is not Withering)
         {
-            await CreatureCmd.Damage(choiceContext, instance.Owner.Creature, new DamageVar(instance.DynamicVars["Fixed"].BaseValue, ValueProp.Unpowered | ValueProp.Move), instance);
+            await CreatureCmd.Damage(choiceContext, instance.Owner.Creature, new DamageVar(instance.DynamicVars["Fixed"].BaseValue, ValueProp.Unpowered | ValueProp.Move), instance, null);
             return;
         }
 
@@ -33,7 +33,7 @@ public static class WitherPatch
             return;
         }
 
-        await CreatureCmd.Damage(choiceContext, instance.Owner.Creature, instance.DynamicVars.Damage, instance);
+        await CreatureCmd.Damage(choiceContext, instance.Owner.Creature, instance.DynamicVars.Damage, instance, null);
     }
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]

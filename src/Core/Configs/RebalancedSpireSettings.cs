@@ -23,6 +23,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("blood_wall")]
     public bool BloodWall { get; set; } = true;
 
+    [JsonPropertyName("colossus")]
+    public bool Colossus { get; set; } = true;
+
     [JsonPropertyName("expect_a_fight")]
     public bool ExpectAFight { get; set; } = true;
 
@@ -137,6 +140,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("defragment")]
     public bool Defragment { get; set; } = true;
 
+    [JsonPropertyName("fuel")]
+    public bool Fuel { get; set; } = true;
+
     [JsonPropertyName("glasswork")]
     public bool Glasswork { get; set; } = true;
 
@@ -145,6 +151,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("refract")]
     public bool Refract { get; set; } = true;
+
+    [JsonPropertyName("shatter")]
+    public bool Shatter { get; set; } = true;
 
     [JsonPropertyName("spinner")]
     public bool Spinner { get; set; } = true;

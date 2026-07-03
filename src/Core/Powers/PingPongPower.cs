@@ -45,6 +45,6 @@ public sealed class PingPongPower : ModPowerTemplate
             return;
         }
 
-        await CreatureCmd.Damage(choiceContext, Applier, creature.MaxHp, DamageProps.monsterMove, Applier, null);
+        await CreatureCmd.Damage(choiceContext, Applier, creature.MaxHp, DamageProps.monsterMove, Applier);
     }
 }

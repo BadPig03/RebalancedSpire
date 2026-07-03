@@ -22,7 +22,7 @@ public sealed class Energetic : ModEnchantmentTemplate
         return !props.IsPoweredAttack() ? 1 : 0;
     }
 
-    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         return cardSource?.Enchantment != this ? 1 : 0;
     }

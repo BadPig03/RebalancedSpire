@@ -11,7 +11,6 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.ValueProps;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
@@ -44,17 +43,12 @@ public static class TankPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(CardModel), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPatch(typeof(Tank), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_CanonicalVars(CardModel __instance, ref IEnumerable<DynamicVar> __result)
+    private static bool PreFix_CanonicalVars(Tank __instance, ref IEnumerable<DynamicVar> __result)
     {
         if (Disabled)
-        {
-            return true;
-        }
-
-        if (__instance is not Tank)
         {
             return true;
         }

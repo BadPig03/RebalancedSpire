@@ -89,7 +89,7 @@ public static class KnowledgeDemonPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("CURSE_OF_KNOWLEDGE_MOVE", __instance.CurseOfKnowledge, new DebuffIntent());
+        MoveState moveState = new MoveState("CURSE_OF_KNOWLEDGE_MOVE", __instance.CurseOfKnowledgeMove, new DebuffIntent());
         MoveState moveState2 = new MoveState("SLAP_MOVE", __instance.SlapMove, new SingleAttackIntent(__instance.SlapDamage));
         MoveState moveState3 = new MoveState("KNOWLEDGE_OVERWHELMING_MOVE", __instance.KnowledgeOverwhelmingMove, new MultiAttackIntent(__instance.KnowledgeOverwhelmingDamage, 3));
         MoveState moveState4 = new MoveState("PONDER_MOVE", _ => PonderMove(__instance), new HealIntent(), new BuffIntent());

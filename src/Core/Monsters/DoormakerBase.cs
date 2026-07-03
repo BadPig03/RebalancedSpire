@@ -30,7 +30,7 @@ public abstract class DoormakerBase : ModMonsterTemplate
 
     private MoveState? _dramaticOpenState;
 
-    private readonly List<PowerModel> _powerModels = [];
+    private readonly Dictionary<PowerModel, int> _powerModels = [];
 
     protected DoormakerBase OtherDoormaker
     {
@@ -155,27 +155,24 @@ public abstract class DoormakerBase : ModMonsterTemplate
         {
             await PowerCmd.Remove(power);
         }
-        foreach (var oldPower in _powerModels)
+        foreach (var pair in _powerModels)
         {
-            var powerModel = PowerCmd.FindExistingInstanceForStacking(oldPower, Creature, oldPower.Applier);
+            if (pair.Value == 0)
+            {
+                continue;
+            }
+
+            var powerModel = PowerCmd.FindExistingInstanceForStacking(pair.Key, Creature, pair.Key.Applier);
             if (powerModel != null)
             {
-                if (powerModel is ITemporaryPower temporaryPower)
-                {
-                    temporaryPower.IgnoreNextInstance();
-                }
-                await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), powerModel, oldPower.Amount, oldPower.Applier, null);
+                await PowerCmd.ModifyAmount(new ThrowingPlayerChoiceContext(), powerModel, pair.Value, pair.Key.Applier, null);
+                continue;
             }
-            else
-            {
-                var power = (PowerModel)oldPower.ClonePreservingMutability();
-                if (power is ITemporaryPower temporaryPower)
-                {
-                    temporaryPower.IgnoreNextInstance();
-                }
-                await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, oldPower.Amount, oldPower.Applier, null);
-            }
+
+            var power = (PowerModel)pair.Key.ClonePreservingMutability();
+            await PowerCmd.Apply(new ThrowingPlayerChoiceContext(), power, Creature, pair.Value, pair.Key.Applier, null);
         }
+
         _powerModels.Clear();
     }
 
@@ -227,9 +224,30 @@ public abstract class DoormakerBase : ModMonsterTemplate
         OriginalHp = Creature.CurrentHp;
         await CreatureCmd.SetMaxAndCurrentHp(Creature, 999999999);
         Creature.HpDisplay = HpDisplay.InfiniteWithoutNumbers;
-        foreach (var power in Creature.Powers.ToList())
+        var dict = Creature.Powers.Select(p => ((PowerModel)p.ClonePreservingMutability(), p.Amount)).ToDictionary();
+        foreach (var pair in dict)
         {
-            _powerModels.Add((PowerModel) power.ClonePreservingMutability());
+            _powerModels.Add(pair.Key, pair.Value);
+        }
+        foreach (var (key, value) in _powerModels)
+        {
+            if (key is not ITemporaryPower temporaryPower)
+            {
+                continue;
+            }
+
+            var pair = _powerModels.FirstOrDefault(p => p.Key.Id == temporaryPower.InternallyAppliedPower.Id);
+            if (pair.Key == null)
+            {
+                continue;
+            }
+
+            _powerModels[pair.Key] += value;
+        }
+
+        var powers = Creature.Powers.ToList();
+        foreach (var power in powers)
+        {
             await PowerCmd.Remove(power);
         }
         UpdateVisual(ClosedState, true);

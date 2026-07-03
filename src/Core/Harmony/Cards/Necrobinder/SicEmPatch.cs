@@ -27,7 +27,7 @@ public static class SicEmPatch
             return;
         }
 
-        await DamageCmd.Attack(instance.DynamicVars.OstyDamage.BaseValue).FromOsty(instance.Owner.Osty, instance).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3").Execute(choiceContext);
+        await DamageCmd.Attack(instance.DynamicVars.OstyDamage.BaseValue).FromOsty(instance.Owner.Osty, instance, cardPlay).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_blunt", null, "blunt_attack.mp3").Execute(choiceContext);
         await PowerCmd.Apply<SicEmPlusPower>(choiceContext, cardPlay.Target, instance.DynamicVars["SicEmPlusPower"].BaseValue, instance.Owner.Creature, instance);
     }
 
