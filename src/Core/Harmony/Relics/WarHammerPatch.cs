@@ -22,8 +22,7 @@ using STS2RitsuLib.Utils;
 public static class WarHammerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WarHammer;
-
-    private static readonly SavedAttachedState<WarHammer, int> EnemiesKilled = new("REBALANCED_SPIRE_RELIC_WAR_HAMMER", _ => 0);
+    private static readonly AttachedState<WarHammer, int> EnemiesKilled = new(_ => 0);
 
     private static Task AfterCombatVictory(WarHammer instance)
     {
@@ -181,5 +180,4 @@ public static class WarHammerPatch
         __result = true;
         return false;
     }
-
 }

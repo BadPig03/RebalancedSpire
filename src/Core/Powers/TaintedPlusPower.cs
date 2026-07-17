@@ -38,7 +38,7 @@ public sealed class TaintedPlusPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_tainted_plus_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_tainted_plus_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_tainted_plus_power.png"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
@@ -113,7 +113,7 @@ public sealed class TaintedPlusPower : ModPowerTemplate
                 continue;
             }
 
-            if (AppliedExhaust.GetValueOrDefault(tainted))
+            if (AppliedExhaust.GetValueOrDefault(tainted, false))
             {
                 CardCmd.RemoveKeyword(card, CardKeyword.Exhaust);
             }

@@ -21,7 +21,7 @@ public sealed class ReaperFormPlusPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_reaper_form_plus_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_reaper_form_plus_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_reaper_form_plus_power.png"
     );
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => new List<IHoverTip>(

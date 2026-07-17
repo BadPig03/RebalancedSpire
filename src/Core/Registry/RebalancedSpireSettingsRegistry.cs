@@ -22,11 +22,12 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .WithTitle(L("the_ironclad.section.label"))
                 .AddToggle("blood_wall", L("the_ironclad.section.blood_wall.title"), ui.BloodWall, L("the_ironclad.section.blood_wall.description"))
                 .AddToggle("colossus", L("the_ironclad.section.colossus.title"), ui.Colossus, L("the_ironclad.section.colossus.description"))
-                .AddToggle("expect_a_fight", L("the_ironclad.section.expect_a_fight.title"), ui.ExpectAFight, L("the_ironclad.section.expect_a_fight.description"))
+                .AddToggle("dominate", L("the_ironclad.section.dominate.title"), ui.Dominate, L("the_ironclad.section.dominate.description"))
                 .AddToggle("forgotten_ritual", L("the_ironclad.section.forgotten_ritual.title"), ui.ForgottenRitual, L("the_ironclad.section.forgotten_ritual.description"))
                 .AddToggle("tank", L("the_ironclad.section.tank.title"), ui.Tank, L("the_ironclad.section.tank.description"))
             ).AddSection("the_silent", s => s
                 .WithTitle(L("the_silent.section.label"))
+                .AddToggle("accelerant", L("the_silent.section.accelerant.title"), ui.Accelerant, L("the_silent.section.accelerant.description"))
                 .AddToggle("acrobatics", L("the_silent.section.acrobatics.title"), ui.Acrobatics, L("the_silent.section.acrobatics.description"))
                 .AddToggle("blade_of_ink", L("the_silent.section.blade_of_ink.title"), ui.BladeOfInk, L("the_silent.section.blade_of_ink.description"))
                 .AddToggle("bouncing_flask", L("the_silent.section.bouncing_flask.title"), ui.BouncingFlask, L("the_silent.section.bouncing_flask.description"))
@@ -48,6 +49,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("glow", L("the_regent.section.glow.title"), ui.Glow, L("the_regent.section.glow.description"))
                 .AddToggle("heirloom_hammer", L("the_regent.section.heirloom_hammer.title"), ui.HeirloomHammer, L("the_regent.section.heirloom_hammer.description"))
                 .AddToggle("neutron_aegis", L("the_regent.section.neutron_aegis.title"), ui.NeutronAegis, L("the_regent.section.neutron_aegis.description"))
+                .AddToggle("pillar_of_creation", L("the_regent.section.pillar_of_creation.title"), ui.PillarOfCreation, L("the_regent.section.pillar_of_creation.description"))
                 .AddToggle("the_sealed_throne", L("the_regent.section.the_sealed_throne.title"), ui.TheSealedThrone, L("the_regent.section.the_sealed_throne.description"))
             ).AddSection("the_necrobinder", s => s
                 .WithTitle(L("the_necrobinder.section.label"))
@@ -95,7 +97,6 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("fishing_rod", L("neow.section.fishing_rod.title"), ui.FishingRod, L("neow.section.fishing_rod.description"))
                 .AddToggle("large_capsule", L("neow.section.large_capsule.title"), ui.LargeCapsule, L("neow.section.large_capsule.description"))
                 .AddToggle("lava_rock", L("neow.section.lava_rock.title"), ui.LavaRock, L("neow.section.lava_rock.description"))
-                .AddToggle("neows_lament", L("neow.section.neows_lament.title"), ui.NeowsLament, L("neow.section.neows_lament.description"))
                 .AddToggle("neows_talisman", L("neow.section.neows_talisman.title"), ui.NeowsTalisman, L("neow.section.neows_talisman.description"))
                 .AddToggle("nutritious_oyster", L("neow.section.nutritious_oyster.title"), ui.NutritiousOyster, L("neow.section.nutritious_oyster.description"))
                 .AddToggle("pomander", L("neow.section.pomander.title"), ui.Pomander, L("neow.section.pomander.description"))
@@ -117,6 +118,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("darv_ancient_choices", L("darv.section.darv_ancient_choices.title"), ui.DarvAncientChoices, L("darv.section.darv_ancient_choices.description"))
             ).AddSection("nonupeipe", s => s
                 .WithTitle(L("nonupeipe.section.label"))
+                .AddToggle("diamond_diadem", L("nonupeipe.section.diamond_diadem.title"), ui.DiamondDiadem, L("nonupeipe.section.diamond_diadem.description"))
                 .AddToggle("looming_fruit", L("nonupeipe.section.looming_fruit.title"), ui.LoomingFruit, L("nonupeipe.section.looming_fruit.description"))
             ).AddSection("tanx", s => s
                 .WithTitle(L("tanx.section.label"))
@@ -166,6 +168,9 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("hungry_for_mushrooms", L("glory.section.hungry_for_mushrooms.title"), ui.HungryForMushrooms, L("glory.section.hungry_for_mushrooms.description"))
                 .AddToggle("reflections", L("glory.section.reflections.title"), ui.Reflections, L("glory.section.reflections.description"))
                 .AddToggle("trial", L("glory.section.trial.title"), ui.Trial, L("glory.section.trial.description"))
+            ).AddSection("act3", s => s
+                .WithTitle(L("act3.section.label"))
+                .AddToggle("war_historian_repy", L("act3.section.war_historian_repy.title"), ui.WarHistorianRepy, L("act3.section.war_historian_repy.description"))
             ), "events"
         );
 
@@ -246,6 +251,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("soul_nexus", L("glory.section.soul_nexus.title"), ui.SoulNexus, L("glory.section.soul_nexus.description"))
                 .AddToggle("test_subject", L("glory.section.test_subject.title"), ui.TestSubject, L("glory.section.test_subject.description"))
                 .AddToggle("aeonglass", L("glory.section.aeonglass.title"), ui.Aeonglass, L("glory.section.aeonglass.description"))
+                .AddToggle("queen", L("glory.section.queen.title"), ui.Queen, L("glory.section.queen.description"))
                 .AddToggle("doormaker", L("glory.section.doormaker.title"), ui.Doormaker, L("glory.section.doormaker.description"))
             ), "enemies"
         );

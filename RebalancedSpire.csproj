@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.50" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.58" />
     </ItemGroup>
     
     <ItemGroup>
@@ -146,6 +146,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_consuming_shadow_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_corpse_explosion_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_corpse_explosion_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_diamond_diadem_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_diamond_diadem_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_disillusion_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_eternal_armor_power.png" />
@@ -174,6 +176,8 @@
       <Content Include="images\powers\big\rebalanced_spire_power_minion_fake_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_omnidynamics_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_omnidynamics_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_pillar_of_creation_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_pillar_of_creation_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_ping_pong_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_ping_pong_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_plow_plus_power.png" />
@@ -198,8 +202,12 @@
       <Content Include="images\powers\big\rebalanced_spire_power_to_its_origin_owner_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_tainted_plus_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_tainted_plus_power.png.import" />
+      <Content Include="images\powers\big\rebalanced_spire_power_well_laid_plans_plus_power.png" />
+      <Content Include="images\powers\big\rebalanced_spire_power_well_laid_plans_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_afterlife_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_diamond_diadem_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_diamond_diadem_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_eternal_armor_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_foregone_conclusion_plus_power.png" />
@@ -232,6 +240,8 @@
       <Content Include="images\powers\rebalanced_spire_power_minion_fake_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_omnidynamics_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_omnidynamics_power.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_pillar_of_creation_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_pillar_of_creation_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_ping_pong_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_ping_pong_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_plow_plus_power.png" />
@@ -256,8 +266,8 @@
       <Content Include="images\powers\rebalanced_spire_power_sic_em_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_tainted_plus_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_tainted_plus_power.png.import" />
-      <Content Include="images\relics\rebalanced_spire_relic_neows_lament.png" />
-      <Content Include="images\relics\rebalanced_spire_relic_neows_lament.png.import" />
+      <Content Include="images\powers\rebalanced_spire_power_well_laid_plans_plus_power.png" />
+      <Content Include="images\powers\rebalanced_spire_power_well_laid_plans_plus_power.png.import" />
       <Content Include="images\ui\main_menu\mod_changelogs_button.png" />
       <Content Include="images\ui\main_menu\mod_changelogs_button.png.import" />
       <Content Include="images\ui\run_history\rebalanced_spire_doormaker_boss.png" />
@@ -328,7 +338,7 @@
       <Content Include="src\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\BloodWallPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ColossusPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Cards\Ironclad\ExpectAFightPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Ironclad\DominatePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ForgottenRitualPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\TankPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\AfterlifePatch.cs.uid" />
@@ -349,7 +359,9 @@
       <Content Include="src\Core\Harmony\Cards\Regent\GlowPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\HeirloomHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\NeutronAegisPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Regent\PillarOfCreationPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\TheSealedThronePatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\AccelerantPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BladeOfInkPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BouncingFlaskPatch.cs.uid" />
@@ -388,6 +400,7 @@
       <Content Include="src\Core\Harmony\Merchant\MerchantCardRemovalEntryPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Boss\AeonglassPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Boss\TestSubjectPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Monsters\Glory\Boss\TorchHeadAmalgamPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\MagiKnightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\MechaKnightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\SoulNexusPatch.cs.uid" />
@@ -474,10 +487,12 @@
       <Content Include="src\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\ChoicesParadoxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\CrossbowPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\DiamondDiademPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\DustyTomePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\FiddlePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\FishingRodPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\FragrantMushroomPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\HistoryCoursePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\LargeCapsulePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\LavaRockPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\LoomingFruitPatch.cs.uid" />
@@ -506,6 +521,7 @@
       <Content Include="src\Core\Powers\AfterlifePower.cs.uid" />
       <Content Include="src\Core\Powers\ConsumingShadowPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\CorpseExplosionPower.cs.uid" />
+      <Content Include="src\Core\Powers\DiamondDiademPower.cs.uid" />
       <Content Include="src\Core\Powers\DisillusionPower.cs.uid" />
       <Content Include="src\Core\Powers\EternalArmorPower.cs.uid" />
       <Content Include="src\Core\Powers\FabricatorPower.cs.uid" />
@@ -520,6 +536,7 @@
       <Content Include="src\Core\Powers\MasterPlannerPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\MinionFakePower.cs.uid" />
       <Content Include="src\Core\Powers\OmnidynamicsPower.cs.uid" />
+      <Content Include="src\Core\Powers\PillarOfCreationPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\PingPongPower.cs.uid" />
       <Content Include="src\Core\Powers\PlowedPower.cs.uid" />
       <Content Include="src\Core\Powers\PlowPlusPower.cs.uid" />
@@ -533,11 +550,11 @@
       <Content Include="src\Core\Powers\TaintedPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\TankPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\ToItsOriginOwnerPower.cs.uid" />
+      <Content Include="src\Core\Powers\WellLaidPlansPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\WitheringPresencePlusPower.cs.uid" />
       <Content Include="src\Core\Registry\RebalancedSpireCardTransformationRegistry.cs.uid" />
       <Content Include="src\Core\Registry\RebalancedSpireNodesRegistry.cs.uid" />
       <Content Include="src\Core\Registry\RebalancedSpireSettingsRegistry.cs.uid" />
-      <Content Include="src\Core\Relics\NeowsLament.cs.uid" />
       <Content Include="src\Core\Singletons\FiddleSingleton.cs.uid" />
       <Content Include="src\Core\SrcHelpers.cs.uid" />
     </ItemGroup>

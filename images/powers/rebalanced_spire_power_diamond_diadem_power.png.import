@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5ny536oiitkt"
-path="res://.godot/imported/rebalanced_spire_relic_neows_lament.png-878ee758a1ffd3ca7a10e31e1e999bea.ctex"
+uid="uid://dq6jhhpcbnauu"
+path="res://.godot/imported/rebalanced_spire_power_diamond_diadem_power.png-0aab963a263b4abf9574328fd41fa1be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/relics/rebalanced_spire_relic_neows_lament.png"
-dest_files=["res://.godot/imported/rebalanced_spire_relic_neows_lament.png-878ee758a1ffd3ca7a10e31e1e999bea.ctex"]
+source_file="res://images/powers/rebalanced_spire_power_diamond_diadem_power.png"
+dest_files=["res://.godot/imported/rebalanced_spire_power_diamond_diadem_power.png-0aab963a263b4abf9574328fd41fa1be.ctex"]
 
 [params]
 

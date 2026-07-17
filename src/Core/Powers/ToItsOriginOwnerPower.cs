@@ -20,7 +20,7 @@ public sealed class ToItsOriginOwnerPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_to_its_origin_owner_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_to_its_origin_owner_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_to_its_origin_owner_power.png"
     );
 
     public override bool ShouldPlayVfx => false;

@@ -26,14 +26,17 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("colossus")]
     public bool Colossus { get; set; } = true;
 
-    [JsonPropertyName("expect_a_fight")]
-    public bool ExpectAFight { get; set; } = true;
+    [JsonPropertyName("dominate")]
+    public bool Dominate { get; set; } = true;
 
     [JsonPropertyName("forgotten_ritual")]
     public bool ForgottenRitual { get; set; } = true;
 
     [JsonPropertyName("tank")]
     public bool Tank { get; set; } = true;
+
+    [JsonPropertyName("accelerant")]
+    public bool Accelerant { get; set; } = true;
 
     [JsonPropertyName("acrobatics")]
     public bool Acrobatics { get; set; } = true;
@@ -91,6 +94,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("neutron_aegis")]
     public bool NeutronAegis { get; set; } = true;
+
+    [JsonPropertyName("pillar_of_creation")]
+    public bool PillarOfCreation { get; set; } = true;
 
     [JsonPropertyName("the_sealed_throne")]
     public bool TheSealedThrone { get; set; } = true;
@@ -185,9 +191,6 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("lava_rock")]
     public bool LavaRock { get; set; } = true;
 
-    [JsonPropertyName("neows_lament")]
-    public bool NeowsLament { get; set; } = true;
-
     [JsonPropertyName("neows_talisman")]
     public bool NeowsTalisman { get; set; } = true;
 
@@ -220,6 +223,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("darv_ancient_choices")]
     public bool DarvAncientChoices { get; set; } = true;
+
+    [JsonPropertyName("diamond_diadem")]
+    public bool DiamondDiadem { get; set; } = true;
 
     [JsonPropertyName("looming_fruit")]
     public bool LoomingFruit { get; set; } = true;
@@ -292,6 +298,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("trial")]
     public bool Trial { get; set; } = true;
+
+    [JsonPropertyName("war_historian_repy")]
+    public bool WarHistorianRepy { get; set; } = true;
 
     [JsonPropertyName("cubex_construct")]
     public bool CubexConstruct { get; set; } = true;
@@ -481,6 +490,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("aeonglass")]
     public bool Aeonglass { get; set; } = true;
+
+    [JsonPropertyName("queen")]
+    public bool Queen { get; set; } = true;
 
     [JsonPropertyName("doormaker")]
     public bool Doormaker { get; set; } = true;

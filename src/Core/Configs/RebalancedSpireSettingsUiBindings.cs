@@ -10,9 +10,10 @@ internal sealed class RebalancedSpireSettingsUiBindings
 
     public IModSettingsValueBinding<bool> BloodWall { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Colossus { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> ExpectAFight { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Dominate { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ForgottenRitual { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Tank { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Accelerant { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Acrobatics { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BladeOfInk { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BouncingFlask { get; private init; } = null!;
@@ -32,6 +33,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Glow { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HeirloomHammer { get; private init; } = null!;
     public IModSettingsValueBinding<bool> NeutronAegis { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> PillarOfCreation { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TheSealedThrone { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Afterlife { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BansheesCry { get; private init; } = null!;
@@ -63,19 +65,25 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> FishingRod { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LargeCapsule { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LavaRock { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> NeowsLament { get; private init; } = null!;
     public IModSettingsValueBinding<bool> NeowsTalisman { get; private init; } = null!;
     public IModSettingsValueBinding<bool> NutritiousOyster { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Pomander { get; private init; } = null!;
     public IModSettingsValueBinding<bool> NeowAncientChoices { get; private init; } = null!;
+
     public IModSettingsValueBinding<bool> AlchemicalCoffer { get; private init; } = null!;
     public IModSettingsValueBinding<bool> OrobasAncientChoices { get; private init; } = null!;
+
     public IModSettingsValueBinding<bool> PaelsHorn { get; private init; } = null!;
+
     public IModSettingsValueBinding<bool> BiiigHug { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ToastyMittens { get; private init; } = null!;
+
     public IModSettingsValueBinding<bool> DustyTome { get; private init; } = null!;
     public IModSettingsValueBinding<bool> DarvAncientChoices { get; private init; } = null!;
+
+    public IModSettingsValueBinding<bool> DiamondDiadem { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LoomingFruit { get; private init; } = null!;
+
     public IModSettingsValueBinding<bool> Crossbow { get; private init; } = null!;
     public IModSettingsValueBinding<bool> WarHammer { get; private init; } = null!;
 
@@ -101,6 +109,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> HungryForMushrooms { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Reflections { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Trial { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> WarHistorianRepy { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> CubexConstruct { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Fogmog { get; private init; } = null!;
@@ -165,6 +174,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> SoulNexus { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TestSubject { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Aeonglass { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Queen { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Doormaker { get; private init; } = null!;
 
     public static RebalancedSpireSettingsUiBindings Create()
@@ -178,9 +188,10 @@ internal sealed class RebalancedSpireSettingsUiBindings
 
             BloodWall = B(s => s.BloodWall, (s, v) => s.BloodWall = v, () => defaults.BloodWall),
             Colossus = B(s => s.Colossus, (s, v) => s.Colossus = v, () => defaults.Colossus),
-            ExpectAFight = B(s => s.ExpectAFight, (s, v) => s.ExpectAFight = v, () => defaults.ExpectAFight),
+            Dominate = B(s => s.Dominate, (s, v) => s.Dominate = v, () => defaults.Dominate),
             ForgottenRitual = B(s => s.ForgottenRitual, (s, v) => s.ForgottenRitual = v, () => defaults.ForgottenRitual),
             Tank = B(s => s.Tank, (s, v) => s.Tank = v, () => defaults.Tank),
+            Accelerant = B(s => s.Accelerant, (s, v) => s.Accelerant = v, () => defaults.Accelerant),
             Acrobatics = B(s => s.Acrobatics, (s, v) => s.Acrobatics = v, () => defaults.Acrobatics),
             BladeOfInk = B(s => s.BladeOfInk, (s, v) => s.BladeOfInk = v, () => defaults.BladeOfInk),
             BouncingFlask = B(s => s.BouncingFlask, (s, v) => s.BouncingFlask = v, () => defaults.BouncingFlask),
@@ -200,6 +211,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Glow = B(s => s.Glow, (s, v) => s.Glow = v, () => defaults.Glow),
             HeirloomHammer = B(s => s.HeirloomHammer, (s, v) => s.HeirloomHammer = v, () => defaults.HeirloomHammer),
             NeutronAegis = B(s => s.NeutronAegis, (s, v) => s.NeutronAegis = v, () => defaults.NeutronAegis),
+            PillarOfCreation = B(s => s.PillarOfCreation, (s, v) => s.PillarOfCreation = v, () => defaults.PillarOfCreation),
             TheSealedThrone = B(s => s.TheSealedThrone, (s, v) => s.TheSealedThrone = v, () => defaults.TheSealedThrone),
             Afterlife = B(s => s.Afterlife, (s, v) => s.Afterlife = v, () => defaults.Afterlife),
             BansheesCry = B(s => s.BansheesCry, (s, v) => s.BansheesCry = v, () => defaults.BansheesCry),
@@ -231,7 +243,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
             FishingRod = B(s => s.FishingRod, (s, v) => s.FishingRod = v, () => defaults.FishingRod),
             LargeCapsule = B(s => s.LargeCapsule, (s, v) => s.LargeCapsule = v, () => defaults.LargeCapsule),
             LavaRock = B(s => s.LavaRock, (s, v) => s.LavaRock = v, () => defaults.LavaRock),
-            NeowsLament = B(s => s.NeowsLament, (s, v) => s.NeowsLament = v, () => defaults.NeowsLament),
             NeowsTalisman = B(s => s.NeowsTalisman, (s, v) => s.NeowsTalisman = v, () => defaults.NeowsTalisman),
             NutritiousOyster = B(s => s.NutritiousOyster, (s, v) => s.NutritiousOyster = v, () => defaults.NutritiousOyster),
             Pomander = B(s => s.Pomander, (s, v) => s.Pomander = v, () => defaults.Pomander),
@@ -243,6 +254,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             ToastyMittens = B(s => s.ToastyMittens, (s, v) => s.ToastyMittens = v, () => defaults.ToastyMittens),
             DustyTome = B(s => s.DustyTome, (s, v) => s.DustyTome = v, () => defaults.DustyTome),
             DarvAncientChoices = B(s => s.DarvAncientChoices, (s, v) => s.DarvAncientChoices = v, () => defaults.DarvAncientChoices),
+            DiamondDiadem = B(s => s.DiamondDiadem, (s, v) => s.DiamondDiadem = v, () => defaults.DiamondDiadem),
             LoomingFruit = B(s => s.LoomingFruit, (s, v) => s.LoomingFruit = v, () => defaults.LoomingFruit),
             Crossbow = B(s => s.Crossbow, (s, v) => s.Crossbow = v, () => defaults.Crossbow),
             WarHammer = B(s => s.WarHammer, (s, v) => s.WarHammer = v, () => defaults.WarHammer),
@@ -332,6 +344,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             SoulNexus = B(s => s.SoulNexus, (s, v) => s.SoulNexus = v, () => defaults.SoulNexus),
             TestSubject = B(s => s.TestSubject, (s, v) => s.TestSubject = v, () => defaults.TestSubject),
             Aeonglass = B(s => s.Aeonglass, (s, v) => s.Aeonglass = v, () => defaults.Aeonglass),
+            Queen = B(s => s.Queen, (s, v) => s.Queen = v, () => defaults.Queen),
             Doormaker = B(s => s.Doormaker, (s, v) => s.Doormaker = v, () => defaults.Doormaker)
         };
     }

@@ -15,7 +15,7 @@ public sealed class SandsOfTimePower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_sands_of_time_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_sands_of_time_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_sands_of_time_power.png"
     );
 
     public override bool ShouldTakeExtraTurn(Player player)

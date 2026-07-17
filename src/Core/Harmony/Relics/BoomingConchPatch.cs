@@ -39,7 +39,7 @@ public static class BoomingConchPatch
             return true;
         }
 
-        var cardsPlayed = CardsPlayed[boomingConch] + 1;
+        var cardsPlayed = CardsPlayed.GetValueOrDefault(boomingConch, 0) + 1;
         CardsPlayed.Set(boomingConch, cardsPlayed);
         boomingConch.Flash();
         boomingConch.Status = cardsPlayed >= boomingConch.DynamicVars.Cards.IntValue ? RelicStatus.Disabled : RelicStatus.Active;
@@ -163,7 +163,7 @@ public static class BoomingConchPatch
             return true;
         }
 
-        __result = CardsPlayed[boomingConch];
+        __result = CardsPlayed.GetValueOrDefault(boomingConch, 0);
         return false;
     }
 

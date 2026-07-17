@@ -1,7 +1,6 @@
 ﻿namespace RebalancedSpire.Core.Harmony.Ancients;
 
 using Configs;
-using Core.Relics;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Events;
@@ -14,15 +13,16 @@ using MegaCrit.Sts2.Core.Models.Relics;
 public static class NeowPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.NeowAncientChoices;
-    private static readonly bool NeowsLamentDisabled = !RebalancedSpireSettingsStore.Settings.NeowsLament;
 
     private static List<EventOption> CurseOptions(Neow instance) =>
     [
         SrcHelpers.RelicOption<CursedPearl>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        SrcHelpers.RelicOption<DowsingRod>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<HeftyTablet>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<LargeCapsule>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<LeafyPoultice>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<NeowsBones>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
+        SrcHelpers.RelicOption<NeowsSacrifice>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<PrecariousShears>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<SilkenTress>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description"),
         SrcHelpers.RelicOption<SilverCrucible>(instance, customDonePage: "NEOW.pages.DONE.CURSED.description")
@@ -52,10 +52,6 @@ public static class NeowPatch
             SrcHelpers.RelicOption<StoneHumidifier>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"),
             SrcHelpers.RelicOption<WingedBoots>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description")
         };
-        if (!NeowsLamentDisabled)
-        {
-            list.Add(SrcHelpers.RelicOption<NeowsLament>(instance, customDonePage: "NEOW.pages.DONE.POSITIVE.description"));
-        }
         return list;
     }
 
@@ -135,16 +131,6 @@ public static class NeowPatch
         else
         {
             positives.RemoveAll(option => option.Relic is Pomander);
-        }
-        if (!NeowsLamentDisabled) {
-            if (__instance.Rng.NextBool())
-            {
-                positives.RemoveAll(option => option.Relic is WingedBoots);
-            }
-            else
-            {
-                positives.RemoveAll(option => option.Relic is NeowsLament);
-            }
         }
 
         var results = positives.UnstableShuffle(__instance.Rng).Take(2).ToList();

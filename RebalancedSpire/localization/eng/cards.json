@@ -20,6 +20,7 @@
   "REBALANCED_SPIRE_CARD_LIMIT_BREAK.title": "Limit Break",
   "REBALANCED_SPIRE_CARD_MASTER_PLANNER.description": "Whenever you discard a [gold]Sly[/gold] card, draw {Cards:diff()} {Cards:plural:card|cards}.",
   "REBALANCED_SPIRE_CARD_NEUTRON_AEGIS.description": "Gain X [gold]Plating[/gold].\nDouble X if it's {Stars:diff()} or more.",
+  "REBALANCED_SPIRE_CARD_PILLAR_OF_CREATION.description": "Whenever you create a card, gain {Block:diff()} [gold]Block[/gold].",
   "REBALANCED_SPIRE_CARD_POISONED_STAB.description": "Add {Cards:diff()} {IfUpgraded:show:upgraded|} [purple]Poisonous[/purple] [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_REAPER_FORM.description": "Whenever Attacks deal damage, apply that much [gold]Doom[/gold].{IfUpgraded:show:\nAt the start of your turn, kill enemies with at least as much [gold]Doom[/gold] as HP.|}",
   "REBALANCED_SPIRE_CARD_REFRACT.description": "[gold]Channel[/gold] {Repeat:diff()} [gold]Glass[/gold].",
@@ -35,6 +36,7 @@
   "REBALANCED_SPIRE_CARD_UNTOUCHABLE.description": "Gain {Block:diff()} [gold]Block[/gold] twice.",
   "REBALANCED_SPIRE_CARD_UP_MY_SLEEVE.description": "Add {Cards:diff()} [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_WISP.description": "Gain {Energy:energyIcons()}. \nTransform a random [gold]Soul[/gold] in your [gold]Draw Pile[/gold] into a copy of this card.",
+  "REBALANCED_SPIRE_CARD_WELL_LAID_PLANS.description": "At the end of your turn, [gold]Retain[/gold] up to {RetainAmount:diff()} {RetainAmount:plural:card|cards}.",
   "REBALANCED_SPIRE_CARD_WITHER.description": "Decrease this card's damage by {PerLevel}.\nAt the end of your turn, if this is in your [gold]Hand[/gold], take {Damage:diff()} damage.",
   "REBALANCED_SPIRE_CARD_WITHER.extraDescription": "Take an extra turn after your turn.\nIncrease this card's cost by 1.",
   "REBALANCED_SPIRE_CARD_WITHER.extraDescription2": "At the end of your turn, if this is in your [gold]Hand[/gold], take {Fixed} damage."

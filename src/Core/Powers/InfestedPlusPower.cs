@@ -29,7 +29,7 @@ public sealed class InfestedPlusPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_infested_plus_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_infested_plus_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_infested_plus_power.png"
     );
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(

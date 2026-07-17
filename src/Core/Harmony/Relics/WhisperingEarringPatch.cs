@@ -134,7 +134,7 @@ public static class WhisperingEarringPatch
             return true;
         }
 
-        var current = CurrentEnergyUsed[whisperingEarring];
+        var current = CurrentEnergyUsed.GetValueOrDefault(whisperingEarring, 0);
         if (current < 0)
         {
             return true;
@@ -207,7 +207,7 @@ public static class WhisperingEarringPatch
             return true;
         }
 
-        __result = CurrentEnergyUsed[whisperingEarring];
+        __result = CurrentEnergyUsed.GetValueOrDefault(whisperingEarring, 0);
         return false;
     }
 
@@ -226,7 +226,7 @@ public static class WhisperingEarringPatch
             return true;
         }
 
-        __result = CurrentEnergyUsed[whisperingEarring] >= 0;
+        __result = CurrentEnergyUsed.GetValueOrDefault(whisperingEarring, 0) >= 0;
         return false;
     }
 }

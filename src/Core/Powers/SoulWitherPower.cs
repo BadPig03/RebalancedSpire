@@ -17,7 +17,7 @@ public sealed class SoulWitherPower : ModPowerTemplate
 
     private int _hitCount;
 
-    public int HitCount
+    private int HitCount
     {
         get => _hitCount;
         set
@@ -34,7 +34,7 @@ public sealed class SoulWitherPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_soul_wither_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_soul_wither_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_soul_wither_power.png"
     );
 
     public override int DisplayAmount => HitCount;
