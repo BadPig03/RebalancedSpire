@@ -21,7 +21,7 @@ public sealed class ScrutinyPower : ModPowerTemplate, IMaxHandSizeModifier
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_scrutiny_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_scrutiny_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_scrutiny_power.png"
     );
 
     public override async Task AfterApplied(Creature? applier, CardModel? cardSource)

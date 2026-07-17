@@ -20,7 +20,6 @@ public static class LavaRockPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LavaRock;
     private static readonly SavedAttachedState<LavaRock, int> EnemiesDefeated = new("REBALANCED_SPIRE_RELIC_LAVA_ROCK", _ => 0);
-    private static readonly SavedAttachedState<LavaRock, int> TriggeredAmount = new("REBALANCED_SPIRE_RELIC_LAVA_ROCK_TRIGGERED", _ => 0);
 
     [HarmonyPatch(typeof(AbstractModel), "AfterCombatVictory")]
     [HarmonyPrefix]
@@ -149,8 +148,7 @@ public static class LavaRockPatch
             return true;
         }
 
-        var amount = TriggeredAmount.GetValueOrDefault(__instance, 0);
-        if (EnemiesDefeated.GetValueOrDefault(__instance, 0) < __instance.DynamicVars["Enemies"].IntValue + amount)
+        if (EnemiesDefeated.GetValueOrDefault(__instance, 0) < __instance.DynamicVars["Enemies"].IntValue)
         {
             return true;
         }
@@ -160,7 +158,6 @@ public static class LavaRockPatch
             rewards.Add(new CardReward(CardCreationOptions.ForNonCombatWithUniformOdds(new List<CardPoolModel>([__instance.Owner.Character.CardPool]), c => c.Rarity == CardRarity.Uncommon).WithFlags(CardCreationFlags.NoRarityModification), 3, player));
         }
         EnemiesDefeated.Set(__instance, 0);
-        TriggeredAmount.Set(__instance, amount + 1);
         __instance.DynamicVars["Enemies"].BaseValue += 1;
         __instance.Flash();
         __instance.InvokeDisplayAmountChanged();

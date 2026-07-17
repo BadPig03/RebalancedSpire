@@ -5,6 +5,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 
@@ -25,6 +26,23 @@ public static class FiddlePatch
         }
 
         __result = Task.CompletedTask;
+        return false;
+    }
+
+    [HarmonyPatch(typeof(Fiddle), "CanonicalVars", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalVars(Fiddle __instance, ref IEnumerable<DynamicVar> __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        __result = new List<DynamicVar>
+        {
+            new CardsVar(2)
+        }.AsReadOnly();
         return false;
     }
 

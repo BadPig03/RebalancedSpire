@@ -13,6 +13,6 @@ public sealed class EternalArmorPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_eternal_armor_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_eternal_armor_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_eternal_armor_power.png"
     );
 }

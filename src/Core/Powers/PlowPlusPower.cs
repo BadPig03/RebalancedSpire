@@ -23,7 +23,7 @@ public sealed class PlowPlusPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_plow_plus_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_plow_plus_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_plow_plus_power.png"
     );
 
     public override bool ShouldPlayVfx => false;

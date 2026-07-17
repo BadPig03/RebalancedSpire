@@ -18,7 +18,7 @@ public sealed class TankPlusPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_tank_plus_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_tank_plus_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_tank_plus_power.png"
     );
 
     public override async Task BeforeSideTurnEndEarly(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

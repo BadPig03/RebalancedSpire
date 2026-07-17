@@ -7,8 +7,10 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Context;
+using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Monsters;
@@ -23,6 +25,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 public static class AeonglassPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Aeonglass;
+
+    private static int EbbDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 32, 28);
 
     private const int ArtifactPowerAmount = 3;
     private const int IncreasingIntensityBlock = 33;
@@ -75,7 +79,7 @@ public static class AeonglassPatch
 
     private static async Task EbbMove(Aeonglass instance)
     {
-        await DamageCmd.Attack(instance.EbbDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await DamageCmd.Attack(EbbDamage).FromMonster(instance).WithAttackerAnim("Attack", 0.15f).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
     }
 
     private static async Task IncreasingIntensityMove(Aeonglass instance)
@@ -110,7 +114,7 @@ public static class AeonglassPatch
 
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("WITHERING_MOVE", _ => WitheringMove(__instance), new StatusIntent(WithersMaxCount), new BuffIntent());
-        MoveState moveState2 = new MoveState("EBB_MOVE", _ => EbbMove(__instance), new SingleAttackIntent(__instance.EbbDamage));
+        MoveState moveState2 = new MoveState("EBB_MOVE", _ => EbbMove(__instance), new SingleAttackIntent(EbbDamage));
         MoveState moveState3 = new MoveState("EYE_LASERS_MOVE", __instance.EyeLasersMove, new MultiAttackIntent(__instance.EyeLasersDamage, __instance.EyeLasersRepeat));
         MoveState moveState4 = new MoveState("INCREASING_INTENSITY_MOVE", _ => IncreasingIntensityMove(__instance), new BuffIntent(), new DefendIntent());
         moveState.FollowUpState = moveState2;

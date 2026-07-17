@@ -18,7 +18,7 @@ public sealed class CorpseExplosionPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_corpse_explosion_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_corpse_explosion_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_corpse_explosion_power.png"
     );
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)

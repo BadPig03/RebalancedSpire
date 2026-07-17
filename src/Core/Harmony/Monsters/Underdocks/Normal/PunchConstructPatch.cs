@@ -82,7 +82,7 @@ public static class PunchConstructPatch
             return;
         }
 
-        instance.Rng.FastForwardCounter(instance.StartingHpReduction);
+        instance.Rng.NextInt(instance.StartingHpReduction);
         await CreatureCmd.SetCurrentHp(instance.Creature, instance.Creature.CurrentHp * instance.Rng.NextInt(70, 81) / 100m);
     }
 

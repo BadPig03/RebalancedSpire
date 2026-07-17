@@ -20,7 +20,7 @@ public sealed class PingPongPower : ModPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_ping_pong_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_ping_pong_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_ping_pong_power.png"
     );
 
     public override bool ShouldPowerBeRemovedAfterOwnerDeath() => false;

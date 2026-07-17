@@ -21,7 +21,7 @@ public sealed class HungerPower : ModPowerTemplate
 
 	public override PowerAssetProfile AssetProfile => new(
 		IconPath: "res://images/powers/rebalanced_spire_power_hunger_power.png",
-		BigIconPath: "res://images/powers/rebalanced_spire_power_hunger_power.png"
+		BigIconPath: "res://images/powers/big/rebalanced_spire_power_hunger_power.png"
 	);
 
 	protected override IEnumerable<IHoverTip> AdditionalHoverTips => HoverTipFactory.FromAffliction<Devoured>(Amount);

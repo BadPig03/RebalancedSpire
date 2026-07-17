@@ -16,6 +16,6 @@ public sealed class LeapPower : ModTemporaryPowerTemplate
 
     public override PowerAssetProfile AssetProfile => new(
         IconPath: "res://images/powers/rebalanced_spire_power_leap_power.png",
-        BigIconPath: "res://images/powers/rebalanced_spire_power_leap_power.png"
+        BigIconPath: "res://images/powers/big/rebalanced_spire_power_leap_power.png"
     );
 }
