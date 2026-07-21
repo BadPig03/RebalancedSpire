@@ -14,6 +14,8 @@ using MegaCrit.Sts2.Core.Models.Relics;
 public static class VakuuPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.VakuuAncientChoices;
+    private static readonly bool SereTalonDisabled = !RebalancedSpireSettingsStore.Settings.SereTalon;
+    private static readonly bool DistinguishedCapeDisabled = !RebalancedSpireSettingsStore.Settings.DistinguishedCape;
 
     [HarmonyPatch(typeof(EventModel), "BackgroundScenePath", MethodType.Getter)]
     [HarmonyPrefix]
@@ -67,8 +69,8 @@ public static class VakuuPatch
         {
             SrcHelpers.RelicOption<Fiddle>(__instance),
             SrcHelpers.RelicOption<PreservedFog>(__instance),
-            SrcHelpers.RelicOption<SereTalon>(__instance),
-            SrcHelpers.RelicOption<DistinguishedCape>(__instance).ThatDecreasesMaxHp(9)
+            DistinguishedCapeDisabled ? SrcHelpers.RelicOption<DistinguishedCape>(__instance) : SrcHelpers.RelicOption<DistinguishedCape>(__instance).ThatDecreasesMaxHp(9),
+            SereTalonDisabled ? SrcHelpers.RelicOption<SereTalon>(__instance).ThatDecreasesMaxHp(9) : SrcHelpers.RelicOption<SereTalon>(__instance)
         }.AsReadOnly();
         return false;
     }

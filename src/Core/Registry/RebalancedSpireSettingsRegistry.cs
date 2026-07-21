@@ -30,6 +30,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("accelerant", L("the_silent.section.accelerant.title"), ui.Accelerant, L("the_silent.section.accelerant.description"))
                 .AddToggle("acrobatics", L("the_silent.section.acrobatics.title"), ui.Acrobatics, L("the_silent.section.acrobatics.description"))
                 .AddToggle("blade_of_ink", L("the_silent.section.blade_of_ink.title"), ui.BladeOfInk, L("the_silent.section.blade_of_ink.description"))
+                .AddToggle("blade_symphony", L("the_silent.section.blade_symphony.title"), ui.BladeSymphony, L("the_silent.section.blade_symphony.description"))
                 .AddToggle("bouncing_flask", L("the_silent.section.bouncing_flask.title"), ui.BouncingFlask, L("the_silent.section.bouncing_flask.description"))
                 .AddToggle("flick_flack", L("the_silent.section.flick_flack.title"), ui.FlickFlack, L("the_silent.section.flick_flack.description"))
                 .AddToggle("hand_trick", L("the_silent.section.hand_trick.title"), ui.HandTrick, L("the_silent.section.hand_trick.description"))
@@ -76,6 +77,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("shatter", L("the_defect.section.shatter.title"), ui.Shatter, L("the_defect.section.shatter.description"))
                 .AddToggle("spinner", L("the_defect.section.spinner.title"), ui.Spinner, L("the_defect.section.spinner.description"))
                 .AddToggle("synchronize", L("the_defect.section.synchronize.title"), ui.Synchronize, L("the_defect.section.synchronize.description"))
+                .AddToggle("trash_to_treasure", L("the_defect.section.trash_to_treasure.title"), ui.TrashToTreasure, L("the_defect.section.trash_to_treasure.description"))
                 .AddToggle("voltaic", L("the_defect.section.voltaic.title"), ui.Voltaic, L("the_defect.section.voltaic.description"))
             ).AddSection("the_colorless", s => s
                 .WithTitle(L("the_colorless.section.label"))
@@ -94,6 +96,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             .AddSection("neow", s => s
                 .WithTitle(L("neow.section.label"))
                 .AddToggle("booming_conch", L("neow.section.booming_conch.title"), ui.BoomingConch, L("neow.section.booming_conch.description"))
+                .AddToggle("dowsing_rod", L("neow.section.dowsing_rod.title"), ui.DowsingRod, L("neow.section.dowsing_rod.description"))
                 .AddToggle("fishing_rod", L("neow.section.fishing_rod.title"), ui.FishingRod, L("neow.section.fishing_rod.description"))
                 .AddToggle("large_capsule", L("neow.section.large_capsule.title"), ui.LargeCapsule, L("neow.section.large_capsule.description"))
                 .AddToggle("lava_rock", L("neow.section.lava_rock.title"), ui.LavaRock, L("neow.section.lava_rock.description"))
@@ -128,6 +131,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .WithTitle(L("vakuu.section.label"))
                 .AddToggle("blood_soaked_rose", L("vakuu.section.blood_soaked_rose.title"), ui.BloodSoakedRose, L("vakuu.section.blood_soaked_rose.description"))
                 .AddToggle("choices_paradox", L("vakuu.section.choices_paradox.title"), ui.ChoicesParadox, L("vakuu.section.choices_paradox.description"))
+                .AddToggle("distinguished_cape", L("vakuu.section.distinguished_cape.title"), ui.DistinguishedCape, L("vakuu.section.distinguished_cape.description"))
                 .AddToggle("fiddle", L("vakuu.section.fiddle.title"), ui.Fiddle, L("vakuu.section.fiddle.description"))
                 .AddToggle("preserved_fog", L("vakuu.section.preserved_fog.title"), ui.PreservedFog, L("vakuu.section.preserved_fog.description"))
                 .AddToggle("sere_talon", L("vakuu.section.sere_talon.title"), ui.SereTalon, L("vakuu.section.sere_talon.description"))

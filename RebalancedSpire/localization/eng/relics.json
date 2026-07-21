@@ -6,6 +6,8 @@
   "REBALANCED_SPIRE_RELIC_CHOICES_PARADOX.description": "At the start of each combat, add [blue]1[/blue] of [blue]{Cards}[/blue] [gold]Upgraded[/gold] random cards into your [gold]Hand[/gold]. Add [gold]Retain[/gold] to the chosen card.",
   "REBALANCED_SPIRE_RELIC_CROSSBOW.description": "At the start of your turn, add a random [gold]Attack[/gold] into your [gold]Hand[/gold]. It's free to play this combat and [gold]Exhausts[/gold] when played.",
   "REBALANCED_SPIRE_RELIC_DIAMOND_DIADEM.description": "Whenever you play [blue]{CardThreshold}[/blue] or fewer cards in a turn, take half damage from enemies.",
+  "REBALANCED_SPIRE_RELIC_DISTINGUISHED_CAPE.description": "Upon pickup, lose [blue]9[/blue] Max HP. Add [blue]{Cards}[/blue] [gold]{Cards:plural:Apparition|Apparitions}[/gold] to your [gold]Deck[/gold].",
+  "REBALANCED_SPIRE_RELIC_DISTINGUISHED_CAPE.eventDescription": "Lose [red]9[/red] Max HP. Add [blue]{Cards}[/blue] [gold]{Cards:plural:Apparition|Apparitions}[/gold] to your [gold]Deck[/gold].",
   "REBALANCED_SPIRE_RELIC_DUSTY_TOME.description": "Upon pickup, choose [blue]1[/blue] of [blue]{Cards}[/blue] upgraded [gold]Ancient Cards[/gold] to add to your [gold]Deck[/gold].",
   "REBALANCED_SPIRE_RELIC_DUSTY_TOME.eventDescription": "Upon pickup, choose [blue]1[/blue] of [blue]{Cards}[/blue] upgraded [gold]Ancient Cards[/gold] to add to your [gold]Deck[/gold].",
   "REBALANCED_SPIRE_RELIC_FIDDLE.description": "At the start of each turn, draw [blue]{Cards}[/blue] additional {Cards:plural:card|cards}. Your max hand size is reduced by [red]{Cards}[/red].",

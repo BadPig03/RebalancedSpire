@@ -6,6 +6,8 @@
   "REBALANCED_SPIRE_RELIC_CHOICES_PARADOX.description": "在每场战斗开始时，从[blue]{Cards}[/blue]张[gold]升级过[/gold]的随机牌中选择[blue]1[/blue]张放入你的[gold]手牌[/gold]。被选中的牌获得[gold]保留[/gold]。",
   "REBALANCED_SPIRE_RELIC_CROSSBOW.description": "在你的回合开始时，将一张随机[gold]攻击牌[/gold]加入你的[gold]手牌[/gold]。这张牌在战斗中可以免费打出，但打出时会被[gold]消耗[/gold]。",
   "REBALANCED_SPIRE_RELIC_DIAMOND_DIADEM.description": "如果你在本回合打出的牌少于等于[blue]{CardThreshold}[/blue]张，则受到敌人的伤害减半。",
+  "REBALANCED_SPIRE_RELIC_DISTINGUISHED_CAPE.description": "拾起时，失去[red]9[/red]点最大生命值。将[blue]{Cards}[/blue]张[gold]灵体[/gold]加入你的[gold]牌组[/gold]。",
+  "REBALANCED_SPIRE_RELIC_DISTINGUISHED_CAPE.eventDescription": "失去[red]9[/red]点最大生命值。将[blue]{Cards}[/blue]张[gold]灵体[/gold]加入你的[gold]牌组[/gold]。",
   "REBALANCED_SPIRE_RELIC_DUSTY_TOME.description": "拾起时，从[blue]{Cards}[/blue]张[gold]升级过的先古牌[/gold]中选择[blue]1[/blue]张加入你的[gold]牌组[/gold]。",
   "REBALANCED_SPIRE_RELIC_DUSTY_TOME.eventDescription": "从[blue]{Cards}[/blue]张[gold]升级过的先古牌[/gold]中选择[blue]1[/blue]张加入你的[gold]牌组[/gold]。",
   "REBALANCED_SPIRE_RELIC_FIDDLE.description": "在每个回合开始时，额外抽[blue]{Cards}[/blue]张牌。你的最大手牌数量减少[red]{Cards}[/red]张。",

@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.58" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.4.61" />
     </ItemGroup>
     
     <ItemGroup>
@@ -333,6 +333,7 @@
       <Content Include="src\Core\Harmony\Cards\Defect\ShatterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\SpinnerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\SynchronizePatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Defect\TrashToTreasurePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\VoltaicPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
@@ -354,6 +355,7 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\WispPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Quest\ByrdonisEggPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Quest\DowsingPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\ForegoneConclusionPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GenesisPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GlowPatch.cs.uid" />
@@ -364,6 +366,7 @@
       <Content Include="src\Core\Harmony\Cards\Silent\AccelerantPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\AcrobaticsPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BladeOfInkPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\BladeSymphonyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BouncingFlaskPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\FlickFlackPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HandTrickPatch.cs.uid" />
@@ -488,6 +491,7 @@
       <Content Include="src\Core\Harmony\Relics\ChoicesParadoxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\CrossbowPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\DiamondDiademPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\DistinguishedCapePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\DustyTomePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\FiddlePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\FishingRodPatch.cs.uid" />

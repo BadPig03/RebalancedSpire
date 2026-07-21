@@ -44,6 +44,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("blade_of_ink")]
     public bool BladeOfInk { get; set; } = true;
 
+    [JsonPropertyName("blade_symphony")]
+    public bool BladeSymphony { get; set; } = true;
+
     [JsonPropertyName("bouncing_flask")]
     public bool BouncingFlask { get; set; } = true;
 
@@ -167,6 +170,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("synchronize")]
     public bool Synchronize { get; set; } = true;
 
+    [JsonPropertyName("trash_to_treasure")]
+    public bool TrashToTreasure { get; set; } = true;
+
     [JsonPropertyName("voltaic")]
     public bool Voltaic { get; set; } = true;
 
@@ -181,6 +187,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("booming_conch")]
     public bool BoomingConch { get; set; } = true;
+
+    [JsonPropertyName("dowsing_rod")]
+    public bool DowsingRod { get; set; } = true;
 
     [JsonPropertyName("fishing_rod")]
     public bool FishingRod { get; set; } = true;
@@ -241,6 +250,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("choices_paradox")]
     public bool ChoicesParadox { get; set; } = true;
+
+    [JsonPropertyName("distinguished_cape")]
+    public bool DistinguishedCape { get; set; } = true;
 
     [JsonPropertyName("fiddle")]
     public bool Fiddle { get; set; } = true;

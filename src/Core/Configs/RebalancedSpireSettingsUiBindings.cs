@@ -16,6 +16,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Accelerant { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Acrobatics { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BladeOfInk { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> BladeSymphony { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BouncingFlask { get; private init; } = null!;
     public IModSettingsValueBinding<bool> FlickFlack { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HandTrick { get; private init; } = null!;
@@ -56,12 +57,14 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Shatter { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Spinner { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Synchronize { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> TrashToTreasure { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Voltaic { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Bolas { get; private init; } = null!;
     public IModSettingsValueBinding<bool> EternalArmor { get; private init; } = null!;
     public IModSettingsValueBinding<bool> RollingBoulder { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BoomingConch { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> DowsingRod { get; private init; } = null!;
     public IModSettingsValueBinding<bool> FishingRod { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LargeCapsule { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LavaRock { get; private init; } = null!;
@@ -89,6 +92,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
 
     public IModSettingsValueBinding<bool> BloodSoakedRose { get; private init; } = null!;
     public IModSettingsValueBinding<bool> ChoicesParadox { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> DistinguishedCape { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Fiddle { get; private init; } = null!;
     public IModSettingsValueBinding<bool> PreservedFog { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SereTalon { get; private init; } = null!;
@@ -194,6 +198,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Accelerant = B(s => s.Accelerant, (s, v) => s.Accelerant = v, () => defaults.Accelerant),
             Acrobatics = B(s => s.Acrobatics, (s, v) => s.Acrobatics = v, () => defaults.Acrobatics),
             BladeOfInk = B(s => s.BladeOfInk, (s, v) => s.BladeOfInk = v, () => defaults.BladeOfInk),
+            BladeSymphony = B(s => s.BladeSymphony, (s, v) => s.BladeSymphony = v, () => defaults.BladeSymphony),
             BouncingFlask = B(s => s.BouncingFlask, (s, v) => s.BouncingFlask = v, () => defaults.BouncingFlask),
             FlickFlack = B(s => s.FlickFlack, (s, v) => s.FlickFlack = v, () => defaults.FlickFlack),
             HandTrick = B(s => s.HandTrick, (s, v) => s.HandTrick = v, () => defaults.HandTrick),
@@ -234,12 +239,14 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Shatter = B(s => s.Shatter, (s, v) => s.Shatter = v, () => defaults.Shatter),
             Spinner = B(s => s.Spinner, (s, v) => s.Spinner = v, () => defaults.Spinner),
             Synchronize = B(s => s.Synchronize, (s, v) => s.Synchronize = v, () => defaults.Synchronize),
+            TrashToTreasure = B(s => s.TrashToTreasure, (s, v) => s.TrashToTreasure = v, () => defaults.TrashToTreasure),
             Voltaic = B(s => s.Voltaic, (s, v) => s.Voltaic = v, () => defaults.Voltaic),
             Bolas = B(s => s.Bolas, (s, v) => s.Bolas = v, () => defaults.Bolas),
             EternalArmor = B(s => s.EternalArmor, (s, v) => s.EternalArmor = v, () => defaults.EternalArmor),
             RollingBoulder = B(s => s.RollingBoulder, (s, v) => s.RollingBoulder = v, () => defaults.RollingBoulder),
 
             BoomingConch = B(s => s.BoomingConch, (s, v) => s.BoomingConch = v, () => defaults.BoomingConch),
+            DowsingRod = B(s => s.DowsingRod, (s, v) => s.DowsingRod = v, () => defaults.DowsingRod),
             FishingRod = B(s => s.FishingRod, (s, v) => s.FishingRod = v, () => defaults.FishingRod),
             LargeCapsule = B(s => s.LargeCapsule, (s, v) => s.LargeCapsule = v, () => defaults.LargeCapsule),
             LavaRock = B(s => s.LavaRock, (s, v) => s.LavaRock = v, () => defaults.LavaRock),
@@ -260,6 +267,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             WarHammer = B(s => s.WarHammer, (s, v) => s.WarHammer = v, () => defaults.WarHammer),
             BloodSoakedRose = B(s => s.BloodSoakedRose, (s, v) => s.BloodSoakedRose = v, () => defaults.BloodSoakedRose),
             ChoicesParadox = B(s => s.ChoicesParadox, (s, v) => s.ChoicesParadox = v, () => defaults.ChoicesParadox),
+            DistinguishedCape = B(s => s.DistinguishedCape, (s, v) => s.DistinguishedCape = v, () => defaults.DistinguishedCape),
             Fiddle = B(s => s.Fiddle, (s, v) => s.Fiddle = v, () => defaults.Fiddle),
             PreservedFog = B(s => s.PreservedFog, (s, v) => s.PreservedFog = v, () => defaults.PreservedFog),
             SereTalon = B(s => s.SereTalon, (s, v) => s.SereTalon = v, () => defaults.SereTalon),
@@ -280,6 +288,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             HungryForMushrooms = B(s => s.HungryForMushrooms, (s, v) => s.HungryForMushrooms = v, () => defaults.HungryForMushrooms),
             Reflections = B(s => s.Reflections, (s, v) => s.Reflections = v, () => defaults.Reflections),
             Trial = B(s => s.Trial, (s, v) => s.Trial = v, () => defaults.Trial),
+            WarHistorianRepy = B(s => s.WarHistorianRepy, (s, v) => s.WarHistorianRepy = v, () => defaults.WarHistorianRepy),
 
             CubexConstruct = B(s => s.CubexConstruct, (s, v) => s.CubexConstruct = v, () => defaults.CubexConstruct),
             Fogmog = B(s => s.Fogmog, (s, v) => s.Fogmog = v, () => defaults.Fogmog),
