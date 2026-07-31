@@ -47,6 +47,25 @@ public class WellLaidPlansPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_CanonicalEnergyCost(CardModel __instance, ref int __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not WellLaidPlans)
+        {
+            return true;
+        }
+
+        __result = 1;
+        return false;
+    }
+
     [HarmonyPatch(typeof(CardModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]

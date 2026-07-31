@@ -4,7 +4,6 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.CardSelection;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -32,36 +31,22 @@ public static class ToastyMittensPatch
         await PowerCmd.Apply<StrengthPower>(choiceContext, player.Creature, instance.DynamicVars.Strength.BaseValue, player.Creature, null);
     }
 
-    [HarmonyPatch(typeof(AbstractModel), "AfterPlayerTurnStart")]
+    [HarmonyPatch(typeof(ToastyMittens), "AfterPlayerTurnStart")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterPlayerTurnStart(AbstractModel __instance, PlayerChoiceContext choiceContext, Player player, ref Task __result)
+    private static bool PreFix_AfterPlayerTurnStart(ToastyMittens __instance, PlayerChoiceContext choiceContext, Player player, ref Task __result)
     {
         if (Disabled)
         {
             return true;
         }
 
-        if (__instance is not ToastyMittens toastyMittens || player != toastyMittens.Owner)
+        if (player != __instance.Owner)
         {
             return true;
         }
 
-        __result = AfterPlayerTurnStart(toastyMittens, choiceContext, player);
-        return false;
-    }
-
-    [HarmonyPatch(typeof(ToastyMittens), "BeforeHandDraw")]
-    [HarmonyPrefix]
-    [UsedImplicitly]
-    private static bool PreFix_BeforeHandDraw(ToastyMittens __instance, Player player, PlayerChoiceContext choiceContext, CombatState combatState, ref Task __result)
-    {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __result = Task.CompletedTask;
+        __result = AfterPlayerTurnStart(__instance, choiceContext, player);
         return false;
     }
 

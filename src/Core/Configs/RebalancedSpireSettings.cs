@@ -56,6 +56,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("hand_trick")]
     public bool HandTrick { get; set; } = true;
 
+    [JsonPropertyName("haze")]
+    public bool Haze { get; set; } = true;
+
     [JsonPropertyName("hidden_daggers")]
     public bool HiddenDaggers { get; set; } = true;
 
@@ -65,11 +68,11 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("master_planner")]
     public bool MasterPlanner { get; set; } = true;
 
+    [JsonPropertyName("mirage")]
+    public bool Mirage { get; set; } = true;
+
     [JsonPropertyName("poisoned_stab")]
     public bool PoisonedStab { get; set; } = true;
-
-    [JsonPropertyName("scare")]
-    public bool Scare { get; set; } = true;
 
     [JsonPropertyName("shadowmeld")]
     public bool Shadowmeld { get; set; } = true;
@@ -160,6 +163,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("refract")]
     public bool Refract { get; set; } = true;
+
+    [JsonPropertyName("rocket_punch")]
+    public bool RocketPunch { get; set; } = true;
 
     [JsonPropertyName("shatter")]
     public bool Shatter { get; set; } = true;

@@ -20,11 +20,12 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> BouncingFlask { get; private init; } = null!;
     public IModSettingsValueBinding<bool> FlickFlack { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HandTrick { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Haze { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HiddenDaggers { get; private init; } = null!;
     public IModSettingsValueBinding<bool> InfiniteBlades { get; private init; } = null!;
     public IModSettingsValueBinding<bool> MasterPlanner { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> Mirage { get; private init; } = null!;
     public IModSettingsValueBinding<bool> PoisonedStab { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> Scare { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Shadowmeld { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Untouchable { get; private init; } = null!;
     public IModSettingsValueBinding<bool> UpMySleeve { get; private init; } = null!;
@@ -54,6 +55,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Glasswork { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Leap { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Refract { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> RocketPunch { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Shatter { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Spinner { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Synchronize { get; private init; } = null!;
@@ -202,11 +204,12 @@ internal sealed class RebalancedSpireSettingsUiBindings
             BouncingFlask = B(s => s.BouncingFlask, (s, v) => s.BouncingFlask = v, () => defaults.BouncingFlask),
             FlickFlack = B(s => s.FlickFlack, (s, v) => s.FlickFlack = v, () => defaults.FlickFlack),
             HandTrick = B(s => s.HandTrick, (s, v) => s.HandTrick = v, () => defaults.HandTrick),
+            Haze = B(s => s.Haze, (s, v) => s.Haze = v, () => defaults.Haze),
             HiddenDaggers = B(s => s.HiddenDaggers, (s, v) => s.HiddenDaggers = v, () => defaults.HiddenDaggers),
             InfiniteBlades = B(s => s.InfiniteBlades, (s, v) => s.InfiniteBlades = v, () => defaults.InfiniteBlades),
             MasterPlanner = B(s => s.MasterPlanner, (s, v) => s.MasterPlanner = v, () => defaults.MasterPlanner),
+            Mirage = B(s => s.Mirage, (s, v) => s.Mirage = v, () => defaults.Mirage),
             PoisonedStab = B(s => s.PoisonedStab, (s, v) => s.PoisonedStab = v, () => defaults.PoisonedStab),
-            Scare = B(s => s.Scare, (s, v) => s.Scare = v, () => defaults.Scare),
             Shadowmeld = B(s => s.Shadowmeld, (s, v) => s.Shadowmeld = v, () => defaults.Shadowmeld),
             Untouchable = B(s => s.Untouchable, (s, v) => s.Untouchable = v, () => defaults.Untouchable),
             UpMySleeve = B(s => s.UpMySleeve, (s, v) => s.UpMySleeve = v, () => defaults.UpMySleeve),
@@ -236,6 +239,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Glasswork = B(s => s.Glasswork, (s, v) => s.Glasswork = v, () => defaults.Glasswork),
             Leap = B(s => s.Leap, (s, v) => s.Leap = v, () => defaults.Leap),
             Refract = B(s => s.Refract, (s, v) => s.Refract = v, () => defaults.Refract),
+            RocketPunch = B(s => s.RocketPunch, (s, v) => s.RocketPunch = v, () => defaults.RocketPunch),
             Shatter = B(s => s.Shatter, (s, v) => s.Shatter = v, () => defaults.Shatter),
             Spinner = B(s => s.Spinner, (s, v) => s.Spinner = v, () => defaults.Spinner),
             Synchronize = B(s => s.Synchronize, (s, v) => s.Synchronize = v, () => defaults.Synchronize),

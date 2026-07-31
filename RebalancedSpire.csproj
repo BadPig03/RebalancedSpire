@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.4.61" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.5.0" />
     </ItemGroup>
     
     <ItemGroup>
@@ -176,8 +176,6 @@
       <Content Include="images\powers\big\rebalanced_spire_power_minion_fake_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_omnidynamics_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_omnidynamics_power.png.import" />
-      <Content Include="images\powers\big\rebalanced_spire_power_pillar_of_creation_plus_power.png" />
-      <Content Include="images\powers\big\rebalanced_spire_power_pillar_of_creation_plus_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_ping_pong_power.png" />
       <Content Include="images\powers\big\rebalanced_spire_power_ping_pong_power.png.import" />
       <Content Include="images\powers\big\rebalanced_spire_power_plow_plus_power.png" />
@@ -240,8 +238,6 @@
       <Content Include="images\powers\rebalanced_spire_power_minion_fake_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_omnidynamics_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_omnidynamics_power.png.import" />
-      <Content Include="images\powers\rebalanced_spire_power_pillar_of_creation_plus_power.png" />
-      <Content Include="images\powers\rebalanced_spire_power_pillar_of_creation_plus_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_ping_pong_power.png" />
       <Content Include="images\powers\rebalanced_spire_power_ping_pong_power.png.import" />
       <Content Include="images\powers\rebalanced_spire_power_plow_plus_power.png" />
@@ -330,6 +326,7 @@
       <Content Include="src\Core\Harmony\Cards\Defect\GlassworkPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\LeapPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\RefractPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Defect\RocketPunchPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\ShatterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\SpinnerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\SynchronizePatch.cs.uid" />
@@ -370,10 +367,11 @@
       <Content Include="src\Core\Harmony\Cards\Silent\BouncingFlaskPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\FlickFlackPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HandTrickPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\HazePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HiddenDaggersPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\InfiniteBladesPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\MasterPlannerPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Cards\Silent\ScarePatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Silent\MiragePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\PoisonedStabPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\ShadowmeldPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\UntouchablePatch.cs.uid" />

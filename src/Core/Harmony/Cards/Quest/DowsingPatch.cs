@@ -4,6 +4,7 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 
 [HarmonyPatch]
@@ -26,6 +27,25 @@ public static class DowsingPatch
         {
             new("Rooms", 4)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(CardModel), "AfterCreated")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_AfterCreated(CardModel __instance)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Dowsing dowsing)
+        {
+            return true;
+        }
+
+        dowsing.RoomsEntered++;
         return false;
     }
 }
