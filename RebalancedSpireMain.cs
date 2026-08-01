@@ -18,8 +18,7 @@ public partial class RebalancedSpireMain : Node
     internal const string ModId = "RebalancedSpire";
     internal const string SettingsKey = "settings";
     internal const string SettingsFileName = "settings.json";
-
-    public const string Version = "v0.3.6-beta";
+    public const string Version = "v0.3.7-beta";
 
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
 

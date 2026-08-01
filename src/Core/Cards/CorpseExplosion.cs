@@ -15,7 +15,7 @@ using STS2RitsuLib.Scaffolding.Content;
 
 [RegisterCard(typeof(SilentCardPool))]
 [UsedImplicitly]
-public sealed class CorpseExplosion() : ModCardTemplate(2, CardType.Skill, CardRarity.Ancient, TargetType.AnyEnemy, !Disabled)
+public sealed class CorpseExplosion() : ModCardTemplate(1, CardType.Skill, CardRarity.Ancient, TargetType.AnyEnemy, !Disabled)
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DustyTome;
 

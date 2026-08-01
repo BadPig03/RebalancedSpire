@@ -22,6 +22,11 @@ public static class CrusherPatch
 
     private static async Task EnlargingStrikeMove(Crusher instance, IReadOnlyList<Creature> targets)
     {
+        if (instance.Background == null)
+        {
+            return;
+        }
+
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_left_attack_slam");
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_med", 0.65f);
         await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), targets, WeakPowerAmount, instance.Creature, null);
@@ -29,6 +34,11 @@ public static class CrusherPatch
 
     private static async Task BugStingMove(Crusher instance)
     {
+        if (instance.Background == null)
+        {
+            return;
+        }
+
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_left_attack_scissor");
         await instance.Background.PlayAttackAnim(NKaiserCrabBossBackground.ArmSide.Left, "attack_double", 0.5f);
         await DamageCmd.Attack(instance.BugStingDamage).WithHitCount(instance.BugStingTimes).FromMonster(instance).WithHitFx("vfx/vfx_attack_slash").Execute(null);

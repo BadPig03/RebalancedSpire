@@ -26,7 +26,7 @@ public static class LostWispPatch
             return;
         }
 
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.Damage, null, null);
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.Damage, null!, null);
         await RelicCmd.Obtain<MegaCrit.Sts2.Core.Models.Relics.LostWisp>(instance.Owner);
         instance.SetEventFinished(instance.L10NLookup("LOST_WISP.pages.CLAIM.description"));
     }

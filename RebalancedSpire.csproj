@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.5.0" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.5.3" />
     </ItemGroup>
     
     <ItemGroup>

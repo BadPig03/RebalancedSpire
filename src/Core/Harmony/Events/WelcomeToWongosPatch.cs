@@ -26,7 +26,7 @@ public static class WelcomeToWongosPatch
             return;
         }
 
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.Damage, null, null);
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.Damage, null!, null);
         instance.SetEventFinished(instance.L10NLookup("REBALANCED_SPIRE_EVENT_WELCOME_TO_WONGOS.pages.LEAVE.description"));
     }
 
