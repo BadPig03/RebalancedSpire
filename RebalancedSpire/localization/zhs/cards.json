@@ -18,7 +18,7 @@
   "REBALANCED_SPIRE_CARD_MASTER_PLANNER.description": "每当你丢弃[gold]奇巧[/gold]牌时，抽{Cards:diff()}张牌。",
   "REBALANCED_SPIRE_CARD_NEUTRON_AEGIS.description": "获得X层[gold]覆甲[/gold]。\n如果X的最终数值为{Stars:diff()}或以上，则将X的数值翻倍。",
   "REBALANCED_SPIRE_CARD_LEAP.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合获得{FocusPower:diff()}点[gold]集中[/gold]。",
-  "REBALANCED_SPIRE_CARD_LIMIT_BREAK.description": "将你的[gold]力量[/gold]翻倍。",
+  "REBALANCED_SPIRE_CARD_LIMIT_BREAK.description": "获得{StrengthPower:diff()}点[gold]力量[/gold]。\n将你的[gold]力量[/gold]翻倍。",
   "REBALANCED_SPIRE_CARD_LIMIT_BREAK.title": "突破极限",
   "REBALANCED_SPIRE_CARD_POISONED_STAB.description": "添加{Cards:diff()}张[purple]剧毒[/purple][gold]{IfUpgraded:show:小刀+|小刀}[/gold]到你的[gold]手牌[/gold]。",
   "REBALANCED_SPIRE_CARD_REAPER_FORM.description": "每当你的攻击造成伤害时，同时给予等量的[gold]灾厄[/gold]。{IfUpgraded:show:\n在你的回合结束时，杀死[gold]灾厄[/gold]大于等于其生命值的敌人。|}",

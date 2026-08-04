@@ -16,7 +16,7 @@
   "REBALANCED_SPIRE_CARD_HIDDEN_DAGGERS.description": "Discard {Cards:diff()} {Cards:plural:card|cards}.\nAdd {Cards:diff()} [purple]Energetic[/purple] [gold]{Cards:plural:Shiv|Shivs}[/gold] into your [gold]Hand[/gold].",
   "REBALANCED_SPIRE_CARD_INFINITE_BLADES.description": "At the start of your turn, add 1 [gold]Shiv[/gold] into your [gold]Hand[/gold].\n{Cards:diff()} [gold]{Cards:plural:Shiv|Shivs}[/gold] do not count toward your [gold]Hand Size[/gold].",
   "REBALANCED_SPIRE_CARD_LEAP.description": "Gain {Block:diff()} [gold]Block[/gold].\nGain {FocusPower:diff()} [gold]Focus[/gold] this turn.",
-  "REBALANCED_SPIRE_CARD_LIMIT_BREAK.description": "Double your [gold]Strength[/gold].",
+  "REBALANCED_SPIRE_CARD_LIMIT_BREAK.description": "Gain {StrengthPower:diff()} [gold]Strength[/gold].\nDouble your [gold]Strength[/gold].",
   "REBALANCED_SPIRE_CARD_LIMIT_BREAK.title": "Limit Break",
   "REBALANCED_SPIRE_CARD_MASTER_PLANNER.description": "Whenever you discard a [gold]Sly[/gold] card, draw {Cards:diff()} {Cards:plural:card|cards}.",
   "REBALANCED_SPIRE_CARD_NEUTRON_AEGIS.description": "Gain X [gold]Plating[/gold].\nDouble X if it's {Stars:diff()} or more.",

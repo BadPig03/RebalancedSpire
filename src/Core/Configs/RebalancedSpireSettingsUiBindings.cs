@@ -43,6 +43,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Defy { get; private init; } = null!;
     public IModSettingsValueBinding<bool> GraveWarden { get; private init; } = null!;
     public IModSettingsValueBinding<bool> PullAggro { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> ReaperForm { get; private init; } = null!;
     public IModSettingsValueBinding<bool> RightHandHand { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Seance { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SicEm { get; private init; } = null!;
@@ -227,6 +228,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Defy = B(s => s.Defy, (s, v) => s.Defy = v, () => defaults.Defy),
             GraveWarden = B(s => s.GraveWarden, (s, v) => s.GraveWarden = v, () => defaults.GraveWarden),
             PullAggro = B(s => s.PullAggro, (s, v) => s.PullAggro = v, () => defaults.PullAggro),
+            ReaperForm = B(s => s.ReaperForm, (s, v) => s.ReaperForm = v, () => defaults.ReaperForm),
             RightHandHand = B(s => s.RightHandHand, (s, v) => s.RightHandHand = v, () => defaults.RightHandHand),
             Seance = B(s => s.Seance, (s, v) => s.Seance = v, () => defaults.Seance),
             SicEm = B(s => s.SicEm, (s, v) => s.SicEm = v, () => defaults.SicEm),

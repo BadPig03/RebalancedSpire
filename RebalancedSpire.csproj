@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.5.3" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.5.8" />
     </ItemGroup>
     
     <ItemGroup>
@@ -538,7 +538,6 @@
       <Content Include="src\Core\Powers\MasterPlannerPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\MinionFakePower.cs.uid" />
       <Content Include="src\Core\Powers\OmnidynamicsPower.cs.uid" />
-      <Content Include="src\Core\Powers\PillarOfCreationPlusPower.cs.uid" />
       <Content Include="src\Core\Powers\PingPongPower.cs.uid" />
       <Content Include="src\Core\Powers\PlowedPower.cs.uid" />
       <Content Include="src\Core\Powers\PlowPlusPower.cs.uid" />

@@ -61,6 +61,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("defy", L("the_necrobinder.section.defy.title"), ui.Defy, L("the_necrobinder.section.defy.description"))
                 .AddToggle("grave_warden", L("the_necrobinder.section.grave_warden.title"), ui.GraveWarden, L("the_necrobinder.section.grave_warden.description"))
                 .AddToggle("pull_aggro", L("the_necrobinder.section.pull_aggro.title"), ui.PullAggro, L("the_necrobinder.section.pull_aggro.description"))
+                .AddToggle("reaper_form", L("the_necrobinder.section.reaper_form.title"), ui.ReaperForm, L("the_necrobinder.section.reaper_form.description"))
                 .AddToggle("right_hand_hand", L("the_necrobinder.section.right_hand_hand.title"), ui.RightHandHand, L("the_necrobinder.section.right_hand_hand.description"))
                 .AddToggle("seance", L("the_necrobinder.section.seance.title"), ui.Seance, L("the_necrobinder.section.seance.description"))
                 .AddToggle("sic_em", L("the_necrobinder.section.sic_em.title"), ui.SicEm, L("the_necrobinder.section.sic_em.description"))

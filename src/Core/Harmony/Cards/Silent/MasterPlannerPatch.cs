@@ -89,7 +89,7 @@ public static class MasterPlannerPatch
             return true;
         }
 
-        __instance.EnergyCost.UpgradeBy(-1);
+        __instance.DynamicVars.Cards.UpgradeValueBy(1);
         return false;
     }
 }
