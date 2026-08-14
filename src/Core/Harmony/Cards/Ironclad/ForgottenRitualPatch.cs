@@ -3,6 +3,8 @@
 using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -24,7 +26,7 @@ public static class ForgottenRitualPatch
     {
         NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NGroundFireVfx.Create(instance.Owner.Creature, VfxColor.Purple));
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
-        if (instance.WasCardExhaustedThisTurn)
+        if (CombatManager.Instance.History.Entries.OfType<CardExhaustedEntry>().Any(e => e.HappenedThisTurn(instance.CombatState) && e.Actor == instance.Owner.Creature))
         {
             await PlayerCmd.GainEnergy(instance.DynamicVars.Energy.IntValue, instance.Owner);
         }

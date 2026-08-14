@@ -4,6 +4,7 @@
   "REBALANCED_SPIRE_CARD_CONSUMING_SHADOW.description": "记录你最后[gold]激发[/gold]的[gold]黑暗[/gold]充能球的伤害。新生成的[gold]黑暗[/gold]充能球会继承其一半的伤害。",
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.description": "给予{PoisonPower:diff()}层[gold]中毒[/gold]。\n当这名敌人死亡时，对所有敌人造成等于其最大生命值的伤害。",
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.title": "尸爆术",
+  "REBALANCED_SPIRE_CARD_EXPECT_A_FIGHT.description": "你的[gold]手牌[/gold]中每有一张攻击牌，就获得{energyPrefix:energyIcons(1)}。{InCombat:\n（获得{CalculatedEnergy:energyIcons()}）|}",
   "REBALANCED_SPIRE_CARD_ETERNAL_ARMOR.description": "获得{PlatingPower:diff()}层[gold]覆甲[/gold]。\n[gold]覆甲[/gold]的层数不再减少。",
   "REBALANCED_SPIRE_CARD_FOREGONE_CONCLUSION.description": "在你的回合开始前，从你的[gold]抽牌堆[/gold]中选择1张牌放入你的[gold]抽牌堆[/gold]顶部。",
   "REBALANCED_SPIRE_CARD_FORGOTTEN_RITUAL.description": "如果你在本回合[gold]消耗过[/gold]卡牌，则获得{Energy:energyIcons()}。\n这张牌的耗能加1。",

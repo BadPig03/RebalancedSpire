@@ -4,6 +4,7 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -29,6 +30,25 @@ public class InkyPatch
             new DamageVar(2, ValueProp.Move),
             new PowerVar<WeakPower>(1)
         }.AsReadOnly();
+        return false;
+    }
+
+    [HarmonyPatch(typeof(EnchantmentModel), "EnchantDamageAdditive")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_EnchantDamageAdditive(EnchantmentModel __instance, decimal originalDamage, ValueProp props, ref decimal __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Inky inky)
+        {
+            return true;
+        }
+
+        __result = !props.IsPoweredAttack() ? 0 : inky.DynamicVars.Damage.BaseValue;
         return false;
     }
 }

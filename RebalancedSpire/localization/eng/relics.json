@@ -1,6 +1,7 @@
 ﻿{
   "REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER.description": "Upon pickup, gain [blue]{PotionSlots}[/blue] empty potion slots and start tracking your last used potion. At the end of combat, gain an additional copy of that potion.",
   "REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER.eventDescription": "Gain [blue]{PotionSlots}[/blue] empty potion slots and start tracking your last used potion. At the end of combat, gain an additional copy of that potion.",
+  "REBALANCED_SPIRE_RELIC_BEAUTIFUL_BRACELET.description": "Upon pickup, [gold]Enchant[/gold] [blue]{Cards}[/blue] random {Cards:plural:card|cards} in your [gold]Deck[/gold] with [purple]Swift[/purple] [blue]{Swift}[/blue].",
   "REBALANCED_SPIRE_RELIC_BIG_MUSHROOM.eventDescription": "Draw [blue]{Cards}[/blue] [red]fewer {Cards:plural:card|cards}[/red] at the start of each combat. Raise your Max HP by [green]{MaxHp}[/green].",
   "REBALANCED_SPIRE_RELIC_BOOMING_CONCH.description": "The first [blue]{Cards}[/blue] cards you play are free to play in [gold]Elite[/gold] combats.",
   "REBALANCED_SPIRE_RELIC_CHOICES_PARADOX.description": "At the start of each combat, add [blue]1[/blue] of [blue]{Cards}[/blue] [gold]Upgraded[/gold] random cards into your [gold]Hand[/gold]. Add [gold]Retain[/gold] to the chosen card.",

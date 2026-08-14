@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.5.8" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.5.12" />
     </ItemGroup>
     
     <ItemGroup>
@@ -318,6 +318,8 @@
       <Content Include="src\Core\Harmony\Cards\Colorless\BolasPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Colorless\EternalArmorPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Colorless\RollingBoulderPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Colorless\SalvoPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Colorless\SplashPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Curse\EnthralledPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Curse\FollyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\ConsumingShadowPatch.cs.uid" />
@@ -337,6 +339,7 @@
       <Content Include="src\Core\Harmony\Cards\Ironclad\BloodWallPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ColossusPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\DominatePatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Ironclad\ExpectAFightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\ForgottenRitualPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\TankPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\AfterlifePatch.cs.uid" />
@@ -406,6 +409,7 @@
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\MechaKnightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\SoulNexusPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Elite\SpectralKnightPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Monsters\Glory\Normal\AxebotPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Normal\FabricatorPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Normal\FrogKnightPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Monsters\Glory\Normal\GlobeHeadPatch.cs.uid" />
@@ -484,6 +488,7 @@
       <Content Include="src\Core\Harmony\Powers\SkittishPowerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\RelicPools\EventRelicPoolPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\AlchemicalCofferPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\BeautifulBraceletPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\BigMushroomPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\ChoicesParadoxPatch.cs.uid" />
@@ -503,6 +508,7 @@
       <Content Include="src\Core\Harmony\Relics\NutritiousOysterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\PomanderPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\PreservedFogPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\RegalitePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SwordOfJadePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SwordOfStonePatch.cs.uid" />

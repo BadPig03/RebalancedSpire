@@ -23,6 +23,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("blood_wall", L("the_ironclad.section.blood_wall.title"), ui.BloodWall, L("the_ironclad.section.blood_wall.description"))
                 .AddToggle("colossus", L("the_ironclad.section.colossus.title"), ui.Colossus, L("the_ironclad.section.colossus.description"))
                 .AddToggle("dominate", L("the_ironclad.section.dominate.title"), ui.Dominate, L("the_ironclad.section.dominate.description"))
+                .AddToggle("expect_a_fight", L("the_ironclad.section.expect_a_fight.title"), ui.ExpectAFight, L("the_ironclad.section.expect_a_fight.description"))
                 .AddToggle("forgotten_ritual", L("the_ironclad.section.forgotten_ritual.title"), ui.ForgottenRitual, L("the_ironclad.section.forgotten_ritual.description"))
                 .AddToggle("tank", L("the_ironclad.section.tank.title"), ui.Tank, L("the_ironclad.section.tank.description"))
             ).AddSection("the_silent", s => s
@@ -87,6 +88,8 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("bolas", L("the_colorless.section.bolas.title"), ui.Bolas, L("the_colorless.section.bolas.description"))
                 .AddToggle("eternal_armor", L("the_colorless.section.eternal_armor.title"), ui.EternalArmor, L("the_colorless.section.eternal_armor.description"))
                 .AddToggle("rolling_boulder", L("the_colorless.section.rolling_boulder.title"), ui.RollingBoulder, L("the_colorless.section.rolling_boulder.description"))
+                .AddToggle("salvo", L("the_colorless.section.salvo.title"), ui.Salvo, L("the_colorless.section.salvo.description"))
+                .AddToggle("splash", L("the_colorless.section.splash.title"), ui.Splash, L("the_colorless.section.splash.description"))
             ), "cards"
         );
 
@@ -124,6 +127,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("darv_ancient_choices", L("darv.section.darv_ancient_choices.title"), ui.DarvAncientChoices, L("darv.section.darv_ancient_choices.description"))
             ).AddSection("nonupeipe", s => s
                 .WithTitle(L("nonupeipe.section.label"))
+                .AddToggle("beautiful_bracelet", L("nonupeipe.section.beautiful_bracelet.title"), ui.BeautifulBracelet, L("nonupeipe.section.beautiful_bracelet.description"))
                 .AddToggle("diamond_diadem", L("nonupeipe.section.diamond_diadem.title"), ui.DiamondDiadem, L("nonupeipe.section.diamond_diadem.description"))
                 .AddToggle("looming_fruit", L("nonupeipe.section.looming_fruit.title"), ui.LoomingFruit, L("nonupeipe.section.looming_fruit.description"))
             ).AddSection("tanx", s => s
@@ -142,6 +146,9 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("whispering_earring", L("vakuu.section.whispering_earring.title"), ui.WhisperingEarring, L("vakuu.section.whispering_earring.description"))
                 .AddToggle("vakuu_ancient_choices", L("vakuu.section.vakuu_ancient_choices.title"), ui.VakuuAncientChoices, L("vakuu.section.vakuu_ancient_choices.description"))
                 .AddToggle("vakuu_fixed_art", L("vakuu.section.vakuu_fixed_art.title"), ui.VakuuFixedArt, L("vakuu.section.vakuu_fixed_art.description"))
+            ).AddSection("regent", s => s
+                .WithTitle(L("regent.section.label"))
+                .AddToggle("regalite", L("regent.section.regalite.title"), ui.Regalite, L("regent.section.regalite.description"))
             ), "relics"
         );
 
@@ -245,6 +252,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("the_insatiable", L("hive.section.the_insatiable.title"), ui.TheInsatiable, L("hive.section.the_insatiable.description"))
             ).AddSection("glory", s => s
                 .WithTitle(L("glory.section.label"))
+                .AddToggle("axebot", L("glory.section.axebot.title"), ui.Axebot, L("glory.section.axebot.description"))
                 .AddToggle("fabricator", L("glory.section.fabricator.title"), ui.Fabricator, L("glory.section.fabricator.description"))
                 .AddToggle("frog_knight", L("glory.section.frog_knight.title"), ui.FrogKnight, L("glory.section.frog_knight.description"))
                 .AddToggle("globe_head", L("glory.section.globe_head.title"), ui.GlobeHead, L("glory.section.globe_head.description"))

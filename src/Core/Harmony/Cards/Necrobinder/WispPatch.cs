@@ -94,4 +94,23 @@ public static class WispPatch
         __instance.DynamicVars.Energy.UpgradeValueBy(1);
         return false;
     }
+
+    [HarmonyPatch(typeof(CardModel), "ShouldGlowGoldInternal", MethodType.Getter)]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_ShouldGlowGoldInternal(CardModel __instance, ref bool __result)
+    {
+        if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not Wisp)
+        {
+            return true;
+        }
+
+        __result = PileType.Draw.GetPile(__instance.Owner).Cards.OfType<Soul>().Any();
+        return false;
+    }
 }

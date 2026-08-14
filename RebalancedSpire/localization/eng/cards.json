@@ -5,6 +5,7 @@
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.description": "Apply {PoisonPower:diff()} [gold]Poison[/gold]. \nWhen the enemy dies, deal damage equal to its Max HP to ALL enemies.",
   "REBALANCED_SPIRE_CARD_CORPSE_EXPLOSION.title": "Corpse Explosion",
   "REBALANCED_SPIRE_CARD_ETERNAL_ARMOR.description": "Gain {PlatingPower:diff()} [gold]Plating[/gold].",
+  "REBALANCED_SPIRE_CARD_EXPECT_A_FIGHT.description": "Gain {energyPrefix:energyIcons(1)} for each Attack in your [gold]Hand[/gold].{InCombat:\n(Gain {CalculatedEnergy:energyIcons()})|}",
   "REBALANCED_SPIRE_CARD_FOREGONE_CONCLUSION.description": "Before your turn starts, put {Cards:diff()} {Cards:plural:card|cards} from your [gold]Draw Pile[/gold] on top of your [gold]Draw Pile[/gold].",
   "REBALANCED_SPIRE_CARD_FORGOTTEN_RITUAL.description": "If you [gold]Exhausted[/gold] a card this turn, gain {Energy:energyIcons()}.\nIncrease this card's cost by 1.",
   "REBALANCED_SPIRE_CARD_FUEL.description": "Gain {Energy:energyIcons()}.\nDraw {Cards:diff()} {Cards:plural:card|cards}.",

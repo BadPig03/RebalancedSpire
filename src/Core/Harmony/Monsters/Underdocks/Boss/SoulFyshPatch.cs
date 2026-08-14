@@ -4,6 +4,8 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Ascension;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
@@ -47,5 +49,18 @@ public static class SoulFyshPatch
         list.Add(moveState4);
         __result = new MonsterMoveStateMachine(list, moveState);
         return false;
+    }
+
+    [HarmonyPatch(typeof(SoulFysh), "DeGasDamage", MethodType.Getter)]
+    [HarmonyPostfix]
+    [UsedImplicitly]
+    private static void ReduceDeGasDamage(ref int __result)
+    {
+        if (Disabled)
+        {
+            return;
+        }
+
+        __result = AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 17, 16);
     }
 }

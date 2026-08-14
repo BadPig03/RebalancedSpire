@@ -12,7 +12,6 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Runs;
 
@@ -71,7 +70,8 @@ public static class DustyTomePatch
 
         __result = new List<DynamicVar>
         {
-            new CardsVar(3)
+            new CardsVar(3),
+            new StringVar("AncientCard")
         }.AsReadOnly();
         return false;
     }
@@ -133,12 +133,6 @@ public static class DustyTomePatch
     [UsedImplicitly]
     private static bool PreFix_SetupForPlayer(DustyTome __instance, Player player)
     {
-        if (Disabled)
-        {
-            return true;
-        }
-
-        __instance.AncientCard = ModelDb.Card<DeprecatedCard>().Id;
-        return false;
+        return Disabled;
     }
 }

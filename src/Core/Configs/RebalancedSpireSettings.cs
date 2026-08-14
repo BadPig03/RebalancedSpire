@@ -29,6 +29,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("dominate")]
     public bool Dominate { get; set; } = true;
 
+    [JsonPropertyName("expect_a_fight")]
+    public bool ExpectAFight { get; set; } = true;
+
     [JsonPropertyName("forgotten_ritual")]
     public bool ForgottenRitual { get; set; } = true;
 
@@ -191,6 +194,12 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("rolling_boulder")]
     public bool RollingBoulder { get; set; } = true;
 
+    [JsonPropertyName("salvo")]
+    public bool Salvo { get; set; } = true;
+
+    [JsonPropertyName("splash")]
+    public bool Splash { get; set; } = true;
+
     [JsonPropertyName("booming_conch")]
     public bool BoomingConch { get; set; } = true;
 
@@ -239,6 +248,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("darv_ancient_choices")]
     public bool DarvAncientChoices { get; set; } = true;
 
+    [JsonPropertyName("beautiful_bracelet")]
+    public bool BeautifulBracelet { get; set; } = true;
+
     [JsonPropertyName("diamond_diadem")]
     public bool DiamondDiadem { get; set; } = true;
 
@@ -280,6 +292,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("vakuu_fixed_art")]
     public bool VakuuFixedArt { get; set; } = true;
+
+    [JsonPropertyName("regalite")]
+    public bool Regalite { get; set; } = true;
 
     [JsonPropertyName("morphic_grove")]
     public bool MorphicGrove { get; set; } = true;
@@ -469,6 +484,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("the_insatiable")]
     public bool TheInsatiable { get; set; } = true;
+
+    [JsonPropertyName("axebot")]
+    public bool Axebot { get; set; } = true;
 
     [JsonPropertyName("fabricator")]
     public bool Fabricator { get; set; } = true;

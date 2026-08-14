@@ -5,6 +5,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Extensions;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
 
@@ -30,7 +31,9 @@ public static class DarvPatch
         }
 
         var list = Darv._validRelicSets.Where(s => s.filter(__instance.Owner)).Select(s => SrcHelpers.RelicOption(__instance, __instance.Rng.NextItem(s.relics)!.ToMutable())).ToList().UnstableShuffle(__instance.Rng).Take(2).ToList();
-        list.Add(SrcHelpers.RelicOption<DustyTome>(__instance));
+        var dustyTome = (DustyTome) ModelDb.Relic<DustyTome>().ToMutable();
+        dustyTome.SetupForPlayer(__instance.Owner);
+        list.Add(SrcHelpers.RelicOption(__instance, dustyTome));
         __result = list.AsReadOnly();
         return false;
     }
