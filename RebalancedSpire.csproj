@@ -512,7 +512,6 @@
       <Content Include="src\Core\Harmony\Relics\SereTalonPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SwordOfJadePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\SwordOfStonePatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Relics\ToastyMittensPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="src\Core\Harmony\RitsuLib\MainMenuModSettingsButtonPatchPatch.cs.uid" />

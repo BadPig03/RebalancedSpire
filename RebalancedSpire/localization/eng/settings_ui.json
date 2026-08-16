@@ -136,7 +136,7 @@
   "the_colorless.section.rolling_boulder.title": "Rolling Boulder",
   "the_colorless.section.rolling_boulder.description": "When enabled:\nOld: Power - Rare - Cost 3 - At the start of your turn, deal 5 (10) damage to ALL enemies, then increase this damage by 5.\nNew: Power - Rare - Cost 3 - At the start of your turn, deal 10 (15) damage to ALL enemies, then increase this damage by 10.",
   "the_colorless.section.salvo.title": "Salvo",
-  "the_colorless.section.salvo.description": "When enabled, damage is decreased from 12 (16) to 9 (13).",
+  "the_colorless.section.salvo.description": "When enabled:\nOld: Attack - Rare - Cost 1 - Deal 9 (13) damage. [gold]Retain[/gold] your [gold]Hand[/gold] this turn.\nNew: Attack - Rare - Cost 1 - Deal 8 (11) damage to ALL enemies. [gold]Retain[/gold] your [gold]Hand[/gold] this turn.",
   "the_colorless.section.splash.title": "Splash",
   "the_colorless.section.splash.description": "When enabled, cost is reduced from 1 to 0.",
 
@@ -172,8 +172,6 @@
   "tezcatara.section.label": "Tezcatara",
   "tezcatara.section.biiig_hug.title": "Biiig Hug",
   "tezcatara.section.biiig_hug.description": "When enabled: Upon pickup, remove [blue]4[/blue] cards from your [gold]Deck[/gold]. Whenever you shuffle your [gold]Draw Pile[/gold], add a [gold]Soot[/gold] to your [gold]Draw Pile[/gold].\n[gold]Soot[/gold]:\n - Old: Status - [gold]Unplayable[/gold].\n - New: Status - Cost 1 - [gold]Exhaust[/gold].",
-  "tezcatara.section.toasty_mittens.title": "Toasty Mittens",
-  "tezcatara.section.toasty_mittens.description": "When enabled:\nOld: Ancient - At the start of your turn, [gold]Exhaust[/gold] the top card of your [gold]Draw Pile[/gold] and gain [blue]1[/blue] [gold]Strength[/gold].\nNew: Ancient - At the start of your turn, choose [blue]1[/blue] of the bottom [blue]5[/blue] cards of your [gold]Draw Pile[/gold] to [gold]Exhaust[/gold], and gain [blue]1[/blue] [gold]Strength[/gold].",
   "darv.section.label": "Darv",
   "darv.section.dusty_tome.title": "Dusty Tome",
   "darv.section.dusty_tome.description": "When enabled:\nOld: Ancient - Upon pickup, obtain an [gold]Ancient Card[/gold].\nNew: Ancient - Upon pickup, choose [blue]1[/blue] of [blue]3[/blue] upgraded [gold]Ancient Cards[/gold] to add to your [gold]Deck[/gold].",

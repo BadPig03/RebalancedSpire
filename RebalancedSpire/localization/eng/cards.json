@@ -25,6 +25,7 @@
   "REBALANCED_SPIRE_CARD_REAPER_FORM.description": "Whenever Attacks deal damage, apply that much [gold]Doom[/gold].{IfUpgraded:show:\nAt the start of your turn, kill enemies with at least as much [gold]Doom[/gold] as HP.|}",
   "REBALANCED_SPIRE_CARD_REFRACT.description": "[gold]Channel[/gold] {Repeat:diff()} [gold]Glass[/gold].",
   "REBALANCED_SPIRE_CARD_RIGHT_HAND_HAND.description": "[gold]Osty[/gold] deals {OstyDamage:diff()} damage.\nWhenever you play a card costing {Required:energyIcons()} or more, put this into your [gold]Hand[/gold] and reduce its cost by {Energy:energyIcons()}.",
+  "REBALANCED_SPIRE_CARD_SALVO.description": "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Retain[/gold] your [gold]Hand[/gold] this turn.",
   "REBALANCED_SPIRE_CARD_SEANCE.description": "Transform a card in your [gold]Draw Pile[/gold] into [gold]{IfUpgraded:show:Soul+|Soul}[/gold].",
   "REBALANCED_SPIRE_CARD_SIC_EM.description": "[gold]Osty[/gold] deals {OstyDamage:diff()} damage.\nWhenever [gold]Osty[/gold] hits this enemy, [gold]Summon[/gold] {SicEmPlusPower:diff()}.",
   "REBALANCED_SPIRE_CARD_SHATTER.description": "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Evoke[/gold] all of your Orbs {IfUpgraded:show:twice|once}.",

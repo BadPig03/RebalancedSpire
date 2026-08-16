@@ -239,9 +239,6 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("biiig_hug")]
     public bool BiiigHug { get; set; } = true;
 
-    [JsonPropertyName("toasty_mittens")]
-    public bool ToastyMittens { get; set; } = true;
-
     [JsonPropertyName("dusty_tome")]
     public bool DustyTome { get; set; } = true;
 

@@ -25,6 +25,7 @@
   "REBALANCED_SPIRE_CARD_REAPER_FORM.description": "每当你的攻击造成伤害时，同时给予等量的[gold]灾厄[/gold]。{IfUpgraded:show:\n在你的回合结束时，杀死[gold]灾厄[/gold]大于等于其生命值的敌人。|}",
   "REBALANCED_SPIRE_CARD_REFRACT.description": "[gold]生成[/gold]{Repeat:diff()}个[gold]玻璃[/gold]充能球。",
   "REBALANCED_SPIRE_CARD_RIGHT_HAND_HAND.description": "[gold]奥斯提[/gold]造成{OstyDamage:diff()}点伤害。\n你每打出耗能为{Required:energyIcons()}或以上的牌，就将这张牌放入你的[gold]手牌[/gold]，且耗能减少{Energy:energyIcons()}。",
+  "REBALANCED_SPIRE_CARD_SALVO.description": "对所有敌人造成{Damage:diff()}点伤害。\n在本回合[gold]保留[/gold]你的[gold]手牌[/gold]。",
   "REBALANCED_SPIRE_CARD_SEANCE.description": "将你[gold]抽牌堆[/gold]中的一张牌变化为[gold]{IfUpgraded:show:灵魂+|灵魂}[/gold]。",
   "REBALANCED_SPIRE_CARD_SIC_EM.description": "[gold]奥斯提[/gold]造成{OstyDamage:diff()}点伤害。\n每当[gold]奥斯提[/gold]攻击这名敌人时，[gold]召唤[/gold]{SicEmPlusPower:diff()}。",
   "REBALANCED_SPIRE_CARD_SHATTER.description": "对所有敌人造成{Damage:diff()}点伤害。\n[gold]激发[/gold]你的所有充能球{IfUpgraded:show:2|1}次。",
