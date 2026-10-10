@@ -19,7 +19,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> BladeOfInk { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BladeSymphony { get; private init; } = null!;
     public IModSettingsValueBinding<bool> BouncingFlask { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> FlickFlack { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HandTrick { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Haze { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HiddenDaggers { get; private init; } = null!;
@@ -209,7 +208,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
             BladeOfInk = B(s => s.BladeOfInk, (s, v) => s.BladeOfInk = v, () => defaults.BladeOfInk),
             BladeSymphony = B(s => s.BladeSymphony, (s, v) => s.BladeSymphony = v, () => defaults.BladeSymphony),
             BouncingFlask = B(s => s.BouncingFlask, (s, v) => s.BouncingFlask = v, () => defaults.BouncingFlask),
-            FlickFlack = B(s => s.FlickFlack, (s, v) => s.FlickFlack = v, () => defaults.FlickFlack),
             HandTrick = B(s => s.HandTrick, (s, v) => s.HandTrick = v, () => defaults.HandTrick),
             Haze = B(s => s.Haze, (s, v) => s.Haze = v, () => defaults.Haze),
             HiddenDaggers = B(s => s.HiddenDaggers, (s, v) => s.HiddenDaggers = v, () => defaults.HiddenDaggers),

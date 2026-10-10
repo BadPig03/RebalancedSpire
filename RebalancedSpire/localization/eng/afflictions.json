@@ -1,7 +1,7 @@
 ﻿{
   "REBALANCED_SPIRE_AFFLICTION_DEVOURED.description": "Add [gold]Exhaust[/gold] to this card.",
   "REBALANCED_SPIRE_AFFLICTION_DEVOURED.title": "Devoured",
-  "REBALANCED_SPIRE_AFFLICTION_TAINTED.description": "This card costs [blue]0[/blue] and gains [gold]Exhausted[/gold]. Cards are un-[gold]Tainted[/gold] at end of turn.",
+  "REBALANCED_SPIRE_AFFLICTION_TAINTED.description": "This card costs [blue]0[/blue] and gains [gold]Exhaust[/gold]. It loses [gold]Tainted[/gold] at the end of the turn.",
   "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.description": "Return the [gold]Byrdonis Egg[/gold] and befriend the [gold]Byrdonis[/gold].",
   "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.extraCardText": "Victory.",
   "REBALANCED_SPIRE_AFFLICTION_TO_ITS_ORIGIN_OWNER.title": "To Its Origin Owner",

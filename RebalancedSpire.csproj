@@ -98,7 +98,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.5.12" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.6.7" />
     </ItemGroup>
     
     <ItemGroup>
@@ -368,7 +368,6 @@
       <Content Include="src\Core\Harmony\Cards\Silent\BladeOfInkPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BladeSymphonyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\BouncingFlaskPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Cards\Silent\FlickFlackPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HandTrickPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HazePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Silent\HiddenDaggersPatch.cs.uid" />

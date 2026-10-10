@@ -53,9 +53,6 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("bouncing_flask")]
     public bool BouncingFlask { get; set; } = true;
 
-    [JsonPropertyName("flick_flack")]
-    public bool FlickFlack { get; set; } = true;
-
     [JsonPropertyName("hand_trick")]
     public bool HandTrick { get; set; } = true;
 

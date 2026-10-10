@@ -33,7 +33,6 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("blade_of_ink", L("the_silent.section.blade_of_ink.title"), ui.BladeOfInk, L("the_silent.section.blade_of_ink.description"))
                 .AddToggle("blade_symphony", L("the_silent.section.blade_symphony.title"), ui.BladeSymphony, L("the_silent.section.blade_symphony.description"))
                 .AddToggle("bouncing_flask", L("the_silent.section.bouncing_flask.title"), ui.BouncingFlask, L("the_silent.section.bouncing_flask.description"))
-                .AddToggle("flick_flack", L("the_silent.section.flick_flack.title"), ui.FlickFlack, L("the_silent.section.flick_flack.description"))
                 .AddToggle("hand_trick", L("the_silent.section.hand_trick.title"), ui.HandTrick, L("the_silent.section.hand_trick.description"))
                 .AddToggle("haze", L("the_silent.section.haze.title"), ui.Haze, L("the_silent.section.haze.description"))
                 .AddToggle("hidden_daggers", L("the_silent.section.hidden_daggers.title"), ui.HiddenDaggers, L("the_silent.section.hidden_daggers.description"))

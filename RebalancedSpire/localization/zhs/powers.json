@@ -1,5 +1,5 @@
 ﻿{
-  "REBALANCED_SPIRE_POWER_AFTERLIFE_POWER.description": "在回合开始时，[gold]奥斯提[/gold]回复[blue]3[/blue]点生命。\n如果[gold]奥斯提[/gold]未存活，则改为[gold]召唤[/gold][blue]2[/blue]。",
+  "REBALANCED_SPIRE_POWER_AFTERLIFE_POWER.description": "在回合开始时，[gold]奥斯提[/gold]回复[blue]4[/blue]点生命。\n如果[gold]奥斯提[/gold]未存活，则改为[gold]召唤[/gold][blue]3[/blue]。",
   "REBALANCED_SPIRE_POWER_AFTERLIFE_POWER.smartDescription": "在回合开始时，[gold]奥斯提[/gold]回复[blue]{Heal:diff()}[/blue]点生命。\n如果[gold]奥斯提[/gold]未存活，则改为[gold]召唤[/gold][blue]{Summon:diff()}[/blue]。",
   "REBALANCED_SPIRE_POWER_AFTERLIFE_POWER.title": "来生",
   "REBALANCED_SPIRE_POWER_CONSUMING_SHADOW_PLUS_POWER.description": "你新生成的[gold]黑暗[/gold]充能球会继承最后记录的[gold]黑暗[/gold]充能球的[blue]50%[/blue]伤害。",
@@ -88,8 +88,8 @@
   "REBALANCED_SPIRE_POWER_SYNCHRONIZE_PLUS_POWER.description": "首次记录新种类的充能球时，获得[blue]1[/blue]点[gold]集中[/gold]。",
   "REBALANCED_SPIRE_POWER_SYNCHRONIZE_PLUS_POWER.smartDescription": "首次记录新种类的充能球时，获得[blue]{Amount}[/blue]点[gold]集中[/gold]。",
   "REBALANCED_SPIRE_POWER_SYNCHRONIZE_PLUS_POWER.title": "同步+",
-  "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.description": "每回合你前[blue]3[/blue]次打出一张攻击牌或技能牌时，[gold]手牌[/gold]中的一张攻击牌或技能牌就被侵蚀为[gold]污染[/gold]。",
-  "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.smartDescription": "每回合你前[blue]{Cards}[/blue]次你打出一张攻击牌或技能牌时，[gold]手牌[/gold]中的一张攻击牌或技能牌就被侵蚀为[gold]{AfflictionTitle}[/gold]。",
+  "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.description": "每回合你前[blue]3[/blue]次打出一张攻击牌或技能牌时，[gold]手牌[/gold]中的随机一张攻击牌或技能牌就被侵蚀为[gold]污染[/gold]。",
+  "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.smartDescription": "每回合你前[blue]{Cards}[/blue]次打出一张攻击牌或技能牌时，[gold]手牌[/gold]中的随机一张攻击牌或技能牌就被侵蚀为[gold]{AfflictionTitle}[/gold]。",
   "REBALANCED_SPIRE_POWER_TAINTED_PLUS_POWER.title": "污染+",
   "REBALANCED_SPIRE_POWER_TANK_PLUS_POWER.description": "在你的回合结束时，其他玩家获得[blue]1[/blue]点[gold]格挡[/gold]。",
   "REBALANCED_SPIRE_POWER_TANK_PLUS_POWER.remoteDescription": "在[gold]{ApplierName}[/gold]的回合结束时，你获得[blue]{Amount}[/blue]点[gold]格挡[/gold]。",
