@@ -29,7 +29,7 @@ public static class MorphicGrovePatch
         var cards = (await CardSelectCmd.FromDeckForTransformation(prefs: new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 2), player: instance.Owner)).ToList();
         foreach (var card in cards)
         {
-            await CardCmd.TransformToRandom(card, instance.Owner.RunState.Rng.Niche, CardPreviewStyle.EventLayout);
+            await CardCmd.TransformToRandom(card, instance.Rng, CardPreviewStyle.EventLayout);
         }
         instance.SetEventFinished(instance.L10NLookup("MORPHIC_GROVE.pages.GROUP.description"));
     }

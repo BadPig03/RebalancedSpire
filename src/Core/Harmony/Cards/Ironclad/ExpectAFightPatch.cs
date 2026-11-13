@@ -82,12 +82,17 @@ public static class ExpectAFightPatch
         return false;
     }
 
-    [HarmonyPatch(typeof(ExpectAFight), "ExtraHoverTips", MethodType.Getter)]
+    [HarmonyPatch(typeof(CardModel), "ExtraHoverTips", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_ExtraHoverTips(ExpectAFight __instance, ref IEnumerable<IHoverTip> __result)
+    private static bool PreFix_ExtraHoverTips(CardModel __instance, ref IEnumerable<IHoverTip> __result)
     {
         if (Disabled)
+        {
+            return true;
+        }
+
+        if (__instance is not ExpectAFight)
         {
             return true;
         }

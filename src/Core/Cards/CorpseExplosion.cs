@@ -19,7 +19,7 @@ public sealed class CorpseExplosion() : ModCardTemplate(1, CardType.Skill, CardR
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DustyTome;
 
-    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://RebalancedSpire/images/packed/card_portraits/slient/rebalanced_spire_card_corpse_explosion.png");
+    public override CardAssetProfile AssetProfile => new(PortraitPath: "res://images/packed/card_portraits/silent/rebalanced_spire_card_corpse_explosion.png");
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new List<DynamicVar>(
     [

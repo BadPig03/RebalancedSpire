@@ -27,7 +27,7 @@ public sealed class MinionFakePower : ModPowerTemplate
 
     public override bool ShouldPowerBeRemovedAfterOwnerDeath() => false;
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature == Owner || Owner.Monster is not KinFollower follower)
         {

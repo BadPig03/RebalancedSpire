@@ -101,7 +101,6 @@ internal sealed class RebalancedSpireSettingsRegistry
             .AddSection("neow", s => s
                 .WithTitle(L("neow.section.label"))
                 .AddToggle("booming_conch", L("neow.section.booming_conch.title"), ui.BoomingConch, L("neow.section.booming_conch.description"))
-                .AddToggle("dowsing_rod", L("neow.section.dowsing_rod.title"), ui.DowsingRod, L("neow.section.dowsing_rod.description"))
                 .AddToggle("fishing_rod", L("neow.section.fishing_rod.title"), ui.FishingRod, L("neow.section.fishing_rod.description"))
                 .AddToggle("large_capsule", L("neow.section.large_capsule.title"), ui.LargeCapsule, L("neow.section.large_capsule.description"))
                 .AddToggle("lava_rock", L("neow.section.lava_rock.title"), ui.LavaRock, L("neow.section.lava_rock.description"))

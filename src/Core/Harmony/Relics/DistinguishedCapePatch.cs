@@ -20,7 +20,7 @@ public static class DistinguishedCapePatch
 
     private static async Task AfterObtained(DistinguishedCape instance)
     {
-        await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.HpLoss.BaseValue, isFromCard: false);
+        await CreatureCmd.LoseMaxHp(new ThrowingPlayerChoiceContext(), instance.Owner.Creature, instance.DynamicVars.HpLoss.BaseValue, cardSource: null);
         var results = new List<CardPileAddResult>();
         for (var i = 0; i < instance.DynamicVars.Cards.IntValue; i++)
         {

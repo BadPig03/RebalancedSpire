@@ -22,6 +22,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Rewards;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.TestSupport;
@@ -32,6 +33,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 public static class KinFollowerPatch
 {
     private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheKin;
+
+    internal const int FakeFollowerIndex = 1;
 
     private const int BoomerangCount = 2;
     private const int GuardPowerAmount = 1;
@@ -58,7 +61,7 @@ public static class KinFollowerPatch
     private static async Task AfterAddedToRoom(KinFollower instance)
     {
         var currentMaxHp = instance.Creature.MaxHp;
-        if (instance.StartsWithDance)
+        if (instance.Index == FakeFollowerIndex)
         {
             await PowerCmd.Apply<MinionFakePower>(new ThrowingPlayerChoiceContext(), instance.Creature, MinionPowerAmount, instance.Creature, null);
             await CreatureCmd.SetMaxAndCurrentHp(instance.Creature, currentMaxHp * 0.5m);
@@ -95,7 +98,7 @@ public static class KinFollowerPatch
                 specialNode.Position = Vector2.Left * (creatureNode2.GlobalPosition.X - vector.Value.X) / creatureNode2.Body.Scale;
             }
         }
-        await DamageCmd.Attack(BoomerangDamage).WithHitCount(BoomerangCount).FromMonster(instance).WithAttackerAnim("BoomerangTrigger", 0.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_boomerang_slashh").WithHitFx("vfx/vfx_attack_slash").OnlyPlayAnimOnce().Execute(null);
+        await DamageCmd.Attack(BoomerangDamage).WithHitCount(BoomerangCount).FromMonster(instance).WithAttackerAnim("BoomerangTrigger", 0.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_boomerang_slash").WithHitFx("vfx/vfx_attack_slash").OnlyPlayAnimOnce().Execute(null);
     }
 
     private static async Task GuardMove(KinFollower instance)
@@ -150,7 +153,7 @@ public static class KinFollowerPatch
                 specialNode.Position = Vector2.Left * (creatureNode2.GlobalPosition.X - vector.Value.X) / creatureNode2.Body.Scale;
             }
         }
-        await DamageCmd.Attack(0).WithHitCount(BoomerangCount).FromMonster(instance).WithAttackerAnim("BoomerangTrigger", 0.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_boomerang_slashh").WithHitFx("vfx/vfx_attack_slash").OnlyPlayAnimOnce().Execute(null);
+        await DamageCmd.Attack(0).WithHitCount(BoomerangCount).FromMonster(instance).WithAttackerAnim("BoomerangTrigger", 0.2f).WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_boomerang_slash").WithHitFx("vfx/vfx_attack_slash").OnlyPlayAnimOnce().Execute(null);
     }
 
     private static async Task GuardFakeMove(KinFollower instance)
@@ -158,7 +161,7 @@ public static class KinFollowerPatch
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/the_kin_minion/the_kin_minion_buff");
         await CreatureCmd.TriggerAnim(instance.Creature, "Cast", 0.9f);
         await CreatureCmd.GainBlock(instance.Creature, new BlockVar(GuardFakeBlock, ValueProp.Move), null);
-        TalkCmd.Play(MonsterModel.L10NMonsterLookup("KIN_FOLLOWER_FAKE.randomLine" + instance.RunRng.Shuffle.NextInt(1, 6)), instance.Creature, VfxColor.Purple, VfxDuration.Standard);
+        TalkCmd.Play(MonsterModel.L10NMonsterLookup("KIN_FOLLOWER_FAKE.randomLine" + Rng.Chaotic.NextInt(1, 6)), instance.Creature, VfxColor.Purple, VfxDuration.Standard);
     }
 
     private static async Task PowerDanceFakeMove(KinFollower instance, IReadOnlyList<Creature> targets)
@@ -192,7 +195,7 @@ public static class KinFollowerPatch
         if (creatureNode != null)
         {
             creatureNode.Visuals.SetVisible(false);
-            creatureNode.ToggleIsInteractable(false);
+            creatureNode.SetIsInteractable(on: false, changeVisibilityImmediately: true);
         }
         instance.Creature.RemoveAllPowersInternalExcept();
         CombatManager.Instance.RemoveCreature(instance.Creature);
@@ -217,7 +220,7 @@ public static class KinFollowerPatch
     [HarmonyPatch(typeof(AbstractModel), "AfterDeath")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterDeath(AbstractModel __instance, PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength, ref Task __result)
+    private static bool PreFix_AfterDeath(AbstractModel __instance, PlayerChoiceContext choiceContext, Creature creature, CardModel? source, bool wasRemovalPrevented, float deathAnimLength, ref Task __result)
     {
         if (Disabled)
         {
@@ -267,8 +270,8 @@ public static class KinFollowerPatch
         moveState_4.FollowUpState = moveState_;
         moveState7.FollowUpState = moveState7;
         ConditionalBranchState branchState = new ConditionalBranchState("KinFollower");
-        branchState.AddState(moveState_, () => __instance.StartsWithDance);
-        branchState.AddState(moveState, () => !__instance.StartsWithDance);
+        branchState.AddState(moveState_, () => __instance.Index == FakeFollowerIndex);
+        branchState.AddState(moveState, () => __instance.Index != FakeFollowerIndex);
         list.Add(moveState);
         list.Add(moveState2);
         list.Add(moveState3);
@@ -294,7 +297,7 @@ public static class KinFollowerPatch
             return;
         }
 
-        if (__instance is not KinFollower { StartsWithDance: true })
+        if (__instance is not KinFollower { Index: FakeFollowerIndex })
         {
             return;
         }

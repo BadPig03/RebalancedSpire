@@ -113,7 +113,7 @@ public abstract class DoormakerBase : ModMonsterTemplate
         return doormakerBase.OtherDoormaker.Creature.HpDisplay == HpDisplay.InfiniteWithoutNumbers || doormakerBase.OtherDoormaker.Creature.IsDead;
     }
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (wasRemovalPrevented || creature.Monster is not DoormakerBase doormakerBase)
         {

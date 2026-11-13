@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Monsters;
+using RebalancedSpire.Core.Harmony.Monsters.Overgrowth.Boss;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
@@ -43,7 +44,7 @@ public sealed class GuardPower : ModPowerTemplate
 
         foreach (var enemy in enemies)
         {
-            if (enemy.Monster is not KinFollower { StartsWithDance: false })
+            if (enemy.Monster is not KinFollower { Index: not KinFollowerPatch.FakeFollowerIndex })
             {
                 continue;
             }

@@ -43,7 +43,7 @@ public static class KinPriestPatch
         await CreatureCmd.TriggerAnim(instance.Creature, "Rally", 1f);
         await CreatureCmd.Add(ModelDb.Monster<KinFollower>().ToMutable(), instance.CombatState, CombatSide.Enemy, "slot1");
         KinFollower fakeKinFollower = (KinFollower) ModelDb.Monster<KinFollower>().ToMutable();
-        fakeKinFollower.StartsWithDance = true;
+        fakeKinFollower.Index = KinFollowerPatch.FakeFollowerIndex;
         await CreatureCmd.Add(fakeKinFollower, instance.CombatState, CombatSide.Enemy, "slot2");
         TalkCmd.Play(MonsterModel.L10NMonsterLookup("KIN_PRIEST.summonFollowersLine"), instance.Creature, VfxColor.Purple, VfxDuration.Standard);
     }
@@ -112,7 +112,7 @@ public static class KinPriestPatch
         {
             foreach (var enemy in enemies)
             {
-                if (enemy.Monster is not KinFollower { StartsWithDance: false } follower)
+                if (enemy.Monster is not KinFollower { Index: not KinFollowerPatch.FakeFollowerIndex } follower)
                 {
                     continue;
                 }
@@ -158,7 +158,7 @@ public static class KinPriestPatch
     [HarmonyPatch(typeof(KinPriest), "AfterDeath")]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_AfterDeath(KinPriest __instance, PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength, ref Task __result)
+    private static bool PreFix_AfterDeath(KinPriest __instance, PlayerChoiceContext choiceContext, Creature creature, CardModel? source, bool wasRemovalPrevented, float deathAnimLength, ref Task __result)
     {
         if (Disabled)
         {

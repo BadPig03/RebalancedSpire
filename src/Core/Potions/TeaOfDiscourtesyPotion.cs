@@ -63,7 +63,7 @@ public class TeaOfDiscourtesyPotion : ModPotionTemplate
             }
         }
 		
-		var cards = PileType.Deck.GetPile(Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(Owner.RunState.Rng.Niche).Take(1).ToList();
+		var cards = PileType.Deck.GetPile(Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(Owner.PlayerRng.NonCombatGeneration).Take(1).ToList();
         foreach (var card in cards)
         {
             CardCmd.Upgrade(card);

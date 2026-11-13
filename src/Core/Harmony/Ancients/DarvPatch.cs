@@ -25,15 +25,21 @@ public static class DarvPatch
             return true;
         }
 
-        if (__instance.Owner == null)
+        var player = __instance.Owner;
+        if (player == null)
         {
             return true;
         }
 
-        var list = Darv._validRelicSets.Where(s => s.filter(__instance.Owner)).Select(s => SrcHelpers.RelicOption(__instance, __instance.Rng.NextItem(s.relics)!.ToMutable())).ToList().UnstableShuffle(__instance.Rng).Take(2).ToList();
+        var options = __instance.AllowedOptions(Darv._validRelicSets.Where(s => s.filter(player)).Select(s => SrcHelpers.RelicOption(__instance, __instance.Rng.NextItem(s.relics)!.ToMutable()))).UnstableShuffle(__instance.Rng);
         var dustyTome = (DustyTome) ModelDb.Relic<DustyTome>().ToMutable();
-        dustyTome.SetupForPlayer(__instance.Owner);
-        list.Add(SrcHelpers.RelicOption(__instance, dustyTome));
+        var canOfferDustyTome = dustyTome.IsAllowed(player.RunState);
+        var list = options.Take(canOfferDustyTome ? 2 : 3).ToList();
+        if (canOfferDustyTome)
+        {
+            dustyTome.SetupForPlayer(player);
+            list.Add(SrcHelpers.RelicOption(__instance, dustyTome));
+        }
         __result = list.AsReadOnly();
         return false;
     }

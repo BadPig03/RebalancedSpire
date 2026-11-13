@@ -30,7 +30,7 @@ public static class FishingRodPatch
         }
 
         instance.Flash();
-        var cardModel = instance.Owner.RunState.Rng.Niche.NextItem(PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable));
+        var cardModel = instance.Owner.PlayerRng.NonCombatGeneration.NextItem(PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable));
         if (cardModel != null)
         {
             CardCmd.Upgrade(cardModel);
@@ -76,6 +76,11 @@ public static class FishingRodPatch
     [UsedImplicitly]
     private static bool PreFix_Description(RelicModel __instance, ref LocString __result)
     {
+        if (Disabled)
+        {
+            return true;
+        }
+
         if (__instance is not FishingRod)
         {
             return true;

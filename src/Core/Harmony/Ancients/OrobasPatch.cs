@@ -4,7 +4,6 @@ using Configs;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Events;
-using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
@@ -114,11 +113,7 @@ public static class OrobasPatch
             list.Add(SrcHelpers.RelicOption(__instance, seaGlass));
         }
 
-        var results = new List<EventOption>();
-        results.AddRange(list.UnstableShuffle(__instance.Rng).Take(1));
-        results.AddRange(OptionPool2(__instance).UnstableShuffle(__instance.Rng).Take(1));
-        results.AddRange(OptionPool3(__instance).UnstableShuffle(__instance.Rng).Take(1));
-        __result = results.AsReadOnly();
+        __result = __instance.GetOptionsFromThreePools(list, OptionPool2(__instance), OptionPool3(__instance));
         return false;
     }
 }

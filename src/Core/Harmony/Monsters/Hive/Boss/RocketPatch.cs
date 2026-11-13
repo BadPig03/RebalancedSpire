@@ -22,7 +22,7 @@ public static class RocketPatch
     private const int StrengthPowerAmount = 2;
     private const int FrailPowerAmount = 2;
 
-    private static async Task TargetingReticleMove(Rocket instance, IReadOnlyList<Creature> targets)
+    private static async Task CalculatingMove(Rocket instance, IReadOnlyList<Creature> targets)
     {
         if (instance.Background == null)
         {
@@ -46,7 +46,7 @@ public static class RocketPatch
         await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, StrengthPowerAmount, instance.Creature, null);
     }
 
-    private static async Task LaserMove(Rocket instance)
+    private static async Task RocketClawMove(Rocket instance)
     {
         if (instance.Background == null)
         {
@@ -55,7 +55,7 @@ public static class RocketPatch
 
         SfxCmd.Play("event:/sfx/enemy/enemy_attacks/kaiser_crab/kaiser_crab_rocket");
         await instance.Background.PlayRightSideHeavy(0.5f);
-        await DamageCmd.Attack(instance.LaserDamage).FromMonster(instance).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
+        await DamageCmd.Attack(instance.RocketClawDamage).FromMonster(instance).WithAttackerFx(null, SrcHelpers.GetSfx(instance, "AttackSfx")).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
         await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), instance.Creature, 10, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
     }
 
@@ -70,10 +70,10 @@ public static class RocketPatch
         }
 
         List<MonsterState> list = [];
-        MoveState moveState = new MoveState("TARGETING_RETICLE_MOVE", t => TargetingReticleMove(__instance, t), new DebuffIntent());
-        MoveState moveState2 = new MoveState("PRECISION_BEAM_MOVE", __instance.PrecisionBeamMove, new SingleAttackIntent(__instance.PrecisionBeamDamage));
+        MoveState moveState = new MoveState("CALCULATING_MOVE", t => CalculatingMove(__instance, t), new DebuffIntent());
+        MoveState moveState2 = new MoveState("PRECISE_SMASH_MOVE", __instance.PreciseSmashMove, new SingleAttackIntent(__instance.PreciseSmashDamage));
         MoveState moveState3 = new MoveState("CHARGE_UP_MOVE", _ => ChargeUpMove(__instance), new BuffIntent());
-        MoveState moveState4 = new MoveState("LASER_MOVE", _ => LaserMove(__instance), new SingleAttackIntent(__instance.LaserDamage));
+        MoveState moveState4 = new MoveState("ROCKET_CLAW_MOVE", _ => RocketClawMove(__instance), new SingleAttackIntent(__instance.RocketClawDamage));
         MoveState moveState5 = new MoveState("RECHARGE_MOVE", __instance.RechargeMove, new SleepIntent());
         moveState.FollowUpState = moveState2;
         moveState2.FollowUpState = moveState3;

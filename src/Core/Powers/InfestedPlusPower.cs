@@ -75,7 +75,7 @@ public sealed class InfestedPlusPower : ModPowerTemplate
         await CreatureCmd.GainMaxHp(Owner, (int) (Owner.MaxHp * MaxHpRatio));
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (wasRemovalPrevented || Owner != target)
         {

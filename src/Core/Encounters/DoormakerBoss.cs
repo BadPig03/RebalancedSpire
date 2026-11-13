@@ -2,12 +2,14 @@ namespace RebalancedSpire.Core.Encounters;
 
 using Afflictions;
 using Configs;
+using Dominions;
 using Godot;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Acts;
+using MegaCrit.Sts2.Core.Models.Dread;
 using MegaCrit.Sts2.Core.Rooms;
 using Monsters;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -28,7 +30,7 @@ public sealed class DoormakerBoss : ModEncounterTemplate
 	public override string CustomRunHistoryIconPath => ImageHelper.GetImagePath("ui/run_history/rebalanced_spire_doormaker_boss.png");
 
 	public override EncounterAssetProfile AssetProfile => new(
-		EncounterScenePath: "res://scenes/encounters/doormaker_boss.tscn"
+		EncounterScenePath: "res://scenes/encounters/rebalanced_spire_encounter_doormaker_boss.tscn"
 	);
 
 	public override string BossNodePath => "res://images/map/placeholder/rebalanced_spire_doormaker_boss_icon";
@@ -38,6 +40,11 @@ public sealed class DoormakerBoss : ModEncounterTemplate
 	public override bool HasScene => true;
 
 	public override bool FullyCenterPlayers => true;
+
+	public override DominionModel GetDominion()
+	{
+		return ModelDb.Dominion<RebalancedSpireDoormakerDominion>();
+	}
 
 	public override bool IsValidForAct(ActModel act)
 	{

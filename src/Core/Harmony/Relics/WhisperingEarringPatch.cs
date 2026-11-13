@@ -15,6 +15,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Utils;
 
 [HarmonyPatch]
@@ -28,7 +29,7 @@ public static class WhisperingEarringPatch
     {
         instance.Flash();
         bool flag;
-        using (CardSelectCmd.PushSelector(new VakuuCardSelector()))
+        using (RunManager.Instance.CardSelectorStack.PushSelector(instance.Owner, new VakuuCardSelector()))
         {
             int cardsPlayed;
             for (cardsPlayed = 0; cardsPlayed < instance.DynamicVars["TotalEnergy"].IntValue; cardsPlayed++)

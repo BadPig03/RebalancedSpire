@@ -85,6 +85,8 @@
 
     <ItemGroup>
         <Publicize Include="sts2" IncludeCompilerGeneratedMembers="false" IncludeVirtualMembers="false" />
+        <!-- Keep the game's generated entry point internal so it cannot shadow this mod's entry point. -->
+        <DoNotPublicize Include="sts2:GodotPlugins.Game.Main" />
     </ItemGroup>
     
     <ItemGroup>
@@ -98,7 +100,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.6.7" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.6.11" />
     </ItemGroup>
     
     <ItemGroup>
@@ -111,6 +113,7 @@
         <None Include="RebalancedSpire.json" />
         <None Include="project.godot" />
         <None Include="RebalancedSpire/**" />
+        <None Remove="packages\sts2.ritsulib\0.6.11\contentFiles\any\any\assets.zip" />
     </ItemGroup>
 
     <ItemGroup>
@@ -355,7 +358,6 @@
       <Content Include="src\Core\Harmony\Cards\Necrobinder\SpurPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Necrobinder\WispPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Quest\ByrdonisEggPatch.cs.uid" />
-      <Content Include="src\Core\Harmony\Cards\Quest\DowsingPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\ForegoneConclusionPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GenesisPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Regent\GlowPatch.cs.uid" />
@@ -573,7 +575,18 @@
         <Error Text=" Godot not found at path '$(GodotPath)'" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')" />
     </Target>
 
-    <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
+    <Target Name="PrepareRitsuLibAnalyzerManifest" BeforeTargets="PrepareForBuild;CoreCompile">
+        <!-- The analyzer requires this filename; the game's manifest remains the single source of truth. -->
+        <Copy SourceFiles="$(MSBuildProjectDirectory)/RebalancedSpire.json"
+              DestinationFiles="$(IntermediateOutputPath)RitsuLibAnalyzer/mod_manifest.json"
+              SkipUnchangedFiles="true" />
+        <ItemGroup>
+            <AdditionalFiles Include="$(IntermediateOutputPath)RitsuLibAnalyzer/mod_manifest.json" />
+            <FileWrites Include="$(IntermediateOutputPath)RitsuLibAnalyzer/mod_manifest.json" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent" Condition="'$(IsInnerGodotExport)' != 'true'">
         <Message Text="Copying .dll and manifest to mods folder." Importance="high" />
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
         <Copy SourceFiles="RebalancedSpire.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
@@ -581,7 +594,7 @@
 
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
         <Message Text="Exporting Godot .pck to mods folder" Importance="high" />
-        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" />
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;RitsuLibAutoCopy=false" ContinueOnError="WarnAndContinue" />
     </Target>
 
     <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">

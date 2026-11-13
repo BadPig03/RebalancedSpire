@@ -3,12 +3,12 @@
   "name": "RebalancedSpire",
   "author": "ty, Oroboro",
   "description": "Our goal is to fix problems, not remove the fun.",
-  "version": "v0.3.11-beta",
-  "min_game_version": "0.111.0",
+  "version": "v0.3.12-beta",
+  "min_game_version": "0.113.0",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
-    { "id": "STS2-RitsuLib", "min_version": "0.5.18" }
+    { "id": "STS2-RitsuLib", "min_version": "0.6.11" }
   ],
   "affects_gameplay": true
 }

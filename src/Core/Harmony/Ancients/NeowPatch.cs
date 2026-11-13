@@ -5,6 +5,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Extensions;
+using MegaCrit.Sts2.Core.Models.Blitz;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Models.Relics;
 
@@ -83,7 +84,7 @@ public static class NeowPatch
         }
 
         var player = __instance.Owner;
-        if (player == null || player.RunState.Modifiers.Count > 0)
+        if (player == null || player.RunState.RunModels.OfType<BlitzRunModel>().Any() || player.RunState.Modifiers.Count > 0)
         {
             return true;
         }
@@ -115,7 +116,7 @@ public static class NeowPatch
                 positives.RemoveAll(option => option.Relic is SmallCapsule);
                 break;
         }
-        positives.RemoveAll(option => option.Relic != null && !option.Relic.IsAllowed(player.RunState));
+        positives.RemoveAll(option => option.Relic != null && !option.Relic.IsAllowedAtNeow(player));
         if (__instance.Rng.NextBool())
         {
             positives.RemoveAll(option => option.Relic is NutritiousOyster);

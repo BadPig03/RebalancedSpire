@@ -22,7 +22,7 @@ public static class WispPatch
     {
         await CreatureCmd.TriggerAnim(instance.Owner.Creature, "Cast", instance.Owner.Character.CastAnimDelay);
         await PlayerCmd.GainEnergy(instance.DynamicVars.Energy.BaseValue, instance.Owner);
-        var soul = PileType.Draw.GetPile(instance.Owner).Cards.OfType<Soul>().ToList().StableShuffle(instance.Owner.PlayerRng.Transformations).FirstOrDefault();
+        var soul = PileType.Draw.GetPile(instance.Owner).Cards.OfType<Soul>().ToList().StableShuffle(instance.Owner.RunState.Rng.CombatCardSelection).FirstOrDefault();
         if (soul == null)
         {
             return;

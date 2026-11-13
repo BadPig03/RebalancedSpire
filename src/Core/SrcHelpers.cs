@@ -1,13 +1,11 @@
 ﻿namespace RebalancedSpire.Core;
 
 using System.Reflection;
-using Configs;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Runs;
-using STS2RitsuLib.Data;
 
 public static class SrcHelpers
 {
@@ -21,8 +19,15 @@ public static class SrcHelpers
         async Task OnChosen()
         {
             await RelicCmd.Obtain(relic, instance.Owner!);
-            instance.CustomDonePage = customDonePage;
-            instance.Done();
+            var description = customDonePage == null ? null : LocString.GetIfExists(instance.LocTable, customDonePage);
+            if (description == null)
+            {
+                instance.Done();
+                return;
+            }
+
+            instance.UpdateRunHistory();
+            instance.SetEventFinished(description);
         }
     }
 

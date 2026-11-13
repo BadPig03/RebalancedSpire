@@ -22,7 +22,10 @@ public static class GasBombPatch
         instance.HasExploded = true;
         await DamageCmd.Attack(instance.ExplodeDamage).FromMonster(instance).WithAttackerAnim("ExplodeTrigger", 0.1f) .WithAttackerFx(null, "event:/sfx/enemy/enemy_attacks/living_fog/living_fog_explode").WithHitVfxNode(_ => NGaseousImpactVfx.Create(CombatSide.Player, instance.CombatState, new Color("#402f45"))).Execute(null);
         await PowerCmd.Remove<PingPongPower>(instance.Creature);
-        await CreatureCmd.Kill(instance.Creature);
+        if (!instance.Creature.IsDead)
+        {
+            await CreatureCmd.Kill(instance.Creature);
+        }
     }
 
     [HarmonyPatch(typeof(GasBomb), "ExplodeMove")]

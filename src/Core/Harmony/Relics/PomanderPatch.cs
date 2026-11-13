@@ -24,7 +24,7 @@ public static class PomanderPatch
         {
             CardCmd.Upgrade(card);
         }
-        var randomCards = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.RunState.Rng.Niche).Take(instance.DynamicVars.Cards.IntValue);
+        var randomCards = PileType.Deck.GetPile(instance.Owner).Cards.Where(c => c.IsUpgradable).ToList().StableShuffle(instance.Owner.PlayerRng.NonCombatGeneration).Take(instance.DynamicVars.Cards.IntValue);
         foreach (var card in randomCards)
         {
             CardCmd.Upgrade(card);

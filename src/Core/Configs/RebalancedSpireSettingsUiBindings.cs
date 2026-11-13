@@ -69,7 +69,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Splash { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BoomingConch { get; private init; } = null!;
-    public IModSettingsValueBinding<bool> DowsingRod { get; private init; } = null!;
     public IModSettingsValueBinding<bool> FishingRod { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LargeCapsule { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LavaRock { get; private init; } = null!;
@@ -258,7 +257,6 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Splash = B(s => s.Splash, (s, v) => s.Splash = v, () => defaults.Splash),
 
             BoomingConch = B(s => s.BoomingConch, (s, v) => s.BoomingConch = v, () => defaults.BoomingConch),
-            DowsingRod = B(s => s.DowsingRod, (s, v) => s.DowsingRod = v, () => defaults.DowsingRod),
             FishingRod = B(s => s.FishingRod, (s, v) => s.FishingRod = v, () => defaults.FishingRod),
             LargeCapsule = B(s => s.LargeCapsule, (s, v) => s.LargeCapsule = v, () => defaults.LargeCapsule),
             LavaRock = B(s => s.LavaRock, (s, v) => s.LavaRock = v, () => defaults.LavaRock),

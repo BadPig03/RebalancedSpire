@@ -61,12 +61,12 @@ public static class ThievingHopperPatch
 		foreach (var target in targets)
 		{
 			var player = target.Player ?? target.PetOwner;
-			if (player == null)
+			if (target.IsDead || player == null)
 			{
 				continue;
 			}
 
-			var list = CardPile.GetCards(player, PileType.Draw, PileType.Discard).Where(c => c.DeckVersion != null).ToList();
+			var list = CardPile.GetCards(player, PileType.Draw, PileType.Discard).Where(c => c.DeckVersion != null && c.Rarity != CardRarity.Quest).ToList();
 			var items = list;
 			foreach (var predicate in ThievingHopper._stealPriorities)
 			{
@@ -80,10 +80,10 @@ public static class ThievingHopperPatch
 				break;
 			}
 
-			var cardToSteal = instance.RunRng.CombatCardGeneration.NextItem(items);
+			var cardToSteal = instance.RunRng.CombatCardSelection.NextItem(items);
 			if (cardToSteal == null)
 			{
-				return;
+				continue;
 			}
 
 			await CardPileCmd.RemoveFromCombat(cardToSteal);

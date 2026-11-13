@@ -200,9 +200,6 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("booming_conch")]
     public bool BoomingConch { get; set; } = true;
 
-    [JsonPropertyName("dowsing_rod")]
-    public bool DowsingRod { get; set; } = true;
-
     [JsonPropertyName("fishing_rod")]
     public bool FishingRod { get; set; } = true;
 

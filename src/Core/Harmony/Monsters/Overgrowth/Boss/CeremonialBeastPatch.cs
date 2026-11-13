@@ -5,8 +5,10 @@ using Core.Powers;
 using HarmonyLib;
 using JetBrains.Annotations;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Monsters;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 
@@ -35,6 +37,17 @@ public static class CeremonialBeastPatch
         await PowerCmd.Apply<PlowPlusPower>(new ThrowingPlayerChoiceContext(), instance.Creature, (int) (instance.MaxInitialHp * SecondPlowAmount), instance.Creature, null);
     }
 
+    private static async Task PlowMove(CeremonialBeast instance, IReadOnlyList<Creature> targets)
+    {
+        await instance.PlowMove(targets);
+        if (instance.Creature.IsDead || !instance.Creature.HasPower<PlowPlusPower>() || instance.Creature.HasPower<PlowPower>())
+        {
+            return;
+        }
+
+        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), instance.Creature, instance.PlowStrength, instance.Creature, null);
+    }
+
     [HarmonyPatch(typeof(CeremonialBeast), "GenerateMoveStateMachine")]
     [HarmonyPrefix]
     [UsedImplicitly]
@@ -47,13 +60,13 @@ public static class CeremonialBeastPatch
 
         List<MonsterState> list = [];
         MoveState moveState = new MoveState("FIRST_STAMP_MOVE", _ => FirstStampMove(__instance), new BuffIntent());
-        MoveState moveState2 = new MoveState("FIRST_PLOW_MOVE", __instance.PlowMove, new SingleAttackIntent(__instance.PlowDamage), new BuffIntent());
+        MoveState moveState2 = new MoveState("FIRST_PLOW_MOVE", targets => PlowMove(__instance, targets), new SingleAttackIntent(__instance.PlowDamage), new BuffIntent());
         MoveState moveState3 = new MoveState("STUN_MOVE", __instance.StunnedMove, new StunIntent())
         {
             MustPerformOnceBeforeTransitioning = true
         };
         MoveState moveState4 = new MoveState("SECOND_STAMP_MOVE", _ => SecondStampMove(__instance), new BuffIntent());
-        MoveState moveState5 = new MoveState("SECOND_PLOW_MOVE", __instance.PlowMove, new SingleAttackIntent(__instance.PlowDamage), new BuffIntent());
+        MoveState moveState5 = new MoveState("SECOND_PLOW_MOVE", targets => PlowMove(__instance, targets), new SingleAttackIntent(__instance.PlowDamage), new BuffIntent());
         __instance.BeastCryState = new MoveState("BEAST_CRY_MOVE", __instance.BeastCryMove, new DebuffIntent());
         MoveState moveState6 = new MoveState("STOMP_MOVE", __instance.StompMove, new SingleAttackIntent(__instance.StompDamage));
         MoveState moveState7 = new MoveState("CRUSH_MOVE", __instance.CrushMove, new SingleAttackIntent(__instance.CrushDamage), new BuffIntent());

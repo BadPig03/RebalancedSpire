@@ -36,10 +36,18 @@ public static class VakuuPatch
         return false;
     }
 
+    [HarmonyPatch(typeof(Vakuu), "ConfigureBackgroundScene")]
+    [HarmonyPrefix]
+    [UsedImplicitly]
+    private static bool PreFix_ConfigureBackgroundScene()
+    {
+        return !RebalancedSpireSettingsStore.Settings.VakuuFixedArt;
+    }
+
     [HarmonyPatch(typeof(Vakuu), "Pool1", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Pool1(Vakuu __instance, ref IEnumerable<EventOption> __result)
+    private static bool PreFix_Pool1(Vakuu __instance, ref List<EventOption> __result)
     {
         if (Disabled)
         {
@@ -51,14 +59,14 @@ public static class VakuuPatch
             SrcHelpers.RelicOption<BloodSoakedRose>(__instance),
             SrcHelpers.RelicOption<LordsParasol>(__instance),
             SrcHelpers.RelicOption<WhisperingEarring>(__instance)
-        }.AsReadOnly();
+        };
         return false;
     }
 
     [HarmonyPatch(typeof(Vakuu), "Pool2", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Pool2(Vakuu __instance, ref IEnumerable<EventOption> __result)
+    private static bool PreFix_Pool2(Vakuu __instance, ref List<EventOption> __result)
     {
         if (Disabled)
         {
@@ -71,14 +79,14 @@ public static class VakuuPatch
             SrcHelpers.RelicOption<PreservedFog>(__instance),
             DistinguishedCapeDisabled ? SrcHelpers.RelicOption<DistinguishedCape>(__instance) : SrcHelpers.RelicOption<DistinguishedCape>(__instance).ThatDecreasesMaxHp(9),
             SereTalonDisabled ? SrcHelpers.RelicOption<SereTalon>(__instance).ThatDecreasesMaxHp(9) : SrcHelpers.RelicOption<SereTalon>(__instance)
-        }.AsReadOnly();
+        };
         return false;
     }
 
     [HarmonyPatch(typeof(Vakuu), "Pool3", MethodType.Getter)]
     [HarmonyPrefix]
     [UsedImplicitly]
-    private static bool PreFix_Pool3(Vakuu __instance, ref IEnumerable<EventOption> __result)
+    private static bool PreFix_Pool3(Vakuu __instance, ref List<EventOption> __result)
     {
         if (Disabled)
         {
@@ -90,7 +98,7 @@ public static class VakuuPatch
             SrcHelpers.RelicOption<ChoicesParadox>(__instance),
             SrcHelpers.RelicOption<MusicBox>(__instance),
             SrcHelpers.RelicOption<JeweledMask>(__instance)
-        }.AsReadOnly();
+        };
         return false;
     }
 }
