@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class GlassworkPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Glasswork;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Glasswork;
 
     private static async Task OnPlay(Glasswork instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

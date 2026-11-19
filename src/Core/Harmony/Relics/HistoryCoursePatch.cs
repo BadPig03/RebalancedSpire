@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class HistoryCoursePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WarHistorianRepy;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.WarHistorianRepy;
 
     private static async Task AfterAutoPrePlayPhaseEntered(HistoryCourse instance, PlayerChoiceContext choiceContext, Player player)
     {

@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class DefyPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Defy;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Defy;
 
     [HarmonyPatch(typeof(Defy), "OnUpgrade")]
     [HarmonyPrefix]

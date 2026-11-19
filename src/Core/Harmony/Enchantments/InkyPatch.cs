@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public class InkyPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BladeOfInk;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BladeOfInk;
 
     [HarmonyPatch(typeof(Inky), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

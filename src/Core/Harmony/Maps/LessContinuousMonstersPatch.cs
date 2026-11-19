@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Random;
 // ReSharper disable InconsistentNaming
 public static class LessContinuousMonstersPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LessContinuousMonsters;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LessContinuousMonsters;
     private static readonly FieldInfo NumOfUnknownsBackingField = AccessTools.Field(typeof(MapPointTypeCounts), "<NumOfUnknowns>k__BackingField");
 
     private const int MaxConsecutiveMonsters = 4;

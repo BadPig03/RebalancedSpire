@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class TwigSlimeMPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TwigSlimeM;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TwigSlimeM;
 
     [HarmonyPatch(typeof(TwigSlimeM), "ClumpDamage", MethodType.Getter)]
     [HarmonyPostfix]

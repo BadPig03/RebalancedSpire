@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 // ReSharper disable InconsistentNaming
 public static class MorphicGrovePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.MorphicGrove;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.MorphicGrove;
 
     private static async Task Group(MorphicGrove instance)
     {

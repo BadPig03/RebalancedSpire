@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class RightHandHandPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.RightHandHand;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.RightHandHand;
 
     private static async Task AfterCardPlayedLate(RightHandHand instance, CardPlay cardPlay)
     {

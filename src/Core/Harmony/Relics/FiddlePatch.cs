@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class FiddlePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fiddle;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Fiddle;
 
     [HarmonyPatch(typeof(Fiddle), "AfterPreventingDraw")]
     [HarmonyPrefix]

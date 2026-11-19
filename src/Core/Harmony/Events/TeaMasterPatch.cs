@@ -17,7 +17,7 @@ using Potions;
 // ReSharper disable InconsistentNaming
 public static class TeaMasterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TeaMaster;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TeaMaster;
 
     private static async Task BoneTea(TeaMaster instance)
     {

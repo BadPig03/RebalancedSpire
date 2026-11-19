@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class ShatterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Shatter;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Shatter;
 
     private static async Task OnPlay(Shatter instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

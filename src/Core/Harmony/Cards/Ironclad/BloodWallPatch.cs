@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class BloodWallPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BloodWall;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BloodWall;
 
     [HarmonyPatch(typeof(BloodWall), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class TheKinBossPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheKin;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheKin;
 
     [HarmonyPatch(typeof(TheKinBoss), "GenerateMonsters")]
     [HarmonyPrefix]

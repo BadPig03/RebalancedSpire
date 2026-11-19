@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class OrobasPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.OrobasAncientChoices;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.OrobasAncientChoices;
 
     private static List<EventOption> OptionPool1(Orobas instance) =>
     [

@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class ChoicesParadoxPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ChoicesParadox;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.ChoicesParadox;
 
     private static async Task AfterPlayerTurnStart(ChoicesParadox instance, PlayerChoiceContext choiceContext, Player player)
     {

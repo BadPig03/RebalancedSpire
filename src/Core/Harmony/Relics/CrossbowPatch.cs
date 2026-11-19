@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class CrossbowPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Crossbow;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Crossbow;
 
     private static async Task AfterSideTurnStart(Crossbow instance)
     {

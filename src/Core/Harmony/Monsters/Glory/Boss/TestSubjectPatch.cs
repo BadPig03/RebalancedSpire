@@ -23,7 +23,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class TestSubjectPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TestSubject;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TestSubject;
 
     private const int AdaptablePowerAmount = 1;
     private const int BigPounceDamage = 45;

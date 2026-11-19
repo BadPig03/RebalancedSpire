@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class DampCultistPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DampCultist;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.DampCultist;
 
     [HarmonyPatch(typeof(DampCultist), "IncantationAmount", MethodType.Getter)]
     [HarmonyPostfix]

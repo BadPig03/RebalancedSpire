@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Rewards;
 // ReSharper disable InconsistentNaming
 public static class LoomingFruitPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LoomingFruit;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LoomingFruit;
     private static readonly List<RelicModel> _fruitRelics =
     [
         ModelDb.Relic<Strawberry>(),

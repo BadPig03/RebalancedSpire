@@ -20,7 +20,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class ForgottenRitualPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ForgottenRitual;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.ForgottenRitual;
 
     private static async Task OnPlay(ForgottenRitual instance)
     {

@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public class TheSealedThronePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheSealedThrone;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheSealedThrone;
 
     [HarmonyPatch(typeof(TheSealedThrone), "OnUpgrade")]
     [HarmonyPrefix]

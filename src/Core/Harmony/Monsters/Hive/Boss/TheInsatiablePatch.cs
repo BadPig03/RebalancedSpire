@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class TheInsatiablePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheInsatiable;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheInsatiable;
 
     private const int SandpitPowerAmount = 4;
     private const int LongDistancePowerAmount = 5;

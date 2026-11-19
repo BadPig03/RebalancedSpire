@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class WishPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SereTalon;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SereTalon;
 
     [HarmonyPatch(typeof(Wish), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]

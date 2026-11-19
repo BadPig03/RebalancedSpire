@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class PillarOfCreationPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PillarOfCreation;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.PillarOfCreation;
 
     [HarmonyPatch(typeof(PillarOfCreation), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

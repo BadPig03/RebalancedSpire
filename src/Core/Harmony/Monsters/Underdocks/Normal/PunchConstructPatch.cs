@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class PunchConstructPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PunchOff;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.PunchOff;
 
     private const int ArtifactPowerAmount = 1;
     private const int WeakPowerAmount = 1;

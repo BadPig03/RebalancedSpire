@@ -17,13 +17,14 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
+using Byrdine = MegaCrit.Sts2.Core.Models.Relics.Byrdine;
 using Byrdpip = MegaCrit.Sts2.Core.Models.Relics.Byrdpip;
 
 [HarmonyPatch]
 // ReSharper disable InconsistentNaming
 public static class ByrdonisPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Byrdonis;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Byrdonis;
 
     private const int FrailPowerAmount = 2;
     private const int TerritorialPowerAmount = 1;
@@ -65,7 +66,7 @@ public static class ByrdonisPatch
 
     private static async Task AfterAddedToRoom(Byrdonis instance)
     {
-		var players = instance.CombatState.Players.Where(p => p.GetRelic<Byrdpip>() != null).ToList();
+        var players = instance.CombatState.Players.Where(p => p.GetRelic<Byrdpip>() != null || p.GetRelic<Byrdine>() != null).ToList();
         foreach (var player in players)
         {
             await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), instance.Creature, WeakAmount, player.Creature, null);

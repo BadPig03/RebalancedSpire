@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class EventRelicPoolPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TeaMaster;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TeaMaster;
 
     private static List<RelicModel> RelicsToRemove =>
     [

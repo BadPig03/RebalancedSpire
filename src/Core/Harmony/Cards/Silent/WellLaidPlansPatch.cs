@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public class WellLaidPlansPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WellLaidPlans;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.WellLaidPlans;
 
     private static async Task OnPlay(WellLaidPlans instance, PlayerChoiceContext choiceContext)
     {

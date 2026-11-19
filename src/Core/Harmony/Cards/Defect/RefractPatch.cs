@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Orbs;
 // ReSharper disable InconsistentNaming
 public static class RefractPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Refract;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Refract;
 
     private static async Task OnPlay(Refract instance, PlayerChoiceContext choiceContext)
     {

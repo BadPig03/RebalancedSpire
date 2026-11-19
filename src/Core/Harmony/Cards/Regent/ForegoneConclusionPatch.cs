@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class ForegoneConclusionPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ForegoneConclusion;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.ForegoneConclusion;
 
     private static async Task OnPlay(ForegoneConclusion instance, PlayerChoiceContext choiceContext)
     {

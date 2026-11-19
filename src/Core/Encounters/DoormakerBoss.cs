@@ -19,7 +19,7 @@ using STS2RitsuLib.Scaffolding.Content;
 [UsedImplicitly]
 public sealed class DoormakerBoss : ModEncounterTemplate
 {
-	private static readonly bool Enabled = RebalancedSpireSettingsStore.Settings.Doormaker;
+	private static bool Enabled => RebalancedSpireRuntimeSettings.Current.Doormaker;
 
 	public override RoomType RoomType => RoomType.Boss;
 

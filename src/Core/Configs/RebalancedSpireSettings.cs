@@ -20,6 +20,18 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("less_price_increase")]
     public bool LessPriceIncrease { get; set; } = true;
 
+    [JsonPropertyName("blitz_elite_event")]
+    public bool BlitzEliteEvent { get; set; } = true;
+
+    [JsonPropertyName("blitz_weak_rewards")]
+    public bool BlitzWeakRewards { get; set; } = true;
+
+    [JsonPropertyName("blitz_normal_rewards")]
+    public bool BlitzNormalRewards { get; set; } = true;
+
+    [JsonPropertyName("blitz_elite_rewards")]
+    public bool BlitzEliteRewards { get; set; } = true;
+
     [JsonPropertyName("blood_wall")]
     public bool BloodWall { get; set; } = true;
 
@@ -188,6 +200,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("eternal_armor")]
     public bool EternalArmor { get; set; } = true;
 
+    [JsonPropertyName("god_byrd")]
+    public bool GodByrd { get; set; } = true;
+
     [JsonPropertyName("rolling_boulder")]
     public bool RollingBoulder { get; set; } = true;
 
@@ -230,6 +245,9 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("paels_horn")]
     public bool PaelsHorn { get; set; } = true;
 
+    [JsonPropertyName("paels_legion")]
+    public bool PaelsLegion { get; set; } = true;
+
     [JsonPropertyName("biiig_hug")]
     public bool BiiigHug { get; set; } = true;
 
@@ -241,6 +259,9 @@ public sealed class RebalancedSpireSettings
 
     [JsonPropertyName("beautiful_bracelet")]
     public bool BeautifulBracelet { get; set; } = true;
+
+    [JsonPropertyName("brilliant_scarf")]
+    public bool BrilliantScarf { get; set; } = true;
 
     [JsonPropertyName("diamond_diadem")]
     public bool DiamondDiadem { get; set; } = true;
@@ -296,6 +317,12 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("spiraling_whirlpool")]
     public bool SpiralingWhirlpool { get; set; } = true;
 
+    [JsonPropertyName("waterfall_of_obvious_secrets")]
+    public bool WaterfallOfObviousSecrets { get; set; } = true;
+
+    [JsonPropertyName("wuppy_in_trouble")]
+    public bool WuppyInTrouble { get; set; } = true;
+
     [JsonPropertyName("sunken_statue")]
     public bool SunkenStatue { get; set; } = true;
 
@@ -314,11 +341,20 @@ public sealed class RebalancedSpireSettings
     [JsonPropertyName("tea_master")]
     public bool TeaMaster { get; set; } = true;
 
+    [JsonPropertyName("museum_of_torture")]
+    public bool MuseumOfTorture { get; set; } = true;
+
     [JsonPropertyName("hungry_for_mushrooms")]
     public bool HungryForMushrooms { get; set; } = true;
 
     [JsonPropertyName("reflections")]
     public bool Reflections { get; set; } = true;
+
+    [JsonPropertyName("shrine_of_the_warlord")]
+    public bool ShrineOfTheWarlord { get; set; } = true;
+
+    [JsonPropertyName("thermae_nonupeipe")]
+    public bool ThermaeNonupeipe { get; set; } = true;
 
     [JsonPropertyName("trial")]
     public bool Trial { get; set; } = true;

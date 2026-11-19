@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SicEmPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SicEm;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SicEm;
 
     private static async Task OnPlay(SicEm instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

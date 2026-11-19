@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class LeafSlimeSPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LeafSlimeS;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LeafSlimeS;
 
     private const int SlimedAmount = 1;
 

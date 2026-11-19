@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class TerrorEelPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TerrorEel;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TerrorEel;
 
     private static int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 145, 140);
 

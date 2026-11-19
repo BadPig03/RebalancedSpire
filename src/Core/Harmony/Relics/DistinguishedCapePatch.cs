@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class DistinguishedCapePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DistinguishedCape;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.DistinguishedCape;
 
     private static async Task AfterObtained(DistinguishedCape instance)
     {

@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class UpMySleevePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.UpMySleeve;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.UpMySleeve;
 
     private static async Task OnPlay(UpMySleeve instance)
     {

@@ -7,6 +7,10 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> UniformIntroGeneration { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LessContinuousMonsters { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LessPriceIncrease { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> BlitzEliteEvent { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> BlitzWeakRewards { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> BlitzNormalRewards { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> BlitzEliteRewards { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BloodWall { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Colossus { get; private init; } = null!;
@@ -64,6 +68,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> Voltaic { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Bolas { get; private init; } = null!;
     public IModSettingsValueBinding<bool> EternalArmor { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> GodByrd { get; private init; } = null!;
     public IModSettingsValueBinding<bool> RollingBoulder { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Salvo { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Splash { get; private init; } = null!;
@@ -81,6 +86,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> OrobasAncientChoices { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> PaelsHorn { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> PaelsLegion { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BiiigHug { get; private init; } = null!;
 
@@ -88,6 +94,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> DarvAncientChoices { get; private init; } = null!;
 
     public IModSettingsValueBinding<bool> BeautifulBracelet { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> BrilliantScarf { get; private init; } = null!;
     public IModSettingsValueBinding<bool> DiamondDiadem { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LoomingFruit { get; private init; } = null!;
 
@@ -109,14 +116,19 @@ internal sealed class RebalancedSpireSettingsUiBindings
     public IModSettingsValueBinding<bool> MorphicGrove { get; private init; } = null!;
     public IModSettingsValueBinding<bool> PunchOff { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SpiralingWhirlpool { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> WaterfallOfObviousSecrets { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> WuppyInTrouble { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SunkenStatue { get; private init; } = null!;
     public IModSettingsValueBinding<bool> LostWisp { get; private init; } = null!;
     public IModSettingsValueBinding<bool> SpiritGrafter { get; private init; } = null!;
     public IModSettingsValueBinding<bool> WelcomeToWongos { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TheLanternKey { get; private init; } = null!;
     public IModSettingsValueBinding<bool> TeaMaster { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> MuseumOfTorture { get; private init; } = null!;
     public IModSettingsValueBinding<bool> HungryForMushrooms { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Reflections { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> ShrineOfTheWarlord { get; private init; } = null!;
+    public IModSettingsValueBinding<bool> ThermaeNonupeipe { get; private init; } = null!;
     public IModSettingsValueBinding<bool> Trial { get; private init; } = null!;
     public IModSettingsValueBinding<bool> WarHistorianRepy { get; private init; } = null!;
 
@@ -195,6 +207,10 @@ internal sealed class RebalancedSpireSettingsUiBindings
             UniformIntroGeneration = B(s => s.UniformIntroGeneration, (s, v) => s.UniformIntroGeneration = v, () => defaults.UniformIntroGeneration),
             LessContinuousMonsters = B(s => s.LessContinuousMonsters, (s, v) => s.LessContinuousMonsters = v, () => defaults.LessContinuousMonsters),
             LessPriceIncrease = B(s => s.LessPriceIncrease, (s, v) => s.LessPriceIncrease = v, () => defaults.LessPriceIncrease),
+            BlitzEliteEvent = B(s => s.BlitzEliteEvent, (s, v) => s.BlitzEliteEvent = v, () => defaults.BlitzEliteEvent),
+            BlitzWeakRewards = B(s => s.BlitzWeakRewards, (s, v) => s.BlitzWeakRewards = v, () => defaults.BlitzWeakRewards),
+            BlitzNormalRewards = B(s => s.BlitzNormalRewards, (s, v) => s.BlitzNormalRewards = v, () => defaults.BlitzNormalRewards),
+            BlitzEliteRewards = B(s => s.BlitzEliteRewards, (s, v) => s.BlitzEliteRewards = v, () => defaults.BlitzEliteRewards),
 
             BloodWall = B(s => s.BloodWall, (s, v) => s.BloodWall = v, () => defaults.BloodWall),
             Colossus = B(s => s.Colossus, (s, v) => s.Colossus = v, () => defaults.Colossus),
@@ -252,6 +268,7 @@ internal sealed class RebalancedSpireSettingsUiBindings
             Voltaic = B(s => s.Voltaic, (s, v) => s.Voltaic = v, () => defaults.Voltaic),
             Bolas = B(s => s.Bolas, (s, v) => s.Bolas = v, () => defaults.Bolas),
             EternalArmor = B(s => s.EternalArmor, (s, v) => s.EternalArmor = v, () => defaults.EternalArmor),
+            GodByrd = B(s => s.GodByrd, (s, v) => s.GodByrd = v, () => defaults.GodByrd),
             RollingBoulder = B(s => s.RollingBoulder, (s, v) => s.RollingBoulder = v, () => defaults.RollingBoulder),
             Salvo = B(s => s.Salvo, (s, v) => s.Salvo = v, () => defaults.Salvo),
             Splash = B(s => s.Splash, (s, v) => s.Splash = v, () => defaults.Splash),
@@ -267,10 +284,12 @@ internal sealed class RebalancedSpireSettingsUiBindings
             AlchemicalCoffer = B(s => s.AlchemicalCoffer, (s, v) => s.AlchemicalCoffer = v, () => defaults.AlchemicalCoffer),
             OrobasAncientChoices = B(s => s.OrobasAncientChoices, (s, v) => s.OrobasAncientChoices = v, () => defaults.OrobasAncientChoices),
             PaelsHorn = B(s => s.PaelsHorn, (s, v) => s.PaelsHorn = v, () => defaults.PaelsHorn),
+            PaelsLegion = B(s => s.PaelsLegion, (s, v) => s.PaelsLegion = v, () => defaults.PaelsLegion),
             BiiigHug = B(s => s.BiiigHug, (s, v) => s.BiiigHug = v, () => defaults.BiiigHug),
             DustyTome = B(s => s.DustyTome, (s, v) => s.DustyTome = v, () => defaults.DustyTome),
             DarvAncientChoices = B(s => s.DarvAncientChoices, (s, v) => s.DarvAncientChoices = v, () => defaults.DarvAncientChoices),
             BeautifulBracelet = B(s => s.BeautifulBracelet, (s, v) => s.BeautifulBracelet = v, () => defaults.BeautifulBracelet),
+            BrilliantScarf = B(s => s.BrilliantScarf, (s, v) => s.BrilliantScarf = v, () => defaults.BrilliantScarf),
             DiamondDiadem = B(s => s.DiamondDiadem, (s, v) => s.DiamondDiadem = v, () => defaults.DiamondDiadem),
             LoomingFruit = B(s => s.LoomingFruit, (s, v) => s.LoomingFruit = v, () => defaults.LoomingFruit),
             Crossbow = B(s => s.Crossbow, (s, v) => s.Crossbow = v, () => defaults.Crossbow),
@@ -290,14 +309,19 @@ internal sealed class RebalancedSpireSettingsUiBindings
             MorphicGrove = B(s => s.MorphicGrove, (s, v) => s.MorphicGrove = v, () => defaults.MorphicGrove),
             PunchOff = B(s => s.PunchOff, (s, v) => s.PunchOff = v, () => defaults.PunchOff),
             SpiralingWhirlpool = B(s => s.SpiralingWhirlpool, (s, v) => s.SpiralingWhirlpool = v, () => defaults.SpiralingWhirlpool),
+            WaterfallOfObviousSecrets = B(s => s.WaterfallOfObviousSecrets, (s, v) => s.WaterfallOfObviousSecrets = v, () => defaults.WaterfallOfObviousSecrets),
+            WuppyInTrouble = B(s => s.WuppyInTrouble, (s, v) => s.WuppyInTrouble = v, () => defaults.WuppyInTrouble),
             SunkenStatue = B(s => s.SunkenStatue, (s, v) => s.SunkenStatue = v, () => defaults.SunkenStatue),
             LostWisp = B(s => s.LostWisp, (s, v) => s.LostWisp = v, () => defaults.LostWisp),
             SpiritGrafter = B(s => s.SpiritGrafter, (s, v) => s.SpiritGrafter = v, () => defaults.SpiritGrafter),
             WelcomeToWongos = B(s => s.WelcomeToWongos, (s, v) => s.WelcomeToWongos = v, () => defaults.WelcomeToWongos),
             TheLanternKey = B(s => s.TheLanternKey, (s, v) => s.TheLanternKey = v, () => defaults.TheLanternKey),
             TeaMaster = B(s => s.TeaMaster, (s, v) => s.TeaMaster = v, () => defaults.TeaMaster),
+            MuseumOfTorture = B(s => s.MuseumOfTorture, (s, v) => s.MuseumOfTorture = v, () => defaults.MuseumOfTorture),
             HungryForMushrooms = B(s => s.HungryForMushrooms, (s, v) => s.HungryForMushrooms = v, () => defaults.HungryForMushrooms),
             Reflections = B(s => s.Reflections, (s, v) => s.Reflections = v, () => defaults.Reflections),
+            ShrineOfTheWarlord = B(s => s.ShrineOfTheWarlord, (s, v) => s.ShrineOfTheWarlord = v, () => defaults.ShrineOfTheWarlord),
+            ThermaeNonupeipe = B(s => s.ThermaeNonupeipe, (s, v) => s.ThermaeNonupeipe = v, () => defaults.ThermaeNonupeipe),
             Trial = B(s => s.Trial, (s, v) => s.Trial = v, () => defaults.Trial),
             WarHistorianRepy = B(s => s.WarHistorianRepy, (s, v) => s.WarHistorianRepy = v, () => defaults.WarHistorianRepy),
 
@@ -372,6 +396,19 @@ internal sealed class RebalancedSpireSettingsUiBindings
 
     private static DefaultModSettingsValueBinding<bool> B(Func<RebalancedSpireSettings, bool> getter, Action<RebalancedSpireSettings, bool> setter, Func<bool> defaultFactory)
     {
-        return ModSettingsBindings.WithDefault(ModSettingsBindings.Global(RebalancedSpireMain.ModId, RebalancedSpireMain.SettingsKey, getter, setter), defaultFactory);
+        var local = ModSettingsBindings.Global(RebalancedSpireMain.ModId, RebalancedSpireMain.SettingsKey, getter, setter);
+        var binding = ModSettingsBindings.Callback(RebalancedSpireMain.ModId, RebalancedSpireMain.SettingsKey,
+            () => RebalancedSpireSettingsSync.Frozen ? getter(RebalancedSpireRuntimeSettings.Current) : local.Read(),
+            value =>
+            {
+                if (RebalancedSpireSettingsSync.Frozen)
+                {
+                    return;
+                }
+
+                local.Write(value);
+                RebalancedSpireSettingsSync.LocalChanged();
+            }, local.Save);
+        return ModSettingsBindings.WithDefault(binding, defaultFactory);
     }
 }

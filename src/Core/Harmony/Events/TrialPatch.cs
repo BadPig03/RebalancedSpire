@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 // ReSharper disable InconsistentNaming
 public static class TrialPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Trial;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Trial;
 
     private static readonly MethodInfo? _setEventStateMethod = typeof(EventModel).GetMethod("SetEventState", BindingFlags.NonPublic | BindingFlags.Instance, null,[typeof(LocString), typeof(IEnumerable<EventOption>)], null);
 

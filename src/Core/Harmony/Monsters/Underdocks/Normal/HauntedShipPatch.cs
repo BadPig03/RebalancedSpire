@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class HauntedShipPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HauntedShip;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.HauntedShip;
 
     [HarmonyPatch(typeof(HauntedShip), "HauntDazed", MethodType.Getter)]
     [HarmonyPostfix]

@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class AfterlifePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Afterlife;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Afterlife;
 
     private static async Task OnPlay(Afterlife instance, PlayerChoiceContext choiceContext)
     {

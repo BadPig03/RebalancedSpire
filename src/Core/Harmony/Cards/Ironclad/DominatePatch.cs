@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class DominatePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Dominate;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Dominate;
 
     [HarmonyPatch(typeof(Dominate), "OnUpgrade")]
     [HarmonyPrefix]

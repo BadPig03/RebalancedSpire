@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class SpectralKnightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Knights;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Knights;
 
     private const int HexPowerAmount = 1;
     private const int IntangiblePowerAmount = 1;

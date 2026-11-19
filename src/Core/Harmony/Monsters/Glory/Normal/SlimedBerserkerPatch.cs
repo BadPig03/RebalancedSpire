@@ -20,7 +20,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class SlimedBerserkerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SlimedBerserker;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SlimedBerserker;
 
     private const int LeechingHugPowerAmount = 1;
     private const int PummelingCount = 4;

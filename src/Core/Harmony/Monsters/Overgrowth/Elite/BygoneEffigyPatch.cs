@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.TestSupport;
 // ReSharper disable InconsistentNaming
 public static class BygoneEffigyPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BygoneEffigy;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BygoneEffigy;
 
     private const int StrengthPowerAmount = 3;
 

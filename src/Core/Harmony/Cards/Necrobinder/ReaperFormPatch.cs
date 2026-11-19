@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public class ReaperFormPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ReaperForm;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.ReaperForm;
 
     private static async Task OnPlay(ReaperForm instance, PlayerChoiceContext choiceContext)
     {

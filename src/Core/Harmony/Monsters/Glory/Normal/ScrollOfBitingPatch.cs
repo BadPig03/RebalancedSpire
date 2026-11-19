@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class ScrollOfBitingPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ScrollOfBiting;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.ScrollOfBiting;
 
     private const int PaperCutsPowerAmount = 1;
 

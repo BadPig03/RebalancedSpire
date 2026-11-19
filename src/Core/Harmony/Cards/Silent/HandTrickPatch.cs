@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class HandTrickPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HandTrick;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.HandTrick;
 
     private static async Task OnPlay(HandTrick instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

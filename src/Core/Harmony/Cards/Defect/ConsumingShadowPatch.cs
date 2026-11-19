@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class ConsumingShadowPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ConsumingShadow;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.ConsumingShadow;
 
     private static async Task OnPlay(ConsumingShadow instance, PlayerChoiceContext choiceContext)
     {

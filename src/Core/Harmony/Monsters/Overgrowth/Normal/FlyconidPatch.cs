@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class FlyconidPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Flyconid;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Flyconid;
 
     [HarmonyPatch(typeof(Flyconid), "SmashDamage", MethodType.Getter)]
     [HarmonyPostfix]

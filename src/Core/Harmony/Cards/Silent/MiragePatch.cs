@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class MiragePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Mirage;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Mirage;
 
     [HarmonyPatch(typeof(Mirage), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]

@@ -21,7 +21,7 @@ using STS2RitsuLib.Utils;
 // ReSharper disable DuplicatedSequentialIfBodies
 public static class BoomingConchPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BoomingConch;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BoomingConch;
     private static readonly AttachedState<RelicModel, int> CardsPlayed = new(() => 0);
 
     [HarmonyPatch(typeof(AbstractModel), "AfterCardPlayed")]

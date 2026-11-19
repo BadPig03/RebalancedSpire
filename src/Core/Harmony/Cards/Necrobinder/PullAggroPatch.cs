@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public class PullAggroPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PullAggro;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.PullAggro;
 
     private static async Task OnPlay(PullAggro instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

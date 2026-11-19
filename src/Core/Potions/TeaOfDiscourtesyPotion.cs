@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.PotionPools;
+using MegaCrit.Sts2.Core.Models.Potions;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 using MegaCrit.Sts2.Core.Random;
@@ -22,6 +23,8 @@ using STS2RitsuLib.Scaffolding.Content;
 [RegisterPotion(typeof(EventPotionPool))]
 public class TeaOfDiscourtesyPotion : ModPotionTemplate
 {
+    public override PotionAssetProfile AssetProfile => new(ImagePath: "res://images/potions/rebalanced_spire_potion_tea_of_discourtesy_potion.png");
+
     public override PotionRarity Rarity => PotionRarity.Event;
 
     public override PotionUsage Usage => PotionUsage.AnyTime;
@@ -34,7 +37,8 @@ public class TeaOfDiscourtesyPotion : ModPotionTemplate
         new StringVar("Dazed", ModelDb.Card<Dazed>().Title)
     ]).AsReadOnly();
 
-    public override bool PassesCustomUsabilityCheck => CombatManager.Instance.IsInProgress || Owner.RunState.CurrentRoom is MerchantRoom;
+    public override bool PassesCustomUsabilityCheck => CombatManager.Instance.IsInProgress ||
+        Owner.RunState.CurrentRoom is MerchantRoom room && FoulPotion.GetFoulPotionMerchantTarget(room).button != null;
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {

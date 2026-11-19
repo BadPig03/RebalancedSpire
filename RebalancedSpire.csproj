@@ -100,11 +100,12 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="STS2.RitsuLib" Version="0.6.11" />
+        <PackageReference Include="STS2.RitsuLib" Version="0.6.14" />
     </ItemGroup>
     
     <ItemGroup>
         <Compile Remove="animations\**" />
+        <Compile Remove="tests\**" />
         <EmbeddedResource Remove="animations\**" />
     </ItemGroup>
 
@@ -307,9 +308,16 @@
       <Content Include="src\Core\Afflictions\Weighted.cs.uid" />
       <Content Include="src\Core\Cards\CorpseExplosion.cs.uid" />
       <Content Include="src\Core\Cards\LimitBreak.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireRuntimeSettings.cs.uid" />
       <Content Include="src\Core\Configs\RebalancedSpireSettings.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireSettingsModelCache.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireSettingsSession.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireSettingsSnapshot.cs.uid" />
       <Content Include="src\Core\Configs\RebalancedSpireSettingsStore.cs.uid" />
+      <Content Include="src\Core\Configs\RebalancedSpireSettingsSync.cs.uid" />
       <Content Include="src\Core\Configs\RebalancedSpireSettingsUiBindings.cs.uid" />
+      <Content Include="src\Core\Configs\SettingsTestVisibility.cs.uid" />
+      <Content Include="src\Core\Dominions\RebalancedSpireDoormakerDominion.cs.uid" />
       <Content Include="src\Core\Enchantments\Energetic.cs.uid" />
       <Content Include="src\Core\Enchantments\Poisonous.cs.uid" />
       <Content Include="src\Core\Encounters\DoormakerBoss.cs.uid" />
@@ -318,6 +326,7 @@
       <Content Include="src\Core\Harmony\Ancients\NeowPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Ancients\OrobasPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Ancients\VakuuPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\CardModelPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Colorless\BolasPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Colorless\EternalArmorPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Colorless\RollingBoulderPatch.cs.uid" />
@@ -337,6 +346,7 @@
       <Content Include="src\Core\Harmony\Cards\Defect\SynchronizePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\TrashToTreasurePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Defect\VoltaicPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Cards\Event\GodByrdPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\RelaxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Event\WishPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Cards\Ironclad\BloodWallPatch.cs.uid" />
@@ -386,17 +396,22 @@
       <Content Include="src\Core\Harmony\Cards\Token\FuelPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Commands\AttackCommandPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Enchantments\InkyPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Encounters\ByrdonisElitePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\PunchOffEventEncounterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\RubyRaidersNormalPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Encounters\TheKinBossPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\LostWispPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\MorphicGrovePatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Events\MuseumOfTorturePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\ReflectionsPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\SpiralingWhirlpoolPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\SpiritGrafterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\TeaMasterPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Events\ThermaeNonupeipePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\TrialPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Events\WaterfallOfObviousSecretsPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Events\WelcomeToWongosPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Events\WuppyInTroublePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Ftues\NAscensionSingleplayerFtuePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Ftues\StartRunLobbyPatch.cs.uid" />
       <Content Include="src\Core\Harmony\HarmonyExtensions.cs.uid" />
@@ -492,6 +507,7 @@
       <Content Include="src\Core\Harmony\Relics\BeautifulBraceletPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\BigMushroomPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\BoomingConchPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\BrilliantScarfPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\ChoicesParadoxPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\CrossbowPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\DiamondDiademPatch.cs.uid" />
@@ -505,6 +521,7 @@
       <Content Include="src\Core\Harmony\Relics\LavaRockPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\LoomingFruitPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\LordsParasolPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Relics\MightyWingsPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\NeowsTalismanPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\NutritiousOysterPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\PomanderPatch.cs.uid" />
@@ -516,6 +533,8 @@
       <Content Include="src\Core\Harmony\Relics\WarHammerPatch.cs.uid" />
       <Content Include="src\Core\Harmony\Relics\WhisperingEarringPatch.cs.uid" />
       <Content Include="src\Core\Harmony\RitsuLib\MainMenuModSettingsButtonPatchPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Runs\RunManagerPatch.cs.uid" />
+      <Content Include="src\Core\Harmony\Runs\RunStatePatch.cs.uid" />
       <Content Include="src\Core\Harmony\Saves\RunHistorySaveManagerPatch.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerBase.cs.uid" />
       <Content Include="src\Core\Monsters\DoormakerLeft.cs.uid" />
@@ -533,7 +552,9 @@
       <Content Include="src\Core\Powers\DisillusionPower.cs.uid" />
       <Content Include="src\Core\Powers\EternalArmorPower.cs.uid" />
       <Content Include="src\Core\Powers\FabricatorPower.cs.uid" />
+      <Content Include="src\Core\Powers\FlightPower.cs.uid" />
       <Content Include="src\Core\Powers\ForegoneConclusionPlusPower.cs.uid" />
+      <Content Include="src\Core\Powers\GodByrdAwakenedPower.cs.uid" />
       <Content Include="src\Core\Powers\GuardPower.cs.uid" />
       <Content Include="src\Core\Powers\HungerPower.cs.uid" />
       <Content Include="src\Core\Powers\InfestedPlusPower.cs.uid" />

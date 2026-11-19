@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class AxebotPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Axebot;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Axebot;
 
     [HarmonyPatch(typeof(Axebot), "HammerUppercutDamage", MethodType.Getter)]
     [HarmonyPostfix]

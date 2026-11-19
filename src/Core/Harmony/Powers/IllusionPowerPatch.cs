@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class IllusionPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheObscura;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheObscura;
 
     private static async Task ReviveMove(IllusionPower instance)
     {

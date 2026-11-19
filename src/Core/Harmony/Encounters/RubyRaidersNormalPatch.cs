@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class RubyRaidersNormalPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.RubyRaiders;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.RubyRaiders;
 
     [HarmonyPatch(typeof(RubyRaidersNormal), "GenerateMonsters")]
     [HarmonyPrefix]

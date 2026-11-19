@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class EternalArmorPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.EternalArmor;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.EternalArmor;
 
     private static async Task OnPlay(EternalArmor instance, PlayerChoiceContext choiceContext)
     {

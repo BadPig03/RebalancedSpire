@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class LordsParasolPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LordsParasol;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LordsParasol;
 
     [HarmonyPatch(typeof(RelicModel), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

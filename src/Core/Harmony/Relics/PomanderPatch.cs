@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class PomanderPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Pomander;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Pomander;
 
     private static async Task AfterObtained(Pomander instance)
     {

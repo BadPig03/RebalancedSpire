@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class InfiniteBladesPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.InfiniteBlades;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.InfiniteBlades;
 
     private const int InfiniteBladesPlusPowerAmount = 1;
 

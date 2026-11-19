@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx.Backgrounds;
 // ReSharper disable InconsistentNaming
 public static class CrusherPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.KaiserCrab;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.KaiserCrab;
 
     private const int WeakPowerAmount = 2;
 

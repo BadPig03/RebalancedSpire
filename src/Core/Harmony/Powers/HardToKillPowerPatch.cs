@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class HardToKillPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Exoskeleton;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Exoskeleton;
 
     [HarmonyPatch(typeof(PowerModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]

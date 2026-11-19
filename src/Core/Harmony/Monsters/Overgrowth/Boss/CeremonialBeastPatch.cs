@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class CeremonialBeastPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.CeremonialBeast;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.CeremonialBeast;
 
     private const float FirstPlowAmount = 0.8f;
     private const float SecondPlowAmount = 0.4f;

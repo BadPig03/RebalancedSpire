@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class BolasPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Bolas;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Bolas;
 
     private static async Task BeforeHandDraw(Bolas instance, Player player)
     {

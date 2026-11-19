@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class SoulNexusPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SoulNexus;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SoulNexus;
 
     private const int MaelstromDamage = 2;
     private const int SoulStrikeDamage = 4;

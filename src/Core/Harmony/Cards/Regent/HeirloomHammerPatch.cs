@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class HeirloomHammerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HeirloomHammer;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.HeirloomHammer;
 
     private static async Task OnPlay(HeirloomHammer instance, PlayerChoiceContext choiceContext)
     {

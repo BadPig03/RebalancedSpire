@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class BeautifulBraceletPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BeautifulBracelet;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BeautifulBracelet;
 
     [HarmonyPatch(typeof(BeautifulBracelet), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

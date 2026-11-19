@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class LivingFogPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LivingFog;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LivingFog;
 
     private const int MaxGasBombs = 5;
     private const int PingPingPowerAmount = 1;

@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class UntouchablePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Untouchable;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Untouchable;
 
     private static async Task OnPlay(Untouchable instance, CardPlay cardPlay)
     {

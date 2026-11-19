@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class TankPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Tank;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Tank;
 
     private static async Task OnPlay(Tank instance, PlayerChoiceContext choiceContext)
     {

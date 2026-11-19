@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class LeapPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Leap;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Leap;
 
     private static async Task OnPlay(Leap instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

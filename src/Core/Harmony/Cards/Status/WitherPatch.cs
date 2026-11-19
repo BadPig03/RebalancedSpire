@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class WitherPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Aeonglass;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Aeonglass;
 
     private static async Task OnTurnEndInHand(Wither instance, PlayerChoiceContext choiceContext)
     {

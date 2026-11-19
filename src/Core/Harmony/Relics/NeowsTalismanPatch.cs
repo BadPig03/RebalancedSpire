@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class NeowsTalismanPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.NeowsTalisman;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.NeowsTalisman;
 
     private static Task AfterObtained(NeowsTalisman instance)
     {

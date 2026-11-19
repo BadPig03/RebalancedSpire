@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class ExoskeletonPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Exoskeleton;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Exoskeleton;
 
     private const int HardToKillPowerAmount = 13;
 

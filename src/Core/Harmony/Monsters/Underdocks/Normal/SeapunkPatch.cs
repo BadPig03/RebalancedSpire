@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class SeapunkPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Seapunk;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Seapunk;
 
     [HarmonyPatch(typeof(Seapunk), "SeaKickDamage", MethodType.Getter)]
     [HarmonyPostfix]

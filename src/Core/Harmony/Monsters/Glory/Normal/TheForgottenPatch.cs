@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class TheForgottenPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheLostAndForgotten;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheLostAndForgotten;
 
     private const int MiasmaBlockAmount = 8;
 

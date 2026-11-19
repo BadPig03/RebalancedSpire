@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public class InkletPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Inklet;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Inklet;
 
     private const int WhirlwindCount = 3;
 

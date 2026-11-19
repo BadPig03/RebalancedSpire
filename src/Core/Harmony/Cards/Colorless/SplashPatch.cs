@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SplashPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Splash;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Splash;
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]

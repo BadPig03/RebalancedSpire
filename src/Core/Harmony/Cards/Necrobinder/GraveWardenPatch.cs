@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class GraveWardenPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.GraveWarden;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.GraveWarden;
 
     private static async Task OnPlay(GraveWarden instance, CardPlay cardPlay)
     {

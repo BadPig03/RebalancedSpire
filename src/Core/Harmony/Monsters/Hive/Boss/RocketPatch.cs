@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class RocketPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.KaiserCrab;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.KaiserCrab;
 
     private const int StrengthPowerAmount = 2;
     private const int FrailPowerAmount = 2;

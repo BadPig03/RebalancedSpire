@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Models.Events;
 // ReSharper disable InconsistentNaming
 public static class SpiralingWhirlpoolPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SpiralingWhirlpool;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SpiralingWhirlpool;
 
     private static async Task ReachIn(SpiralingWhirlpool instance)
     {

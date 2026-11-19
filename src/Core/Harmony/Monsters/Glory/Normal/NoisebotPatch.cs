@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class NoisebotPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fabricator;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Fabricator;
 
     private const int DazedAmount = 1;
 

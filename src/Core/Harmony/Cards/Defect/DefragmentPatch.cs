@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class DefragmentPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Defragment;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Defragment;
 
     [HarmonyPatch(typeof(CardModel), "Rarity", MethodType.Getter)]
     [HarmonyPrefix]

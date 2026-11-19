@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class CoolantPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Coolant;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Coolant;
 
     [HarmonyPatch(typeof(Coolant), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

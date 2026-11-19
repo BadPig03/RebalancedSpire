@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class FuelPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fuel;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Fuel;
 
     private static async Task OnPlay(Fuel instance, PlayerChoiceContext choiceContext)
     {

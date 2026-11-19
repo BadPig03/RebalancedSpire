@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class NeutronAegisPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.NeutronAegis;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.NeutronAegis;
 
     private static async Task OnPlay(NeutronAegis instance, PlayerChoiceContext choiceContext)
     {

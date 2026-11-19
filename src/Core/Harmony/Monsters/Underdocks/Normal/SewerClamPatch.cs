@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class SewerClamPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SewerClam;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SewerClam;
 
     private static int PlatingPowerAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 7, 6);
 

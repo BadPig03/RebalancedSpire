@@ -7,9 +7,11 @@ using STS2RitsuLib.Utils.Persistence.Migration;
 
 internal static class RebalancedSpireSettingsStore
 {
+    private static ModDataStoreCache<RebalancedSpireSettings>? _cache;
+
     private static ModDataStore Store => ModDataStore.For(RebalancedSpireMain.ModId);
 
-    internal static RebalancedSpireSettings Settings => Store.CreateCache<RebalancedSpireSettings>(RebalancedSpireMain.SettingsKey).Value;
+    internal static RebalancedSpireSettings Settings => (_cache ??= Store.CreateCache<RebalancedSpireSettings>(RebalancedSpireMain.SettingsKey)).Value;
 
     internal static void Initialize()
     {

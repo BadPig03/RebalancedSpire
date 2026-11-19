@@ -13,9 +13,9 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class VakuuPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.VakuuAncientChoices;
-    private static readonly bool SereTalonDisabled = !RebalancedSpireSettingsStore.Settings.SereTalon;
-    private static readonly bool DistinguishedCapeDisabled = !RebalancedSpireSettingsStore.Settings.DistinguishedCape;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.VakuuAncientChoices;
+    private static bool SereTalonDisabled => !RebalancedSpireRuntimeSettings.Current.SereTalon;
+    private static bool DistinguishedCapeDisabled => !RebalancedSpireRuntimeSettings.Current.DistinguishedCape;
 
     [HarmonyPatch(typeof(EventModel), "BackgroundScenePath", MethodType.Getter)]
     [HarmonyPrefix]
@@ -27,7 +27,7 @@ public static class VakuuPatch
             return true;
         }
 
-        if (!RebalancedSpireSettingsStore.Settings.VakuuFixedArt)
+        if (!RebalancedSpireRuntimeSettings.Current.VakuuFixedArt)
         {
             return true;
         }
@@ -41,7 +41,7 @@ public static class VakuuPatch
     [UsedImplicitly]
     private static bool PreFix_ConfigureBackgroundScene()
     {
-        return !RebalancedSpireSettingsStore.Settings.VakuuFixedArt;
+        return !RebalancedSpireRuntimeSettings.Current.VakuuFixedArt;
     }
 
     [HarmonyPatch(typeof(Vakuu), "Pool1", MethodType.Getter)]

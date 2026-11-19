@@ -10,7 +10,6 @@ internal sealed class RebalancedSpireSettingsRegistry
     internal static void Initialize()
     {
         var ui = RebalancedSpireSettingsUiBindings.Create();
-        RebalancedSpireSettingsStore.Initialize();
 
         RitsuLibFramework.RegisterModSettings(RebalancedSpireMain.ModId, p => p
             .WithModDisplayName(L("mod.title", "Rebalanced Spire"))
@@ -86,6 +85,7 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .WithTitle(L("the_colorless.section.label"))
                 .AddToggle("bolas", L("the_colorless.section.bolas.title"), ui.Bolas, L("the_colorless.section.bolas.description"))
                 .AddToggle("eternal_armor", L("the_colorless.section.eternal_armor.title"), ui.EternalArmor, L("the_colorless.section.eternal_armor.description"))
+                .AddToggle("god_byrd", L("the_colorless.section.god_byrd.title"), ui.GodByrd, L("the_colorless.section.god_byrd.description"))
                 .AddToggle("rolling_boulder", L("the_colorless.section.rolling_boulder.title"), ui.RollingBoulder, L("the_colorless.section.rolling_boulder.description"))
                 .AddToggle("salvo", L("the_colorless.section.salvo.title"), ui.Salvo, L("the_colorless.section.salvo.description"))
                 .AddToggle("splash", L("the_colorless.section.splash.title"), ui.Splash, L("the_colorless.section.splash.description"))
@@ -115,6 +115,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             ).AddSection("pael", s => s
                 .WithTitle(L("pael.section.label"))
                 .AddToggle("paels_horn", L("pael.section.paels_horn.title"), ui.PaelsHorn, L("pael.section.paels_horn.description"))
+                .AddToggle("paels_legion", L("pael.section.paels_legion.title"), ui.PaelsLegion, L("pael.section.paels_legion.description"))
             ).AddSection("tezcatara", s => s
                 .WithTitle(L("tezcatara.section.label"))
                 .AddToggle("biiig_hug", L("tezcatara.section.biiig_hug.title"), ui.BiiigHug, L("tezcatara.section.biiig_hug.description"))
@@ -125,6 +126,7 @@ internal sealed class RebalancedSpireSettingsRegistry
             ).AddSection("nonupeipe", s => s
                 .WithTitle(L("nonupeipe.section.label"))
                 .AddToggle("beautiful_bracelet", L("nonupeipe.section.beautiful_bracelet.title"), ui.BeautifulBracelet, L("nonupeipe.section.beautiful_bracelet.description"))
+                .AddToggle("brilliant_scarf", L("nonupeipe.section.brilliant_scarf.title"), ui.BrilliantScarf, L("nonupeipe.section.brilliant_scarf.description"))
                 .AddToggle("diamond_diadem", L("nonupeipe.section.diamond_diadem.title"), ui.DiamondDiadem, L("nonupeipe.section.diamond_diadem.description"))
                 .AddToggle("looming_fruit", L("nonupeipe.section.looming_fruit.title"), ui.LoomingFruit, L("nonupeipe.section.looming_fruit.description"))
             ).AddSection("tanx", s => s
@@ -162,6 +164,8 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .WithTitle(L("underdocks.section.label"))
                 .AddToggle("punch_off", L("underdocks.section.punch_off.title"), ui.PunchOff, L("underdocks.section.punch_off.description"))
                 .AddToggle("spiraling_whirlpool", L("underdocks.section.spiraling_whirlpool.title"), ui.SpiralingWhirlpool, L("underdocks.section.spiraling_whirlpool.description"))
+                .AddToggle("waterfall_of_obvious_secrets", L("underdocks.section.waterfall_of_obvious_secrets.title"), ui.WaterfallOfObviousSecrets, L("underdocks.section.waterfall_of_obvious_secrets.description"))
+                .AddToggle("wuppy_in_trouble", L("underdocks.section.wuppy_in_trouble.title"), ui.WuppyInTrouble, L("underdocks.section.wuppy_in_trouble.description"))
             ).AddSection("act1", s => s
                 .WithTitle(L("act1.section.label"))
                 .AddToggle("sunken_statue", L("act1.section.sunken_statue.title"), ui.SunkenStatue, L("act1.section.sunken_statue.description"))
@@ -174,10 +178,15 @@ internal sealed class RebalancedSpireSettingsRegistry
             ).AddSection("act1and2", s => s
                 .WithTitle(L("act1and2.section.label"))
                 .AddToggle("tea_master", L("act1and2.section.tea_master.title"), ui.TeaMaster, L("act1and2.section.tea_master.description"))
+            ).AddSection("act2", s => s
+                .WithTitle(L("act2.section.label"))
+                .AddToggle("museum_of_torture", L("act2.section.museum_of_torture.title"), ui.MuseumOfTorture, L("act2.section.museum_of_torture.description"))
             ).AddSection("glory", s => s
                 .WithTitle(L("glory.section.label"))
                 .AddToggle("hungry_for_mushrooms", L("glory.section.hungry_for_mushrooms.title"), ui.HungryForMushrooms, L("glory.section.hungry_for_mushrooms.description"))
                 .AddToggle("reflections", L("glory.section.reflections.title"), ui.Reflections, L("glory.section.reflections.description"))
+                .AddToggle("shrine_of_the_warlord", L("glory.section.shrine_of_the_warlord.title"), ui.ShrineOfTheWarlord, L("glory.section.shrine_of_the_warlord.description"))
+                .AddToggle("thermae_nonupeipe", L("glory.section.thermae_nonupeipe.title"), ui.ThermaeNonupeipe, L("glory.section.thermae_nonupeipe.description"))
                 .AddToggle("trial", L("glory.section.trial.title"), ui.Trial, L("glory.section.trial.description"))
             ).AddSection("act3", s => s
                 .WithTitle(L("act3.section.label"))
@@ -266,6 +275,23 @@ internal sealed class RebalancedSpireSettingsRegistry
                 .AddToggle("queen", L("glory.section.queen.title"), ui.Queen, L("glory.section.queen.description"))
                 .AddToggle("doormaker", L("glory.section.doormaker.title"), ui.Doormaker, L("glory.section.doormaker.description"))
             ), "enemies"
+        );
+
+        RitsuLibFramework.RegisterModSettings(RebalancedSpireMain.ModId, p => p
+            .WithModDisplayName(L("mod.title", "Rebalanced Spire"))
+            .WithTitle(L("blitz_settings.page.title"))
+            .WithDescription(L("blitz_settings.page.description"))
+            .WithSortOrder(4)
+            .WithReadOnlyOnHostSurfaces(ModSettingsHostSurface.RunPause | ModSettingsHostSurface.CombatPause)
+            .AddSection("blitz_map", s => s
+                .WithTitle(L("blitz_map.section.label"))
+                .AddToggle("blitz_elite_event", L("blitz_map.section.blitz_elite_event.title"), ui.BlitzEliteEvent, L("blitz_map.section.blitz_elite_event.description"))
+            ).AddSection("blitz_rewards", s => s
+                .WithTitle(L("blitz_rewards.section.label"))
+                .AddToggle("blitz_weak_rewards", L("blitz_rewards.section.blitz_weak_rewards.title"), ui.BlitzWeakRewards, L("blitz_rewards.section.blitz_weak_rewards.description"))
+                .AddToggle("blitz_normal_rewards", L("blitz_rewards.section.blitz_normal_rewards.title"), ui.BlitzNormalRewards, L("blitz_rewards.section.blitz_normal_rewards.description"))
+                .AddToggle("blitz_elite_rewards", L("blitz_rewards.section.blitz_elite_rewards.title"), ui.BlitzEliteRewards, L("blitz_rewards.section.blitz_elite_rewards.description"))
+            ), "blitz"
         );
 
         RitsuLibFramework.RegisterModSettings(RebalancedSpireMain.ModId, p => p

@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public class RegalitePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Regalite;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Regalite;
 
     [HarmonyPatch(typeof(Regalite), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

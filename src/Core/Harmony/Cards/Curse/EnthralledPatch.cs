@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class EnthralledPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BloodSoakedRose;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BloodSoakedRose;
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]

@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Map;
 // ReSharper disable InconsistentNaming
 public static class UniformIntroGenerationPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.UniformIntroGeneration;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.UniformIntroGeneration;
     private static readonly PropertyInfo GridProperty = AccessTools.Property(typeof(StandardActMap), "Grid");
     private static readonly int[][] _startColumnBuckets =
     [

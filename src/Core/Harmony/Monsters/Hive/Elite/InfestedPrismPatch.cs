@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class InfestedPrismPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.InfestedPrism;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.InfestedPrism;
 
     private const int TaintedPlusPowerAmount = 1;
     private const int WhirlwindRepeat = 3;

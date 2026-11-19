@@ -8,15 +8,12 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
 
 [RegisterPower]
 public sealed class ForegoneConclusionPlusPower : ModPowerTemplate
 {
-    private int _bonusDrawFromNextTurn;
-
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
@@ -33,27 +30,8 @@ public sealed class ForegoneConclusionPlusPower : ModPowerTemplate
             return;
         }
 
-        var nextTurnDraw = Owner.GetPower<DrawCardsNextTurnPower>();
-        if (nextTurnDraw != null && nextTurnDraw.AmountOnTurnStart != 0)
-        {
-            _bonusDrawFromNextTurn = nextTurnDraw.Amount;
-            await PowerCmd.Remove(nextTurnDraw);
-        }
-
         await CardPileCmd.ShuffleIfNecessary(choiceContext, Owner.Player);
         var selected = (await CardSelectCmd.FromCombatPile(choiceContext, PileType.Draw.GetPile(Owner.Player), Owner.Player, new CardSelectorPrefs(new LocString("card_selection", "REBALANCEDSPIRE_TO_PUT_ON_TOP"), Amount))).ToList();
         await CardPileCmd.Add(selected, PileType.Draw, CardPilePosition.Top, null, true);
-    }
-
-    public override decimal ModifyHandDraw(Player player, decimal count)
-    {
-        if (player != Owner.Player || _bonusDrawFromNextTurn <= 0)
-        {
-            return count;
-        }
-
-        var bonus = _bonusDrawFromNextTurn;
-        _bonusDrawFromNextTurn = 0;
-        return count + bonus;
     }
 }

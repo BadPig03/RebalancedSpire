@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class DebilitatePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Debilitate;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Debilitate;
 
     [HarmonyPatch(typeof(Debilitate), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

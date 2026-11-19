@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 // ReSharper disable InconsistentNaming
 public static class ReflectionsPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Reflections;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Reflections;
 
     private const int CloneCardsLimit = 13;
 

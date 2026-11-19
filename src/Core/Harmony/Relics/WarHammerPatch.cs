@@ -21,7 +21,7 @@ using STS2RitsuLib.Utils;
 // ReSharper disable InconsistentNaming
 public static class WarHammerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WarHammer;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.WarHammer;
     private static readonly AttachedState<WarHammer, int> EnemiesKilled = new(_ => 0);
 
     private static Task AfterCombatVictory(WarHammer instance)

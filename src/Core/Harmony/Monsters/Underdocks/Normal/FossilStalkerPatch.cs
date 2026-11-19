@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class FossilStalkerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.FossilStalker;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.FossilStalker;
 
     [HarmonyPatch(typeof(FossilStalker), "GenerateMoveStateMachine")]
     [HarmonyPrefix]

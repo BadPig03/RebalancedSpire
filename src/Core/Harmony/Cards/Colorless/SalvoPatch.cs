@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SalvoPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Salvo;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Salvo;
 
     private static async Task OnPlay(Salvo instance, PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

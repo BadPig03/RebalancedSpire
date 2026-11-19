@@ -22,7 +22,7 @@ using MegaCrit.Sts2.Core.Nodes.Vfx;
 // ReSharper disable InconsistentNaming
 public static class PhrogParasitePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PhrogParasite;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.PhrogParasite;
 
     private const int MaxAmount = 4;
     private const int InfestedPlusPowerAmount = 1;

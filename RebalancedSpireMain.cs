@@ -7,6 +7,7 @@ using Logger = MegaCrit.Sts2.Core.Logging.Logger;
 namespace RebalancedSpire;
 
 using System.Reflection;
+using Core.Configs;
 using Core.Harmony;
 using Core.Registry;
 using STS2RitsuLib;
@@ -18,13 +19,15 @@ public partial class RebalancedSpireMain : Node
     internal const string ModId = "RebalancedSpire";
     internal const string SettingsKey = "settings";
     internal const string SettingsFileName = "settings.json";
-    public const string Version = "v0.3.12-beta";
+    public const string Version = "v0.4.0-beta";
 
     public static Logger Logger { get; } = new(ModId, LogType.Generic);
 
     private static void Initialize()
     {
         var assembly = Assembly.GetExecutingAssembly();
+        RebalancedSpireSettingsStore.Initialize();
+        RebalancedSpireSettingsSync.Initialize();
         new Harmony(ModId).PatchAllForRebalancedSpire(assembly);
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);

@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Models.Events;
 // ReSharper disable InconsistentNaming
 public static class SpiritGrafterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SpiritGrafter;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SpiritGrafter;
 
     private static async Task StrikeBack(SpiritGrafter instance)
     {

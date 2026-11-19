@@ -32,7 +32,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class KinFollowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheKin;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheKin;
 
     internal const int FakeFollowerIndex = 1;
 

@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Afflictions;
 // ReSharper disable InconsistentNaming
 public static class TaintedPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.InfestedPrism;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.InfestedPrism;
 
     [HarmonyPatch(typeof(AfflictionModel), "Description", MethodType.Getter)]
     [HarmonyPrefix]

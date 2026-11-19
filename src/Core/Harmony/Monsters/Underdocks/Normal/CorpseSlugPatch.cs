@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class CorpseSlugPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.CorpseSlug;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.CorpseSlug;
 
     [HarmonyPatch(typeof(CorpseSlug), "MaxInitialHp", MethodType.Getter)]
     [HarmonyPostfix]

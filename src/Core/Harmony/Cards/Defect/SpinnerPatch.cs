@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SpinnerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Spinner;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Spinner;
 
     private static async Task OnPlay(Spinner instance, PlayerChoiceContext choiceContext)
     {

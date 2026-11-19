@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.Rewards;
 // ReSharper disable InconsistentNaming
 public static class LargeCapsulePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LargeCapsule;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LargeCapsule;
 
     private static async Task AfterObtained(LargeCapsule instance)
     {

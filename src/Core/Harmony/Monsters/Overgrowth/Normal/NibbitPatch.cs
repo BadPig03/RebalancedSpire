@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class NibbitPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Nibbit;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Nibbit;
 
     private static int ButtDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 12, 11);
     private static int SliceDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 6, 5);

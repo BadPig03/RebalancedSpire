@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class SwordOfJadePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SunkenStatue;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SunkenStatue;
 
     private static async Task AfterRoomEntered(SwordOfJade instance)
     {

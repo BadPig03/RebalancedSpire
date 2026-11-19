@@ -12,7 +12,7 @@ using IMaxHandSizeModifier = STS2RitsuLib.Combat.HandSize.IMaxHandSizeModifier;
 [UsedImplicitly]
 public sealed class FiddleSingleton() : HookedSingletonModel(HookType.Combat), IMaxHandSizeModifier
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fiddle;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Fiddle;
 
     public int ModifyMaxHandSize(Player player, int currentMaxHandSize)
     {

@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class SnappingJaxfruitPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SnappingJaxfruit;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SnappingJaxfruit;
 
     [HarmonyPatch(typeof(SnappingJaxfruit), "MinInitialHp", MethodType.Getter)]
     [HarmonyPostfix]

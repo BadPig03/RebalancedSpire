@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SkittishPowerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PhantasmalGardener;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.PhantasmalGardener;
 
     private const int StrengthPowerAmount = -1;
 

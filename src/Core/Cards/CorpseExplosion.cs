@@ -17,7 +17,7 @@ using STS2RitsuLib.Scaffolding.Content;
 [UsedImplicitly]
 public sealed class CorpseExplosion() : ModCardTemplate(1, CardType.Skill, CardRarity.Ancient, TargetType.AnyEnemy, !Disabled)
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DustyTome;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.DustyTome;
 
     public override CardAssetProfile AssetProfile => new(PortraitPath: "res://images/packed/card_portraits/silent/rebalanced_spire_card_corpse_explosion.png");
 

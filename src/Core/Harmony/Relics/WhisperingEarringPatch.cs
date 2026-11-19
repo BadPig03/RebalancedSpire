@@ -22,7 +22,7 @@ using STS2RitsuLib.Utils;
 // ReSharper disable InconsistentNaming
 public static class WhisperingEarringPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WhisperingEarring;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.WhisperingEarring;
     private static readonly AttachedState<WhisperingEarring, int> CurrentEnergyUsed = new(() => 0);
 
     private static async Task VakuuAutoPlay(WhisperingEarring instance, PlayerChoiceContext choiceContext, Player player)

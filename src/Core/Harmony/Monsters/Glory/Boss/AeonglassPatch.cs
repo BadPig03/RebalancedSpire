@@ -24,7 +24,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class AeonglassPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Aeonglass;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Aeonglass;
 
     private static int EbbDamage => AscensionHelper.GetValueIfAscension(AscensionLevel.DeadlyEnemies, 32, 28);
 

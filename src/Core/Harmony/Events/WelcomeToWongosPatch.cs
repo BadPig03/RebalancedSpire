@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class WelcomeToWongosPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.WelcomeToWongos;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.WelcomeToWongos;
 
     private static async Task Leave(WelcomeToWongos instance)
     {

@@ -17,7 +17,7 @@ using STS2RitsuLib.Utils;
 // ReSharper disable InconsistentNaming
 public static class AlchemicalCofferPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.AlchemicalCoffer;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.AlchemicalCoffer;
 
     private static readonly SavedAttachedState<AlchemicalCoffer, ModelId?> LastPotionUsed = new("REBALANCED_SPIRE_RELIC_ALCHEMICAL_COFFER", _ => null);
 

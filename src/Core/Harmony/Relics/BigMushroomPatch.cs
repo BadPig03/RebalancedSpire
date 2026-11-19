@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class BigMushroomPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HungryForMushrooms;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.HungryForMushrooms;
 
     [HarmonyPatch(typeof(BigMushroom), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

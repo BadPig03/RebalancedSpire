@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class HiddenDaggersPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HiddenDaggers;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.HiddenDaggers;
 
     private static async Task OnPlay(HiddenDaggers instance, PlayerChoiceContext choiceContext)
     {

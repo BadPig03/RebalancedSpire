@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class FrogKnightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.FrogKnight;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.FrogKnight;
 
     [HarmonyPatch(typeof(FrogKnight), "PlatingAmount", MethodType.Getter)]
     [HarmonyPostfix]

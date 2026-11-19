@@ -21,7 +21,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public class FabricatorPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Fabricator;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Fabricator;
 
     internal const float SpawnBotDamageRatio = 1 / 15f;
     private const int FabricatorPowerAmount = 1;

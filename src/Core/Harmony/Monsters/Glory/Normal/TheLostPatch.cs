@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class TheLostPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheLostAndForgotten;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheLostAndForgotten;
 
     [HarmonyPatch(typeof(TheLost), "MinInitialHp", MethodType.Getter)]
     [HarmonyPostfix]

@@ -18,7 +18,7 @@ using STS2RitsuLib.Utils;
 // ReSharper disable InconsistentNaming
 public static class LavaRockPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LavaRock;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LavaRock;
     private static readonly SavedAttachedState<LavaRock, int> EnemiesDefeated = new("REBALANCED_SPIRE_RELIC_LAVA_ROCK", _ => 0);
 
     [HarmonyPatch(typeof(AbstractModel), "AfterCombatVictory")]

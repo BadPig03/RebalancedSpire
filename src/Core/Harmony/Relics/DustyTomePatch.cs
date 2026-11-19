@@ -19,7 +19,7 @@ using MegaCrit.Sts2.Core.Runs;
 // ReSharper disable InconsistentNaming
 public static class DustyTomePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DustyTome;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.DustyTome;
 
     private static async Task AfterObtained(DustyTome instance)
     {

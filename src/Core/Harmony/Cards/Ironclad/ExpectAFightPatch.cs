@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class ExpectAFightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.ExpectAFight;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.ExpectAFight;
 
     private static async Task OnPlay(ExpectAFight instance, CardPlay cardPlay)
     {

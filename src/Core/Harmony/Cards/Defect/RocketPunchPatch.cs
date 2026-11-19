@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class RocketPunchPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.RocketPunch;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.RocketPunch;
 
     private static Task AfterCardGeneratedForCombat(RocketPunch instance, CardModel card, Player? creator)
     {

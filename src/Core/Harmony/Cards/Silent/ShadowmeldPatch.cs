@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class ShadowmeldPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Shadowmeld;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Shadowmeld;
 
     [HarmonyPatch(typeof(CardModel), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]

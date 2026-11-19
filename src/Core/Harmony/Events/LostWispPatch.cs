@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class LostWispPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.LostWisp;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.LostWisp;
 
     private static async Task Claim(LostWisp instance)
     {

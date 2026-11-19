@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class TrashToTreasurePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TrashToTreasure;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TrashToTreasure;
 
     [HarmonyPatch(typeof(TrashToTreasure), "OnUpgrade")]
     [HarmonyPrefix]

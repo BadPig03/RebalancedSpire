@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class FishingRodPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.FishingRod;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.FishingRod;
 
     private static Task AfterCombatVictory(FishingRod instance, CombatRoom room)
     {

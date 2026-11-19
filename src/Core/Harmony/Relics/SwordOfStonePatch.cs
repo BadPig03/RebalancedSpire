@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class SwordOfStonePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SunkenStatue;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SunkenStatue;
 
     [HarmonyPatch(typeof(SwordOfStone), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

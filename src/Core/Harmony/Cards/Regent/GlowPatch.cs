@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class GlowPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Glow;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Glow;
 
     private static async Task OnPlay(Glow instance, PlayerChoiceContext choiceContext)
     {

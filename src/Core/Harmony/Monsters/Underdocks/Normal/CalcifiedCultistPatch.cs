@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Monsters;
 // ReSharper disable InconsistentNaming
 public static class CalcifiedCultistPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.CalcifiedCultist;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.CalcifiedCultist;
 
     [HarmonyPatch(typeof(CalcifiedCultist), "MaxInitialHp", MethodType.Getter)]
     [HarmonyPostfix]

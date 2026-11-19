@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class WispPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Wisp;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Wisp;
 
     private static async Task OnPlay(Wisp instance)
     {

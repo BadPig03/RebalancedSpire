@@ -14,6 +14,8 @@ using STS2RitsuLib.Scaffolding.Content;
 [RegisterPotion(typeof(EventPotionPool))]
 public sealed class BoneTeaPotion : ModPotionTemplate
 {
+    public override PotionAssetProfile AssetProfile => new(ImagePath: "res://images/potions/rebalanced_spire_potion_bone_tea_potion.png");
+
     public override PotionRarity Rarity => PotionRarity.Event;
 
     public override PotionUsage Usage => PotionUsage.CombatOnly;

@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SeancePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Seance;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Seance;
 
     private static async Task OnPlay(Seance instance, PlayerChoiceContext choiceContext)
     {

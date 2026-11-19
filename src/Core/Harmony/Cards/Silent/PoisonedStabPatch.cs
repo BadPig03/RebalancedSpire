@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class PoisonedStabPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PoisonedStab;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.PoisonedStab;
 
     private static async Task OnPlay(PoisonedStab instance)
     {

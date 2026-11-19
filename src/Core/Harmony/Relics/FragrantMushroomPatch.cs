@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 // ReSharper disable InconsistentNaming
 public static class FragrantMushroomPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.HungryForMushrooms;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.HungryForMushrooms;
 
     [HarmonyPatch(typeof(FragrantMushroom), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

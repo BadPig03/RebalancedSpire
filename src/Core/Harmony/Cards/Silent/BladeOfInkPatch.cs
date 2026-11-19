@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Enchantments;
 // ReSharper disable InconsistentNaming
 public static class BladeOfInkPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BladeOfInk;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BladeOfInk;
 
     [HarmonyPatch(typeof(BladeOfInk), "ExtraHoverTips", MethodType.Getter)]
     [HarmonyPrefix]

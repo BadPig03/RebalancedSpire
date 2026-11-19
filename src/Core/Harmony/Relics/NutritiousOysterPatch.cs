@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Rooms;
 // ReSharper disable InconsistentNaming
 public static class NutritiousOysterPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.NutritiousOyster;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.NutritiousOyster;
 
     private static async Task AfterCombatVictory(NutritiousOyster instance)
     {

@@ -15,7 +15,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 // ReSharper disable InconsistentNaming
 public static class ParafrightPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.TheObscura;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.TheObscura;
 
     private const int IllusionPowerAmount = 1;
     private const int DisillusionPowerAmount = 4;

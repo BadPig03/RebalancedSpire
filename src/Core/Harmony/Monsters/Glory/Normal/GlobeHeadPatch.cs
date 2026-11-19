@@ -12,7 +12,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class GlobeHeadPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.GlobeHead;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.GlobeHead;
 
     private const int GalvanicPowerAmount = 3;
 

@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class MasterPlannerPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.MasterPlanner;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.MasterPlanner;
 
     private static async Task OnPlay(MasterPlanner instance, PlayerChoiceContext choiceContext)
     {

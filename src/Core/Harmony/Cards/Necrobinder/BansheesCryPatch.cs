@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class BansheesCryPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BansheesCry;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BansheesCry;
 
     [HarmonyPatch(typeof(CardModel), "CanonicalEnergyCost", MethodType.Getter)]
     [HarmonyPrefix]

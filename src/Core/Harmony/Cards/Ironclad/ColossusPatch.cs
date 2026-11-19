@@ -11,7 +11,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class ColossusPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Colossus;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Colossus;
 
     [HarmonyPatch(typeof(Colossus), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

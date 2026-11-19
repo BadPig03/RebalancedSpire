@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class FollyPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.PreservedFog;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.PreservedFog;
 
     [HarmonyPatch(typeof(Folly), "CanonicalKeywords", MethodType.Getter)]
     [HarmonyPrefix]

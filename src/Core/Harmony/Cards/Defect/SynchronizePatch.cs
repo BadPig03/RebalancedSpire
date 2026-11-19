@@ -16,7 +16,7 @@ using MegaCrit.Sts2.Core.Models.Cards;
 // ReSharper disable InconsistentNaming
 public static class SynchronizePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Synchronize;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Synchronize;
 
     private static async Task OnPlay(Synchronize instance, PlayerChoiceContext choiceContext)
     {

@@ -17,7 +17,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 // ReSharper disable InconsistentNaming
 public static class SkulkingColonyPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.SkulkingColony;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.SkulkingColony;
 
     private const int PiercingStabsCount = 2;
 

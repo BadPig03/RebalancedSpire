@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class HazePatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.Haze;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.Haze;
 
     [HarmonyPatch(typeof(Haze), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

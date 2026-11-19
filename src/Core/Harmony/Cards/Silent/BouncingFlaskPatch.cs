@@ -13,7 +13,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 // ReSharper disable InconsistentNaming
 public static class BouncingFlaskPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.BouncingFlask;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.BouncingFlask;
 
     [HarmonyPatch(typeof(BouncingFlask), "CanonicalVars", MethodType.Getter)]
     [HarmonyPrefix]

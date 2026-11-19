@@ -22,7 +22,7 @@ using STS2RitsuLib.Utils;
 // ReSharper disable InconsistentNaming
 public static class DiamondDiademPatch
 {
-    private static readonly bool Disabled = !RebalancedSpireSettingsStore.Settings.DiamondDiadem;
+    private static bool Disabled => !RebalancedSpireRuntimeSettings.Current.DiamondDiadem;
     private static readonly AttachedState<DiamondDiadem, int> CardsPlayedThisTurn = new(() => 0);
 
     private static Task AfterCardPlayed(DiamondDiadem instance, CardPlay cardPlay)
